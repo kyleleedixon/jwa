@@ -143,6 +143,102 @@ export const SPECIALTY_LABELS: Record<string, string> = {
   group_distraction: 'Group Distraction',
 };
 
+export const SPECIALTY_GROUPS: Record<string, string> = {
+  // Healing
+  heal: 'Healing',
+  heal_pct: 'Healing',
+  hot_contextual: 'Healing',
+
+  // Shielding
+  shield: 'Shielding',
+  group_shield: 'Shielding',
+  taunt: 'Shielding',
+  group_taunt: 'Shielding',
+  armor_increase: 'Shielding',
+
+  // Evasion
+  dodge: 'Evasion',
+  cloak: 'Evasion',
+  bypass_dodge: 'Evasion',
+  bypass_alert: 'Evasion',
+  bypass_absorb: 'Evasion',
+
+  // Stunning
+  stun: 'Stunning',
+  group_stun: 'Stunning',
+
+  // Speed Control
+  speed_increase: 'Speed Control',
+  group_speed_increase: 'Speed Control',
+  speed_decrease: 'Speed Control',
+  group_speed_decrease: 'Speed Control',
+
+  // Damage Boosting
+  damage_increase: 'Damage Boosting',
+  group_damage_increase: 'Damage Boosting',
+  crit_increase: 'Damage Boosting',
+  group_crit_increase: 'Damage Boosting',
+
+  // Weakening
+  damage_decrease: 'Weakening',
+  distraction: 'Weakening',
+  group_distraction: 'Weakening',
+  crit_decrease: 'Weakening',
+  armor_decrease: 'Weakening',
+  group_armor_decrease: 'Weakening',
+  vulner: 'Weakening',
+  group_vulner: 'Weakening',
+  resistance_decrease_all: 'Weakening',
+
+  // Armor Bypass
+  bypass_armor: 'Armor Bypass',
+  group_bypass_armor: 'Armor Bypass',
+  rend: 'Armor Bypass',
+
+  // Group Attacks
+  group_attack: 'Group Attack',
+  target_all_opponents: 'Group Attack',
+  target_team: 'Group Attack',
+
+  // Priority Moves
+  priority_damage: 'Priority Moves',
+  priority_non_damage: 'Priority Moves',
+
+  // Swap Control
+  swap_prevent: 'Swap Control',
+
+  // Counter & Reactive
+  has_counter_ability: 'Counter & Reactive',
+  has_on_escape_ability: 'Counter & Reactive',
+  has_swap_in_ability: 'Counter & Reactive',
+
+  // Special Abilities
+  has_special_active_ability: 'Special Abilities',
+  has_special_passive_ability: 'Special Abilities',
+  has_alert_ability: 'Special Abilities',
+  cheat_death: 'Special Abilities',
+};
+
+export const ABILITY_GROUP_ORDER = [
+  'Damage Boosting',
+  'Armor Bypass',
+  'Group Attack',
+  'Priority Moves',
+  'Weakening',
+  'Stunning',
+  'Speed Control',
+  'Healing',
+  'Shielding',
+  'Evasion',
+  'Swap Control',
+  'Counter & Reactive',
+  'Special Abilities',
+];
+
 export function label(map: Record<string, string>, key: string): string {
   return map[key] ?? key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+export function specialtyGroups(specialty: string[]): string[] {
+  return Array.from(new Set(specialty.map(s => SPECIALTY_GROUPS[s]).filter(Boolean)));
 }

@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import { Creature } from '@/types/creature';
+import { specialtyGroups } from '@/lib/labels';
 import FilterPanel from './FilterPanel';
 import CreatureCard from './CreatureCard';
 import CreatureModal from './CreatureModal';
@@ -18,8 +19,7 @@ const EMPTY_FILTERS: Filters = {
   rarity: new Set(),
   class: new Set(),
   hybrid_type: new Set(),
-  specialty: new Set(),
-  dna_source: new Set(),
+  ability_group: new Set(),
 };
 
 export default function Dashboard({ creatures }: Props) {
@@ -53,8 +53,7 @@ export default function Dashboard({ creatures }: Props) {
       if (filters.rarity.size > 0 && !filters.rarity.has(c.rarity)) return false;
       if (filters.class.size > 0 && !filters.class.has(c.class)) return false;
       if (filters.hybrid_type.size > 0 && !filters.hybrid_type.has(c.hybrid_type)) return false;
-      if (filters.specialty.size > 0 && !c.specialty.some(s => filters.specialty.has(s))) return false;
-      if (filters.dna_source.size > 0 && !c.dna_source.some(s => filters.dna_source.has(s))) return false;
+      if (filters.ability_group.size > 0 && !specialtyGroups(c.specialty).some(g => filters.ability_group.has(g))) return false;
       return true;
     });
   }, [creatures, search, filters]);

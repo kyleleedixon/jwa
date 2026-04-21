@@ -7,9 +7,9 @@ import {
   CLASS_LABELS,
   HYBRID_TYPE_LABELS,
   HYBRID_TYPE_ORDER,
-  SPAWN_LABELS,
-  SPECIALTY_LABELS,
+  ABILITY_GROUP_ORDER,
   label,
+  specialtyGroups,
 } from '@/lib/labels';
 
 interface Props {
@@ -20,24 +20,12 @@ interface Props {
 }
 
 export default function FilterPanel({ creatures, filters, onToggle, onClear }: Props) {
-  const allSpecialties = Array.from(
-    new Set(creatures.flatMap(c => c.specialty))
-  ).sort((a, b) => {
-    const la = label(SPECIALTY_LABELS, a);
-    const lb = label(SPECIALTY_LABELS, b);
-    return la.localeCompare(lb);
-  });
-
-  const allSpawns = Array.from(
-    new Set(creatures.flatMap(c => c.dna_source))
-  ).sort((a, b) => {
-    const la = label(SPAWN_LABELS, a);
-    const lb = label(SPAWN_LABELS, b);
-    return la.localeCompare(lb);
-  });
-
   const allClasses = Array.from(new Set(creatures.map(c => c.class))).sort((a, b) =>
     label(CLASS_LABELS, a).localeCompare(label(CLASS_LABELS, b))
+  );
+
+  const availableGroups = ABILITY_GROUP_ORDER.filter(g =>
+    creatures.some(c => specialtyGroups(c.specialty).includes(g))
   );
 
   const allHybridTypes = HYBRID_TYPE_ORDER.filter(h =>
@@ -85,19 +73,11 @@ export default function FilterPanel({ creatures, filters, onToggle, onClear }: P
       />
 
       <FilterSection
-        title="Spawn Location"
-        options={allSpawns}
-        selected={filters.dna_source}
-        getLabel={v => label(SPAWN_LABELS, v)}
-        onToggle={v => onToggle('dna_source', v)}
-      />
-
-      <FilterSection
-        title="Expertise"
-        options={allSpecialties}
-        selected={filters.specialty}
-        getLabel={v => label(SPECIALTY_LABELS, v)}
-        onToggle={v => onToggle('specialty', v)}
+        title="Abilities"
+        options={availableGroups}
+        selected={filters.ability_group}
+        getLabel={v => v}
+        onToggle={v => onToggle('ability_group', v)}
       />
     </aside>
   );
