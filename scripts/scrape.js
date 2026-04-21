@@ -106,6 +106,7 @@ function parseMoves(moveArray, moveType, moveNames) {
       delay: mv.delay,
       cooldown: mv.cooldown,
       priority: mv.priority,
+      ...(mv.icon && { icon: 'https://cdn.paleo.gg/games' + mv.icon }),
       effects: (mv.effects || []).map(e => ({
         action: e.action,
         target: e.target,
@@ -180,6 +181,13 @@ async function sleep(ms) {
 }
 
 async function main() {
+  // Fetch last modified date from the dinodex index
+  console.log('  Fetching dinodex metadata...');
+  const indexRes = await axios.get('https://www.paleo.gg/games/jurassic-world-alive/dinodex', { headers: HEADERS, timeout: 15000 });
+  const indexProps = parsePageProps(indexRes.data);
+  const lastModifiedDate = indexProps.meta?.lastModifiedDate || null;
+  console.log(`  Last modified date: ${lastModifiedDate}`);
+
   // Fetch move names once from the first creature page
   console.log('  Fetching move name dictionary...');
   const firstRes = await axios.get(BASE_URL + SLUGS[0], { headers: HEADERS, timeout: 15000 });
@@ -207,6 +215,10 @@ async function main() {
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, JSON.stringify(results, null, 2));
   console.log(`  Saved to ${outPath}`);
+
+  const metaPath = path.join(__dirname, '../src/data/meta.json');
+  fs.writeFileSync(metaPath, JSON.stringify({ lastModifiedDate }, null, 2));
+  console.log(`  Saved meta to ${metaPath}`);
 }
 
 main().catch(console.error);

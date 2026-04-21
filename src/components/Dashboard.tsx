@@ -11,6 +11,7 @@ const PAGE_SIZE = 60;
 
 interface Props {
   creatures: Creature[];
+  lastModifiedDate: string | null;
 }
 
 type Filters = Record<string, Set<string>>;
@@ -35,7 +36,7 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: 'crit', label: 'CRIT' },
 ];
 
-export default function Dashboard({ creatures }: Props) {
+export default function Dashboard({ creatures, lastModifiedDate }: Props) {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [page, setPage] = useState(1);
@@ -148,9 +149,16 @@ export default function Dashboard({ creatures }: Props) {
               className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-1.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
             />
           </div>
-          <span className="text-sm text-gray-400 ml-auto">
-            {filtered.length} <span className="hidden sm:inline">of {creatures.length} </span>creatures
-          </span>
+          <div className="flex items-center gap-3 ml-auto">
+            {lastModifiedDate && (
+              <span className="text-xs text-gray-500 hidden sm:inline">
+                Data updated <span className="text-gray-300">{lastModifiedDate}</span>
+              </span>
+            )}
+            <span className="text-sm text-gray-400">
+              {filtered.length} <span className="hidden sm:inline">of {creatures.length} </span>creatures
+            </span>
+          </div>
         </div>
       </header>
 

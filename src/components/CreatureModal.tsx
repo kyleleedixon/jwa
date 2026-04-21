@@ -186,6 +186,11 @@ function MoveRow({ move, baseDamage }: { move: Move; baseDamage: number }) {
   return (
     <div className="bg-slate-800/60 rounded-xl p-3 border border-slate-700/40">
       <div className="flex items-start gap-2">
+        {move.icon && (
+          <div className="w-9 h-9 shrink-0 rounded-lg bg-slate-700/60 flex items-center justify-center overflow-hidden">
+            <Image src={move.icon} alt="" width={32} height={32} className="object-contain" unoptimized />
+          </div>
+        )}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="font-semibold text-white text-sm">{move.name.startsWith('ra__') ? 'Enhancement' : move.name}</span>
