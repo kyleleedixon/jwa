@@ -16,7 +16,7 @@ export const RARITY_COLORS: Record<string, string> = {
   epic: 'text-yellow-400 border-yellow-500',
   legendary: 'text-red-400 border-red-500',
   unique: 'text-green-400 border-green-500',
-  apex: 'text-white border-gray-900',
+  apex: 'text-white',
   omega: 'text-gray-300 border-gray-400',
 };
 

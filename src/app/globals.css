@@ -17,3 +17,10 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.apex-metallic-border {
+  box-shadow:
+    0 0 0 1px rgba(200, 200, 200, 0.55),
+    0 0 0 2.5px rgba(8, 8, 8, 1),
+    0 0 0 4px rgba(140, 140, 140, 0.3);
+}

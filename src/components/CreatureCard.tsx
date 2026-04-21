@@ -23,7 +23,7 @@ export default function CreatureCard({ creature }: Props) {
 
   return (
     <div
-      className={`relative flex flex-col rounded-xl border ${rarityColor} bg-slate-800/80 hover:bg-slate-700/80 transition-colors overflow-hidden group cursor-pointer`}
+      className={`relative flex flex-col rounded-xl ${creature.rarity === 'apex' ? 'apex-metallic-border' : `border ${rarityColor}`} bg-slate-800/80 hover:bg-slate-700/80 transition-colors overflow-hidden group cursor-pointer`}
     >
       {/* image */}
       <div className={`relative w-full aspect-square ${rarityBg} flex items-center justify-center p-3`}>
