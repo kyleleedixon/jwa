@@ -106,14 +106,21 @@ export default function FilterPanel({ creatures, filters, onToggle, onClear }: P
                       if (!checked) onToggle('ability_group', group);
                       onToggle('group_only', group);
                     }}
-                    title="Show group-effect only"
-                    className={`shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded border transition-colors ml-1 ${
-                      groupOnly
-                        ? 'bg-blue-500 border-blue-500 text-white'
-                        : 'border-slate-600 text-gray-400 hover:border-slate-400 hover:text-white'
-                    }`}
+                    title="Group effects only"
+                    className="shrink-0 flex items-center gap-1.5 ml-2 cursor-pointer"
                   >
-                    Group
+                    <span className={`text-[10px] transition-colors ${groupOnly ? 'text-blue-300' : 'text-gray-500'}`}>
+                      Group
+                    </span>
+                    {/* toggle track */}
+                    <span className={`relative inline-flex h-4 w-7 shrink-0 rounded-full border transition-colors duration-200 ${
+                      groupOnly ? 'bg-blue-500 border-blue-500' : 'bg-slate-700 border-slate-600'
+                    }`}>
+                      {/* thumb */}
+                      <span className={`absolute top-0.5 h-3 w-3 rounded-full bg-white shadow transition-transform duration-200 ${
+                        groupOnly ? 'translate-x-3.5' : 'translate-x-0.5'
+                      }`} />
+                    </span>
                   </button>
                 )}
               </div>
