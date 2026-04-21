@@ -156,7 +156,7 @@ export default function CreatureModal({ creature, onClose }: Props) {
                 <div>
                   <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Moves</h3>
                   <div className="flex flex-col gap-2">
-                    {regularMoves.map(m => <MoveRow key={m.uuid} move={m} />)}
+                    {regularMoves.map(m => <MoveRow key={m.uuid} move={m} baseDamage={creature.damage} />)}
                   </div>
                 </div>
               )}
@@ -164,7 +164,7 @@ export default function CreatureModal({ creature, onClose }: Props) {
                 <div>
                   <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Special Abilities</h3>
                   <div className="flex flex-col gap-2">
-                    {specialMoves.map(m => <MoveRow key={m.uuid} move={m} />)}
+                    {specialMoves.map(m => <MoveRow key={m.uuid} move={m} baseDamage={creature.damage} />)}
                   </div>
                 </div>
               )}
@@ -176,9 +176,10 @@ export default function CreatureModal({ creature, onClose }: Props) {
   );
 }
 
-function MoveRow({ move }: { move: Move }) {
+function MoveRow({ move, baseDamage }: { move: Move; baseDamage: number }) {
   const typeColor = MOVE_TYPE_COLORS[move.type] ?? 'bg-gray-500/20 text-gray-300 border-gray-500/30';
   const attackEffect = move.effects.find(e => e.action === 'attack');
+  const totalDamage = attackEffect?.multiplier != null ? Math.round(baseDamage * attackEffect.multiplier) : null;
 
   return (
     <div className="bg-slate-800/60 rounded-xl p-3 border border-slate-700/40">
@@ -194,7 +195,7 @@ function MoveRow({ move }: { move: Move }) {
             )}
             {attackEffect && (
               <span className="text-[10px] font-medium px-1.5 py-0.5 rounded border bg-red-500/20 text-red-300 border-red-500/30">
-                {attackEffect.multiplier}x DMG
+                {attackEffect.multiplier}x DMG{totalDamage != null && ` = ${totalDamage}`}
               </span>
             )}
           </div>
