@@ -89,6 +89,14 @@ const POINTS_PER_LEVEL = 7;
 const STAT_KEYS = ['health', 'damage', 'speed', 'armor', 'crit', 'critm'] as const;
 const STAT_LABELS: Record<string, string> = { health: 'Health', damage: 'Damage', speed: 'Speed', armor: 'Armor', crit: 'Crit', critm: 'Crit Mult' };
 
+const MAX_BOOSTS = 35;
+type BoostStat = 'health' | 'damage' | 'speed';
+const BOOST_STATS: { key: BoostStat; label: string }[] = [
+  { key: 'health', label: 'Health' },
+  { key: 'damage', label: 'Damage' },
+  { key: 'speed',  label: 'Speed'  },
+];
+
 export default function CreatureModal({ creature, onClose }: Props) {
   const isOmega = creature.rarity === 'omega';
   const minLevel = MIN_LEVEL[creature.rarity] ?? 1;
@@ -97,11 +105,13 @@ export default function CreatureModal({ creature, onClose }: Props) {
 
   const [level, setLevel] = useState(defaultLevel);
   const [omegaAlloc, setOmegaAlloc] = useState<Record<string, number>>({});
+  const [boosts, setBoosts] = useState<Record<BoostStat, number>>({ health: 0, damage: 0, speed: 0 });
 
   // Reset when creature changes
   useEffect(() => {
     setLevel(defaultLevel);
     setOmegaAlloc({});
+    setBoosts({ health: 0, damage: 0, speed: 0 });
   }, [creature.uuid]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // When level drops, trim allocations that exceed new budget
@@ -136,6 +146,14 @@ export default function CreatureModal({ creature, onClose }: Props) {
   const rarityBg = RARITY_BG[creature.rarity] ?? 'bg-gray-500/20';
   const classColor = CLASS_COLORS[creature.class] ?? 'text-gray-400';
 
+  // Boost calculations — based on stat value at the creature's minimum level
+  const baseHealth = statAtLevel(creature.health, minLevel);
+  const baseDamage = statAtLevel(creature.damage, minLevel);
+  const healthBoostPer = Math.floor(baseHealth * 0.025);
+  const damageBoostPer = Math.floor(baseDamage * 0.025);
+  const totalBoosts = boosts.health + boosts.damage + boosts.speed;
+  const remainingBoosts = MAX_BOOSTS - totalBoosts;
+
   // Stat calculations
   let displayHealth: number, displayDamage: number, displaySpeed: number,
       displayArmor: number | string, displayCrit: number | string;
@@ -156,12 +174,28 @@ export default function CreatureModal({ creature, onClose }: Props) {
     displayCrit   = `${creature.crit}%`;
   }
 
+  // Apply boosts on top of level/omega values
+  displayHealth += boosts.health * healthBoostPer;
+  displayDamage += boosts.damage * damageBoostPer;
+  displaySpeed  += boosts.speed * 2;
+
   const availablePoints = isOmega ? (level - 1) * POINTS_PER_LEVEL : 0;
   const allocatedPoints = Object.values(omegaAlloc).reduce((a, b) => a + b, 0);
   const remainingPoints = availablePoints - allocatedPoints;
 
   const regularMoves = creature.moves.filter(m => m.type === 'regular');
   const specialMoves = creature.moves.filter(m => m.type !== 'regular');
+
+  function changeBoost(stat: BoostStat, delta: number) {
+    setBoosts(prev => {
+      const cur = prev[stat];
+      const used = prev.health + prev.damage + prev.speed;
+      const next = delta > 0
+        ? Math.min(cur + delta, cur + (MAX_BOOSTS - used))
+        : Math.max(0, cur + delta);
+      return { ...prev, [stat]: next };
+    });
+  }
 
   function changeAlloc(stat: string, delta: number) {
     setOmegaAlloc(prev => {
@@ -241,6 +275,52 @@ export default function CreatureModal({ creature, onClose }: Props) {
               <span className="text-white font-semibold font-mono">{s.value}</span>
             </div>
           ))}
+        </div>
+
+        {/* boosts allocator */}
+        <div className="px-5 py-4 border-b border-slate-700/60">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Boosts</h3>
+            <span className={`text-xs font-mono font-semibold ${remainingBoosts === 0 ? 'text-green-400' : 'text-blue-400'}`}>
+              {totalBoosts} / {MAX_BOOSTS} used
+              {remainingBoosts > 0 && <span className="text-gray-500 font-normal"> · {remainingBoosts} left</span>}
+            </span>
+          </div>
+          <div className="flex flex-col gap-2">
+            {BOOST_STATS.map(({ key, label: bLabel }) => {
+              const cur = boosts[key];
+              const perBoost = key === 'speed' ? 2 : key === 'health' ? healthBoostPer : damageBoostPer;
+              const pct = (cur / MAX_BOOSTS) * 100;
+              return (
+                <div key={key} className="flex items-center gap-2">
+                  <span className="text-xs text-gray-400 w-14 shrink-0">{bLabel}</span>
+                  <button
+                    onClick={() => changeBoost(key, -1)}
+                    disabled={cur === 0}
+                    className="w-7 h-7 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold shrink-0 flex items-center justify-center"
+                  >−</button>
+                  <div className="flex-1 min-w-0">
+                    <div className="h-2 rounded-full bg-slate-700 overflow-hidden">
+                      <div className="h-full rounded-full bg-amber-500 transition-all" style={{ width: `${pct}%` }} />
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => changeBoost(key, 1)}
+                    disabled={remainingBoosts === 0}
+                    className="w-7 h-7 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold shrink-0 flex items-center justify-center"
+                  >+</button>
+                  <span className="text-xs font-mono text-gray-400 w-20 text-right shrink-0">
+                    {cur} / {MAX_BOOSTS}
+                    {cur > 0 && (
+                      <span className="ml-1 text-amber-400">
+                        +{key === 'speed' ? cur * 2 : cur * perBoost}
+                      </span>
+                    )}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* omega points allocator */}
