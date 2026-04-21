@@ -122,6 +122,7 @@ function deriveSpecialties(moves, existing) {
   if (allEffects.includes('remove_all_pos')) extra.add('nullify');
   if (allEffects.includes('remove_all_neg')) extra.add('cleanse');
   if (allEffects.includes('dot')) extra.add('dot');
+  if (allEffects.includes('heal') || allEffects.includes('heal_pct')) extra.add('heal');
   return [...new Set([...existing, ...extra])];
 }
 

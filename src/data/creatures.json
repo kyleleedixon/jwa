@@ -9850,7 +9850,8 @@
       "heal_increase",
       "speed_decrease",
       "group_speed_decrease",
-      "vulner"
+      "vulner",
+      "heal"
     ],
     "dna_source": [
       "sanctuary",
@@ -11000,7 +11001,8 @@
       "group_crit_decrease",
       "speed_decrease",
       "vulner",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -11939,7 +11941,8 @@
       "speed_decrease",
       "vulner",
       "group_vulner",
-      "swap_prevent"
+      "swap_prevent",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -14144,7 +14147,8 @@
       "shield",
       "cloak",
       "speed_decrease",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -17313,7 +17317,8 @@
       "swap_prevent",
       "dot",
       "resistance_decrease_all",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -18066,7 +18071,8 @@
       "heal_decrease",
       "group_heal_decrease",
       "swap_prevent",
-      "group_swap_prevent"
+      "group_swap_prevent",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -18576,7 +18582,8 @@
       "group_bypass_alert",
       "damage_decrease",
       "crit_decrease",
-      "resistance_decrease_all"
+      "resistance_decrease_all",
+      "heal"
     ],
     "dna_source": [
       "sanctuary",
@@ -18879,7 +18886,8 @@
       "hot_contextual",
       "damage_decrease",
       "group_damage_decrease",
-      "vulner"
+      "vulner",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -23165,7 +23173,8 @@
       "vulner",
       "swap_prevent",
       "dot",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "arena"
@@ -25075,7 +25084,8 @@
       "speed_increase",
       "damage_decrease",
       "swap_prevent",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -25330,7 +25340,8 @@
       "damage_decrease",
       "heal_decrease",
       "nullify",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -25834,7 +25845,8 @@
       "speed_decrease",
       "group_speed_decrease",
       "vulner",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -41616,7 +41628,8 @@
       "armor_decrease",
       "group_armor_decrease",
       "vulner",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -48886,7 +48899,8 @@
       "crit_decrease",
       "group_crit_decrease",
       "heal_decrease",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -50597,7 +50611,8 @@
       "cloak",
       "taunt",
       "vulner",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -53100,7 +53115,8 @@
       "group_bypass_alert",
       "shield",
       "vulner",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "sanctuary",
@@ -53571,7 +53587,8 @@
       "group_crit_decrease",
       "heal_decrease",
       "swap_prevent",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -54245,7 +54262,8 @@
       "speed_increase",
       "damage_decrease",
       "crit_decrease",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "sanctuary",
@@ -54447,7 +54465,8 @@
       "speed_increase",
       "damage_decrease",
       "vulner",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -54683,7 +54702,8 @@
       "damage_decrease",
       "crit_decrease",
       "vulner",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -57849,7 +57869,8 @@
       "vulner",
       "group_vulner",
       "swap_prevent",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -59575,7 +59596,8 @@
       "vulner",
       "swap_prevent",
       "nullify",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -60688,7 +60710,8 @@
       "speed_decrease",
       "group_speed_decrease",
       "vulner",
-      "group_vulner"
+      "group_vulner",
+      "heal"
     ],
     "dna_source": [
       "short_range"
@@ -62854,7 +62877,8 @@
       "damage_increase",
       "group_damage_increase",
       "swap_prevent",
-      "resistance_decrease_all"
+      "resistance_decrease_all",
+      "heal"
     ],
     "dna_source": [
       "raid"
@@ -64223,7 +64247,8 @@
       "speed_decrease",
       "group_speed_decrease",
       "vulner",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -64611,7 +64636,8 @@
       "speed_increase",
       "damage_decrease",
       "crit_decrease",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "short_range"
@@ -65316,7 +65342,8 @@
       "dot",
       "resistance_decrease_all",
       "nullify",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -67526,7 +67553,8 @@
       "damage_decrease",
       "group_damage_decrease",
       "swap_prevent",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -70359,7 +70387,8 @@
       "group_damage_decrease",
       "speed_decrease",
       "group_speed_decrease",
-      "vulner"
+      "vulner",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -76901,7 +76930,8 @@
       "damage_decrease",
       "speed_decrease",
       "vulner",
-      "group_vulner"
+      "group_vulner",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -77193,7 +77223,8 @@
       "shield",
       "group_shield",
       "heal_decrease",
-      "vulner"
+      "vulner",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -77386,7 +77417,8 @@
       "heal_decrease",
       "vulner",
       "group_vulner",
-      "swap_prevent"
+      "swap_prevent",
+      "heal"
     ],
     "dna_source": [
       "sanctuary",
@@ -77858,7 +77890,8 @@
       "damage_decrease",
       "speed_decrease",
       "armor_decrease",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "sanctuary",
@@ -80682,7 +80715,8 @@
       "group_vulner",
       "swap_prevent",
       "resistance_decrease_all",
-      "nullify"
+      "nullify",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -81046,7 +81080,8 @@
       "swap_prevent",
       "dot",
       "group_dot",
-      "resistance_decrease_all"
+      "resistance_decrease_all",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -81811,7 +81846,8 @@
       "crit_decrease",
       "heal_decrease",
       "group_heal_decrease",
-      "swap_prevent"
+      "swap_prevent",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -82823,7 +82859,8 @@
       "speed_decrease",
       "armor_decrease",
       "vulner",
-      "group_vulner"
+      "group_vulner",
+      "heal"
     ],
     "dna_source": [
       "strike_towers",
@@ -85558,7 +85595,8 @@
       "speed_increase",
       "damage_decrease",
       "crit_decrease",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -91158,7 +91196,8 @@
       "armor_increase",
       "damage_decrease",
       "vulner",
-      "nullify"
+      "nullify",
+      "heal"
     ],
     "dna_source": [
       "strike_towers",
@@ -92709,7 +92748,8 @@
       "damage_decrease",
       "swap_prevent",
       "nullify",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -96072,7 +96112,8 @@
       "heal_decrease",
       "vulner",
       "swap_prevent",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "none"
@@ -96301,7 +96342,8 @@
       "hot_contextual",
       "speed_decrease",
       "group_speed_decrease",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "sanctuary",
@@ -101734,7 +101776,8 @@
       "vulner",
       "group_vulner",
       "nullify",
-      "cleanse"
+      "cleanse",
+      "heal"
     ],
     "dna_source": [
       "sanctuary",

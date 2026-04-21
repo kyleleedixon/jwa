@@ -137,7 +137,7 @@ export const SPECIALTY_LABELS: Record<string, string> = {
   resistance_decrease_all: 'Resistance Decrease',
   rend: 'Rend',
   dodge: 'Dodge',
-  hot_contextual: 'Regeneration',
+  hot_contextual: 'Devour',
   cloak: 'Cloak',
   distraction: 'Distraction',
   group_distraction: 'Group Distraction',
@@ -147,7 +147,7 @@ export const SPECIALTY_GROUPS: Record<string, string> = {
   // Healing
   heal: 'Healing',
   heal_pct: 'Healing',
-  hot_contextual: 'Healing',
+  hot_contextual: 'Devour',
 
   // Shielding
   shield: 'Shielding',
@@ -263,6 +263,7 @@ export const ABILITY_GROUP_ORDER = [
   'Stunning',
   'Speed Control',
   'Healing',
+  'Devour',
   'Cleansing',
   'Shielding',
   'Evasion',
