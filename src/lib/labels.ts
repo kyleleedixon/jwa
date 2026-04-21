@@ -13,21 +13,21 @@ export const RARITY_ORDER = ['common', 'rare', 'epic', 'legendary', 'unique', 'a
 export const RARITY_COLORS: Record<string, string> = {
   common: 'text-gray-300 border-gray-500',
   rare: 'text-blue-400 border-blue-500',
-  epic: 'text-purple-400 border-purple-500',
-  legendary: 'text-yellow-400 border-yellow-500',
-  unique: 'text-orange-400 border-orange-500',
-  apex: 'text-emerald-400 border-emerald-500',
-  omega: 'text-pink-400 border-pink-500',
+  epic: 'text-yellow-400 border-yellow-500',
+  legendary: 'text-red-400 border-red-500',
+  unique: 'text-green-400 border-green-500',
+  apex: 'text-white border-gray-900',
+  omega: 'text-gray-300 border-gray-400',
 };
 
 export const RARITY_BG: Record<string, string> = {
   common: 'bg-gray-500/20',
   rare: 'bg-blue-500/20',
-  epic: 'bg-purple-500/20',
-  legendary: 'bg-yellow-500/20',
-  unique: 'bg-orange-500/20',
-  apex: 'bg-emerald-500/20',
-  omega: 'bg-pink-500/20',
+  epic: 'bg-yellow-500/20',
+  legendary: 'bg-red-500/20',
+  unique: 'bg-green-500/20',
+  apex: 'bg-gray-900/60',
+  omega: 'bg-gray-400/20',
 };
 
 export const CLASS_LABELS: Record<string, string> = {

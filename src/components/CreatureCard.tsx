@@ -82,11 +82,11 @@ function rarityGlow(rarity: string): string {
   const map: Record<string, string> = {
     common: 'bg-gray-400',
     rare: 'bg-blue-400',
-    epic: 'bg-purple-400',
-    legendary: 'bg-yellow-400',
-    unique: 'bg-orange-400',
-    apex: 'bg-emerald-400',
-    omega: 'bg-pink-400',
+    epic: 'bg-yellow-400',
+    legendary: 'bg-red-400',
+    unique: 'bg-green-400',
+    apex: 'bg-gray-900',
+    omega: 'bg-gray-400',
   };
   return map[rarity] ?? 'bg-gray-400';
 }
