@@ -6,6 +6,7 @@ import { specialtyGroups, GROUP_SPECIALTIES_BY_GROUP } from '@/lib/labels';
 import FilterPanel from './FilterPanel';
 import CreatureCard from './CreatureCard';
 import CreatureModal from './CreatureModal';
+import HelpModal from './HelpModal';
 
 const PAGE_SIZE = 60;
 
@@ -42,6 +43,7 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
   const [page, setPage] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selected, setSelected] = useState<Creature | null>(null);
+  const [helpOpen, setHelpOpen] = useState(false);
   const [sortKey, setSortKey] = useState<SortKey>('name');
   const [sortDir, setSortDir] = useState<SortDir>('asc');
 
@@ -123,6 +125,7 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
   return (
     <div className="flex flex-col min-h-screen bg-slate-900 text-white">
       {selected && <CreatureModal creature={selected} onClose={() => setSelected(null)} />}
+      {helpOpen && <HelpModal onClose={() => setHelpOpen(false)} />}
       {/* header */}
       <header className="border-b border-slate-700 bg-slate-900/95 sticky top-0 z-10 backdrop-blur">
         <div className="max-w-screen-2xl mx-auto px-4 py-3 flex items-center gap-4">
@@ -149,6 +152,18 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
               className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-1.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
             />
           </div>
+          <button
+            onClick={() => setHelpOpen(true)}
+            className="p-1.5 rounded-lg hover:bg-slate-700 transition-colors text-gray-400 hover:text-white"
+            aria-label="How to use"
+            title="How to use"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </button>
           <div className="flex items-center gap-3 ml-auto">
             {lastModifiedDate && (
               <span className="text-xs text-gray-500 hidden sm:inline">
