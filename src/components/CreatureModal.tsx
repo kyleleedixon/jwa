@@ -114,7 +114,23 @@ export default function CreatureModal({ creature, onClose }: Props) {
     setBoosts({ health: 0, damage: 0, speed: 0 });
   }, [creature.uuid]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // When level drops, trim allocations that exceed new budget
+  // When level drops, trim boosts that exceed new budget
+  useEffect(() => {
+    const budget = level;
+    const total = boosts.health + boosts.damage + boosts.speed;
+    if (total <= budget) return;
+    let excess = total - budget;
+    const next = { ...boosts };
+    for (const k of (['speed', 'damage', 'health'] as BoostStat[])) {
+      if (excess <= 0) break;
+      const cut = Math.min(next[k], excess);
+      next[k] -= cut;
+      excess -= cut;
+    }
+    setBoosts(next);
+  }, [level]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // When level drops, trim omega allocations that exceed new budget
   useEffect(() => {
     if (!isOmega || !creature.points) return;
     const budget = (level - 1) * POINTS_PER_LEVEL;
@@ -151,8 +167,9 @@ export default function CreatureModal({ creature, onClose }: Props) {
   const baseDamage = statAtLevel(creature.damage, minLevel);
   const healthBoostPer = Math.floor(baseHealth * 0.025);
   const damageBoostPer = Math.floor(baseDamage * 0.025);
+  const availableBoosts = level;
   const totalBoosts = boosts.health + boosts.damage + boosts.speed;
-  const remainingBoosts = MAX_BOOSTS - totalBoosts;
+  const remainingBoosts = availableBoosts - totalBoosts;
 
   // Stat calculations
   let displayHealth: number, displayDamage: number, displaySpeed: number,
@@ -282,7 +299,7 @@ export default function CreatureModal({ creature, onClose }: Props) {
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Boosts</h3>
             <span className={`text-xs font-mono font-semibold ${remainingBoosts === 0 ? 'text-green-400' : 'text-blue-400'}`}>
-              {totalBoosts} / {MAX_BOOSTS} used
+              {totalBoosts} / {availableBoosts} used
               {remainingBoosts > 0 && <span className="text-gray-500 font-normal"> · {remainingBoosts} left</span>}
             </span>
           </div>
@@ -290,7 +307,7 @@ export default function CreatureModal({ creature, onClose }: Props) {
             {BOOST_STATS.map(({ key, label: bLabel }) => {
               const cur = boosts[key];
               const perBoost = key === 'speed' ? 2 : key === 'health' ? healthBoostPer : damageBoostPer;
-              const pct = (cur / MAX_BOOSTS) * 100;
+              const pct = availableBoosts > 0 ? (cur / availableBoosts) * 100 : 0;
               return (
                 <div key={key} className="flex items-center gap-2">
                   <span className="text-xs text-gray-400 w-14 shrink-0">{bLabel}</span>
@@ -310,7 +327,7 @@ export default function CreatureModal({ creature, onClose }: Props) {
                     className="w-7 h-7 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold shrink-0 flex items-center justify-center"
                   >+</button>
                   <span className="text-xs font-mono text-gray-400 w-20 text-right shrink-0">
-                    {cur} / {MAX_BOOSTS}
+                    {cur} / {availableBoosts}
                     {cur > 0 && (
                       <span className="ml-1 text-amber-400">
                         +{key === 'speed' ? cur * 2 : cur * perBoost}
