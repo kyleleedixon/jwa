@@ -89,15 +89,10 @@ const POINTS_PER_LEVEL = 7;
 const STAT_KEYS = ['health', 'damage', 'speed', 'armor', 'crit', 'critm'] as const;
 const STAT_LABELS: Record<string, string> = { health: 'Health', damage: 'Damage', speed: 'Speed', armor: 'Armor', crit: 'Crit', critm: 'Crit Mult' };
 
-function omegaMaxLevel(pcap: Record<string, number>): number {
-  const total = Object.values(pcap).reduce((a, b) => a + b, 0);
-  return Math.ceil(total / POINTS_PER_LEVEL) + 1;
-}
-
 export default function CreatureModal({ creature, onClose }: Props) {
   const isOmega = creature.rarity === 'omega';
   const minLevel = MIN_LEVEL[creature.rarity] ?? 1;
-  const maxLevel = isOmega && creature.points ? omegaMaxLevel(creature.points.pcap) : MAX_LEVEL;
+  const maxLevel = MAX_LEVEL;
   const defaultLevel = isOmega ? 1 : 26;
 
   const [level, setLevel] = useState(defaultLevel);
