@@ -205,12 +205,12 @@ export const SPECIALTY_GROUPS: Record<string, string> = {
   priority_non_damage: 'Priority Moves',
 
   // Swap Control
-  swap_prevent: 'Swap Control',
+  swap_prevent: 'Swap Prevention',
 
   // Counter & Reactive
   has_counter_ability: 'Counter & Reactive',
   has_on_escape_ability: 'Counter & Reactive',
-  has_swap_in_ability: 'Counter & Reactive',
+  has_swap_in_ability: 'Swap In',
 
   // Special Abilities
   has_special_active_ability: 'Special Abilities',
@@ -250,7 +250,7 @@ export const SPECIALTY_GROUPS: Record<string, string> = {
   group_resistance_decrease_all: 'Weakening',
   priority_last_damage: 'Priority Moves',
   priority_last_non_damage: 'Priority Moves',
-  group_swap_prevent: 'Swap Control',
+  group_swap_prevent: 'Swap Prevention',
 };
 
 export const GROUP_SPECIALTIES_BY_GROUP: Record<string, string[]> = {
@@ -263,7 +263,7 @@ export const GROUP_SPECIALTIES_BY_GROUP: Record<string, string[]> = {
   'Weakening':      ['group_damage_decrease', 'group_armor_decrease', 'group_vulner', 'group_heal_decrease', 'group_crit_decrease', 'group_resistance_decrease_all'],
   'Armor Bypass':   ['group_bypass_armor', 'group_rend'],
   'Damage Over Time':['group_dot'],
-  'Swap Control':   ['group_swap_prevent'],
+  'Swap Prevention':['group_swap_prevent'],
 };
 
 export const ABILITY_GROUP_ORDER = [
@@ -280,7 +280,8 @@ export const ABILITY_GROUP_ORDER = [
   'Shielding',
   'Evasion',
   'Damage Over Time',
-  'Swap Control',
+  'Swap In',
+  'Swap Prevention',
   'Counter & Reactive',
   'Special Abilities',
 ];
