@@ -26,34 +26,33 @@ export default function CreatureCard({ creature }: Props) {
       className={`relative flex flex-col rounded-xl ${creature.rarity === 'apex' ? 'apex-metallic-border' : `border ${rarityColor}`} bg-slate-800/80 hover:bg-slate-700/80 transition-colors overflow-hidden group cursor-pointer`}
     >
       {/* image */}
-      <div className={`relative w-full aspect-square ${rarityBg} flex items-center justify-center p-3`}>
+      <div className={`relative w-full aspect-square ${rarityBg}`}>
         <Image
           src={creature.image}
           alt={creature.name}
-          width={120}
-          height={120}
-          className="object-contain drop-shadow-lg group-hover:scale-105 transition-transform"
+          fill
+          sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16vw"
+          className="object-contain p-2 drop-shadow-lg group-hover:scale-105 transition-transform"
           onError={(e) => { (e.target as HTMLImageElement).style.opacity = '0.3'; }}
           unoptimized
         />
       </div>
 
       {/* info */}
-      <div className="flex flex-col gap-1 p-3">
-        {/* fixed 2-line height so all cards are the same regardless of name length */}
-        <p className="font-semibold text-white text-sm leading-tight line-clamp-2 h-[2.5rem]">{creature.name}</p>
+      <div className="flex flex-col gap-1 p-2 sm:p-3">
+        <p className="font-semibold text-white text-xs sm:text-sm leading-tight line-clamp-2 h-[2.25rem] sm:h-[2.5rem]">{creature.name}</p>
 
-        <div className="flex items-center gap-1.5">
-          <span className={`text-xs font-medium px-1.5 py-0.5 rounded border ${rarityColor} ${rarityBg} whitespace-nowrap`}>
+        <div className="flex items-center gap-1">
+          <span className={`text-[10px] sm:text-xs font-medium px-1 sm:px-1.5 py-0.5 rounded border ${rarityColor} ${rarityBg} whitespace-nowrap`}>
             {label(RARITY_LABELS, creature.rarity)}
           </span>
-          <span className={`text-xs font-medium truncate ${classColor}`}>
+          <span className={`text-[10px] sm:text-xs font-medium truncate ${classColor}`}>
             {label(CLASS_LABELS, creature.class)}
           </span>
         </div>
 
         {/* stats row */}
-        <div className="grid grid-cols-3 gap-x-2 gap-y-0.5 mt-1 text-xs text-gray-400">
+        <div className="grid grid-cols-3 gap-x-1 sm:gap-x-2 gap-y-0.5 mt-0.5 sm:mt-1">
           <StatCell label="HP" value={creature.health} />
           <StatCell label="DMG" value={creature.damage} />
           <StatCell label="SPD" value={creature.speed} />
@@ -73,8 +72,8 @@ export default function CreatureCard({ creature }: Props) {
 function StatCell({ label, value }: { label: string; value: string | number }) {
   return (
     <div className="flex flex-col">
-      <span className="text-gray-500 text-[10px] uppercase tracking-wide">{label}</span>
-      <span className="text-gray-200 font-mono">{value}</span>
+      <span className="text-gray-500 text-[9px] sm:text-[10px] uppercase tracking-wide">{label}</span>
+      <span className="text-gray-200 text-[10px] sm:text-xs tabular-nums">{value}</span>
     </div>
   );
 }

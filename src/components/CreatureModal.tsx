@@ -180,7 +180,7 @@ export default function CreatureModal({ creature, onClose }: Props) {
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-slate-900 rounded-2xl border border-slate-700 shadow-2xl"
+        className="relative w-full max-w-2xl max-h-[100dvh] sm:max-h-[90vh] overflow-y-auto bg-slate-900 sm:rounded-2xl border-0 sm:border border-slate-700 shadow-2xl"
         onClick={e => e.stopPropagation()}
       >
         {/* header */}
@@ -262,34 +262,36 @@ export default function CreatureModal({ creature, onClose }: Props) {
                 const base = (creature as unknown as Record<string, number>)[k] ?? 0;
                 const bonus = alloc * delta;
                 const effectiveCap = Math.min(pcap, Math.floor((cap - base) / delta));
-                const pct = pcap > 0 ? (alloc / pcap) * 100 : 0;
+                const pct = effectiveCap > 0 ? (alloc / effectiveCap) * 100 : 0;
                 return (
-                  <div key={k} className="flex items-center gap-2">
-                    <span className="text-xs text-gray-400 w-16 shrink-0">{STAT_LABELS[k]}</span>
-                    <button
-                      onClick={() => changeAlloc(k, -1)}
-                      disabled={alloc === 0}
-                      className="w-6 h-6 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white text-sm font-bold shrink-0 flex items-center justify-center"
-                    >−</button>
-                    <div className="flex-1 min-w-0">
-                      <div className="h-2 rounded-full bg-slate-700 overflow-hidden">
-                        <div
-                          className={`h-full rounded-full transition-all ${alloc >= effectiveCap ? 'bg-green-500' : 'bg-blue-500'}`}
-                          style={{ width: `${pct}%` }}
-                        />
+                  <div key={k} className="flex flex-col gap-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-400 w-16 shrink-0">{STAT_LABELS[k]}</span>
+                      <button
+                        onClick={() => changeAlloc(k, -1)}
+                        disabled={alloc === 0}
+                        className="w-7 h-7 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold shrink-0 flex items-center justify-center"
+                      >−</button>
+                      <div className="flex-1 min-w-0">
+                        <div className="h-2 rounded-full bg-slate-700 overflow-hidden">
+                          <div
+                            className={`h-full rounded-full transition-all ${alloc >= effectiveCap ? 'bg-green-500' : 'bg-blue-500'}`}
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
                       </div>
+                      <button
+                        onClick={() => changeAlloc(k, 1)}
+                        disabled={alloc >= effectiveCap || remainingPoints === 0}
+                        className="w-7 h-7 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold shrink-0 flex items-center justify-center"
+                      >+</button>
+                      <span className="text-xs font-mono text-gray-400 w-20 text-right shrink-0">
+                        {alloc}/{effectiveCap}
+                        <span className={`ml-1 ${bonus > 0 ? 'text-green-400' : 'text-gray-600'}`}>
+                          {bonus > 0 ? `+${bonus}` : ''}
+                        </span>
+                      </span>
                     </div>
-                    <button
-                      onClick={() => changeAlloc(k, 1)}
-                      disabled={alloc >= effectiveCap || remainingPoints === 0}
-                      className="w-6 h-6 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white text-sm font-bold shrink-0 flex items-center justify-center"
-                    >+</button>
-                    <span className="text-xs font-mono text-gray-300 w-16 text-right shrink-0">
-                      {alloc}/{effectiveCap} pts
-                    </span>
-                    <span className={`text-xs font-mono w-16 text-right shrink-0 ${bonus > 0 ? 'text-green-400' : 'text-gray-600'}`}>
-                      {bonus > 0 ? `+${bonus}` : '—'}
-                    </span>
                   </div>
                 );
               })}

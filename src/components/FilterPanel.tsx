@@ -18,9 +18,10 @@ interface Props {
   filters: Record<string, Set<string>>;
   onToggle: (category: string, value: string) => void;
   onClear: () => void;
+  onClose: () => void;
 }
 
-export default function FilterPanel({ creatures, filters, onToggle, onClear }: Props) {
+export default function FilterPanel({ creatures, filters, onToggle, onClear, onClose }: Props) {
   const allClasses = Array.from(new Set(creatures.map(c => c.class))).sort((a, b) =>
     label(CLASS_LABELS, a).localeCompare(label(CLASS_LABELS, b))
   );
@@ -36,17 +37,21 @@ export default function FilterPanel({ creatures, filters, onToggle, onClear }: P
   const activeCount = Object.values(filters).reduce((n, s) => n + s.size, 0);
 
   return (
-    <aside className="w-64 shrink-0 flex flex-col gap-4 overflow-y-auto pr-2">
+    <aside className="w-72 shrink-0 flex flex-col gap-4 overflow-y-auto pr-2">
       <div className="flex items-center justify-between">
         <h2 className="text-white font-semibold text-sm uppercase tracking-wider">Filters</h2>
-        {activeCount > 0 && (
-          <button
-            onClick={onClear}
-            className="text-xs text-gray-400 hover:text-white transition-colors"
-          >
-            Clear all ({activeCount})
+        <div className="flex items-center gap-3">
+          {activeCount > 0 && (
+            <button onClick={onClear} className="text-xs text-gray-400 hover:text-white transition-colors">
+              Clear all ({activeCount})
+            </button>
+          )}
+          <button onClick={onClose} className="md:hidden text-gray-400 hover:text-white transition-colors" aria-label="Close filters">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
           </button>
-        )}
+        </div>
       </div>
 
       <FilterSection

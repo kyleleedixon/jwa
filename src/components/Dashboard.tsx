@@ -41,7 +41,7 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [page, setPage] = useState(1);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selected, setSelected] = useState<Creature | null>(null);
   const [helpOpen, setHelpOpen] = useState(false);
   const [sortKey, setSortKey] = useState<SortKey>('name');
@@ -126,12 +126,21 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
     <div className="flex flex-col min-h-screen bg-slate-900 text-white">
       {selected && <CreatureModal creature={selected} onClose={() => setSelected(null)} />}
       {helpOpen && <HelpModal onClose={() => setHelpOpen(false)} />}
+
+      {/* mobile sidebar backdrop */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-20 bg-black/60 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* header */}
       <header className="border-b border-slate-700 bg-slate-900/95 sticky top-0 z-10 backdrop-blur">
-        <div className="max-w-screen-2xl mx-auto px-4 py-3 flex items-center gap-4">
+        <div className="max-w-screen-2xl mx-auto px-3 sm:px-4 lg:px-6 py-2.5 sm:py-3 flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => setSidebarOpen(o => !o)}
-            className="p-1.5 rounded-lg hover:bg-slate-700 transition-colors text-gray-400 hover:text-white"
+            className="p-1.5 rounded-lg hover:bg-slate-700 transition-colors text-gray-400 hover:text-white shrink-0"
             aria-label="Toggle filters"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -140,13 +149,13 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
               <line x1="3" y1="18" x2="21" y2="18"/>
             </svg>
           </button>
-          <h1 className="font-bold text-lg text-white tracking-tight">
+          <h1 className="font-bold text-base sm:text-lg text-white tracking-tight shrink-0">
             JWA <span className="text-blue-400">Dinodex</span>
           </h1>
-          <div className="flex-1 max-w-md">
+          <div className="flex-1 min-w-0">
             <input
               type="text"
-              placeholder="Search creatures…"
+              placeholder="Search…"
               value={search}
               onChange={e => { setSearch(e.target.value); setPage(1); }}
               className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-1.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
@@ -154,37 +163,43 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
           </div>
           <button
             onClick={() => setHelpOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-sm font-medium"
+            className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-sm font-medium shrink-0"
+            aria-label="How to use"
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="12" cy="12" r="10"/>
               <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
               <line x1="12" y1="17" x2="12.01" y2="17"/>
             </svg>
-            How to use
+            <span className="hidden md:inline">How to use</span>
           </button>
-          <div className="flex items-center gap-3 ml-auto">
+          <div className="flex items-center gap-2 shrink-0">
             {lastModifiedDate && (
-              <span className="text-xs text-gray-500 hidden sm:inline">
-                Data updated <span className="text-gray-300">{lastModifiedDate}</span>
+              <span className="text-xs text-gray-500 hidden lg:inline">
+                Updated <span className="text-gray-300">{lastModifiedDate}</span>
               </span>
             )}
-            <span className="text-sm text-gray-400">
-              {filtered.length} <span className="hidden sm:inline">of {creatures.length} </span>creatures
+            <span className="text-sm text-gray-400 whitespace-nowrap">
+              {filtered.length}<span className="hidden sm:inline"> / {creatures.length}</span>
             </span>
           </div>
         </div>
       </header>
 
-      <div className="flex flex-1 max-w-screen-2xl mx-auto w-full px-4 py-6 gap-6">
-        {/* sidebar */}
+      <div className="flex flex-1 max-w-screen-2xl mx-auto w-full px-3 sm:px-4 lg:px-6 py-3 sm:py-4 lg:py-6 gap-4 lg:gap-6">
+        {/* sidebar — drawer on mobile, inline on md+ */}
         {sidebarOpen && (
-          <FilterPanel
-            creatures={creatures}
-            filters={filters}
-            onToggle={handleToggle}
-            onClear={handleClear}
-          />
+          <div className="fixed top-0 left-0 h-full z-30 md:relative md:z-auto md:top-auto md:h-auto">
+            <div className="h-full md:h-auto bg-slate-900 md:bg-transparent border-r border-slate-700 md:border-0 p-4 md:p-0 pt-16 md:pt-0 overflow-y-auto w-72">
+              <FilterPanel
+                creatures={creatures}
+                filters={filters}
+                onToggle={handleToggle}
+                onClear={handleClear}
+                onClose={() => setSidebarOpen(false)}
+              />
+            </div>
+          </div>
         )}
 
         {/* grid */}
@@ -203,13 +218,13 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
             </div>
           ) : (
             <>
-              <div className="flex items-center gap-2 mb-3 flex-wrap">
-                <span className="text-xs text-gray-500 uppercase tracking-wider">Sort:</span>
+              <div className="flex items-center gap-2 mb-3 overflow-x-auto pb-1 scrollbar-none">
+                <span className="text-xs text-gray-500 uppercase tracking-wider shrink-0">Sort:</span>
                 {SORT_OPTIONS.map(opt => (
                   <button
                     key={opt.key}
                     onClick={() => handleSort(opt.key)}
-                    className={`text-xs px-2.5 py-1 rounded-md border transition-colors ${
+                    className={`text-xs px-2.5 py-1 rounded-md border transition-colors shrink-0 ${
                       sortKey === opt.key
                         ? 'bg-blue-600/30 border-blue-500/60 text-blue-300'
                         : 'border-slate-700 text-gray-400 hover:border-slate-500 hover:text-white'
@@ -222,7 +237,7 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
                   </button>
                 ))}
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 sm:gap-3">
                 {visible.map(c => (
                   <div key={c.uuid} onClick={() => setSelected(c)}>
                     <CreatureCard creature={c} />
