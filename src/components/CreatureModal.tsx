@@ -188,7 +188,7 @@ function MoveRow({ move, baseDamage }: { move: Move; baseDamage: number }) {
       <div className="flex items-start gap-2">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-semibold text-white text-sm">{move.name}</span>
+            <span className="font-semibold text-white text-sm">{move.name.startsWith('ra__') ? 'Enhancement' : move.name}</span>
             <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded border ${typeColor}`}>
               {MOVE_TYPE_LABELS[move.type] ?? move.type}
             </span>

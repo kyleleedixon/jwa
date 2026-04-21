@@ -101,7 +101,7 @@ function parseMoves(moveArray, moveType, moveNames) {
   return (moveArray || []).map(mv => {
     return {
       uuid: mv.uuid,
-      name: moveNames[mv.uuid] || mv.uuid,
+      name: moveNames[mv.uuid] || 'Enhancement',
       type: moveType,
       delay: mv.delay,
       cooldown: mv.cooldown,
