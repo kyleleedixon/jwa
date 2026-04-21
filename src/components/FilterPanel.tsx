@@ -80,7 +80,7 @@ export default function FilterPanel({ creatures, filters, onToggle, onClear }: P
             <span className="ml-1.5 text-blue-400">({filters.ability_group.size})</span>
           )}
         </h3>
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-0.5">
           {availableGroups.map(group => {
             const checked = filters.ability_group.has(group);
             const hasGroupVariant = (GROUP_SPECIALTIES_BY_GROUP[group] ?? []).some(s =>
@@ -88,26 +88,29 @@ export default function FilterPanel({ creatures, filters, onToggle, onClear }: P
             );
             const groupOnly = filters.group_only.has(group);
             return (
-              <div key={group} className="flex items-center gap-2">
-                <label className="flex items-center gap-2 cursor-pointer group flex-1 min-w-0">
+              <div key={group} className={`flex items-center rounded-lg px-2 py-1 transition-colors ${checked ? 'bg-slate-800/60' : 'hover:bg-slate-800/30'}`}>
+                <label className="flex items-center gap-2 cursor-pointer flex-1 min-w-0">
                   <input
                     type="checkbox"
                     checked={checked}
                     onChange={() => onToggle('ability_group', group)}
                     className="w-3.5 h-3.5 rounded accent-blue-500 cursor-pointer shrink-0"
                   />
-                  <span className={`text-xs transition-colors truncate ${checked ? 'text-white' : 'text-gray-400 group-hover:text-gray-200'}`}>
+                  <span className={`text-xs transition-colors truncate ${checked ? 'text-white' : 'text-gray-400'}`}>
                     {group}
                   </span>
                 </label>
-                {checked && hasGroupVariant && (
+                {hasGroupVariant && (
                   <button
-                    onClick={() => onToggle('group_only', group)}
-                    title="Group effects only"
-                    className={`shrink-0 text-[10px] px-1.5 py-0.5 rounded border transition-colors ${
+                    onClick={() => {
+                      if (!checked) onToggle('ability_group', group);
+                      onToggle('group_only', group);
+                    }}
+                    title="Show group-effect only"
+                    className={`shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded transition-colors ml-1 ${
                       groupOnly
-                        ? 'bg-blue-600/40 border-blue-400/60 text-blue-200'
-                        : 'border-slate-600 text-gray-500 hover:border-slate-400 hover:text-gray-300'
+                        ? 'bg-blue-500/30 text-blue-300'
+                        : 'text-gray-600 hover:text-gray-400'
                     }`}
                   >
                     Group

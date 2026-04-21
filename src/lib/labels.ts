@@ -270,7 +270,6 @@ export const ABILITY_GROUP_ORDER = [
   'Damage Boosting',
   'Armor Bypass',
   'Nullifying',
-  'Group Attack',
   'Priority Moves',
   'Weakening',
   'Stunning',
