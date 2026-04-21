@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import { Creature } from '@/types/creature';
-import { specialtyGroups } from '@/lib/labels';
+import { specialtyGroups, GROUP_SPECIALTIES_BY_GROUP } from '@/lib/labels';
 import FilterPanel from './FilterPanel';
 import CreatureCard from './CreatureCard';
 import CreatureModal from './CreatureModal';
@@ -20,6 +20,7 @@ const EMPTY_FILTERS: Filters = {
   class: new Set(),
   hybrid_type: new Set(),
   ability_group: new Set(),
+  group_only: new Set(),
 };
 
 type SortKey = 'name' | 'health' | 'damage' | 'speed' | 'armor' | 'crit';
@@ -46,8 +47,16 @@ export default function Dashboard({ creatures }: Props) {
   const handleToggle = useCallback((category: string, value: string) => {
     setFilters(prev => {
       const next = { ...prev, [category]: new Set(prev[category]) };
-      if (next[category].has(value)) next[category].delete(value);
-      else next[category].add(value);
+      if (next[category].has(value)) {
+        next[category].delete(value);
+        // clear group_only when ability is unchecked
+        if (category === 'ability_group') {
+          next.group_only = new Set(prev.group_only);
+          next.group_only.delete(value);
+        }
+      } else {
+        next[category].add(value);
+      }
       return next;
     });
     setPage(1);
@@ -79,7 +88,18 @@ export default function Dashboard({ creatures }: Props) {
       if (filters.rarity.size > 0 && !filters.rarity.has(c.rarity)) return false;
       if (filters.class.size > 0 && !filters.class.has(c.class)) return false;
       if (filters.hybrid_type.size > 0 && !filters.hybrid_type.has(c.hybrid_type)) return false;
-      if (filters.ability_group.size > 0 && !specialtyGroups(c.specialty).some(g => filters.ability_group.has(g))) return false;
+      if (filters.ability_group.size > 0) {
+        const cGroups = specialtyGroups(c.specialty);
+        const match = [...filters.ability_group].some(g => {
+          if (!cGroups.includes(g)) return false;
+          if (filters.group_only.has(g)) {
+            const groupKeys = GROUP_SPECIALTIES_BY_GROUP[g] ?? [];
+            return c.specialty.some(s => groupKeys.includes(s));
+          }
+          return true;
+        });
+        if (!match) return false;
+      }
       return true;
     });
 

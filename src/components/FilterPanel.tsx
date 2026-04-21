@@ -8,6 +8,7 @@ import {
   HYBRID_TYPE_LABELS,
   HYBRID_TYPE_ORDER,
   ABILITY_GROUP_ORDER,
+  GROUP_SPECIALTIES_BY_GROUP,
   label,
   specialtyGroups,
 } from '@/lib/labels';
@@ -72,13 +73,51 @@ export default function FilterPanel({ creatures, filters, onToggle, onClear }: P
         onToggle={v => onToggle('hybrid_type', v)}
       />
 
-      <FilterSection
-        title="Abilities"
-        options={availableGroups}
-        selected={filters.ability_group}
-        getLabel={v => v}
-        onToggle={v => onToggle('ability_group', v)}
-      />
+      <div>
+        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+          Abilities
+          {filters.ability_group.size > 0 && (
+            <span className="ml-1.5 text-blue-400">({filters.ability_group.size})</span>
+          )}
+        </h3>
+        <div className="flex flex-col gap-1.5">
+          {availableGroups.map(group => {
+            const checked = filters.ability_group.has(group);
+            const hasGroupVariant = (GROUP_SPECIALTIES_BY_GROUP[group] ?? []).some(s =>
+              creatures.some(c => c.specialty.includes(s))
+            );
+            const groupOnly = filters.group_only.has(group);
+            return (
+              <div key={group} className="flex items-center gap-2">
+                <label className="flex items-center gap-2 cursor-pointer group flex-1 min-w-0">
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => onToggle('ability_group', group)}
+                    className="w-3.5 h-3.5 rounded accent-blue-500 cursor-pointer shrink-0"
+                  />
+                  <span className={`text-xs transition-colors truncate ${checked ? 'text-white' : 'text-gray-400 group-hover:text-gray-200'}`}>
+                    {group}
+                  </span>
+                </label>
+                {checked && hasGroupVariant && (
+                  <button
+                    onClick={() => onToggle('group_only', group)}
+                    title="Group effects only"
+                    className={`shrink-0 text-[10px] px-1.5 py-0.5 rounded border transition-colors ${
+                      groupOnly
+                        ? 'bg-blue-600/40 border-blue-400/60 text-blue-200'
+                        : 'border-slate-600 text-gray-500 hover:border-slate-400 hover:text-gray-300'
+                    }`}
+                  >
+                    Group
+                  </button>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </aside>
   );
 }

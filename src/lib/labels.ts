@@ -253,6 +253,19 @@ export const SPECIALTY_GROUPS: Record<string, string> = {
   group_swap_prevent: 'Swap Control',
 };
 
+export const GROUP_SPECIALTIES_BY_GROUP: Record<string, string[]> = {
+  'Healing':        ['group_heal', 'group_heal_pct', 'group_heal_increase'],
+  'Shielding':      ['group_shield', 'group_taunt', 'group_armor_increase'],
+  'Evasion':        ['group_dodge', 'group_cloak', 'group_bypass_alert', 'group_bypass_dodge'],
+  'Stunning':       ['group_stun'],
+  'Speed Control':  ['group_speed_increase', 'group_speed_decrease'],
+  'Damage Boosting':['group_damage_increase', 'group_crit_increase'],
+  'Weakening':      ['group_damage_decrease', 'group_armor_decrease', 'group_vulner', 'group_heal_decrease', 'group_crit_decrease', 'group_resistance_decrease_all'],
+  'Armor Bypass':   ['group_bypass_armor', 'group_rend'],
+  'Damage Over Time':['group_dot'],
+  'Swap Control':   ['group_swap_prevent'],
+};
+
 export const ABILITY_GROUP_ORDER = [
   'Damage Boosting',
   'Armor Bypass',
