@@ -90,6 +90,7 @@ const STAT_KEYS = ['health', 'damage', 'speed', 'armor', 'crit', 'critm'] as con
 const STAT_LABELS: Record<string, string> = { health: 'Health', damage: 'Damage', speed: 'Speed', armor: 'Armor', crit: 'Crit', critm: 'Crit Mult' };
 
 const MAX_BOOSTS = 35;
+const MAX_BOOSTS_PER_STAT = 20;
 type BoostStat = 'health' | 'damage' | 'speed';
 const BOOST_STATS: { key: BoostStat; label: string }[] = [
   { key: 'health', label: 'Health' },
@@ -208,7 +209,7 @@ export default function CreatureModal({ creature, onClose }: Props) {
       const cur = prev[stat];
       const used = prev.health + prev.damage + prev.speed;
       const next = delta > 0
-        ? Math.min(cur + delta, cur + (MAX_BOOSTS - used))
+        ? Math.min(cur + delta, MAX_BOOSTS_PER_STAT, cur + (availableBoosts - used))
         : Math.max(0, cur + delta);
       return { ...prev, [stat]: next };
     });
@@ -307,7 +308,8 @@ export default function CreatureModal({ creature, onClose }: Props) {
             {BOOST_STATS.map(({ key, label: bLabel }) => {
               const cur = boosts[key];
               const perBoost = key === 'speed' ? 2 : key === 'health' ? healthBoostPer : damageBoostPer;
-              const pct = availableBoosts > 0 ? (cur / availableBoosts) * 100 : 0;
+              const pct = (cur / MAX_BOOSTS_PER_STAT) * 100;
+              const atStatCap = cur >= MAX_BOOSTS_PER_STAT;
               return (
                 <div key={key} className="flex items-center gap-2">
                   <span className="text-xs text-gray-400 w-14 shrink-0">{bLabel}</span>
@@ -318,16 +320,16 @@ export default function CreatureModal({ creature, onClose }: Props) {
                   >−</button>
                   <div className="flex-1 min-w-0">
                     <div className="h-2 rounded-full bg-slate-700 overflow-hidden">
-                      <div className="h-full rounded-full bg-amber-500 transition-all" style={{ width: `${pct}%` }} />
+                      <div className={`h-full rounded-full transition-all ${atStatCap ? 'bg-green-500' : 'bg-amber-500'}`} style={{ width: `${pct}%` }} />
                     </div>
                   </div>
                   <button
                     onClick={() => changeBoost(key, 1)}
-                    disabled={remainingBoosts === 0}
+                    disabled={remainingBoosts === 0 || atStatCap}
                     className="w-7 h-7 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold shrink-0 flex items-center justify-center"
                   >+</button>
                   <span className="text-xs font-mono text-gray-400 w-20 text-right shrink-0">
-                    {cur} / {availableBoosts}
+                    {cur} / {MAX_BOOSTS_PER_STAT}
                     {cur > 0 && (
                       <span className="ml-1 text-amber-400">
                         +{key === 'speed' ? cur * 2 : cur * perBoost}
