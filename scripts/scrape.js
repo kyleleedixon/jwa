@@ -91,13 +91,46 @@ const HEADERS = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
 const CONCURRENCY = 8;
 const DELAY_MS = 300;
 
-async function fetchCreature(slug) {
+function parsePageProps(html) {
+  const match = html.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/);
+  if (!match) throw new Error('No __NEXT_DATA__');
+  return JSON.parse(match[1]).props.pageProps;
+}
+
+function parseMoves(moveArray, moveType, moveNames) {
+  return (moveArray || []).map(mv => ({
+    uuid: mv.uuid,
+    name: moveNames[mv.uuid] || mv.uuid,
+    type: moveType,
+    delay: mv.delay,
+    cooldown: mv.cooldown,
+    priority: mv.priority,
+    icon: mv.icon ? `https://cdn.paleo.gg${mv.icon}` : null,
+    effects: (mv.effects || []).map(e => ({
+      action: e.action,
+      target: e.target,
+      ...(e.multiplier != null && { multiplier: e.multiplier }),
+      ...(e.duration != null && { duration: e.duration }),
+    })),
+  }));
+}
+
+async function fetchCreature(slug, moveNames) {
   for (let attempt = 1; attempt <= 3; attempt++) {
     try {
       const res = await axios.get(BASE_URL + slug, { headers: HEADERS, timeout: 15000 });
-      const match = res.data.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/);
-      if (!match) throw new Error('No __NEXT_DATA__');
-      const d = JSON.parse(match[1]).props.pageProps.detail;
+      const pp = parsePageProps(res.data);
+      const d = pp.detail;
+      const names = moveNames || pp.__namespaces['dinodex-move'] || {};
+
+      const moves = [
+        ...parseMoves(d.moves, 'regular', names),
+        ...parseMoves(d.moves_counter, 'counter', names),
+        ...parseMoves(d.moves_swap_in, 'swap_in', names),
+        ...parseMoves(d.moves_on_escape, 'on_escape', names),
+        ...parseMoves(d.moves_reactive, 'reactive', names),
+      ];
+
       return {
         uuid: d.uuid,
         name: d.name,
@@ -118,6 +151,7 @@ async function fetchCreature(slug) {
         ingredients: d.ingredients || [],
         hybrids: d.hybrids || [],
         image: `https://cdn.paleo.gg/games/jwa/images/creature/${d.uuid}.png`,
+        moves,
       };
     } catch (err) {
       if (attempt === 3) {
@@ -134,12 +168,18 @@ async function sleep(ms) {
 }
 
 async function main() {
+  // Fetch move names once from the first creature page
+  console.log('  Fetching move name dictionary...');
+  const firstRes = await axios.get(BASE_URL + SLUGS[0], { headers: HEADERS, timeout: 15000 });
+  const moveNames = parsePageProps(firstRes.data).__namespaces['dinodex-move'] || {};
+  console.log(`  Loaded ${Object.keys(moveNames).length} move names.`);
+
   const results = [];
   let done = 0;
 
   for (let i = 0; i < SLUGS.length; i += CONCURRENCY) {
     const batch = SLUGS.slice(i, i + CONCURRENCY);
-    const fetched = await Promise.all(batch.map(fetchCreature));
+    const fetched = await Promise.all(batch.map(slug => fetchCreature(slug, moveNames)));
     for (const c of fetched) {
       if (c) results.push(c);
     }

@@ -1,3 +1,21 @@
+export interface MoveEffect {
+  action: string;
+  target: string;
+  multiplier?: number;
+  duration?: number[];
+}
+
+export interface Move {
+  uuid: string;
+  name: string;
+  type: 'regular' | 'counter' | 'swap_in' | 'on_escape' | 'reactive';
+  delay: number;
+  cooldown: number;
+  priority: number;
+  icon: string | null;
+  effects: MoveEffect[];
+}
+
 export interface Creature {
   uuid: string;
   name: string;
@@ -18,6 +36,7 @@ export interface Creature {
   ingredients: string[];
   hybrids: string[];
   image: string;
+  moves: Move[];
 }
 
 export interface FilterState {

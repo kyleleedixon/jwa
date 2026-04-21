@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { Creature } from '@/types/creature';
 import FilterPanel from './FilterPanel';
 import CreatureCard from './CreatureCard';
+import CreatureModal from './CreatureModal';
 
 const PAGE_SIZE = 60;
 
@@ -26,6 +27,7 @@ export default function Dashboard({ creatures }: Props) {
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [page, setPage] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [selected, setSelected] = useState<Creature | null>(null);
 
   const handleToggle = useCallback((category: string, value: string) => {
     setFilters(prev => {
@@ -65,6 +67,7 @@ export default function Dashboard({ creatures }: Props) {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-900 text-white">
+      {selected && <CreatureModal creature={selected} onClose={() => setSelected(null)} />}
       {/* header */}
       <header className="border-b border-slate-700 bg-slate-900/95 sticky top-0 z-10 backdrop-blur">
         <div className="max-w-screen-2xl mx-auto px-4 py-3 flex items-center gap-4">
@@ -126,7 +129,9 @@ export default function Dashboard({ creatures }: Props) {
             <>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
                 {visible.map(c => (
-                  <CreatureCard key={c.uuid} creature={c} />
+                  <div key={c.uuid} onClick={() => setSelected(c)}>
+                    <CreatureCard creature={c} />
+                  </div>
                 ))}
               </div>
 
