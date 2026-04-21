@@ -197,7 +197,38 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "24b13a8b60e6e644cbfec04920d1f818": 6,
+      "43fca1924b86a83478e45901ae2b0f7d": 11,
+      "ot__7ee64b2fd3860cc4c89571836392d7c1_2a7a0c38fd7aa644d8a537b023858b12__33": 16
+    },
+    "points": {
+      "cap": {
+        "health": 6145,
+        "damage": 2615,
+        "speed": 119,
+        "armor": 0,
+        "crit": 100,
+        "critm": 200
+      },
+      "delta": {
+        "health": 35,
+        "damage": 25,
+        "speed": 1,
+        "armor": 0,
+        "crit": 1,
+        "critm": 2
+      },
+      "pcap": {
+        "health": 137,
+        "damage": 83,
+        "speed": 10,
+        "armor": 0,
+        "crit": 90,
+        "critm": 35
+      }
+    }
   },
   {
     "uuid": "acrocanthops",
@@ -15917,7 +15948,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "07bc56d65d6d80145b36bddfdeb1a7b9": 6,
+      "bba89e270ac511f449d36f1826b13370": 11,
+      "9a7edbdc35b270c4b8f8ef1dca2c06be": 16,
+      "ot__73eaf32ee8a81a94da23a8985b035c04_cbffcf20ccce4bd44867d3a24f3863a3__33": 21
+    },
+    "points": {
+      "cap": {
+        "health": 7600,
+        "damage": 2190,
+        "speed": 113,
+        "armor": 35,
+        "crit": 10,
+        "critm": 150
+      },
+      "delta": {
+        "health": 50,
+        "damage": 15,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 129,
+        "damage": 94,
+        "speed": 27,
+        "armor": 30,
+        "crit": 10,
+        "critm": 25
+      }
+    }
   },
   {
     "uuid": "bajadasaurus",
@@ -19432,7 +19495,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "c57d865fa62a1eb4f896f4604df9e4d8": 6,
+      "7d1ec36de9f90e543b6b2eac5b7a7b00": 11,
+      "d8061bc4cb839564ba17c7e78199b13d": 16,
+      "d9280e5f0877315499185b1b189bdb0a": 21
+    },
+    "points": {
+      "cap": {
+        "health": 6890,
+        "damage": 2680,
+        "speed": 115,
+        "armor": 25,
+        "crit": 15,
+        "critm": 125
+      },
+      "delta": {
+        "health": 35,
+        "damage": 20,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 174,
+        "damage": 109,
+        "speed": 10,
+        "armor": 20,
+        "crit": 15,
+        "critm": 0
+      }
+    }
   },
   {
     "uuid": "blonde",
@@ -20078,7 +20173,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "59654059a9452e9499aec0ea6ea0c941": 6,
+      "f75b528ab9e56bb4c8424f78828ec0f6": 11,
+      "5307ae663ad86a1469c49385d4cbf547": 16,
+      "r__cfdafe3572aeb3e4f900e03033f76da2_7692108e0c7c8184f95b4f6c0e005fe6": 21
+    },
+    "points": {
+      "cap": {
+        "health": 8295,
+        "damage": 2055,
+        "speed": 115,
+        "armor": 30,
+        "crit": 25,
+        "critm": 175
+      },
+      "delta": {
+        "health": 55,
+        "damage": 15,
+        "speed": 1,
+        "armor": 1,
+        "crit": 2,
+        "critm": 2
+      },
+      "pcap": {
+        "health": 129,
+        "damage": 112,
+        "speed": 14,
+        "armor": 30,
+        "crit": 10,
+        "critm": 25
+      }
+    }
   },
   {
     "uuid": "brachiosaurus",
@@ -21577,7 +21704,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "3d315fe06bdf1d94e8e5e972b53e04c6": 6,
+      "42f921846375a0c44a7d9fe2773450d1": 11,
+      "be5c2b34ae3b3e842a30c50d6a130a1b": 16,
+      "611447ddd12fb8847b10ecd48da44cbb": 21
+    },
+    "points": {
+      "cap": {
+        "health": 7030,
+        "damage": 2325,
+        "speed": 130,
+        "armor": 0,
+        "crit": 40,
+        "critm": 175
+      },
+      "delta": {
+        "health": 40,
+        "damage": 25,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 147,
+        "damage": 77,
+        "speed": 20,
+        "armor": 0,
+        "crit": 10,
+        "critm": 50
+      }
+    }
   },
   {
     "uuid": "carnotarkus",
@@ -23989,7 +24148,38 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "ot__151a15e250b3c704194d04cdc89242fc_5308f94bfa47f1c49ade480435f7dc31__50": 6,
+      "14b82f01b06290045a8b34794bf345c3": 11,
+      "5269bde3255808044b50d8ee3cae9138": 16
+    },
+    "points": {
+      "cap": {
+        "health": 7025,
+        "damage": 2450,
+        "speed": 117,
+        "armor": 0,
+        "crit": 50,
+        "critm": 140
+      },
+      "delta": {
+        "health": 45,
+        "damage": 20,
+        "speed": 1,
+        "armor": 0,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 125,
+        "damage": 102,
+        "speed": 11,
+        "armor": 0,
+        "crit": 45,
+        "critm": 15
+      }
+    }
   },
   {
     "uuid": "cervalces",
@@ -24614,7 +24804,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "3298eff2857055e4a88222c92d3cd4e8": 6,
+      "089ae4baa35048741b05ebbd80ac6712": 11,
+      "cf787248eef433b4ba21e150385d4c87": 16,
+      "e21debad2655d6b4bb5ea0934c6365b9": 21
+    },
+    "points": {
+      "cap": {
+        "health": 6000,
+        "damage": 2800,
+        "speed": 137,
+        "armor": 0,
+        "crit": 100,
+        "critm": 150
+      },
+      "delta": {
+        "health": 50,
+        "damage": 20,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 94,
+        "damage": 115,
+        "speed": 18,
+        "armor": 0,
+        "crit": 70,
+        "critm": 25
+      }
+    }
   },
   {
     "uuid": "coelhaast",
@@ -27945,7 +28167,38 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "c7d2a3b70f297194fa6b3de3d0d158dc": 6,
+      "566d6b5e857d9f748a4365a4642eb7b1": 11,
+      "c1852e4b9ea4b2e46ad406b8c5f48055": 16
+    },
+    "points": {
+      "cap": {
+        "health": 6680,
+        "damage": 2510,
+        "speed": 109,
+        "armor": 25,
+        "crit": 40,
+        "critm": 125
+      },
+      "delta": {
+        "health": 40,
+        "damage": 20,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 142,
+        "damage": 101,
+        "speed": 8,
+        "armor": 20,
+        "crit": 35,
+        "critm": 0
+      }
+    }
   },
   {
     "uuid": "dakotacurus",
@@ -30354,7 +30607,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "12becd281050dea448e260c0005d7cd1": 6,
+      "f1faa438e41029145880b933880b731a": 11,
+      "ot__12cc16c7334bb3f44bea9de3f1555c17_b690d59a15034fc48b479760bbfba478__50": 16,
+      "1c8fa83450f8538409657e4bcce1ed80": 21
+    },
+    "points": {
+      "cap": {
+        "health": 9000,
+        "damage": 2000,
+        "speed": 109,
+        "armor": 40,
+        "crit": 25,
+        "critm": 130
+      },
+      "delta": {
+        "health": 50,
+        "damage": 10,
+        "speed": 1,
+        "armor": 2,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 150,
+        "damage": 160,
+        "speed": 5,
+        "armor": 17,
+        "crit": 20,
+        "critm": 5
+      }
+    }
   },
   {
     "uuid": "dilophoboa",
@@ -40719,7 +41004,40 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "271bd4e389a9b1640a17b547d72b4a9a": 6,
+      "4c9bb845c38da9d439362a14ec2889ff": 11,
+      "ffa44c48c936f5347ac73025b5de5eb5": 16,
+      "675bdc93965b64d44b09a022dda7f2b5": 21,
+      "41177365c1aa57b47a3324d011f06bd8": 26
+    },
+    "points": {
+      "cap": {
+        "health": 6770,
+        "damage": 2890,
+        "speed": 135,
+        "armor": 0,
+        "crit": 45,
+        "critm": 175
+      },
+      "delta": {
+        "health": 60,
+        "damage": 30,
+        "speed": 1,
+        "armor": 0,
+        "crit": 2,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 100,
+        "damage": 89,
+        "speed": 35,
+        "armor": 0,
+        "crit": 22,
+        "critm": 50
+      }
+    }
   },
   {
     "uuid": "estemmenosuchus",
@@ -41759,7 +42077,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "4ef9988eb1351ca4eabf52037189fdac": 6,
+      "25a19ee033bb48444b8306a308784572": 11,
+      "ba40db04fd078b14484d8dd1f5aa5f9a": 16,
+      "d9a9350ef0629e24194035f15e7a3aff": 21
+    },
+    "points": {
+      "cap": {
+        "health": 5110,
+        "damage": 2610,
+        "speed": 132,
+        "armor": 20,
+        "crit": 100,
+        "critm": 150
+      },
+      "delta": {
+        "health": 40,
+        "damage": 20,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 99,
+        "damage": 104,
+        "speed": 15,
+        "armor": 10,
+        "crit": 80,
+        "critm": 25
+      }
+    }
   },
   {
     "uuid": "fukuisaurus",
@@ -43156,7 +43506,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "905907df1122a8d4ca4ac6de72474d92": 6,
+      "1d9532a26b6f7b343b839c0bb0c99cc4": 11,
+      "be139814184e91d4d9abb63fca4dd4b2": 16,
+      "undefined": 21
+    },
+    "points": {
+      "cap": {
+        "health": 6480,
+        "damage": 2750,
+        "speed": 125,
+        "armor": 15,
+        "crit": 35,
+        "critm": 160
+      },
+      "delta": {
+        "health": 40,
+        "damage": 25,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 129,
+        "damage": 87,
+        "speed": 25,
+        "armor": 10,
+        "crit": 35,
+        "critm": 35
+      }
+    }
   },
   {
     "uuid": "ghost",
@@ -48859,7 +49241,38 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "f1b979b870579ca48840941c370e9d81": 6,
+      "71633b33d1a07bc40b18b6acbc534c35": 11,
+      "1abdc7aeb01de3346a23872e4f5f0ae6": 16
+    },
+    "points": {
+      "cap": {
+        "health": 7310,
+        "damage": 2175,
+        "speed": 118,
+        "armor": 25,
+        "crit": 25,
+        "critm": 140
+      },
+      "delta": {
+        "health": 40,
+        "damage": 15,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 149,
+        "damage": 117,
+        "speed": 16,
+        "armor": 20,
+        "crit": 20,
+        "critm": 15
+      }
+    }
   },
   {
     "uuid": "hydra_boa",
@@ -49354,7 +49767,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "67bfa8d1c22ac034e91a54c7b606c36e": 6,
+      "68679fd723571b44bb8f77ce9ab9d0b9": 11,
+      "ad47d2f12d006be4b9be6aef1f52b8ac": 16,
+      "8c7b6578fbf054541bc5153671737328": 21
+    },
+    "points": {
+      "cap": {
+        "health": 5460,
+        "damage": 2365,
+        "speed": 131,
+        "armor": 0,
+        "crit": 75,
+        "critm": 175
+      },
+      "delta": {
+        "health": 30,
+        "damage": 35,
+        "speed": 1,
+        "armor": 0,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 137,
+        "damage": 55,
+        "speed": 13,
+        "armor": 0,
+        "crit": 65,
+        "critm": 50
+      }
+    }
   },
   {
     "uuid": "iguanodon",
@@ -54263,7 +54708,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "98bc501f0523ef84898bf19f188e35e4": 6,
+      "55f5b7f558536b74faa72fae65f4ae54": 11,
+      "3eb5a199e0e123c419166d4fedf4e2d0": 16,
+      "381d14d756234d042962a2ca615ce8c5": 21
+    },
+    "points": {
+      "cap": {
+        "health": 6600,
+        "damage": 2100,
+        "speed": 120,
+        "armor": 30,
+        "crit": 50,
+        "critm": 140
+      },
+      "delta": {
+        "health": 60,
+        "damage": 10,
+        "speed": 1,
+        "armor": 2,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 86,
+        "damage": 170,
+        "speed": 16,
+        "armor": 10,
+        "crit": 45,
+        "critm": 15
+      }
+    }
   },
   {
     "uuid": "lambeosaurus",
@@ -54492,7 +54969,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "1d321366079b6a047aa4831277dc3dd0": 6,
+      "3ae33a1fd8dd8f545b0d6b854a66453c": 11,
+      "16f3658c59860d84c95cc1ed476428d6": 16,
+      "ot__acba4bad28846df4a85dea5739b41778_f5c5175661383394ea1b7471478b5e25__50": 21
+    },
+    "points": {
+      "cap": {
+        "health": 7630,
+        "damage": 2360,
+        "speed": 119,
+        "armor": 35,
+        "crit": 0,
+        "critm": 125
+      },
+      "delta": {
+        "health": 55,
+        "damage": 15,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 116,
+        "damage": 134,
+        "speed": 18,
+        "armor": 30,
+        "crit": 0,
+        "critm": 0
+      }
+    }
   },
   {
     "uuid": "leaellynasaura",
@@ -54782,7 +55291,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "6e3498a1b3f415644b4c8a0ba905dff0": 6,
+      "2f0e128298029574cad817ef8a257b03": 11,
+      "a88584d0fa2ab8c4f81eb3cb64012cec": 16,
+      "ot__0214005f52f78414988c57c2dfe7746a_bafde6d71cea7f44592917dd1ab66cdf__33": 21
+    },
+    "points": {
+      "cap": {
+        "health": 5690,
+        "damage": 1810,
+        "speed": 132,
+        "armor": 25,
+        "crit": 50,
+        "critm": 150
+      },
+      "delta": {
+        "health": 45,
+        "damage": 15,
+        "speed": 2,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 102,
+        "damage": 90,
+        "speed": 11,
+        "armor": 25,
+        "crit": 45,
+        "critm": 25
+      }
+    }
   },
   {
     "uuid": "leucistic_baryonyx",
@@ -55189,7 +55730,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "6ce73d4aa8a730e4fb52e04fe366a1f8": 6,
+      "7d18fd7dc89526443aa5ee534b2ac32c": 11,
+      "993d362e260464048893b1d1699a1c38": 16,
+      "15ed2bd01d4824043b6d4a43eec0fd8e": 21
+    },
+    "points": {
+      "cap": {
+        "health": 7300,
+        "damage": 2500,
+        "speed": 121,
+        "armor": 15,
+        "crit": 20,
+        "critm": 150
+      },
+      "delta": {
+        "health": 40,
+        "damage": 25,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 155,
+        "damage": 84,
+        "speed": 11,
+        "armor": 10,
+        "crit": 15,
+        "critm": 25
+      }
+    }
   },
   {
     "uuid": "lystrosaurus",
@@ -58120,7 +58693,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "9672ababeb75585469e911f10412ebf3": 6,
+      "865008b30cc0dd14191e87b7a75c7c6f": 11,
+      "ba751c62d0c2f554b95e94d8e5fd9a85": 16,
+      "76ad6f4f094250f43bbad22511c736d2": 21
+    },
+    "points": {
+      "cap": {
+        "health": 5530,
+        "damage": 2750,
+        "speed": 135,
+        "armor": 5,
+        "crit": 30,
+        "critm": 175
+      },
+      "delta": {
+        "health": 30,
+        "damage": 25,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 157,
+        "damage": 93,
+        "speed": 18,
+        "armor": 5,
+        "crit": 20,
+        "critm": 50
+      }
+    }
   },
   {
     "uuid": "mastodonsaurus",
@@ -58415,7 +59020,40 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "3eb5a199e0e123c419166d4fedf4e2d0": 6,
+      "132b2baaf90442445a05d6901cea3e97": 11,
+      "ot__4de7711118514444d86b46beeece19cb_2cfb1b66f2946834d9c891de15bc5918__50": 16,
+      "15ed2bd01d4824043b6d4a43eec0fd8e": 21,
+      "1e4ea8c1e2333c5409b2f362d620b726": 26
+    },
+    "points": {
+      "cap": {
+        "health": 6740,
+        "damage": 2675,
+        "speed": 125,
+        "armor": 50,
+        "crit": 25,
+        "critm": 150
+      },
+      "delta": {
+        "health": 45,
+        "damage": 25,
+        "speed": 1,
+        "armor": 2,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 122,
+        "damage": 89,
+        "speed": 20,
+        "armor": 23,
+        "crit": 20,
+        "critm": 25
+      }
+    }
   },
   {
     "uuid": "megalania",
@@ -58682,7 +59320,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "226e9db8d42f80e4abe9bb32e6d33c65": 6,
+      "583b67f549afd6745946865d5dce764b": 11,
+      "132b2baaf90442445a05d6901cea3e97": 16,
+      "62cbd3465cdc6f24bad9f6afe3858cb5": 21
+    },
+    "points": {
+      "cap": {
+        "health": 5550,
+        "damage": 2100,
+        "speed": 125,
+        "armor": 10,
+        "crit": 10,
+        "critm": 200
+      },
+      "delta": {
+        "health": 30,
+        "damage": 20,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 145,
+        "damage": 86,
+        "speed": 25,
+        "armor": 10,
+        "crit": 10,
+        "critm": 75
+      }
+    }
   },
   {
     "uuid": "megaloceros",
@@ -67243,7 +67913,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "e0f0671af411cb94c829a255d3d6814b": 6,
+      "ee02878d02d5ac54daff39dba86d53e4": 11,
+      "9c47ff50faa5cb746bbbda3c2eecb2aa": 16,
+      "b67bc67eaf80c1f498afc52a164793d0": 21
+    },
+    "points": {
+      "cap": {
+        "health": 7155,
+        "damage": 1935,
+        "speed": 122,
+        "armor": 25,
+        "crit": 10,
+        "critm": 125
+      },
+      "delta": {
+        "health": 45,
+        "damage": 15,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 141,
+        "damage": 96,
+        "speed": 19,
+        "armor": 20,
+        "crit": 10,
+        "critm": 0
+      }
+    }
   },
   {
     "uuid": "ophiacodon",
@@ -79518,7 +80220,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "a28f9993c86591642a24c3a5300e924b": 6,
+      "f9e7d5abd8900a6418e262f5677902bf": 11,
+      "9d502d155b9d04a42a6a0bcbd2997d5b": 16,
+      "4d3acc20222427f40bceecb733e6b085": 21
+    },
+    "points": {
+      "cap": {
+        "health": 4890,
+        "damage": 2150,
+        "speed": 131,
+        "armor": 5,
+        "crit": 40,
+        "critm": 150
+      },
+      "delta": {
+        "health": 30,
+        "damage": 15,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 124,
+        "damage": 111,
+        "speed": 17,
+        "armor": 5,
+        "crit": 30,
+        "critm": 25
+      }
+    }
   },
   {
     "uuid": "rebel",
@@ -83744,7 +84478,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "c00359754bdec7e41ba1edd2372a63d9": 6,
+      "9e2d88225f1b39c45bf9b49e7bec69c8": 11,
+      "5e850ad875e1efe4fbf3301820554748": 16,
+      "dfe7344fb6e2e964596e6e3a676de8b6": 21
+    },
+    "points": {
+      "cap": {
+        "health": 6950,
+        "damage": 2275,
+        "speed": 117,
+        "armor": 30,
+        "crit": 25,
+        "critm": 150
+      },
+      "delta": {
+        "health": 35,
+        "damage": 25,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 158,
+        "damage": 66,
+        "speed": 12,
+        "armor": 25,
+        "crit": 20,
+        "critm": 25
+      }
+    }
   },
   {
     "uuid": "saurornitholestes",
@@ -86196,7 +86962,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "ot__fbf7919f2c2c45f48b5b21aa4abf56cc_e959932fade86124a85f6ee88a307cb2__50": 6,
+      "9934b57e37817674da1ba9746dd59f6d": 11,
+      "22e47343728c32a42b83db25fe2c8489": 16,
+      "7f222fd2aae9a7849aacedd7fa19d7a4": 21
+    },
+    "points": {
+      "cap": {
+        "health": 5580,
+        "damage": 1980,
+        "speed": 123,
+        "armor": 25,
+        "crit": 30,
+        "critm": 200
+      },
+      "delta": {
+        "health": 40,
+        "damage": 20,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 108,
+        "damage": 76,
+        "speed": 20,
+        "armor": 20,
+        "crit": 25,
+        "critm": 75
+      }
+    }
   },
   {
     "uuid": "segnotherisaurus",
@@ -87621,7 +88419,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "e2fef28396ad7bb40a6b2fe56bde2833": 6,
+      "a7859f5bb6752d044a41037c81495af2": 11,
+      "r__46d1440100761164d9d0ed9abc5f6508_e2da6ca0a4788d646bdd9b6de087f40b": 16,
+      "1494ad7ba205c8a459b49f283f4bfedb": 21
+    },
+    "points": {
+      "cap": {
+        "health": 6600,
+        "damage": 2850,
+        "speed": 138,
+        "armor": 0,
+        "crit": 75,
+        "critm": 175
+      },
+      "delta": {
+        "health": 35,
+        "damage": 35,
+        "speed": 1,
+        "armor": 0,
+        "crit": 2,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 150,
+        "damage": 65,
+        "speed": 24,
+        "armor": 0,
+        "crit": 35,
+        "critm": 50
+      }
+    }
   },
   {
     "uuid": "skoolasaurus",
@@ -90956,7 +91786,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "85ef1573dd0e0f54bbc7e7a12f756189": 6,
+      "r__4149668ea60d97c4693d121220f445be_55ccdf15729ca7148ab3022f151caa5e": 11,
+      "2995b5ff248bfa34cb7c51659bbf7e0c": 16,
+      "r__8ce5e52bef21ffb44937b4eed069a6ca_c2c63a6bc3acc3547a22c3800c18bcdc": 21
+    },
+    "points": {
+      "cap": {
+        "health": 7020,
+        "damage": 2995,
+        "speed": 118,
+        "armor": 0,
+        "crit": 50,
+        "critm": 150
+      },
+      "delta": {
+        "health": 40,
+        "damage": 25,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 143,
+        "damage": 99,
+        "speed": 12,
+        "armor": 0,
+        "crit": 45,
+        "critm": 25
+      }
+    }
   },
   {
     "uuid": "spinosaurus_gen_2",
@@ -92771,7 +93633,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "819afeedf9989044ebaa8b178d7f4ef6": 6,
+      "d91fd556e9dd6964d8513cd0db05abdd": 11,
+      "c8ba4a69ba1a632408f79a59ec32b0ec": 16,
+      "fa24025fa94897141abc63f83d5926f6": 21
+    },
+    "points": {
+      "cap": {
+        "health": 8200,
+        "damage": 2150,
+        "speed": 116,
+        "armor": 40,
+        "crit": 35,
+        "critm": 125
+      },
+      "delta": {
+        "health": 60,
+        "damage": 15,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 117,
+        "damage": 120,
+        "speed": 16,
+        "armor": 30,
+        "crit": 30,
+        "critm": 0
+      }
+    }
   },
   {
     "uuid": "stegouros",
@@ -93035,7 +93929,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "a897245300b0a694982aebd35ad6fad2": 6,
+      "23e87e7ad3dd0e74e99fd9d7e6f0528f": 11,
+      "90a1f5856dcf7ba4199a8b851d596f83": 16,
+      "a9e3a6eb01eb96a48b66d13bf2749c3c": 21
+    },
+    "points": {
+      "cap": {
+        "health": 6500,
+        "damage": 2200,
+        "speed": 121,
+        "armor": 40,
+        "crit": 50,
+        "critm": 150
+      },
+      "delta": {
+        "health": 50,
+        "damage": 10,
+        "speed": 1,
+        "armor": 2,
+        "crit": 2,
+        "critm": 2
+      },
+      "pcap": {
+        "health": 104,
+        "damage": 177,
+        "speed": 12,
+        "armor": 18,
+        "crit": 22,
+        "critm": 7
+      }
+    }
   },
   {
     "uuid": "struthiomimus",
@@ -98281,7 +99207,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "10a122c2833d4394992dd3425394d6d1": 6,
+      "ae536176da0a6014bbe48929bfca3e97": 11,
+      "9e6f46133a593064a8f4bad92bcf78e7": 16,
+      "ot__5330aa40be80c074eb00ff0f270cf158_5d17b2559eb3e3a40a59ca1fdddf7326__33": 21
+    },
+    "points": {
+      "cap": {
+        "health": 6600,
+        "damage": 2075,
+        "speed": 116,
+        "armor": 35,
+        "crit": 40,
+        "critm": 140
+      },
+      "delta": {
+        "health": 40,
+        "damage": 15,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 132,
+        "damage": 112,
+        "speed": 9,
+        "armor": 30,
+        "crit": 35,
+        "critm": 15
+      }
+    }
   },
   {
     "uuid": "tragodistis",
@@ -103034,7 +103992,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "900e004343f89fc428173e46a8a7beb1": 6,
+      "1971ce67381895249a60e8cf666376b2": 11,
+      "cc5d98281867ecf43a789507564e0a95": 16,
+      "r__88aa7a7d1cc856a44b220d5389f0d68a_33d0327a57751174fa62fbe7fa29ad8e": 21
+    },
+    "points": {
+      "cap": {
+        "health": 6715,
+        "damage": 2070,
+        "speed": 116,
+        "armor": 30,
+        "crit": 15,
+        "critm": 150
+      },
+      "delta": {
+        "health": 35,
+        "damage": 20,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 164,
+        "damage": 76,
+        "speed": 17,
+        "armor": 20,
+        "crit": 15,
+        "critm": 25
+      }
+    }
   },
   {
     "uuid": "velociraptor",
@@ -104029,7 +105019,39 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "ot__d7c56d0acc302af44893332e71d435cf_caa618667b7bd1b498f6b563fcbcdeea__33": 6,
+      "d2ab10a3e11cb0a43965124ff93e1a74": 11,
+      "54b711214ea84c64d840108cf43c58f0": 16,
+      "ot__151a15e250b3c704194d04cdc89242fc_5308f94bfa47f1c49ade480435f7dc31__33": 21
+    },
+    "points": {
+      "cap": {
+        "health": 5950,
+        "damage": 2840,
+        "speed": 120,
+        "armor": 0,
+        "crit": 100,
+        "critm": 205
+      },
+      "delta": {
+        "health": 30,
+        "damage": 30,
+        "speed": 1,
+        "armor": 1,
+        "crit": 2,
+        "critm": 2
+      },
+      "pcap": {
+        "health": 151,
+        "damage": 78,
+        "speed": 10,
+        "armor": 0,
+        "crit": 47,
+        "critm": 40
+      }
+    }
   },
   {
     "uuid": "yuxisaurus",
@@ -104312,6 +105334,38 @@
           }
         ]
       }
-    ]
+    ],
+    "move_unlock_lv": {
+      "4545ccf2ac7ace74ea06c24d0e4d600f": 6,
+      "7bc39bebe728ea341b43259383589620": 11,
+      "d9a9350ef0629e24194035f15e7a3aff": 16,
+      "8fa1821a99a891943ae8de3753cf19ca": 21
+    },
+    "points": {
+      "cap": {
+        "health": 6750,
+        "damage": 1925,
+        "speed": 117,
+        "armor": 33,
+        "crit": 50,
+        "critm": 175
+      },
+      "delta": {
+        "health": 50,
+        "damage": 15,
+        "speed": 1,
+        "armor": 1,
+        "crit": 1,
+        "critm": 1
+      },
+      "pcap": {
+        "health": 105,
+        "damage": 101,
+        "speed": 12,
+        "armor": 23,
+        "crit": 40,
+        "critm": 50
+      }
+    }
   }
 ]

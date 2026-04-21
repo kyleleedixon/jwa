@@ -1,3 +1,9 @@
+export interface OmegaPoints {
+  cap:   Record<string, number>;
+  delta: Record<string, number>;
+  pcap:  Record<string, number>;
+}
+
 export interface MoveEffect {
   action: string;
   target: string;
@@ -37,6 +43,8 @@ export interface Creature {
   hybrids: string[];
   image: string;
   moves: Move[];
+  move_unlock_lv?: Record<string, number>;
+  points?: OmegaPoints;
 }
 
 export interface FilterState {

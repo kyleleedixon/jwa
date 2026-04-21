@@ -85,13 +85,47 @@ function fmt(val: string, map: Record<string, string>) {
   return map[val] ?? val.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
 
-export default function CreatureModal({ creature, onClose }: Props) {
-  const minLevel = MIN_LEVEL[creature.rarity] ?? 1;
-  const [level, setLevel] = useState(26);
+const POINTS_PER_LEVEL = 7;
+const STAT_KEYS = ['health', 'damage', 'speed', 'armor', 'crit', 'critm'] as const;
+const STAT_LABELS: Record<string, string> = { health: 'Health', damage: 'Damage', speed: 'Speed', armor: 'Armor', crit: 'Crit', critm: 'Crit Mult' };
 
+function omegaMaxLevel(pcap: Record<string, number>): number {
+  const total = Object.values(pcap).reduce((a, b) => a + b, 0);
+  return Math.ceil(total / POINTS_PER_LEVEL) + 1;
+}
+
+export default function CreatureModal({ creature, onClose }: Props) {
+  const isOmega = creature.rarity === 'omega';
+  const minLevel = MIN_LEVEL[creature.rarity] ?? 1;
+  const maxLevel = isOmega && creature.points ? omegaMaxLevel(creature.points.pcap) : MAX_LEVEL;
+  const defaultLevel = isOmega ? 1 : 26;
+
+  const [level, setLevel] = useState(defaultLevel);
+  const [omegaAlloc, setOmegaAlloc] = useState<Record<string, number>>({});
+
+  // Reset when creature changes
   useEffect(() => {
-    setLevel(26);
-  }, [creature.uuid]);
+    setLevel(defaultLevel);
+    setOmegaAlloc({});
+  }, [creature.uuid]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // When level drops, trim allocations that exceed new budget
+  useEffect(() => {
+    if (!isOmega || !creature.points) return;
+    const budget = (level - 1) * POINTS_PER_LEVEL;
+    const total = Object.values(omegaAlloc).reduce((a, b) => a + b, 0);
+    if (total <= budget) return;
+    // trim proportionally by zeroing from the end
+    let excess = total - budget;
+    const next = { ...omegaAlloc };
+    for (const k of [...STAT_KEYS].reverse()) {
+      if (excess <= 0) break;
+      const cut = Math.min(next[k] ?? 0, excess);
+      next[k] = (next[k] ?? 0) - cut;
+      excess -= cut;
+    }
+    setOmegaAlloc(next);
+  }, [level]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -107,11 +141,43 @@ export default function CreatureModal({ creature, onClose }: Props) {
   const rarityBg = RARITY_BG[creature.rarity] ?? 'bg-gray-500/20';
   const classColor = CLASS_COLORS[creature.class] ?? 'text-gray-400';
 
-  const scaledHealth = statAtLevel(creature.health, level);
-  const scaledDamage = statAtLevel(creature.damage, level);
+  // Stat calculations
+  let displayHealth: number, displayDamage: number, displaySpeed: number,
+      displayArmor: number | string, displayCrit: number | string;
+
+  if (isOmega && creature.points) {
+    const { delta, cap } = creature.points;
+    const alloc = omegaAlloc;
+    displayHealth = Math.min(creature.health + (alloc.health ?? 0) * delta.health, cap.health);
+    displayDamage = Math.min(creature.damage + (alloc.damage ?? 0) * delta.damage, cap.damage);
+    displaySpeed  = Math.min(creature.speed  + (alloc.speed  ?? 0) * delta.speed,  cap.speed);
+    displayArmor  = `${Math.min(creature.armor + (alloc.armor ?? 0) * delta.armor, cap.armor)}%`;
+    displayCrit   = `${Math.min(creature.crit  + (alloc.crit  ?? 0) * delta.crit,  cap.crit)}%`;
+  } else {
+    displayHealth = statAtLevel(creature.health, level);
+    displayDamage = statAtLevel(creature.damage, level);
+    displaySpeed  = creature.speed;
+    displayArmor  = `${creature.armor}%`;
+    displayCrit   = `${creature.crit}%`;
+  }
+
+  const availablePoints = isOmega ? (level - 1) * POINTS_PER_LEVEL : 0;
+  const allocatedPoints = Object.values(omegaAlloc).reduce((a, b) => a + b, 0);
+  const remainingPoints = availablePoints - allocatedPoints;
 
   const regularMoves = creature.moves.filter(m => m.type === 'regular');
   const specialMoves = creature.moves.filter(m => m.type !== 'regular');
+
+  function changeAlloc(stat: string, delta: number) {
+    setOmegaAlloc(prev => {
+      const pcap = creature.points!.pcap[stat] ?? 0;
+      const cur = prev[stat] ?? 0;
+      const next = Math.max(0, Math.min(cur + delta, pcap, cur + remainingPoints + (delta < 0 ? 0 : remainingPoints)));
+      // clamp to remaining budget
+      const actualNext = delta > 0 ? Math.min(cur + delta, pcap, cur + remainingPoints) : Math.max(0, cur + delta);
+      return { ...prev, [stat]: actualNext };
+    });
+  }
 
   return (
     <div
@@ -158,22 +224,22 @@ export default function CreatureModal({ creature, onClose }: Props) {
           <input
             type="range"
             min={minLevel}
-            max={MAX_LEVEL}
+            max={maxLevel}
             value={level}
             onChange={e => setLevel(Number(e.target.value))}
             className="flex-1 accent-blue-500 cursor-pointer"
           />
-          <span className="text-sm font-bold text-white w-7 text-right shrink-0">{level}</span>
+          <span className="text-sm font-bold text-white w-10 text-right shrink-0">{level} / {maxLevel}</span>
         </div>
 
         {/* stats */}
         <div className="grid grid-cols-5 gap-2 px-5 py-3 border-b border-slate-700/60">
           {[
-            { label: 'Health', value: scaledHealth },
-            { label: 'Damage', value: scaledDamage },
-            { label: 'Speed', value: creature.speed },
-            { label: 'Armor', value: `${creature.armor}%` },
-            { label: 'Crit', value: `${creature.crit}%` },
+            { label: 'Health', value: displayHealth },
+            { label: 'Damage', value: displayDamage },
+            { label: 'Speed',  value: displaySpeed },
+            { label: 'Armor',  value: displayArmor },
+            { label: 'Crit',   value: displayCrit },
           ].map(s => (
             <div key={s.label} className="flex flex-col items-center bg-slate-800/60 rounded-lg py-2">
               <span className="text-[10px] uppercase tracking-wider text-gray-500">{s.label}</span>
@@ -181,6 +247,60 @@ export default function CreatureModal({ creature, onClose }: Props) {
             </div>
           ))}
         </div>
+
+        {/* omega points allocator */}
+        {isOmega && creature.points && (
+          <div className="px-5 py-4 border-b border-slate-700/60">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Points</h3>
+              <span className={`text-xs font-mono font-semibold ${remainingPoints === 0 ? 'text-green-400' : remainingPoints > 0 ? 'text-yellow-400' : 'text-red-400'}`}>
+                {allocatedPoints} / {availablePoints} allocated
+                {remainingPoints > 0 && <span className="text-gray-500"> · {remainingPoints} remaining</span>}
+              </span>
+            </div>
+            <div className="flex flex-col gap-2">
+              {STAT_KEYS.filter(k => (creature.points!.delta[k] ?? 0) > 0).map(k => {
+                const alloc = omegaAlloc[k] ?? 0;
+                const pcap = creature.points!.pcap[k] ?? 0;
+                const delta = creature.points!.delta[k] ?? 0;
+                const cap = creature.points!.cap[k] ?? 0;
+                const base = (creature as unknown as Record<string, number>)[k] ?? 0;
+                const bonus = alloc * delta;
+                const effectiveCap = Math.min(pcap, Math.floor((cap - base) / delta));
+                const pct = pcap > 0 ? (alloc / pcap) * 100 : 0;
+                return (
+                  <div key={k} className="flex items-center gap-2">
+                    <span className="text-xs text-gray-400 w-16 shrink-0">{STAT_LABELS[k]}</span>
+                    <button
+                      onClick={() => changeAlloc(k, -1)}
+                      disabled={alloc === 0}
+                      className="w-6 h-6 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white text-sm font-bold shrink-0 flex items-center justify-center"
+                    >−</button>
+                    <div className="flex-1 min-w-0">
+                      <div className="h-2 rounded-full bg-slate-700 overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all ${alloc >= effectiveCap ? 'bg-green-500' : 'bg-blue-500'}`}
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => changeAlloc(k, 1)}
+                      disabled={alloc >= effectiveCap || remainingPoints === 0}
+                      className="w-6 h-6 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white text-sm font-bold shrink-0 flex items-center justify-center"
+                    >+</button>
+                    <span className="text-xs font-mono text-gray-300 w-16 text-right shrink-0">
+                      {alloc}/{effectiveCap} pts
+                    </span>
+                    <span className={`text-xs font-mono w-16 text-right shrink-0 ${bonus > 0 ? 'text-green-400' : 'text-gray-600'}`}>
+                      {bonus > 0 ? `+${bonus}` : '—'}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* moves */}
         <div className="p-5 flex flex-col gap-3">
@@ -192,7 +312,11 @@ export default function CreatureModal({ creature, onClose }: Props) {
                 <div>
                   <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Moves</h3>
                   <div className="flex flex-col gap-2">
-                    {regularMoves.map(m => <MoveRow key={m.uuid} move={m} baseDamage={scaledDamage} />)}
+                    {regularMoves.map(m => (
+                      <MoveRow key={m.uuid} move={m} baseDamage={displayDamage as number}
+                        unlockLevel={creature.move_unlock_lv?.[m.uuid]}
+                        currentLevel={level} />
+                    ))}
                   </div>
                 </div>
               )}
@@ -200,7 +324,11 @@ export default function CreatureModal({ creature, onClose }: Props) {
                 <div>
                   <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Special Abilities</h3>
                   <div className="flex flex-col gap-2">
-                    {specialMoves.map(m => <MoveRow key={m.uuid} move={m} baseDamage={scaledDamage} />)}
+                    {specialMoves.map(m => (
+                      <MoveRow key={m.uuid} move={m} baseDamage={displayDamage as number}
+                        unlockLevel={creature.move_unlock_lv?.[m.uuid]}
+                        currentLevel={level} />
+                    ))}
                   </div>
                 </div>
               )}
@@ -212,13 +340,16 @@ export default function CreatureModal({ creature, onClose }: Props) {
   );
 }
 
-function MoveRow({ move, baseDamage }: { move: Move; baseDamage: number }) {
+function MoveRow({ move, baseDamage, unlockLevel, currentLevel }: {
+  move: Move; baseDamage: number; unlockLevel?: number; currentLevel?: number;
+}) {
+  const locked = unlockLevel != null && currentLevel != null && currentLevel < unlockLevel;
   const typeColor = MOVE_TYPE_COLORS[move.type] ?? 'bg-gray-500/20 text-gray-300 border-gray-500/30';
   const attackEffect = move.effects.find(e => e.action === 'attack');
   const totalDamage = attackEffect?.multiplier != null ? Math.round(baseDamage * attackEffect.multiplier) : null;
 
   return (
-    <div className="bg-slate-800/60 rounded-xl p-3 border border-slate-700/40">
+    <div className={`bg-slate-800/60 rounded-xl p-3 border border-slate-700/40 transition-opacity ${locked ? 'opacity-40' : ''}`}>
       <div className="flex items-start gap-2">
         {move.icon && (
           <div className="w-9 h-9 shrink-0 rounded-lg bg-slate-700/60 flex items-center justify-center overflow-hidden">
@@ -228,6 +359,11 @@ function MoveRow({ move, baseDamage }: { move: Move; baseDamage: number }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="font-semibold text-white text-sm">{move.name.startsWith('ra__') ? 'Enhancement' : move.name}</span>
+                    {locked && (
+                      <span className="text-[10px] font-medium px-1.5 py-0.5 rounded border bg-slate-600/40 text-gray-400 border-slate-500/40">
+                        Unlocks Lv {unlockLevel}
+                      </span>
+                    )}
             <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded border ${typeColor}`}>
               {MOVE_TYPE_LABELS[move.type] ?? move.type}
             </span>

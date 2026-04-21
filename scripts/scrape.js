@@ -165,6 +165,8 @@ async function fetchCreature(slug, moveNames) {
         hybrids: d.hybrids || [],
         image: `https://cdn.paleo.gg/games/jwa/images/creature/${d.uuid}.png`,
         moves,
+        ...(d.move_unlock_lv && Object.keys(d.move_unlock_lv).length > 0 && { move_unlock_lv: d.move_unlock_lv }),
+        ...(d.points && { points: d.points }),
       };
     } catch (err) {
       if (attempt === 3) {
