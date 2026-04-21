@@ -22,12 +22,26 @@ const EMPTY_FILTERS: Filters = {
   ability_group: new Set(),
 };
 
+type SortKey = 'name' | 'health' | 'damage' | 'speed' | 'armor' | 'crit';
+type SortDir = 'asc' | 'desc';
+
+const SORT_OPTIONS: { key: SortKey; label: string }[] = [
+  { key: 'name', label: 'Name' },
+  { key: 'health', label: 'HP' },
+  { key: 'damage', label: 'DMG' },
+  { key: 'speed', label: 'SPD' },
+  { key: 'armor', label: 'ARM' },
+  { key: 'crit', label: 'CRIT' },
+];
+
 export default function Dashboard({ creatures }: Props) {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [page, setPage] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selected, setSelected] = useState<Creature | null>(null);
+  const [sortKey, setSortKey] = useState<SortKey>('name');
+  const [sortDir, setSortDir] = useState<SortDir>('asc');
 
   const handleToggle = useCallback((category: string, value: string) => {
     setFilters(prev => {
@@ -44,8 +58,20 @@ export default function Dashboard({ creatures }: Props) {
     setPage(1);
   }, []);
 
+  const handleSort = useCallback((key: SortKey) => {
+    setSortKey(prev => {
+      if (prev === key) {
+        setSortDir(d => d === 'asc' ? 'desc' : 'asc');
+      } else {
+        setSortDir(key === 'name' ? 'asc' : 'desc');
+      }
+      return key;
+    });
+    setPage(1);
+  }, []);
+
   const filtered = useMemo(() => {
-    return creatures.filter(c => {
+    const list = creatures.filter(c => {
       if (search) {
         const q = search.toLowerCase();
         if (!c.name.toLowerCase().includes(q)) return false;
@@ -56,7 +82,16 @@ export default function Dashboard({ creatures }: Props) {
       if (filters.ability_group.size > 0 && !specialtyGroups(c.specialty).some(g => filters.ability_group.has(g))) return false;
       return true;
     });
-  }, [creatures, search, filters]);
+
+    list.sort((a, b) => {
+      let cmp = 0;
+      if (sortKey === 'name') cmp = a.name.localeCompare(b.name);
+      else cmp = (a[sortKey] as number) - (b[sortKey] as number);
+      return sortDir === 'asc' ? cmp : -cmp;
+    });
+
+    return list;
+  }, [creatures, search, filters, sortKey, sortDir]);
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const visible = filtered.slice(0, page * PAGE_SIZE);
@@ -126,6 +161,25 @@ export default function Dashboard({ creatures }: Props) {
             </div>
           ) : (
             <>
+              <div className="flex items-center gap-2 mb-3 flex-wrap">
+                <span className="text-xs text-gray-500 uppercase tracking-wider">Sort:</span>
+                {SORT_OPTIONS.map(opt => (
+                  <button
+                    key={opt.key}
+                    onClick={() => handleSort(opt.key)}
+                    className={`text-xs px-2.5 py-1 rounded-md border transition-colors ${
+                      sortKey === opt.key
+                        ? 'bg-blue-600/30 border-blue-500/60 text-blue-300'
+                        : 'border-slate-700 text-gray-400 hover:border-slate-500 hover:text-white'
+                    }`}
+                  >
+                    {opt.label}
+                    {sortKey === opt.key && (
+                      <span className="ml-1">{sortDir === 'asc' ? '↑' : '↓'}</span>
+                    )}
+                  </button>
+                ))}
+              </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
                 {visible.map(c => (
                   <div key={c.uuid} onClick={() => setSelected(c)}>

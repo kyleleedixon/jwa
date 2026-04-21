@@ -115,6 +115,9 @@ export default function CreatureModal({ creature, onClose }: Props) {
               </span>
               <span className={`text-xs font-medium ${classColor}`}>{label(CLASS_LABELS, creature.class)}</span>
               <span className="text-xs text-gray-500">{label(HYBRID_TYPE_LABELS, creature.hybrid_type)}</span>
+              {creature.version && (
+                <span className="text-xs text-gray-500 ml-auto">Updated {creature.version}</span>
+              )}
             </div>
             {creature.description && (
               <p className="text-xs text-gray-400 mt-2 leading-relaxed line-clamp-2">{creature.description}</p>
