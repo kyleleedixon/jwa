@@ -107,10 +107,10 @@ export default function FilterPanel({ creatures, filters, onToggle, onClear }: P
                       onToggle('group_only', group);
                     }}
                     title="Show group-effect only"
-                    className={`shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded transition-colors ml-1 ${
+                    className={`shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded border transition-colors ml-1 ${
                       groupOnly
-                        ? 'bg-blue-500/30 text-blue-300'
-                        : 'text-gray-600 hover:text-gray-400'
+                        ? 'bg-blue-500 border-blue-500 text-white'
+                        : 'border-slate-600 text-gray-400 hover:border-slate-400 hover:text-white'
                     }`}
                   >
                     Group
