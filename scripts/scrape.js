@@ -1,0 +1,159 @@
+const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+
+const SLUGS = [
+  '93_classic_t_rex','acrocanthops','acrocanthosaurus','aenocyonyx','aerospinosaurus','aerotitan',
+  'ailurarctos','alacranix','alankydactylus','alankyloceratops','alankylosaurus','alanqa',
+  'albertocevia','albertosaurus','albertospinos','allodrigues','alloraptor','allosaurus',
+  'allosaurus_gen_2','allosinosaurus','amargasaurus','amargocephalus','ampelorex','ampelosaurus',
+  'amphicyon','andrewsarchus','andrewtherium','andrewtodon','andrewtops','angel','animantarx',
+  'ankylocodon','ankylodactylus','ankylodicurus','ankylomoloch','ankylos_lux','ankylosaurus',
+  'ankylosaurus_gen_2','ankyntrosaurus','antarctopelta','antarctovenator','anurognathus',
+  'apatoceratops','apatosaurus','aquicomilus','aquignathus','aquilamimus','aquilops','aquilosaurus',
+  'aquilotae','aquiraptor','aquisaurus','arambourgiania','archaeopteryx','archaeotherium',
+  'arctalces','arctocanis','arctodus','arctops','arctovasilas','ardentismaxima','ardontognathus',
+  'ardontosaurus','argentavis','argenteryx','argentinosaurus','armbrusters_wolf','atrocimoloch',
+  'atrocodistis','atrocomaxima','atromolistis','australotitan','bajadasaurus','bajatonodon',
+  'baryonyx','baryonyx_gen_2','baryosaurus','baryothus','baryotor','becklejara','becklerizaurus',
+  'becklolyth','becklophosaurus','beelzebufo','beta','big_eatie','blonde','blue','borealopelta',
+  'brachiosaurus','brontolasmus','brontotherium','brunette','bumpy','carbonemys','carbotoceratops',
+  'carcharodontosaurus','carnotarkus','carnotaurus','centroceratops','centrolophus_lux',
+  'centrosaurus','ceramagnus','ceranosaurus','cerastegotops','ceratosaurus','ceratosaurus_gen_2',
+  'cervalces','charlie','clever_girl','coelhaast','coelurosauravus','compsocaulus','compsognathus',
+  'compsognathus_gen_2','compsoraptor','compsovenator','concakuisaurus','concatoloch',
+  'concatosaurus','concavenator','constrictoraptor','crichtomoloch','crichtonsaurus',
+  'cryolophosaurus','dakotacurus','dakotanops','dakotaraptor','darwezopteryx','darwinopterus',
+  'deinocheirus','deinomimus','deinonychus','deinosuchus','deinotherium','deinotops','delta',
+  'diabloceratops','dilophoboa','dilophosaurus','dilophosaurus_gen_2','diloracheirus',
+  'diloranosaurus','dilozorion','dimetrodon','dimetrodon_gen_2','dimodactylus','dimorphodon',
+  'diorajasaur','diplocaulus','diplocaulus_gen_2','diplodocus','diplotator','diplovenator',
+  'dire_wolf','distortus_rex','dodo','dodocevia','doedicurus','draco_intrepidus','draco_lux',
+  'dracoceratops','dracoceratosaurus','dracorex','dracorex_gen_2','dracovenator','dreadactylus',
+  'dreadnoughtus','dsungaia','dsungaripterus','dsungascorpios','echo','edaphocevia','edaphosaurus',
+  'edmontoguanodon','edmontosaurus','einiasuchus','einiosaurus','elasmotherium','enteloceros',
+  'entelochops','entelodon','entelolania','entelomoth','eremocanis','eremoceros','eremotherium',
+  'erlidominus','erlikogamma','erlikosaurus','erlikosaurus_gen_2','erlikospyx','erythrosuchus',
+  'estemmenosuchus','eucladoceros','euoplocephalus','fukuimimus','fukuiraptor','fukuisaurus',
+  'fukuitops','gallimimus','geminideus','geminititan','geosternbergia','ghost','giganotosaurus',
+  'giganspinoceratops','gigantspinosaurus','giganyx','gigaspikasaur','giraffatitan','glyptoceras',
+  'glyptodon','glyptosavis','gorgonops','gorgosaurus','gorgosuchus','gorgotrebax','graciliraptor',
+  'gryganyth','grylenken','grypolyth','gryposuchus','haast_eagle','haast_eagle_gen_2',
+  'haast_maximus','hadros_lux','hatzegopteryx','herranotor','herrerasaurus','homalocephale',
+  'hydra_boa','ichthyovenator','iguanodon','imperatosuchus','indochicyon','indolycan',
+  'indominus_rex','indominus_rex_gen_2','indonemys','indoraptor','indoraptor_gen_2','indotaurus',
+  'inostherium','inostrancevia','irritator','irritator_gen_2','junior','kaprosuchus','kelenken',
+  'kentrorex','kentrosaurus','keratoporcus','koolabourgiana','koolasuchus','koolasuchus_gen_2',
+  'koreanosaurus','lambeosaurus','leaellynasaura','leucistic_baryonyx','little_eatie',
+  'lystrosaurus','lystrosavis','lystrosuchus','lythronax','magnapyritor','magnaraptor','maiasaura',
+  'majundaboa','majundasuchus','majungasaurus','mammolania','mammotherium','marsupial_lion',
+  'masiakasaurus','mastodonsaurus','megalania','megaloceros','megalocevia','megalogaia','megalonyx',
+  'megalosaurus','megalosuchus','megalotops','megamimus','megaraptor','megatyrannus','megistocurus',
+  'megistotherium','meiolania','microraptor','miragaia','monkeydactyl','monkeyondactylus',
+  'monolometrodon','monolomoth','monolophosaurus','monolophosaurus_gen_2','monolorhino','monomimus',
+  'monostegotops','moros_intrepidus','mortem_rex','moschops','mutadon','nanophosaurus',
+  'nanotyrannus','nasutoceratops','nodopatosaurus','nodopatotitan','nodosaurus','nomingia',
+  'nominrex','nundasuchus','nyctopteryx','nyctosaurus','olorotitan','ophiacodon','ornithomimus',
+  'ouranosaurus','ovilophomoloch','ovilophosaurus','ovinnolophosaurus','oviraptor','oviraptor_gen_2',
+  'ovylenken','pachycephalosaurus','panthera','panthera_blytheae','pantherator','paramoloch',
+  'parasaurolophus','parasaurolophus_lux','parasauthops','phorurex','phorusaura','phorusrhacos',
+  'pierce','plateopikasaurus','plateorex','plateosaurus','postimetrodon','postosuchus','poukaidei',
+  'poukandactylus','preondactylus','procerathomimus','proceratosaurus','proto_lux','protoceratops',
+  'protonodon','pteranodon','pteranokyrie','pteraquetzal','pterovexus','pulmonoscorpius','purrolyth',
+  'purussaurus','purussaurus_gen_2','purutaurus','pyroraptor','pyroraptor_gen_2','pyrorixis',
+  'pyrosuchus','pyrritator','quetzalcoatlus','quetzalcoatlus_gen_2','quetzaljara','quetzorion',
+  'rajadorixis','rajadotholus','rajakylosaurus','rajasaurus','rajatholus','rativates','rebel',
+  'rebirth_raptor','rebirth_spinosaurus','rebirth_spinosaurus_gen_2','rebirth_t_rex','red',
+  'refrenantem','rexy','rinchenia','rinchicyon','rodrigues_solitaire','sah_panthera','sarcomantarx',
+  'sarcorixis','sarcosaurus','sarcosuchus','saurolyth','saurophaganax','saurornitholestes',
+  'scaphognathus','scaphotator','scelidosaurus','scolosaurus','scorpius_rex','scorpius_rex_gen_2',
+  'scorpius_rex_gen_3','scutophicyon','scutosaurus','secodontosaurus','segnoraptor','segnosaurus',
+  'segnotherisaurus','shantungosaurus','shantunrax','sinoceratops','sinokotaraptor',
+  'sinosauropteryx','sinraptor','skoolasaurus','skoonametrodon','skoonasaurus','skorpiodactylus',
+  'skorpiostegotops','skorpiovenator','smilocephalosaurus','smilodon','smilonemys','sonorasaurus',
+  'sphaerotholus','spinoceratops','spinoconstrictor','spinonyx','spinosaurus','spinosaurus_aegyptiacus',
+  'spinosaurus_gen_2','spinotahraptor','spinotasuchus','spinotops','stegoceras','stegoceratops',
+  'stegodeus','stegosaurus','stegosaurus_ungulatus','stegouros','struthiomimus','stygidaryx',
+  'stygimoloch','stygimoloch_gen_2','styracosaurus_lux','suchomimus','suchotator','tanycolagreus',
+  'tapejara','tarbognathus','tarbosaurus','tenontorex','tenontosaurus','testacornibus',
+  'therizinosaurus','thoradolosaur','thylaconyx','thylacosmilus','thylacotator','thylos_intrepidus',
+  'tiger','titanoboa','titanoboa_gen_2','titanosaurus','titanotarkus','titanotholus','titanotor',
+  'toro','tragodistis','triceratops','triceratops_gen_2','troodoboa','troodon','trykosaurus',
+  'trykovenator','tryostronix','tsintamoth','tsintaosaurus','tuojiangosaurus','tuoramoloch',
+  'tupandactylus','tyrannodactylus','tyrannolophosaur','tyrannometrodon','tyrannosaur_buck',
+  'tyrannosaur_doe','tyrannosaurus_rex','tyrannosaurus_rex_gen_2','utahraptor','utarinex',
+  'utasinoraptor','vectispinus','velociraptor','velosrhacos','woolly_mammoth','woolly_rhino',
+  'wuerhosaurus','yutyrannus','yuxisaurus',
+];
+
+const BASE_URL = 'https://www.paleo.gg/games/jurassic-world-alive/dinodex/';
+const HEADERS = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36' };
+const CONCURRENCY = 8;
+const DELAY_MS = 300;
+
+async function fetchCreature(slug) {
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const res = await axios.get(BASE_URL + slug, { headers: HEADERS, timeout: 15000 });
+      const match = res.data.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/);
+      if (!match) throw new Error('No __NEXT_DATA__');
+      const d = JSON.parse(match[1]).props.pageProps.detail;
+      return {
+        uuid: d.uuid,
+        name: d.name,
+        rarity: d.rarity,
+        class: d.class,
+        size: d.size,
+        hybrid_type: d.hybrid_type,
+        specialty: d.specialty || [],
+        dna_source: (d.dna_source || []).map(s => s.loc),
+        health: d.health,
+        damage: d.damage,
+        speed: d.speed,
+        armor: d.armor,
+        crit: d.crit,
+        critm: d.critm,
+        version: d.version,
+        description: d.description || '',
+        ingredients: d.ingredients || [],
+        hybrids: d.hybrids || [],
+        image: `https://cdn.paleo.gg/games/jwa/images/creature/${d.uuid}.png`,
+      };
+    } catch (err) {
+      if (attempt === 3) {
+        console.error(`  FAILED ${slug}: ${err.message}`);
+        return null;
+      }
+      await new Promise(r => setTimeout(r, 1000 * attempt));
+    }
+  }
+}
+
+async function sleep(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+async function main() {
+  const results = [];
+  let done = 0;
+
+  for (let i = 0; i < SLUGS.length; i += CONCURRENCY) {
+    const batch = SLUGS.slice(i, i + CONCURRENCY);
+    const fetched = await Promise.all(batch.map(fetchCreature));
+    for (const c of fetched) {
+      if (c) results.push(c);
+    }
+    done += batch.length;
+    process.stdout.write(`\r  Progress: ${done}/${SLUGS.length} (${results.length} ok)`);
+    if (i + CONCURRENCY < SLUGS.length) await sleep(DELAY_MS);
+  }
+
+  console.log(`\n  Done! ${results.length} creatures scraped.`);
+
+  const outPath = path.join(__dirname, '../src/data/creatures.json');
+  fs.mkdirSync(path.dirname(outPath), { recursive: true });
+  fs.writeFileSync(outPath, JSON.stringify(results, null, 2));
+  console.log(`  Saved to ${outPath}`);
+}
+
+main().catch(console.error);
