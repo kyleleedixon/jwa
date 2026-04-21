@@ -77,13 +77,13 @@ export default function HelpModal({ onClose }: Props) {
 
           <Section title="Browsing & Search">
             <Item label="Search bar">
-              Type any part of a creature&rsquo;s name to instantly filter the grid. The count in the top-right updates as you type.
+              Type any part of a creature&rsquo;s name to instantly filter the grid. The count top-right updates as you type.
             </Item>
             <Item label="Filter sidebar">
-              Click the <Badge>☰</Badge> icon in the header to show or hide the filter panel. Active filter counts appear in blue next to each section heading.
+              Click the <Badge>Filters</Badge> button in the header to show or hide the filter panel. A blue number badge shows how many filters are active. On desktop the panel is open by default; on mobile it slides in as a drawer.
             </Item>
             <Item label="Sorting">
-              Use the sort bar above the grid to sort by <Badge>Name</Badge> <Badge>HP</Badge> <Badge>DMG</Badge> <Badge>SPD</Badge> <Badge>ARM</Badge> or <Badge>CRIT</Badge>. Clicking a stat defaults to highest-first; clicking it again flips direction. The active sort shows an arrow.
+              Use the sort bar above the grid to sort by <Badge>Name</Badge> <Badge>HP</Badge> <Badge>DMG</Badge> <Badge>SPD</Badge> <Badge>ARM</Badge> or <Badge>CRIT</Badge>. Clicking a stat defaults to highest-first; clicking it again reverses direction. The active sort shows an arrow.
             </Item>
             <Item label="Load more">
               The grid shows 60 creatures at a time. Scroll to the bottom and click <Badge>Load more</Badge> to see the next batch.
@@ -92,25 +92,25 @@ export default function HelpModal({ onClose }: Props) {
 
           <Section title="Filters">
             <Item label="Rarity / Class">
-              Check one or more options to show only creatures that match. Multiple selections within the same filter are treated as OR — checking Epic and Legendary shows both.
+              Check one or more options to show only creatures that match. Multiple selections within the same section are OR — checking Epic and Legendary shows both.
             </Item>
             <Item label="Hybrid Type">
               Filter by how a creature is obtained: Non-Hybrid, Standard Hybrid, Super Hybrid, Mega Hybrid, or Giga Hybrid.
             </Item>
             <Item label="Abilities">
-              Each entry represents a category of what a creature can do (e.g. Healing, Stunning, Devour). Checking multiple abilities is OR — a creature only needs to match one. Click <Badge color="blue">Clear all</Badge> to reset.
+              Each entry is a category of what a creature can do (e.g. Healing, Devour, Stunning). Multiple selections are OR — a creature only needs to match one. Click <Badge color="blue">Clear all</Badge> to reset everything.
             </Item>
             <Item label="Group toggle">
-              After selecting an ability, a <Badge color="blue">Group</Badge> toggle appears next to it. Turning it on narrows results to creatures that specifically have the group-targeting version of that ability (e.g. group heals rather than single-target heals). Each ability has its toggle independently.
+              Next to each ability filter is a <Badge color="blue">Group</Badge> toggle. Turning it on narrows results to creatures that have the group-targeting version of that ability (e.g. group heals rather than single-target heals). Each ability&rsquo;s toggle is independent.
             </Item>
           </Section>
 
           <Section title="Creature Cards">
             <Item label="Stats preview">
-              Each card shows HP, DMG, SPD, ARM, and CRIT at level 26 — the standard comparison level used across the JWA community.
+              Each card shows HP, DMG, SPD, ARM, and CRIT at level 26 — the standard comparison level used in the JWA community.
             </Item>
             <Item label="Open detail">
-              Click any card to open the full detail modal.
+              Tap or click any card to open the full detail modal.
             </Item>
           </Section>
 
@@ -119,37 +119,40 @@ export default function HelpModal({ onClose }: Props) {
               Shows rarity, class, hybrid type, and the game version when this creature&rsquo;s stats were last updated (e.g. <Badge>Updated v3.1</Badge>).
             </Item>
             <Item label="Level slider">
-              Drag to any level between the creature&rsquo;s minimum (determined by rarity) and 35. <strong className="text-white">Health and Damage scale with level</strong> using the exact formula from the game. Speed, Armor, and Crit are unaffected by level.
+              Drag to any level between the creature&rsquo;s minimum (set by rarity) and 35. <strong className="text-white">Health and Damage scale with level</strong> using the game&rsquo;s own formula. Speed, Armor, and Crit are unaffected by level.
+            </Item>
+            <Item label="Boosts">
+              Every creature gets <strong className="text-white">1 boost per level</strong> — so a level 35 creature has 35 boosts to allocate. Distribute them freely across Health, Damage, and Speed. Each <strong className="text-white">Health or Damage boost</strong> adds 2.5% of that stat&rsquo;s value at the creature&rsquo;s minimum level. Each <strong className="text-white">Speed boost</strong> adds +2. Boosts stack on top of level scaling (and Omega points). Sliding the level down trims excess boosts automatically.
             </Item>
             <Item label="Moves">
-              Regular active moves are listed under <strong className="text-white">Moves</strong>; counters, swap-ins, on-escape, and reactive abilities are listed under <strong className="text-white">Special Abilities</strong>. Each move shows its type, cooldown, priority, damage multiplier, and all secondary effects with targets and durations.
+              Regular active moves appear under <strong className="text-white">Moves</strong>; counters, swap-ins, on-escape, and reactive abilities appear under <strong className="text-white">Special Abilities</strong>. Each move shows its type, cooldown, priority, damage multiplier, and all secondary effects with targets and durations.
             </Item>
             <Item label="Damage totals">
-              Any move with an attack multiplier shows the actual damage value at your current level, e.g. <Badge color="yellow">1.5x DMG = 2325</Badge>. This updates live as you move the level slider.
+              Moves with an attack multiplier show the actual damage at your current level and boosts, e.g. <Badge color="yellow">1.5x DMG = 2325</Badge>. This updates live as you adjust the level or boosts.
             </Item>
             <Item label="Move icons">
-              Where available, a small icon is shown to the left of each move name. Not all moves have icons in the source data.
+              Where available, a small icon is shown to the left of each move name.
             </Item>
           </Section>
 
           <Section title="Omega Creatures">
             <Item label="What are Omegas?">
-              Omegas are a special rarity that replace the standard level-scaling formula with a point-based stat customisation system. Level 35 is still the cap.
+              Omegas replace the standard level-scaling formula with a point-based stat customisation system. Level 35 is still the cap, and they receive boosts just like every other creature.
             </Item>
             <Item label="Points">
-              Every level-up grants <Badge color="green">7 points</Badge> to spend freely. The <strong className="text-white">Points</strong> panel below the stats shows each allocatable stat with a progress bar, <Badge>−</Badge> and <Badge>+</Badge> buttons, and a <em>pts / cap</em> readout. The header shows how many points are allocated vs. available.
+              Every level-up grants <Badge color="green">7 points</Badge> to spend freely. The <strong className="text-white">Points</strong> panel shows each allocatable stat with a progress bar, <Badge>−</Badge> and <Badge>+</Badge> buttons, and a <em>pts / cap</em> readout. The header shows allocated vs. available.
             </Item>
             <Item label="Stat caps">
-              Each stat has two limits: a <strong className="text-white">point cap</strong> (max points that stat can absorb) and an <strong className="text-white">absolute cap</strong> (the maximum value that stat can ever reach). The progress bar turns <span className="text-green-400">green</span> when a stat hits its effective ceiling. Not all stats can receive points — only stats with a positive point-to-stat conversion are shown.
+              Each stat has a <strong className="text-white">point cap</strong> (max points it can absorb) and an <strong className="text-white">absolute cap</strong> (highest possible value). The progress bar turns <span className="text-green-400">green</span> when a stat hits its ceiling. Only stats with a positive point-to-stat conversion are shown.
             </Item>
             <Item label="Move unlock levels">
-              Some Omega moves are locked until a certain level. Locked moves are shown at reduced opacity with an <Badge>Unlocks Lv X</Badge> badge. Slide the level up to unlock them.
+              Some Omega moves are locked until a certain level. Locked moves appear dimmed with an <Badge>Unlocks Lv X</Badge> badge. Slide the level up to unlock them.
             </Item>
           </Section>
 
           <Section title="Data & Updates">
             <Item label="Source">
-              All data is scraped from <span className="text-blue-400">paleo.gg/games/jurassic-world-alive/dinodex</span>. The last scrape date is shown in the top-right of the dashboard header.
+              All data is scraped from <span className="text-blue-400">paleo.gg/games/jurassic-world-alive/dinodex</span>. The last scrape date appears in the top-right of the header.
             </Item>
             <Item label="Stats baseline">
               All stats are stored at level 26 (the game&rsquo;s standard comparison level). The level slider scales from this baseline using the game&rsquo;s own multiplier table.
