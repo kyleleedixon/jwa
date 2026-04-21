@@ -180,9 +180,6 @@ function MoveRow({ move }: { move: Move }) {
   return (
     <div className="bg-slate-800/60 rounded-xl p-3 border border-slate-700/40">
       <div className="flex items-start gap-2">
-        {move.icon && (
-          <img src={move.icon} alt="" width={28} height={28} className="rounded shrink-0 mt-0.5" />
-        )}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="font-semibold text-white text-sm">{move.name}</span>

@@ -12,7 +12,6 @@ export interface Move {
   delay: number;
   cooldown: number;
   priority: number;
-  icon: string | null;
   effects: MoveEffect[];
 }
 

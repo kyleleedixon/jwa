@@ -98,21 +98,31 @@ function parsePageProps(html) {
 }
 
 function parseMoves(moveArray, moveType, moveNames) {
-  return (moveArray || []).map(mv => ({
-    uuid: mv.uuid,
-    name: moveNames[mv.uuid] || mv.uuid,
-    type: moveType,
-    delay: mv.delay,
-    cooldown: mv.cooldown,
-    priority: mv.priority,
-    icon: mv.icon ? `https://cdn.paleo.gg${mv.icon}` : null,
-    effects: (mv.effects || []).map(e => ({
-      action: e.action,
-      target: e.target,
-      ...(e.multiplier != null && { multiplier: e.multiplier }),
-      ...(e.duration != null && { duration: e.duration }),
-    })),
-  }));
+  return (moveArray || []).map(mv => {
+    return {
+      uuid: mv.uuid,
+      name: moveNames[mv.uuid] || mv.uuid,
+      type: moveType,
+      delay: mv.delay,
+      cooldown: mv.cooldown,
+      priority: mv.priority,
+      effects: (mv.effects || []).map(e => ({
+        action: e.action,
+        target: e.target,
+        ...(e.multiplier != null && { multiplier: e.multiplier }),
+        ...(e.duration != null && { duration: e.duration }),
+      })),
+    };
+  });
+}
+
+function deriveSpecialties(moves, existing) {
+  const extra = new Set();
+  const allEffects = moves.flatMap(m => m.effects.map(e => e.action));
+  if (allEffects.includes('remove_all_pos')) extra.add('nullify');
+  if (allEffects.includes('remove_all_neg')) extra.add('cleanse');
+  if (allEffects.includes('dot')) extra.add('dot');
+  return [...new Set([...existing, ...extra])];
 }
 
 async function fetchCreature(slug, moveNames) {
@@ -131,6 +141,7 @@ async function fetchCreature(slug, moveNames) {
         ...parseMoves(d.moves_reactive, 'reactive', names),
       ];
 
+      const specialty = deriveSpecialties(moves, d.specialty || []);
       return {
         uuid: d.uuid,
         name: d.name,
@@ -138,7 +149,7 @@ async function fetchCreature(slug, moveNames) {
         class: d.class,
         size: d.size,
         hybrid_type: d.hybrid_type,
-        specialty: d.specialty || [],
+        specialty,
         dna_source: (d.dna_source || []).map(s => s.loc),
         health: d.health,
         damage: d.damage,
@@ -189,6 +200,7 @@ async function main() {
   }
 
   console.log(`\n  Done! ${results.length} creatures scraped.`);
+
 
   const outPath = path.join(__dirname, '../src/data/creatures.json');
   fs.mkdirSync(path.dirname(outPath), { recursive: true });

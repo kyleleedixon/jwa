@@ -217,19 +217,56 @@ export const SPECIALTY_GROUPS: Record<string, string> = {
   has_special_passive_ability: 'Special Abilities',
   has_alert_ability: 'Special Abilities',
   cheat_death: 'Special Abilities',
+  group_cheat_death: 'Special Abilities',
+
+  // Nullifying (derived from remove_all_pos move effect)
+  nullify: 'Nullifying',
+
+  // Cleansing
+  cleanse: 'Cleansing',
+  remove_all_neg: 'Cleansing',
+
+  // Damage Over Time
+  dot: 'Damage Over Time',
+  group_dot: 'Damage Over Time',
+
+  // Additional unmapped
+  has_revenge_ability: 'Counter & Reactive',
+  run: 'Counter & Reactive',
+  group_bypass_alert: 'Evasion',
+  group_bypass_dodge: 'Evasion',
+  group_dodge: 'Evasion',
+  group_cloak: 'Evasion',
+  group_heal: 'Healing',
+  group_heal_pct: 'Healing',
+  heal_increase: 'Healing',
+  group_heal_increase: 'Healing',
+  group_damage_decrease: 'Weakening',
+  heal_decrease: 'Weakening',
+  group_heal_decrease: 'Weakening',
+  group_crit_decrease: 'Weakening',
+  group_armor_increase: 'Shielding',
+  group_rend: 'Armor Bypass',
+  group_resistance_decrease_all: 'Weakening',
+  priority_last_damage: 'Priority Moves',
+  priority_last_non_damage: 'Priority Moves',
+  group_swap_prevent: 'Swap Control',
 };
 
 export const ABILITY_GROUP_ORDER = [
   'Damage Boosting',
   'Armor Bypass',
+  'Nullifying',
   'Group Attack',
   'Priority Moves',
   'Weakening',
   'Stunning',
   'Speed Control',
   'Healing',
+  'Cleansing',
   'Shielding',
   'Evasion',
+  'Damage Over Time',
   'Swap Control',
   'Counter & Reactive',
   'Special Abilities',
