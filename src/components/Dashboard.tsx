@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { Creature } from '@/types/creature';
 import { specialtyGroups, GROUP_SPECIALTIES_BY_GROUP } from '@/lib/labels';
 import FilterPanel from './FilterPanel';
@@ -42,6 +42,9 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [page, setPage] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  useEffect(() => {
+    if (window.innerWidth >= 768) setSidebarOpen(true);
+  }, []);
   const [selected, setSelected] = useState<Creature | null>(null);
   const [helpOpen, setHelpOpen] = useState(false);
   const [sortKey, setSortKey] = useState<SortKey>('name');
@@ -140,14 +143,20 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
         <div className="max-w-screen-2xl mx-auto px-3 sm:px-4 lg:px-6 py-2.5 sm:py-3 flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => setSidebarOpen(o => !o)}
-            className="p-1.5 rounded-lg hover:bg-slate-700 transition-colors text-gray-400 hover:text-white shrink-0"
+            className={`flex items-center gap-1.5 shrink-0 rounded-lg transition-colors px-2 py-1.5 text-sm font-medium ${sidebarOpen ? 'bg-blue-600/20 text-blue-300' : 'bg-slate-700 hover:bg-slate-600 text-gray-300 hover:text-white'}`}
             aria-label="Toggle filters"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="3" y1="6" x2="21" y2="6"/>
               <line x1="3" y1="12" x2="21" y2="12"/>
               <line x1="3" y1="18" x2="21" y2="18"/>
             </svg>
+            <span className="md:hidden">Filters</span>
+            {activeFilterCount > 0 && (
+              <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-blue-500 text-white text-[10px] font-bold leading-none">
+                {activeFilterCount}
+              </span>
+            )}
           </button>
           <h1 className="font-bold text-base sm:text-lg text-white tracking-tight shrink-0">
             JWA <span className="text-blue-400">Dinodex</span>
