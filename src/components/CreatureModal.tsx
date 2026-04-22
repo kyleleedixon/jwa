@@ -571,11 +571,11 @@ function MoveRow({ move, baseDamage, baseHealth, unlockLevel, currentLevel }: {
                   {e.target && e.target !== 'self' && (
                     <span className="text-gray-500"> → {fmt(e.target, TARGET_LABELS)}</span>
                   )}
-                  {e.multiplier != null && !isHeal && !isDevour && (
+                  {e.multiplier != null && (
                     <span className="text-gray-400"> {(e.multiplier * 100).toFixed(0)}%</span>
                   )}
                   {healAmt != null && (
-                    <span className="text-green-400"> = +{healAmt} HP{isDevour && e.duration ? '/turn' : ''}</span>
+                    <span className="text-green-400"> (+{healAmt} HP{isDevour && e.duration ? '/turn' : ''})</span>
                   )}
                   {e.duration && (
                     <span className="text-gray-500"> {e.duration[0]}t</span>
