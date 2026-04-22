@@ -348,7 +348,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
             <div className="flex flex-col gap-2 text-xs">
               {/* coins row */}
               <div className="flex items-center gap-2">
-                <span className="text-gray-400 w-14 shrink-0">Coins</span>
+                <span className="text-gray-400 w-28 shrink-0">Coins</span>
                 <span className="text-yellow-300 font-semibold tabular-nums">{evoCostAvg.coins.toLocaleString()}</span>
               </div>
               {/* DNA rows */}
