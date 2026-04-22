@@ -46,9 +46,8 @@ export default function CreatureCard({ creature }: Props) {
           <span className={`text-[10px] sm:text-xs font-medium px-1 sm:px-1.5 py-0.5 rounded border ${rarityColor} ${rarityBg} whitespace-nowrap`}>
             {label(RARITY_LABELS, creature.rarity)}
           </span>
-          <span className={`text-[10px] sm:text-xs font-medium truncate ${classColor}`}>
-            {label(CLASS_LABELS, creature.class)}
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={`https://cdn.paleo.gg/games/jwa/images/class/${creature.class}.png`} alt={label(CLASS_LABELS, creature.class)} title={label(CLASS_LABELS, creature.class)} className="w-4 h-4 object-contain shrink-0" />
         </div>
 
         {/* stats row */}
