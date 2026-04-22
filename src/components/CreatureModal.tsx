@@ -404,6 +404,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                     }`}
                     title={enhTitle(enh)}
                   >
+                    <span className="text-[10px] text-gray-500 font-medium">E{i + 1}</span>
                     <span className="text-[10px] font-semibold uppercase tracking-wide">{label}</span>
                   </button>
                 );
