@@ -388,12 +388,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
         {/* boosts allocator */}
         <div className="px-5 py-4 border-b border-slate-700/60">
           <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-400 shrink-0">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-              </svg>
-              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Boosts</h3>
-            </div>
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Boosts</h3>
             <span className={`text-xs font-mono font-semibold ${remainingBoosts === 0 ? 'text-green-400' : 'text-blue-400'}`}>
               {totalBoosts} / {availableBoosts} used
               {remainingBoosts > 0 && <span className="text-gray-500 font-normal"> · {remainingBoosts} left</span>}
@@ -477,12 +472,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
         {isOmega && creature.points && (
           <div className="px-5 py-4 border-b border-slate-700/60">
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-400 shrink-0">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                </svg>
-                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Points</h3>
-              </div>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Points</h3>
               <div className="flex items-center gap-2">
                 <span className={`text-xs font-mono font-semibold ${remainingPoints === 0 ? 'text-green-400' : remainingPoints > 0 ? 'text-yellow-400' : 'text-red-400'}`}>
                   {allocatedPoints} / {availablePoints}
