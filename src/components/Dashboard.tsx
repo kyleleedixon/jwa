@@ -184,11 +184,7 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
             className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-sm font-medium shrink-0"
             aria-label="How to use"
           >
-            <svg width="15" height="15" viewBox="-1 -1 26 26" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-              <line x1="12" y1="17" x2="12.01" y2="17"/>
-            </svg>
+            <span className="w-4 h-4 rounded-full border border-current flex items-center justify-center text-[10px] font-bold leading-none shrink-0">?</span>
             <span className="hidden md:inline">How to use</span>
           </button>
           <div className="flex items-center gap-2 shrink-0">
