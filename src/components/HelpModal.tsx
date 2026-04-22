@@ -33,6 +33,7 @@ function Badge({ children, color = 'slate' }: { children: React.ReactNode; color
     green:  'bg-green-500/20 text-green-300',
     yellow: 'bg-yellow-500/20 text-yellow-300',
     violet: 'bg-violet-600/20 text-violet-300',
+    red:    'bg-red-500/20 text-red-300',
   };
   return (
     <span className={`inline-block text-[11px] font-medium px-1.5 py-0.5 rounded ${colors[color]}`}>
@@ -65,7 +66,7 @@ export default function HelpModal({ onClose }: Props) {
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-700 sticky top-0 bg-slate-900 z-10">
           <div>
             <h1 className="text-lg font-bold text-white">How to use the Dinodex</h1>
-            <p className="text-xs text-gray-500 mt-0.5">All 498 creatures from Jurassic World Alive. Data auto-syncs daily from paleo.gg.</p>
+            <p className="text-xs text-gray-500 mt-0.5">All creatures from Jurassic World Alive. Data auto-syncs daily from paleo.gg.</p>
           </div>
           <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -78,13 +79,13 @@ export default function HelpModal({ onClose }: Props) {
 
           <Section title="Browsing & Search">
             <Item label="Search bar">
-              Type any part of a creature&rsquo;s name to instantly filter the grid. The count top-right updates as you type.
+              Type any part of a creature&rsquo;s name to instantly filter the grid.
             </Item>
             <Item label="Filter sidebar">
               Click the <Badge>Filters</Badge> button in the header to show or hide the filter panel. A blue number badge shows how many filters are active. On desktop the panel is open by default; on mobile it slides in as a drawer.
             </Item>
             <Item label="Sorting">
-              Use the sort bar above the grid to sort by <Badge>Name</Badge> <Badge>HP</Badge> <Badge>DMG</Badge> <Badge>SPD</Badge> <Badge>ARM</Badge> or <Badge>CRIT</Badge>. Clicking a stat defaults to highest-first; clicking again reverses. The active sort shows an arrow.
+              Use the sort bar above the grid to sort by <Badge>Name</Badge> <Badge>HP</Badge> <Badge>DMG</Badge> <Badge>SPD</Badge> <Badge>ARM</Badge> <Badge>CRIT</Badge> or <Badge>CRIT DMG</Badge>. Clicking a stat defaults to highest-first; clicking again reverses.
             </Item>
             <Item label="Load more">
               The grid shows 60 creatures at a time. Scroll to the bottom and click <Badge>Load more</Badge> to see the next batch.
@@ -105,13 +106,16 @@ export default function HelpModal({ onClose }: Props) {
               Each entry is a category of what a creature can do (e.g. Healing, Stunning, Evasion). Multiple selections are OR.
             </Item>
             <Item label="Group toggle">
-              Next to each ability filter is a <Badge color="blue">Group</Badge> toggle. Turning it on narrows results to creatures that have the group-targeting version of that ability. Each toggle is independent.
+              Next to each ability filter is a <Badge color="blue">Group</Badge> toggle. Turning it on narrows results to creatures that have the group-targeting version of that ability.
             </Item>
           </Section>
 
           <Section title="Creature Cards">
             <Item label="Stats preview">
-              Each card shows HP, DMG, SPD, ARM, and CRIT at level 26 — the standard comparison level used by the JWA community.
+              Each card shows HP, DMG, SPD, ARM, CRIT, and CRIT DMG at level 26 — the standard comparison level used by the JWA community.
+            </Item>
+            <Item label="Class icon">
+              The small icon next to the rarity badge shows the creature&rsquo;s class (Fierce, Cunning, Resilient, etc.).
             </Item>
             <Item label="Open detail">
               Tap or click any card to open the full detail modal.
@@ -120,31 +124,31 @@ export default function HelpModal({ onClose }: Props) {
 
           <Section title="Creature Detail Modal">
             <Item label="Header">
-              Shows rarity, class, hybrid type, full description, and the game version when this creature&rsquo;s stats were last updated (e.g. <Badge>Updated v3.1</Badge>).
+              Shows rarity, class icon, hybrid type, full description, and the game version when this creature&rsquo;s stats were last updated.
+            </Item>
+            <Item label="Bio info">
+              Directly below the header: <strong className="text-white">Made From</strong> and <strong className="text-white">Used In</strong> show ingredient and hybrid relationships side by side. <strong className="text-white">Resistances</strong> are color-coded — <span className="text-green-300 text-xs font-medium">green</span> = 100% immune, <span className="text-lime-300 text-xs font-medium">lime</span> = 67–99%, <span className="text-yellow-300 text-xs font-medium">yellow</span> = 34–66%, <span className="text-red-300 text-xs font-medium">red</span> = 1–33%. <strong className="text-white">Spawn</strong> shows where DNA can be found.
             </Item>
             <Item label="Level slider">
               Drag to any level between the creature&rsquo;s minimum (set by rarity) and 35. Health and Damage scale with level using the game&rsquo;s own formula. Speed, Armor, and Crit are unaffected by level.
             </Item>
             <Item label="Evolution cost">
-              Below the stats, see the coins and ingredient DNA needed to reach the selected level from the creature&rsquo;s starting level. Hybrid ingredient DNA shows three columns — <span className="text-green-400 text-xs font-medium">Best (50 DNA/fuse)</span>, <span className="text-blue-300 text-xs font-medium">Avg (22)</span>, and <span className="text-red-400 text-xs font-medium">Worst (10)</span>.
+              Below the stats, see the coins and DNA needed to reach the selected level from the creature&rsquo;s starting level. For hybrids, ingredient DNA shows three columns — <span className="text-green-400 text-xs font-medium">Best (50 DNA/fuse)</span>, <span className="text-blue-300 text-xs font-medium">Avg (22)</span>, and <span className="text-red-400 text-xs font-medium">Worst (10)</span>. Omega creatures show their own coin and DNA cost tables.
             </Item>
             <Item label="Boosts">
-              Every creature gets <strong className="text-white">1 boost per level</strong>. Distribute them across Health, Damage, and Speed. Health and Damage boosts are multiplicative (+2.5% each). Speed boosts add +2 each. Max 20 boosts per stat. Enhancements can raise the total boost cap.
+              Every creature gets <strong className="text-white">1 boost per level</strong>. Distribute them across Health, Damage, and Speed using the − / + buttons. Each stat shows its in-game icon. Health and Damage boosts are multiplicative (+2.5% each). Speed boosts add +2 each. Max 20 boosts per stat. Enhancements can raise the total boost cap.
             </Item>
             <Item label="Enhancements">
-              Unique and Apex creatures have up to 5 purchasable enhancements shown as <Badge color="violet">E1</Badge>–<Badge color="violet">E5</Badge>. Click a step to activate all enhancements up to that tier; click the active step again to deactivate it. HP/DMG enhancements are multiplicative and apply after boosts. The final tier usually unlocks a new reactive move, shown as <Badge color="violet">Enhancement locked</Badge> until activated.
+              Unique and Apex creatures have up to 5 purchasable enhancements shown as <Badge color="violet">E1</Badge>–<Badge color="violet">E5</Badge>. Click a step to activate all enhancements up to that tier; click the active step again to deactivate it. HP/DMG enhancements are multiplicative and apply after boosts. The final tier usually unlocks a new reactive move.
             </Item>
             <Item label="Ingredients & hybrids">
-              <strong className="text-white">Made From</strong> shows which creatures this one is fused from. <strong className="text-white">Used In</strong> shows which hybrids use this creature. All chips are clickable — tap one to jump directly to that creature.
+              <strong className="text-white">Made From</strong> and <strong className="text-white">Used In</strong> chips are clickable — tap one to jump directly to that creature.
             </Item>
             <Item label="Spawn locations">
               Shows where a creature&rsquo;s DNA can be found in the wild (e.g. Local Area 2, Sanctuary, Event Only).
             </Item>
-            <Item label="Resistances">
-              Non-zero resistances are shown as badges. <span className="text-green-300 text-xs font-medium">Green</span> = 100% immune; grey = partial resistance with percentage.
-            </Item>
             <Item label="Moves">
-              Active moves appear under <strong className="text-white">Moves</strong>; counters, swap-ins, on-escape, and reactive abilities under <strong className="text-white">Special Abilities</strong>. Each shows type, cooldown, priority, and all effects with targets and durations. Attack multipliers show the calculated damage total. Heal effects show both the percentage and the HP amount. Devour shows HP per turn based on current damage.
+              Active moves appear under <strong className="text-white">Moves</strong>; counters, swap-ins, on-escape, and reactive abilities under <strong className="text-white">Special Abilities</strong>. Each shows type, cooldown, priority, and all effects. Moves with priority show a priority indicator on their icon. Attack multipliers show the calculated damage total. Heal effects show both the percentage and HP amount.
             </Item>
             <Item label="Crit damage">
               The stats grid shows both Crit Rate and Crit DMG multiplier. For Omega creatures both scale with point allocation.
@@ -153,16 +157,16 @@ export default function HelpModal({ onClose }: Props) {
 
           <Section title="Omega Creatures">
             <Item label="What are Omegas?">
-              Omegas use a point-based stat customisation system instead of the standard level-scaling formula. They still have a level slider, boosts, and a full move breakdown.
+              Omegas use a point-based stat customisation system. They still have a level slider, evolution costs, boosts, and a full move breakdown.
             </Item>
             <Item label="Points">
-              Every level-up grants <Badge color="green">7 points</Badge> to spend freely. The <strong className="text-white">Points</strong> panel shows each allocatable stat with a progress bar and <Badge>−</Badge> / <Badge>+</Badge> buttons. The header shows allocated vs. available points.
+              Every level-up grants <Badge color="green">7 points</Badge> to spend freely. The <strong className="text-white">Points</strong> panel shows each allocatable stat with a progress bar, − / + buttons, and the in-game stat icon. Use <Badge color="blue">Preset</Badge> to evenly distribute all available points, or <Badge>Reset</Badge> to clear them.
             </Item>
             <Item label="Stat caps">
-              Each stat has a point cap and an absolute value cap. The bar turns <span className="text-green-400">green</span> when a stat is maxed. Only stats with a non-zero point delta are shown.
+              Each stat has a point cap and an absolute value cap. The bar turns <span className="text-green-400">green</span> when a stat is maxed.
             </Item>
             <Item label="Move unlocks">
-              Some Omega moves are locked until a certain level. They appear dimmed with an <Badge>Unlocks Lv X</Badge> badge. Slide the level up to unlock them.
+              Some Omega moves are locked until a certain level. They appear dimmed with an <Badge>Unlocks Lv X</Badge> badge.
             </Item>
           </Section>
 
