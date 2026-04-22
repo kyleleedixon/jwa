@@ -15,7 +15,7 @@ function statAtLevel(base: number, level: number): number {
   return Math.floor(base * LEVEL_MULT[level - 1] / 1e9);
 }
 
-import { RESISTANCE_KEYS, RESISTANCE_LABELS } from '@/lib/labels';
+import { RESISTANCE_KEYS, RESISTANCE_LABELS, SPAWN_LABELS, label as labelFn } from '@/lib/labels';
 import { evolutionCost, RARITY_LEVEL_RANGE } from '@/lib/evolution';
 
 interface Props {
@@ -584,6 +584,20 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                   </span>
                 );
               })}
+            </div>
+          </div>
+        )}
+
+        {/* spawn locations */}
+        {creature.dna_source.length > 0 && (
+          <div className="px-5 py-3 border-b border-slate-700/60">
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Spawn Locations</h3>
+            <div className="flex flex-wrap gap-1.5">
+              {creature.dna_source.map(loc => (
+                <span key={loc} className="text-xs font-medium px-2 py-0.5 rounded border bg-slate-700/60 text-gray-300 border-slate-600">
+                  {labelFn(SPAWN_LABELS, loc)}
+                </span>
+              ))}
             </div>
           </div>
         )}
