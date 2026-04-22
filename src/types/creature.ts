@@ -1,3 +1,9 @@
+export interface Enhancement {
+  cost: number;
+  req: [string, number][];
+  rwd: { type: string; value: number | string };
+}
+
 export interface OmegaPoints {
   cap:   Record<string, number>;
   delta: Record<string, number>;
@@ -46,6 +52,7 @@ export interface Creature {
   resistance: number[];
   move_unlock_lv?: Record<string, number>;
   points?: OmegaPoints;
+  enhancements?: Enhancement[];
 }
 
 export interface FilterState {

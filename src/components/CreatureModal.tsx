@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { Creature, Move } from '@/types/creature';
+import { Creature, Enhancement, Move } from '@/types/creature';
 import { RARITY_LABELS, CLASS_LABELS, HYBRID_TYPE_LABELS, RARITY_COLORS, RARITY_BG, CLASS_COLORS, label } from '@/lib/labels';
 
 // Multiplier table from paleo.gg source: index = level - 1, value / 1e9 = multiplier
@@ -89,6 +89,21 @@ function fmt(val: string, map: Record<string, string>) {
   return map[val] ?? val.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
 
+function enhLabel(enh: Enhancement): string {
+  const { type, value } = enh.rwd;
+  if (type === 'health') return `+${value} HP`;
+  if (type === 'damage') return `+${value} DMG`;
+  if (type === 'speed') return `+${value} SPD`;
+  if (type === 'boost_max') return `+${value} Boost`;
+  if (type === 'moves_reactive') return 'New Move';
+  return type;
+}
+
+function enhTitle(enh: Enhancement): string {
+  const parts = enh.req.map(([res, amt]) => `${amt.toLocaleString()} ${res.replace(/_/g, ' ')}`);
+  return parts.join(', ');
+}
+
 const POINTS_PER_LEVEL = 7;
 const STAT_KEYS = ['health', 'damage', 'speed', 'armor', 'crit', 'critm'] as const;
 const STAT_LABELS: Record<string, string> = { health: 'Health', damage: 'Damage', speed: 'Speed', armor: 'Armor', crit: 'Crit', critm: 'Crit Mult' };
@@ -113,12 +128,14 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
   const [level, setLevel] = useState(defaultLevel);
   const [omegaAlloc, setOmegaAlloc] = useState<Record<string, number>>({});
   const [boosts, setBoosts] = useState<Record<BoostStat, number>>({ health: 0, damage: 0, speed: 0 });
+  const [enhancementLevel, setEnhancementLevel] = useState(0);
 
   // Reset when creature changes
   useEffect(() => {
     setLevel(defaultLevel);
     setOmegaAlloc({});
     setBoosts({ health: 0, damage: 0, speed: 0 });
+    setEnhancementLevel(0);
   }, [creature.uuid]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // When level drops, trim boosts that exceed new budget
@@ -169,12 +186,20 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
   const rarityBg = RARITY_BG[creature.rarity] ?? 'bg-gray-500/20';
   const classColor = CLASS_COLORS[creature.class] ?? 'text-gray-400';
 
+  // Enhancement calculations
+  const activeEnhancements = (creature.enhancements ?? []).slice(0, enhancementLevel);
+  const enhHealthBonus  = activeEnhancements.filter(e => e.rwd.type === 'health').reduce((s, e) => s + (e.rwd.value as number), 0);
+  const enhDamageBonus  = activeEnhancements.filter(e => e.rwd.type === 'damage').reduce((s, e) => s + (e.rwd.value as number), 0);
+  const enhSpeedBonus   = activeEnhancements.filter(e => e.rwd.type === 'speed').reduce((s, e) => s + (e.rwd.value as number), 0);
+  const enhBoostMax     = activeEnhancements.filter(e => e.rwd.type === 'boost_max').reduce((s, e) => s + (e.rwd.value as number), 0);
+  const unlockedReactiveUuid = activeEnhancements.find(e => e.rwd.type === 'moves_reactive')?.rwd.value as string | undefined;
+
   // Boost calculations — based on stat value at the creature's minimum level
   const baseHealth = statAtLevel(creature.health, minLevel);
   const baseDamage = statAtLevel(creature.damage, minLevel);
   const healthBoostPer = Math.floor(baseHealth * 0.025);
   const damageBoostPer = Math.floor(baseDamage * 0.025);
-  const availableBoosts = level;
+  const availableBoosts = level + enhBoostMax;
   const totalBoosts = boosts.health + boosts.damage + boosts.speed;
   const remainingBoosts = availableBoosts - totalBoosts;
 
@@ -200,7 +225,10 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
     displayCritm  = `${creature.critm}%`;
   }
 
-  // Apply boosts on top of level/omega values
+  // Apply enhancements then boosts
+  displayHealth = (displayHealth as number) + enhHealthBonus;
+  displayDamage = (displayDamage as number) + enhDamageBonus;
+  displaySpeed  = (displaySpeed  as number) + enhSpeedBonus;
   displayHealth += boosts.health * healthBoostPer;
   displayDamage += boosts.damage * damageBoostPer;
   displaySpeed  += boosts.speed * 2;
@@ -211,6 +239,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
 
   const regularMoves = creature.moves.filter(m => m.type === 'regular');
   const specialMoves = creature.moves.filter(m => m.type !== 'regular');
+  const enhanceMoveUuid = creature.enhancements?.find(e => e.rwd.type === 'moves_reactive')?.rwd.value as string | undefined;
 
   function changeBoost(stat: BoostStat, delta: number) {
     setBoosts(prev => {
@@ -350,6 +379,38 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
             })}
           </div>
         </div>
+
+        {/* enhancements */}
+        {creature.enhancements && creature.enhancements.length > 0 && (
+          <div className="px-5 py-4 border-b border-slate-700/60">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Enhancements</h3>
+              <span className={`text-xs font-semibold ${enhancementLevel === creature.enhancements.length ? 'text-green-400' : 'text-blue-400'}`}>
+                {enhancementLevel} / {creature.enhancements.length}
+              </span>
+            </div>
+            <div className="flex gap-2">
+              {creature.enhancements.map((enh, i) => {
+                const active = i < enhancementLevel;
+                const label = enhLabel(enh);
+                return (
+                  <button
+                    key={i}
+                    onClick={() => setEnhancementLevel(enhancementLevel === i + 1 ? i : i + 1)}
+                    className={`flex-1 flex flex-col items-center gap-1 rounded-lg border py-2 px-1 transition-colors ${
+                      active
+                        ? 'bg-violet-600/20 border-violet-500/50 text-violet-300'
+                        : 'bg-slate-800/60 border-slate-700 text-gray-500 hover:border-slate-500 hover:text-gray-300'
+                    }`}
+                    title={enhTitle(enh)}
+                  >
+                    <span className="text-[10px] font-semibold uppercase tracking-wide">{label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* omega points allocator */}
         {isOmega && creature.points && (
@@ -500,7 +561,8 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                     {specialMoves.map(m => (
                       <MoveRow key={m.uuid} move={m} baseDamage={displayDamage as number} baseHealth={displayHealth as number}
                         unlockLevel={creature.move_unlock_lv?.[m.uuid]}
-                        currentLevel={level} />
+                        currentLevel={level}
+                        enhanceLocked={enhanceMoveUuid === m.uuid && !unlockedReactiveUuid} />
                     ))}
                   </div>
                 </div>
@@ -513,10 +575,10 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
   );
 }
 
-function MoveRow({ move, baseDamage, baseHealth, unlockLevel, currentLevel }: {
-  move: Move; baseDamage: number; baseHealth: number; unlockLevel?: number; currentLevel?: number;
+function MoveRow({ move, baseDamage, baseHealth, unlockLevel, currentLevel, enhanceLocked }: {
+  move: Move; baseDamage: number; baseHealth: number; unlockLevel?: number; currentLevel?: number; enhanceLocked?: boolean;
 }) {
-  const locked = unlockLevel != null && currentLevel != null && currentLevel < unlockLevel;
+  const locked = (unlockLevel != null && currentLevel != null && currentLevel < unlockLevel) || enhanceLocked;
   const typeColor = MOVE_TYPE_COLORS[move.type] ?? 'bg-gray-500/20 text-gray-300 border-gray-500/30';
   const attackEffect = move.effects.find(e => e.action === 'attack');
   const totalDamage = attackEffect?.multiplier != null ? Math.round(baseDamage * attackEffect.multiplier) : null;
@@ -532,7 +594,12 @@ function MoveRow({ move, baseDamage, baseHealth, unlockLevel, currentLevel }: {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="font-semibold text-white text-sm">{move.name.startsWith('ra__') ? 'Enhancement' : move.name}</span>
-                    {locked && (
+                    {enhanceLocked && (
+                      <span className="text-[10px] font-medium px-1.5 py-0.5 rounded border bg-violet-600/20 text-violet-400 border-violet-500/40">
+                        Enhancement locked
+                      </span>
+                    )}
+                    {locked && !enhanceLocked && (
                       <span className="text-[10px] font-medium px-1.5 py-0.5 rounded border bg-slate-600/40 text-gray-400 border-slate-500/40">
                         Unlocks Lv {unlockLevel}
                       </span>
