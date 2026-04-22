@@ -87,10 +87,10 @@ const TARGET_LABELS: Record<string, string> = {
 };
 
 function resistanceColor(val: number): string {
-  if (val >= 100) return 'bg-green-500/20 text-green-300 border-green-500/30';
-  if (val >= 67)  return 'bg-lime-500/20 text-lime-300 border-lime-500/30';
-  if (val >= 34)  return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
-  return 'bg-orange-500/20 text-orange-300 border-orange-500/30';
+  if (val >= 100) return 'bg-green-500/25 text-green-300 border-green-400/50';
+  if (val >= 67)  return 'bg-lime-500/25 text-lime-300 border-lime-400/50';
+  if (val >= 34)  return 'bg-yellow-500/25 text-yellow-300 border-yellow-400/50';
+  return 'bg-red-500/25 text-red-300 border-red-400/50';
 }
 
 function fmt(val: string, map: Record<string, string>) {
