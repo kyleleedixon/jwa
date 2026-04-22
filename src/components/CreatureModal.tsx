@@ -406,7 +406,11 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
               const atStatCap = cur >= MAX_BOOSTS_PER_STAT;
               return (
                 <div key={key} className="flex items-center gap-2">
-                  <span className="text-xs text-gray-400 w-14 shrink-0">{bLabel}</span>
+                  <div className="flex items-center gap-1.5 w-20 shrink-0">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={`https://cdn.paleo.gg/games/jwa/images/stat/${key}.png`} alt="" className="w-4 h-4 object-contain shrink-0" />
+                    <span className="text-xs text-gray-400">{bLabel}</span>
+                  </div>
                   <button
                     onClick={() => changeBoost(key, -1)}
                     disabled={cur === 0}
@@ -546,7 +550,11 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                 return (
                   <div key={k} className="flex flex-col gap-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-400 w-16 shrink-0">{STAT_LABELS[k]}</span>
+                      <div className="flex items-center gap-1.5 w-20 shrink-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={`https://cdn.paleo.gg/games/jwa/images/stat/${k}.png`} alt="" className="w-4 h-4 object-contain shrink-0" />
+                        <span className="text-xs text-gray-400">{STAT_LABELS[k]}</span>
+                      </div>
                       <button
                         onClick={() => changeAlloc(k, -1)}
                         disabled={alloc === 0}
