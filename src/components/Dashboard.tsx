@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { Creature } from '@/types/creature';
-import { specialtyGroups, GROUP_SPECIALTIES_BY_GROUP } from '@/lib/labels';
+import { specialtyGroups, GROUP_SPECIALTIES_BY_GROUP, RESISTANCE_KEYS } from '@/lib/labels';
 import FilterPanel from './FilterPanel';
 import CreatureCard from './CreatureCard';
 import CreatureModal from './CreatureModal';
@@ -23,6 +23,7 @@ const EMPTY_FILTERS: Filters = {
   hybrid_type: new Set(),
   ability_group: new Set(),
   group_only: new Set(),
+  resistance: new Set(),
 };
 
 type SortKey = 'name' | 'health' | 'damage' | 'speed' | 'armor' | 'crit';
@@ -94,6 +95,13 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
       if (filters.rarity.size > 0 && !filters.rarity.has(c.rarity)) return false;
       if (filters.class.size > 0 && !filters.class.has(c.class)) return false;
       if (filters.hybrid_type.size > 0 && !filters.hybrid_type.has(c.hybrid_type)) return false;
+      if (filters.resistance.size > 0) {
+        const match = [...filters.resistance].some(key => {
+          const idx = RESISTANCE_KEYS.indexOf(key as typeof RESISTANCE_KEYS[number]);
+          return idx >= 0 && (c.resistance?.[idx] ?? 0) > 0;
+        });
+        if (!match) return false;
+      }
       if (filters.ability_group.size > 0) {
         const cGroups = specialtyGroups(c.specialty);
         const match = [...filters.ability_group].some(g => {
@@ -127,7 +135,7 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-900 text-white">
-      {selected && <CreatureModal creature={selected} onClose={() => setSelected(null)} />}
+      {selected && <CreatureModal creature={selected} creatures={creatures} onClose={() => setSelected(null)} onNavigate={setSelected} />}
       {helpOpen && <HelpModal onClose={() => setHelpOpen(false)} />}
 
       {/* mobile sidebar backdrop */}

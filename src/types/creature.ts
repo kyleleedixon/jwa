@@ -43,6 +43,7 @@ export interface Creature {
   hybrids: string[];
   image: string;
   moves: Move[];
+  resistance: number[];
   move_unlock_lv?: Record<string, number>;
   points?: OmegaPoints;
 }

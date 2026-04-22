@@ -9,6 +9,8 @@ import {
   HYBRID_TYPE_ORDER,
   ABILITY_GROUP_ORDER,
   GROUP_SPECIALTIES_BY_GROUP,
+  RESISTANCE_KEYS,
+  RESISTANCE_LABELS,
   label,
   specialtyGroups,
 } from '@/lib/labels';
@@ -77,6 +79,33 @@ export default function FilterPanel({ creatures, filters, onToggle, onClear, onC
         getLabel={v => label(HYBRID_TYPE_LABELS, v)}
         onToggle={v => onToggle('hybrid_type', v)}
       />
+
+      <div>
+        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+          Resistances
+          {filters.resistance.size > 0 && (
+            <span className="ml-1.5 text-blue-400">({filters.resistance.size})</span>
+          )}
+        </h3>
+        <div className="flex flex-col gap-1.5">
+          {RESISTANCE_KEYS.filter(key => {
+            const idx = RESISTANCE_KEYS.indexOf(key);
+            return creatures.some(c => (c.resistance?.[idx] ?? 0) > 0);
+          }).map(key => (
+            <label key={key} className="flex items-center gap-2 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={filters.resistance.has(key)}
+                onChange={() => onToggle('resistance', key)}
+                className="w-3.5 h-3.5 rounded accent-blue-500 cursor-pointer"
+              />
+              <span className={`text-xs transition-colors ${filters.resistance.has(key) ? 'text-white' : 'text-gray-400 group-hover:text-gray-200'}`}>
+                {RESISTANCE_LABELS[key]}
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
 
       <div>
         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">

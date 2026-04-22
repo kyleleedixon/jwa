@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Creature, Move } from '@/types/creature';
 import { RARITY_LABELS, CLASS_LABELS, HYBRID_TYPE_LABELS, RARITY_COLORS, RARITY_BG, CLASS_COLORS, label } from '@/lib/labels';
@@ -15,9 +15,13 @@ function statAtLevel(base: number, level: number): number {
   return Math.floor(base * LEVEL_MULT[level - 1] / 1e9);
 }
 
+import { RESISTANCE_KEYS, RESISTANCE_LABELS } from '@/lib/labels';
+
 interface Props {
   creature: Creature;
+  creatures: Creature[];
   onClose: () => void;
+  onNavigate: (c: Creature) => void;
 }
 
 const MOVE_TYPE_LABELS: Record<string, string> = {
@@ -98,7 +102,9 @@ const BOOST_STATS: { key: BoostStat; label: string }[] = [
   { key: 'speed',  label: 'Speed'  },
 ];
 
-export default function CreatureModal({ creature, onClose }: Props) {
+export default function CreatureModal({ creature, creatures, onClose, onNavigate }: Props) {
+  const creatureByUuid = useMemo(() => new Map(creatures.map(c => [c.uuid, c])), [creatures]);
+
   const isOmega = creature.rarity === 'omega';
   const minLevel = MIN_LEVEL[creature.rarity] ?? 1;
   const maxLevel = MAX_LEVEL;
@@ -174,7 +180,7 @@ export default function CreatureModal({ creature, onClose }: Props) {
 
   // Stat calculations
   let displayHealth: number, displayDamage: number, displaySpeed: number,
-      displayArmor: number | string, displayCrit: number | string;
+      displayArmor: string, displayCrit: string, displayCritm: string;
 
   if (isOmega && creature.points) {
     const { delta, cap } = creature.points;
@@ -184,12 +190,14 @@ export default function CreatureModal({ creature, onClose }: Props) {
     displaySpeed  = Math.min(creature.speed  + (alloc.speed  ?? 0) * delta.speed,  cap.speed);
     displayArmor  = `${Math.min(creature.armor + (alloc.armor ?? 0) * delta.armor, cap.armor)}%`;
     displayCrit   = `${Math.min(creature.crit  + (alloc.crit  ?? 0) * delta.crit,  cap.crit)}%`;
+    displayCritm  = `${Math.min(creature.critm + (alloc.critm ?? 0) * (delta.critm ?? 0), cap.critm ?? creature.critm)}%`;
   } else {
     displayHealth = statAtLevel(creature.health, level);
     displayDamage = statAtLevel(creature.damage, level);
     displaySpeed  = creature.speed;
     displayArmor  = `${creature.armor}%`;
     displayCrit   = `${creature.crit}%`;
+    displayCritm  = `${creature.critm}%`;
   }
 
   // Apply boosts on top of level/omega values
@@ -280,17 +288,18 @@ export default function CreatureModal({ creature, onClose }: Props) {
         </div>
 
         {/* stats */}
-        <div className="grid grid-cols-5 gap-2 px-5 py-3 border-b border-slate-700/60">
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 px-5 py-3 border-b border-slate-700/60">
           {[
-            { label: 'Health', value: displayHealth },
-            { label: 'Damage', value: displayDamage },
-            { label: 'Speed',  value: displaySpeed },
-            { label: 'Armor',  value: displayArmor },
-            { label: 'Crit',   value: displayCrit },
+            { label: 'Health',   value: displayHealth },
+            { label: 'Damage',   value: displayDamage },
+            { label: 'Speed',    value: displaySpeed },
+            { label: 'Armor',    value: displayArmor },
+            { label: 'Crit',     value: displayCrit },
+            { label: 'Crit DMG', value: displayCritm },
           ].map(s => (
             <div key={s.label} className="flex flex-col items-center bg-slate-800/60 rounded-lg py-2">
               <span className="text-[10px] uppercase tracking-wider text-gray-500">{s.label}</span>
-              <span className="text-white font-semibold font-mono">{s.value}</span>
+              <span className="text-white font-semibold tabular-nums text-sm">{s.value}</span>
             </div>
           ))}
         </div>
@@ -353,7 +362,15 @@ export default function CreatureModal({ creature, onClose }: Props) {
               </span>
             </div>
             <div className="flex flex-col gap-2">
-              {STAT_KEYS.filter(k => (creature.points!.delta[k] ?? 0) > 0).map(k => {
+              {STAT_KEYS.filter(k => {
+                const d = creature.points!.delta[k] ?? 0;
+                if (d <= 0) return false;
+                const p = creature.points!.pcap[k] ?? 0;
+                if (p <= 0) return false;
+                const base = (creature as unknown as Record<string, number>)[k] ?? 0;
+                const cap = creature.points!.cap[k] ?? 0;
+                return Math.min(p, Math.floor((cap - base) / d)) > 0;
+              }).map(k => {
                 const alloc = omegaAlloc[k] ?? 0;
                 const pcap = creature.points!.pcap[k] ?? 0;
                 const delta = creature.points!.delta[k] ?? 0;
@@ -398,6 +415,66 @@ export default function CreatureModal({ creature, onClose }: Props) {
           </div>
         )}
 
+        {/* ingredients — what this creature is made from */}
+        {creature.ingredients.length > 0 && (
+          <div className="px-5 py-3 border-b border-slate-700/60">
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Made From</h3>
+            <div className="flex flex-wrap gap-2">
+              {creature.ingredients.map(uuid => {
+                const c = creatureByUuid.get(uuid);
+                if (!c) return <span key={uuid} className="text-xs text-gray-500 capitalize">{uuid.replace(/_/g, ' ')}</span>;
+                return (
+                  <button key={uuid} onClick={() => onNavigate(c)} className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 transition-colors">
+                    <div className="relative w-6 h-6 shrink-0">
+                      <Image src={c.image} alt={c.name} fill className="object-contain" unoptimized />
+                    </div>
+                    <span className="text-xs text-gray-300">{c.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* hybrids — creatures this one is used in */}
+        {creature.hybrids.length > 0 && (
+          <div className="px-5 py-3 border-b border-slate-700/60">
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Used In</h3>
+            <div className="flex flex-wrap gap-2">
+              {creature.hybrids.map(uuid => {
+                const c = creatureByUuid.get(uuid);
+                if (!c) return <span key={uuid} className="text-xs text-gray-500 capitalize">{uuid.replace(/_/g, ' ')}</span>;
+                return (
+                  <button key={uuid} onClick={() => onNavigate(c)} className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 transition-colors">
+                    <div className="relative w-6 h-6 shrink-0">
+                      <Image src={c.image} alt={c.name} fill className="object-contain" unoptimized />
+                    </div>
+                    <span className="text-xs text-gray-300">{c.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* resistances */}
+        {creature.resistance?.some(v => v > 0) && (
+          <div className="px-5 py-3 border-b border-slate-700/60">
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Resistances</h3>
+            <div className="flex flex-wrap gap-1.5">
+              {RESISTANCE_KEYS.map((key, idx) => {
+                const val = creature.resistance[idx] ?? 0;
+                if (val === 0) return null;
+                return (
+                  <span key={key} className={`text-xs font-medium px-2 py-0.5 rounded border ${val === 100 ? 'bg-green-500/20 text-green-300 border-green-500/30' : 'bg-slate-700/60 text-gray-300 border-slate-600'}`}>
+                    {RESISTANCE_LABELS[key]} {val}%
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* moves */}
         <div className="p-5 flex flex-col gap-3">
           {creature.moves.length === 0 ? (
@@ -409,7 +486,7 @@ export default function CreatureModal({ creature, onClose }: Props) {
                   <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Moves</h3>
                   <div className="flex flex-col gap-2">
                     {regularMoves.map(m => (
-                      <MoveRow key={m.uuid} move={m} baseDamage={displayDamage as number}
+                      <MoveRow key={m.uuid} move={m} baseDamage={displayDamage as number} baseHealth={displayHealth as number}
                         unlockLevel={creature.move_unlock_lv?.[m.uuid]}
                         currentLevel={level} />
                     ))}
@@ -421,7 +498,7 @@ export default function CreatureModal({ creature, onClose }: Props) {
                   <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Special Abilities</h3>
                   <div className="flex flex-col gap-2">
                     {specialMoves.map(m => (
-                      <MoveRow key={m.uuid} move={m} baseDamage={displayDamage as number}
+                      <MoveRow key={m.uuid} move={m} baseDamage={displayDamage as number} baseHealth={displayHealth as number}
                         unlockLevel={creature.move_unlock_lv?.[m.uuid]}
                         currentLevel={level} />
                     ))}
@@ -436,8 +513,8 @@ export default function CreatureModal({ creature, onClose }: Props) {
   );
 }
 
-function MoveRow({ move, baseDamage, unlockLevel, currentLevel }: {
-  move: Move; baseDamage: number; unlockLevel?: number; currentLevel?: number;
+function MoveRow({ move, baseDamage, baseHealth, unlockLevel, currentLevel }: {
+  move: Move; baseDamage: number; baseHealth: number; unlockLevel?: number; currentLevel?: number;
 }) {
   const locked = unlockLevel != null && currentLevel != null && currentLevel < unlockLevel;
   const typeColor = MOVE_TYPE_COLORS[move.type] ?? 'bg-gray-500/20 text-gray-300 border-gray-500/30';
@@ -480,20 +557,32 @@ function MoveRow({ move, baseDamage, unlockLevel, currentLevel }: {
           </div>
 
           <div className="flex flex-wrap gap-1.5 mt-2">
-            {move.effects.filter(e => e.action !== 'attack').map((e, i) => (
-              <span key={i} className="text-[11px] bg-slate-700/60 text-gray-300 px-2 py-0.5 rounded">
-                {fmt(e.action, ACTION_LABELS)}
-                {e.target && e.target !== 'self' && (
-                  <span className="text-gray-500"> → {fmt(e.target, TARGET_LABELS)}</span>
-                )}
-                {e.multiplier != null && e.action !== 'attack' && (
-                  <span className="text-gray-400"> {(e.multiplier * 100).toFixed(0)}%</span>
-                )}
-                {e.duration && (
-                  <span className="text-gray-500"> {e.duration[0]}t</span>
-                )}
-              </span>
-            ))}
+            {move.effects.filter(e => e.action !== 'attack').map((e, i) => {
+              const isHeal = e.action === 'heal' || e.action === 'heal_pct';
+              const isDevour = e.action === 'hot_contextual';
+              const healAmt = isHeal && e.multiplier != null
+                ? Math.round(baseHealth * e.multiplier)
+                : isDevour && e.multiplier != null
+                  ? Math.round((totalDamage ?? baseDamage) * e.multiplier)
+                  : null;
+              return (
+                <span key={i} className="text-[11px] bg-slate-700/60 text-gray-300 px-2 py-0.5 rounded">
+                  {fmt(e.action, ACTION_LABELS)}
+                  {e.target && e.target !== 'self' && (
+                    <span className="text-gray-500"> → {fmt(e.target, TARGET_LABELS)}</span>
+                  )}
+                  {e.multiplier != null && !isHeal && !isDevour && (
+                    <span className="text-gray-400"> {(e.multiplier * 100).toFixed(0)}%</span>
+                  )}
+                  {healAmt != null && (
+                    <span className="text-green-400"> = +{healAmt} HP{isDevour && e.duration ? '/turn' : ''}</span>
+                  )}
+                  {e.duration && (
+                    <span className="text-gray-500"> {e.duration[0]}t</span>
+                  )}
+                </span>
+              );
+            })}
           </div>
         </div>
       </div>

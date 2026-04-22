@@ -286,6 +286,40 @@ export const ABILITY_GROUP_ORDER = [
   'Special Abilities',
 ];
 
+export const RESISTANCE_KEYS = [
+  'rst_crit_decrease',
+  'rst_dot',
+  'rst_damage_decrease',
+  'rst_rend',
+  'rst_speed_decrease',
+  'rst_stun',
+  'rst_swap_prevent',
+  'rst_taunt',
+  'rst_vulner',
+  'rst_armor_decrease',
+  'rst_resistance_decrease_all',
+  'rst_heal_decrease',
+  'rst_daze',
+] as const;
+
+export type ResistanceKey = typeof RESISTANCE_KEYS[number];
+
+export const RESISTANCE_LABELS: Record<ResistanceKey, string> = {
+  rst_crit_decrease: 'Crit Reduction',
+  rst_dot: 'Damage Over Time',
+  rst_damage_decrease: 'Reduced Damage',
+  rst_rend: 'Rend',
+  rst_speed_decrease: 'Speed Decrease',
+  rst_stun: 'Stun',
+  rst_swap_prevent: 'Swap Prevention',
+  rst_taunt: 'Taunt',
+  rst_vulner: 'Vulnerable',
+  rst_armor_decrease: 'Reduced Armor',
+  rst_resistance_decrease_all: 'Affliction',
+  rst_heal_decrease: 'Heal Reduction',
+  rst_daze: 'Daze',
+};
+
 export function label(map: Record<string, string>, key: string): string {
   return map[key] ?? key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
