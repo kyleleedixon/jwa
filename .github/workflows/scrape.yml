@@ -1,0 +1,58 @@
+name: Daily scrape check
+
+on:
+  schedule:
+    - cron: '0 8 * * *'   # 08:00 UTC daily
+  workflow_dispatch:        # allow manual trigger
+
+jobs:
+  check-and-scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check paleo.gg last-modified date
+        id: check
+        run: |
+          REMOTE=$(node -e "
+            const axios = require('axios');
+            const headers = { 'User-Agent': 'Mozilla/5.0' };
+            axios.get('https://www.paleo.gg/games/jurassic-world-alive/dinodex', { headers })
+              .then(res => {
+                const m = res.data.match(/<script id=\"__NEXT_DATA__\" type=\"application\/json\">(.*?)<\/script>/s);
+                const pp = JSON.parse(m[1]).props.pageProps;
+                console.log(pp.meta?.lastModifiedDate || '');
+              })
+              .catch(() => console.log(''));
+          ")
+          LOCAL=$(node -e "try { console.log(require('./src/data/meta.json').lastModifiedDate || ''); } catch { console.log(''); }")
+          echo "remote=$REMOTE" >> $GITHUB_OUTPUT
+          echo "local=$LOCAL"   >> $GITHUB_OUTPUT
+          echo "Remote: $REMOTE  Local: $LOCAL"
+          if [ "$REMOTE" != "$LOCAL" ] && [ -n "$REMOTE" ]; then
+            echo "stale=true" >> $GITHUB_OUTPUT
+          else
+            echo "stale=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run scraper
+        if: steps.check.outputs.stale == 'true'
+        run: node scripts/scrape.js
+
+      - name: Commit and push updated data
+        if: steps.check.outputs.stale == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/creatures.json src/data/meta.json
+          git diff --cached --quiet || git commit -m "chore: auto-scrape paleo.gg (${{ steps.check.outputs.remote }})"
+          git push
