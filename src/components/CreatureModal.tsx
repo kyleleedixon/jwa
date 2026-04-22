@@ -254,9 +254,10 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
   }
 
   // Evolution cost (from creature's min level to current slider level)
-  const evoCostAvg   = !isOmega ? evolutionCost(creature.rarity, minLevel, level, creature.ingredients.map(uuid => creatureByUuid.get(uuid)?.rarity ?? '').filter(Boolean), 22) : null;
-  const evoCostBest  = !isOmega ? evolutionCost(creature.rarity, minLevel, level, creature.ingredients.map(uuid => creatureByUuid.get(uuid)?.rarity ?? '').filter(Boolean), 50) : null;
-  const evoCostWorst = !isOmega ? evolutionCost(creature.rarity, minLevel, level, creature.ingredients.map(uuid => creatureByUuid.get(uuid)?.rarity ?? '').filter(Boolean), 10) : null;
+  const ingRarities = creature.ingredients.map(uuid => creatureByUuid.get(uuid)?.rarity ?? '').filter(Boolean);
+  const evoCostAvg   = evolutionCost(creature.rarity, minLevel, level, ingRarities, 22);
+  const evoCostBest  = evolutionCost(creature.rarity, minLevel, level, ingRarities, 50);
+  const evoCostWorst = evolutionCost(creature.rarity, minLevel, level, ingRarities, 10);
 
   function changeAlloc(stat: string, delta: number) {
     setOmegaAlloc(prev => {
@@ -441,7 +442,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
         </div>
 
         {/* evolution cost */}
-        {evoCostAvg && level > minLevel && (
+        {level > minLevel && (
           <div className="px-5 py-4 border-b border-slate-700/60">
             <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
               Evolution Cost <span className="text-gray-600 normal-case font-normal">(Lv {minLevel} → {level})</span>
