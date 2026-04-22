@@ -289,7 +289,8 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
               <span className={`text-xs font-medium px-2 py-0.5 rounded border ${rarityColor} ${rarityBg}`}>
                 {label(RARITY_LABELS, creature.rarity)}
               </span>
-              <span className={`text-xs font-medium ${classColor}`}>{label(CLASS_LABELS, creature.class)}</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`https://cdn.paleo.gg/games/jwa/images/class/${creature.class}.png`} alt={label(CLASS_LABELS, creature.class)} title={label(CLASS_LABELS, creature.class)} className="w-5 h-5 object-contain" />
               <span className="text-xs text-gray-500">{label(HYBRID_TYPE_LABELS, creature.hybrid_type)}</span>
               {creature.version && (
                 <span className="text-xs font-medium px-2 py-0.5 rounded border border-slate-600 bg-slate-700/60 text-gray-300">
@@ -356,8 +357,8 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
             )}
 
             {creature.resistance?.some(v => v > 0) && (
-              <div className="flex items-start gap-3">
-                <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider w-24 shrink-0 pt-0.5">Resistances</span>
+              <div className="flex items-start gap-2">
+                <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider shrink-0 pt-0.5">Resistances</span>
                 <div className="flex flex-wrap gap-1">
                   {RESISTANCE_KEYS.map((key, idx) => {
                     const val = creature.resistance[idx] ?? 0;
@@ -373,8 +374,8 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
             )}
 
             {creature.dna_source.length > 0 && (
-              <div className="flex items-start gap-3">
-                <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider w-24 shrink-0 pt-0.5">Spawn</span>
+              <div className="flex items-start gap-2">
+                <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider shrink-0 pt-0.5">Spawn</span>
                 <div className="flex flex-wrap gap-1">
                   {creature.dna_source.map(loc => (
                     <span key={loc} className="text-xs font-medium px-2 py-0.5 rounded border bg-slate-700/60 text-gray-300 border-slate-600">
