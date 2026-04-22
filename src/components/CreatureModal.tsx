@@ -354,23 +354,32 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
               {/* DNA rows */}
               {evoCostAvg.ingredients.length === 0 ? (
                 <div className="flex items-center gap-2">
-                  <span className="text-gray-400 w-14 shrink-0">DNA</span>
+                  <span className="text-gray-400 w-28 shrink-0">DNA</span>
                   <span className="text-blue-300 font-semibold tabular-nums">{evoCostAvg.dna.toLocaleString()}</span>
                 </div>
               ) : (
-                creature.ingredients.map((uuid, i) => {
-                  const ing = creatureByUuid.get(uuid);
-                  const worst = evoCostWorst!.ingredients[i]?.dna ?? 0;
-                  const avg   = evoCostAvg!.ingredients[i]?.dna ?? 0;
-                  const best  = evoCostBest!.ingredients[i]?.dna ?? 0;
-                  return (
-                    <div key={uuid} className="flex items-center gap-2">
-                      <span className="text-gray-400 w-28 shrink-0">{ing?.name ?? uuid}</span>
-                      <span className="text-blue-300 font-semibold tabular-nums">{avg.toLocaleString()}</span>
-                      <span className="text-gray-500 tabular-nums">({best.toLocaleString()}–{worst.toLocaleString()})</span>
-                    </div>
-                  );
-                })
+                <>
+                  <div className="flex items-center gap-2 text-[10px] text-gray-500 uppercase tracking-wider pb-1">
+                    <span className="w-28 shrink-0">Ingredient DNA</span>
+                    <span className="w-20 text-right">Best (50)</span>
+                    <span className="w-20 text-right">Avg (22)</span>
+                    <span className="w-20 text-right">Worst (10)</span>
+                  </div>
+                  {creature.ingredients.map((uuid, i) => {
+                    const ing = creatureByUuid.get(uuid);
+                    const worst = evoCostWorst!.ingredients[i]?.dna ?? 0;
+                    const avg   = evoCostAvg!.ingredients[i]?.dna ?? 0;
+                    const best  = evoCostBest!.ingredients[i]?.dna ?? 0;
+                    return (
+                      <div key={uuid} className="flex items-center gap-2">
+                        <span className="text-gray-400 w-28 shrink-0">{ing?.name ?? uuid}</span>
+                        <span className="text-green-400 tabular-nums w-20 text-right">{best.toLocaleString()}</span>
+                        <span className="text-blue-300 font-semibold tabular-nums w-20 text-right">{avg.toLocaleString()}</span>
+                        <span className="text-red-400 tabular-nums w-20 text-right">{worst.toLocaleString()}</span>
+                      </div>
+                    );
+                  })}
+                </>
               )}
             </div>
           </div>
