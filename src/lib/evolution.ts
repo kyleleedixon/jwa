@@ -72,11 +72,7 @@ export function dnaToLevel(rarity: string, fromLevel: number, toLevel: number): 
 export function coinsToLevel(rarity: string, fromLevel: number, toLevel: number): number {
   const table = LEVEL_COINS[rarity];
   if (!table) return 0;
-  // if starting from the creature's min unlock level, the first level is free
-  const minLevel = RARITY_LEVEL_RANGE[rarity]?.[0] ?? 1;
-  let cost = sum(table.slice(fromLevel - 1, toLevel - 1));
-  if (fromLevel === minLevel) cost -= table[fromLevel - 1] ?? 0;
-  return cost;
+  return sum(table.slice(fromLevel - 1, toLevel - 1));
 }
 
 // Full evolution cost including fusing ingredient DNA
