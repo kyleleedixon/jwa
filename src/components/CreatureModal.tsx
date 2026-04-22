@@ -729,8 +729,12 @@ function MoveRow({ move, baseDamage, baseHealth, unlockLevel, currentLevel, enha
     <div className={`bg-slate-800/60 rounded-xl p-3 border border-slate-700/40 transition-opacity ${locked ? 'opacity-40' : ''}`}>
       <div className="flex items-start gap-2">
         {move.icon && (
-          <div className="w-9 h-9 shrink-0 rounded-lg bg-slate-700/60 flex items-center justify-center overflow-hidden">
+          <div className="relative w-9 h-9 shrink-0 rounded-lg bg-slate-700/60 flex items-center justify-center overflow-hidden">
             <Image src={move.icon} alt="" width={32} height={32} className="object-contain" unoptimized />
+            {move.priority > 0 && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src="https://cdn.paleo.gg/games/jwa/images/move/indicator/priority.png" alt="Priority" className="absolute top-0 right-0 w-3.5 h-3.5 object-contain" />
+            )}
           </div>
         )}
         <div className="flex-1 min-w-0">
