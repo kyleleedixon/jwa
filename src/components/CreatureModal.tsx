@@ -388,7 +388,12 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
         {/* boosts allocator */}
         <div className="px-5 py-4 border-b border-slate-700/60">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Boosts</h3>
+            <div className="flex items-center gap-2">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-400 shrink-0">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Boosts</h3>
+            </div>
             <span className={`text-xs font-mono font-semibold ${remainingBoosts === 0 ? 'text-green-400' : 'text-blue-400'}`}>
               {totalBoosts} / {availableBoosts} used
               {remainingBoosts > 0 && <span className="text-gray-500 font-normal"> · {remainingBoosts} left</span>}
@@ -468,11 +473,57 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
         {isOmega && creature.points && (
           <div className="px-5 py-4 border-b border-slate-700/60">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Points</h3>
-              <span className={`text-xs font-mono font-semibold ${remainingPoints === 0 ? 'text-green-400' : remainingPoints > 0 ? 'text-yellow-400' : 'text-red-400'}`}>
-                {allocatedPoints} / {availablePoints} allocated
-                {remainingPoints > 0 && <span className="text-gray-500"> · {remainingPoints} remaining</span>}
-              </span>
+              <div className="flex items-center gap-2">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-400 shrink-0">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Points</h3>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className={`text-xs font-mono font-semibold ${remainingPoints === 0 ? 'text-green-400' : remainingPoints > 0 ? 'text-yellow-400' : 'text-red-400'}`}>
+                  {allocatedPoints} / {availablePoints}
+                  {remainingPoints > 0 && <span className="text-gray-500 font-normal"> · {remainingPoints} left</span>}
+                </span>
+                <button
+                  onClick={() => {
+                    const eligible = STAT_KEYS.filter(k => {
+                      const d = creature.points!.delta[k] ?? 0;
+                      const p = creature.points!.pcap[k] ?? 0;
+                      const base = (creature as unknown as Record<string, number>)[k] ?? 0;
+                      const cap = creature.points!.cap[k] ?? 0;
+                      return d > 0 && p > 0 && Math.min(p, Math.floor((cap - base) / d)) > 0;
+                    });
+                    if (eligible.length === 0) return;
+                    const next: Record<string, number> = {};
+                    let remaining = availablePoints;
+                    // distribute evenly, respecting effective caps
+                    const caps = Object.fromEntries(eligible.map(k => {
+                      const d = creature.points!.delta[k] ?? 1;
+                      const p = creature.points!.pcap[k] ?? 0;
+                      const base = (creature as unknown as Record<string, number>)[k] ?? 0;
+                      const cap = creature.points!.cap[k] ?? 0;
+                      return [k, Math.min(p, Math.floor((cap - base) / d))];
+                    }));
+                    let keys = [...eligible];
+                    while (remaining > 0 && keys.length > 0) {
+                      const share = Math.floor(remaining / keys.length);
+                      const leftover = remaining % keys.length;
+                      keys.forEach((k, i) => {
+                        const add = Math.min((share + (i < leftover ? 1 : 0)), caps[k] - (next[k] ?? 0));
+                        next[k] = (next[k] ?? 0) + add;
+                        remaining -= add;
+                      });
+                      keys = keys.filter(k => (next[k] ?? 0) < caps[k]);
+                    }
+                    setOmegaAlloc(next);
+                  }}
+                  className="text-[10px] font-medium px-2 py-0.5 rounded bg-blue-600/20 text-blue-300 hover:bg-blue-600/30 transition-colors"
+                >Preset</button>
+                <button
+                  onClick={() => setOmegaAlloc({})}
+                  className="text-[10px] font-medium px-2 py-0.5 rounded bg-slate-700 text-gray-400 hover:bg-slate-600 hover:text-white transition-colors"
+                >Reset</button>
+              </div>
             </div>
             <div className="flex flex-col gap-2">
               {STAT_KEYS.filter(k => {
