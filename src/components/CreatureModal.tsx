@@ -308,6 +308,80 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
           </button>
         </div>
 
+        {/* ingredients — what this creature is made from */}
+        {creature.ingredients.length > 0 && (
+          <div className="px-5 py-3 border-b border-slate-700/60">
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Made From</h3>
+            <div className="flex flex-wrap gap-2">
+              {creature.ingredients.map(uuid => {
+                const c = creatureByUuid.get(uuid);
+                if (!c) return <span key={uuid} className="text-xs text-gray-500 capitalize">{uuid.replace(/_/g, ' ')}</span>;
+                return (
+                  <button key={uuid} onClick={() => onNavigate(c)} className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 transition-colors">
+                    <div className="relative w-6 h-6 shrink-0">
+                      <Image src={c.image} alt={c.name} fill className="object-contain" unoptimized />
+                    </div>
+                    <span className="text-xs text-gray-300">{c.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* hybrids — creatures this one is used in */}
+        {creature.hybrids.length > 0 && (
+          <div className="px-5 py-3 border-b border-slate-700/60">
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Used In</h3>
+            <div className="flex flex-wrap gap-2">
+              {creature.hybrids.map(uuid => {
+                const c = creatureByUuid.get(uuid);
+                if (!c) return <span key={uuid} className="text-xs text-gray-500 capitalize">{uuid.replace(/_/g, ' ')}</span>;
+                return (
+                  <button key={uuid} onClick={() => onNavigate(c)} className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 transition-colors">
+                    <div className="relative w-6 h-6 shrink-0">
+                      <Image src={c.image} alt={c.name} fill className="object-contain" unoptimized />
+                    </div>
+                    <span className="text-xs text-gray-300">{c.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* resistances */}
+        {creature.resistance?.some(v => v > 0) && (
+          <div className="px-5 py-3 border-b border-slate-700/60">
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Resistances</h3>
+            <div className="flex flex-wrap gap-1.5">
+              {RESISTANCE_KEYS.map((key, idx) => {
+                const val = creature.resistance[idx] ?? 0;
+                if (val === 0) return null;
+                return (
+                  <span key={key} className={`text-xs font-medium px-2 py-0.5 rounded border ${val === 100 ? 'bg-green-500/20 text-green-300 border-green-500/30' : 'bg-slate-700/60 text-gray-300 border-slate-600'}`}>
+                    {RESISTANCE_LABELS[key]} {val}%
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* spawn locations */}
+        {creature.dna_source.length > 0 && (
+          <div className="px-5 py-3 border-b border-slate-700/60">
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Spawn Locations</h3>
+            <div className="flex flex-wrap gap-1.5">
+              {creature.dna_source.map(loc => (
+                <span key={loc} className="text-xs font-medium px-2 py-0.5 rounded border bg-slate-700/60 text-gray-300 border-slate-600">
+                  {labelFn(SPAWN_LABELS, loc)}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* level slider */}
         <div className="flex items-center gap-3 px-5 pt-4 pb-2">
           <span className="text-xs text-gray-500 shrink-0">Level</span>
@@ -573,80 +647,6 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                   </div>
                 );
               })}
-            </div>
-          </div>
-        )}
-
-        {/* ingredients — what this creature is made from */}
-        {creature.ingredients.length > 0 && (
-          <div className="px-5 py-3 border-b border-slate-700/60">
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Made From</h3>
-            <div className="flex flex-wrap gap-2">
-              {creature.ingredients.map(uuid => {
-                const c = creatureByUuid.get(uuid);
-                if (!c) return <span key={uuid} className="text-xs text-gray-500 capitalize">{uuid.replace(/_/g, ' ')}</span>;
-                return (
-                  <button key={uuid} onClick={() => onNavigate(c)} className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 transition-colors">
-                    <div className="relative w-6 h-6 shrink-0">
-                      <Image src={c.image} alt={c.name} fill className="object-contain" unoptimized />
-                    </div>
-                    <span className="text-xs text-gray-300">{c.name}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* hybrids — creatures this one is used in */}
-        {creature.hybrids.length > 0 && (
-          <div className="px-5 py-3 border-b border-slate-700/60">
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Used In</h3>
-            <div className="flex flex-wrap gap-2">
-              {creature.hybrids.map(uuid => {
-                const c = creatureByUuid.get(uuid);
-                if (!c) return <span key={uuid} className="text-xs text-gray-500 capitalize">{uuid.replace(/_/g, ' ')}</span>;
-                return (
-                  <button key={uuid} onClick={() => onNavigate(c)} className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 transition-colors">
-                    <div className="relative w-6 h-6 shrink-0">
-                      <Image src={c.image} alt={c.name} fill className="object-contain" unoptimized />
-                    </div>
-                    <span className="text-xs text-gray-300">{c.name}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* resistances */}
-        {creature.resistance?.some(v => v > 0) && (
-          <div className="px-5 py-3 border-b border-slate-700/60">
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Resistances</h3>
-            <div className="flex flex-wrap gap-1.5">
-              {RESISTANCE_KEYS.map((key, idx) => {
-                const val = creature.resistance[idx] ?? 0;
-                if (val === 0) return null;
-                return (
-                  <span key={key} className={`text-xs font-medium px-2 py-0.5 rounded border ${val === 100 ? 'bg-green-500/20 text-green-300 border-green-500/30' : 'bg-slate-700/60 text-gray-300 border-slate-600'}`}>
-                    {RESISTANCE_LABELS[key]} {val}%
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* spawn locations */}
-        {creature.dna_source.length > 0 && (
-          <div className="px-5 py-3 border-b border-slate-700/60">
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Spawn Locations</h3>
-            <div className="flex flex-wrap gap-1.5">
-              {creature.dna_source.map(loc => (
-                <span key={loc} className="text-xs font-medium px-2 py-0.5 rounded border bg-slate-700/60 text-gray-300 border-slate-600">
-                  {labelFn(SPAWN_LABELS, loc)}
-                </span>
-              ))}
             </div>
           </div>
         )}
