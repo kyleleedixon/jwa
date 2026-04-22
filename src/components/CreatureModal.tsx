@@ -311,13 +311,13 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
 
         {/* bio info — ingredients, hybrids, resistances, spawn */}
         {(creature.ingredients.length > 0 || creature.hybrids.length > 0 || creature.resistance?.some(v => v > 0) || creature.dna_source.length > 0) && (
-          <div className="px-5 py-3 border-b border-slate-700/60 flex flex-col gap-2">
+          <div className="px-5 py-3 border-b border-slate-700/60">
+            <div className="grid gap-y-3" style={{ gridTemplateColumns: '5.5rem 1fr' }}>
 
-            {(creature.ingredients.length > 0 || creature.hybrids.length > 0) && (
-              <div className="flex items-start gap-6 flex-wrap">
-                {creature.ingredients.length > 0 && (
-                  <div className="flex items-start gap-2">
-                    <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider shrink-0 pt-1">Made From</span>
+              {creature.ingredients.length > 0 && (
+                <>
+                  <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider pt-1">Made From</span>
+                  <div className="flex items-start gap-4 flex-wrap">
                     <div className="flex flex-wrap gap-1.5">
                       {creature.ingredients.map(uuid => {
                         const c = creatureByUuid.get(uuid);
@@ -332,60 +332,80 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                         );
                       })}
                     </div>
+                    {creature.hybrids.length > 0 && (
+                      <div className="flex items-start gap-2">
+                        <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider shrink-0 pt-1">Used In</span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {creature.hybrids.map(uuid => {
+                            const c = creatureByUuid.get(uuid);
+                            if (!c) return <span key={uuid} className="text-xs text-gray-500">{uuid.replace(/_/g, ' ')}</span>;
+                            return (
+                              <button key={uuid} onClick={() => onNavigate(c)} className="flex items-center gap-1 px-1.5 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 transition-colors">
+                                <div className="relative w-5 h-5 shrink-0">
+                                  <Image src={c.image} alt={c.name} fill className="object-contain" unoptimized />
+                                </div>
+                                <span className="text-xs text-gray-300">{c.name}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
-                {creature.hybrids.length > 0 && (
-                  <div className="flex items-start gap-2">
-                    <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider shrink-0 pt-1">Used In</span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {creature.hybrids.map(uuid => {
-                        const c = creatureByUuid.get(uuid);
-                        if (!c) return <span key={uuid} className="text-xs text-gray-500">{uuid.replace(/_/g, ' ')}</span>;
-                        return (
-                          <button key={uuid} onClick={() => onNavigate(c)} className="flex items-center gap-1 px-1.5 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 transition-colors">
-                            <div className="relative w-5 h-5 shrink-0">
-                              <Image src={c.image} alt={c.name} fill className="object-contain" unoptimized />
-                            </div>
-                            <span className="text-xs text-gray-300">{c.name}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
+                </>
+              )}
 
-            {creature.resistance?.some(v => v > 0) && (
-              <div className="flex items-start gap-2">
-                <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider shrink-0 pt-0.5">Resistances</span>
-                <div className="flex flex-wrap gap-1">
-                  {RESISTANCE_KEYS.map((key, idx) => {
-                    const val = creature.resistance[idx] ?? 0;
-                    if (val === 0) return null;
-                    return (
-                      <span key={key} className={`text-xs font-medium px-2 py-0.5 rounded border ${val === 100 ? 'bg-green-500/20 text-green-300 border-green-500/30' : 'bg-slate-700/60 text-gray-300 border-slate-600'}`}>
-                        {RESISTANCE_LABELS[key]} {val}%
+              {creature.ingredients.length === 0 && creature.hybrids.length > 0 && (
+                <>
+                  <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider pt-1">Used In</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {creature.hybrids.map(uuid => {
+                      const c = creatureByUuid.get(uuid);
+                      if (!c) return <span key={uuid} className="text-xs text-gray-500">{uuid.replace(/_/g, ' ')}</span>;
+                      return (
+                        <button key={uuid} onClick={() => onNavigate(c)} className="flex items-center gap-1 px-1.5 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 transition-colors">
+                          <div className="relative w-5 h-5 shrink-0">
+                            <Image src={c.image} alt={c.name} fill className="object-contain" unoptimized />
+                          </div>
+                          <span className="text-xs text-gray-300">{c.name}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+
+              {creature.resistance?.some(v => v > 0) && (
+                <>
+                  <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider pt-0.5">Resistances</span>
+                  <div className="flex flex-wrap gap-1">
+                    {RESISTANCE_KEYS.map((key, idx) => {
+                      const val = creature.resistance[idx] ?? 0;
+                      if (val === 0) return null;
+                      return (
+                        <span key={key} className={`text-xs font-medium px-2 py-0.5 rounded border ${val === 100 ? 'bg-green-500/20 text-green-300 border-green-500/30' : 'bg-slate-700/60 text-gray-300 border-slate-600'}`}>
+                          {RESISTANCE_LABELS[key]} {val}%
+                        </span>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+
+              {creature.dna_source.length > 0 && (
+                <>
+                  <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider pt-0.5">Spawn</span>
+                  <div className="flex flex-wrap gap-1">
+                    {creature.dna_source.map(loc => (
+                      <span key={loc} className="text-xs font-medium px-2 py-0.5 rounded border bg-slate-700/60 text-gray-300 border-slate-600">
+                        {labelFn(SPAWN_LABELS, loc)}
                       </span>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
+                    ))}
+                  </div>
+                </>
+              )}
 
-            {creature.dna_source.length > 0 && (
-              <div className="flex items-start gap-2">
-                <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider shrink-0 pt-0.5">Spawn</span>
-                <div className="flex flex-wrap gap-1">
-                  {creature.dna_source.map(loc => (
-                    <span key={loc} className="text-xs font-medium px-2 py-0.5 rounded border bg-slate-700/60 text-gray-300 border-slate-600">
-                      {labelFn(SPAWN_LABELS, loc)}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
+            </div>
           </div>
         )}
 
