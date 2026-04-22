@@ -552,7 +552,7 @@ function MoveRow({ move, baseDamage, baseHealth, unlockLevel, currentLevel }: {
 
           <div className="flex gap-3 mt-1 text-xs text-gray-500">
             {move.delay > 0 && <span>Delay {move.delay}</span>}
-            {move.cooldown > 0 && <span>CD {move.cooldown}</span>}
+            {move.cooldown > 0 && <span>Cooldown {move.cooldown}</span>}
             {move.delay === 0 && move.cooldown === 0 && <span className="text-green-600">No cooldown</span>}
           </div>
 
