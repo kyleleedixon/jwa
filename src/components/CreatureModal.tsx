@@ -86,6 +86,13 @@ const TARGET_LABELS: Record<string, string> = {
   random: 'Random',
 };
 
+function resistanceColor(val: number): string {
+  if (val >= 100) return 'bg-green-500/20 text-green-300 border-green-500/30';
+  if (val >= 67)  return 'bg-lime-500/20 text-lime-300 border-lime-500/30';
+  if (val >= 34)  return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
+  return 'bg-orange-500/20 text-orange-300 border-orange-500/30';
+}
+
 function fmt(val: string, map: Record<string, string>) {
   return map[val] ?? val.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
@@ -384,7 +391,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                       const val = creature.resistance[idx] ?? 0;
                       if (val === 0) return null;
                       return (
-                        <span key={key} className={`text-xs font-medium px-2 py-0.5 rounded border ${val === 100 ? 'bg-green-500/20 text-green-300 border-green-500/30' : 'bg-slate-700/60 text-gray-300 border-slate-600'}`}>
+                        <span key={key} className={`text-xs font-medium px-2 py-0.5 rounded border ${resistanceColor(val)}`}>
                           {RESISTANCE_LABELS[key]} {val}%
                         </span>
                       );
