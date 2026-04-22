@@ -16,6 +16,7 @@ function statAtLevel(base: number, level: number): number {
 }
 
 import { RESISTANCE_KEYS, RESISTANCE_LABELS } from '@/lib/labels';
+import { evolutionCost, RARITY_LEVEL_RANGE } from '@/lib/evolution';
 
 interface Props {
   creature: Creature;
@@ -252,6 +253,11 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
     });
   }
 
+  // Evolution cost (from creature's min level to current slider level)
+  const evoCostAvg   = !isOmega ? evolutionCost(creature.rarity, minLevel, level, creature.ingredients.map(uuid => creatureByUuid.get(uuid)?.rarity ?? '').filter(Boolean), 22) : null;
+  const evoCostBest  = !isOmega ? evolutionCost(creature.rarity, minLevel, level, creature.ingredients.map(uuid => creatureByUuid.get(uuid)?.rarity ?? '').filter(Boolean), 50) : null;
+  const evoCostWorst = !isOmega ? evolutionCost(creature.rarity, minLevel, level, creature.ingredients.map(uuid => creatureByUuid.get(uuid)?.rarity ?? '').filter(Boolean), 10) : null;
+
   function changeAlloc(stat: string, delta: number) {
     setOmegaAlloc(prev => {
       const pcap = creature.points!.pcap[stat] ?? 0;
@@ -332,6 +338,43 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
             </div>
           ))}
         </div>
+
+        {/* evolution cost */}
+        {evoCostAvg && level > minLevel && (
+          <div className="px-5 py-4 border-b border-slate-700/60">
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+              Evolution Cost <span className="text-gray-600 normal-case font-normal">(Lv {minLevel} → {level})</span>
+            </h3>
+            <div className="flex flex-col gap-2 text-xs">
+              {/* coins row */}
+              <div className="flex items-center gap-2">
+                <span className="text-gray-400 w-14 shrink-0">Coins</span>
+                <span className="text-yellow-300 font-semibold tabular-nums">{evoCostAvg.coins.toLocaleString()}</span>
+              </div>
+              {/* DNA rows */}
+              {evoCostAvg.ingredients.length === 0 ? (
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-400 w-14 shrink-0">DNA</span>
+                  <span className="text-blue-300 font-semibold tabular-nums">{evoCostAvg.dna.toLocaleString()}</span>
+                </div>
+              ) : (
+                creature.ingredients.map((uuid, i) => {
+                  const ing = creatureByUuid.get(uuid);
+                  const worst = evoCostWorst!.ingredients[i]?.dna ?? 0;
+                  const avg   = evoCostAvg!.ingredients[i]?.dna ?? 0;
+                  const best  = evoCostBest!.ingredients[i]?.dna ?? 0;
+                  return (
+                    <div key={uuid} className="flex items-center gap-2">
+                      <span className="text-gray-400 w-14 shrink-0 truncate">{ing?.name ?? uuid}</span>
+                      <span className="text-blue-300 font-semibold tabular-nums">{avg.toLocaleString()}</span>
+                      <span className="text-gray-500 tabular-nums">({best.toLocaleString()}–{worst.toLocaleString()})</span>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        )}
 
         {/* boosts allocator */}
         <div className="px-5 py-4 border-b border-slate-700/60">
