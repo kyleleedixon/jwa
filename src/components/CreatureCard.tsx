@@ -58,6 +58,7 @@ export default function CreatureCard({ creature }: Props) {
           <StatCell label="SPD" value={creature.speed} />
           <StatCell label="ARM" value={`${creature.armor}%`} />
           <StatCell label="CRIT" value={`${creature.crit}%`} />
+          <StatCell label="CRIT DMG" value={`${creature.critm}%`} />
         </div>
       </div>
 

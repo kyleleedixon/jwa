@@ -26,7 +26,7 @@ const EMPTY_FILTERS: Filters = {
   resistance: new Set(),
 };
 
-type SortKey = 'name' | 'health' | 'damage' | 'speed' | 'armor' | 'crit';
+type SortKey = 'name' | 'health' | 'damage' | 'speed' | 'armor' | 'crit' | 'critm';
 type SortDir = 'asc' | 'desc';
 
 const SORT_OPTIONS: { key: SortKey; label: string }[] = [
@@ -36,6 +36,7 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: 'speed', label: 'SPD' },
   { key: 'armor', label: 'ARM' },
   { key: 'crit', label: 'CRIT' },
+  { key: 'critm', label: 'CRIT DMG' },
 ];
 
 export default function Dashboard({ creatures, lastModifiedDate }: Props) {
