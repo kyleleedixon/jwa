@@ -186,24 +186,16 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
   const rarityBg = RARITY_BG[creature.rarity] ?? 'bg-gray-500/20';
   const classColor = CLASS_COLORS[creature.class] ?? 'text-gray-400';
 
-  // Enhancement calculations
+  // Enhancement metadata (boost_max and reactive unlock don't affect stat display)
   const activeEnhancements = (creature.enhancements ?? []).slice(0, enhancementLevel);
-  const enhHealthBonus  = activeEnhancements.filter(e => e.rwd.type === 'health').reduce((s, e) => s + (e.rwd.value as number), 0);
-  const enhDamageBonus  = activeEnhancements.filter(e => e.rwd.type === 'damage').reduce((s, e) => s + (e.rwd.value as number), 0);
-  const enhSpeedBonus   = activeEnhancements.filter(e => e.rwd.type === 'speed').reduce((s, e) => s + (e.rwd.value as number), 0);
-  const enhBoostMax     = activeEnhancements.filter(e => e.rwd.type === 'boost_max').reduce((s, e) => s + (e.rwd.value as number), 0);
+  const enhBoostMax = activeEnhancements.filter(e => e.rwd.type === 'boost_max').reduce((s, e) => s + (e.rwd.value as number), 0);
   const unlockedReactiveUuid = activeEnhancements.find(e => e.rwd.type === 'moves_reactive')?.rwd.value as string | undefined;
 
-  // Boost calculations — based on stat value at the creature's minimum level
-  const baseHealth = statAtLevel(creature.health, minLevel);
-  const baseDamage = statAtLevel(creature.damage, minLevel);
-  const healthBoostPer = Math.floor(baseHealth * 0.025);
-  const damageBoostPer = Math.floor(baseDamage * 0.025);
   const availableBoosts = level + enhBoostMax;
   const totalBoosts = boosts.health + boosts.damage + boosts.speed;
   const remainingBoosts = availableBoosts - totalBoosts;
 
-  // Stat calculations
+  // Stat calculations — correct order: level → boosts (multiplicative) → enhancements (multiplicative)
   let displayHealth: number, displayDamage: number, displaySpeed: number,
       displayArmor: string, displayCrit: string, displayCritm: string;
 
@@ -225,13 +217,21 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
     displayCritm  = `${creature.critm}%`;
   }
 
-  // Apply enhancements then boosts
-  displayHealth = (displayHealth as number) + enhHealthBonus;
-  displayDamage = (displayDamage as number) + enhDamageBonus;
-  displaySpeed  = (displaySpeed  as number) + enhSpeedBonus;
-  displayHealth += boosts.health * healthBoostPer;
-  displayDamage += boosts.damage * damageBoostPer;
-  displaySpeed  += boosts.speed * 2;
+  // Step 2: boosts — multiplicative for health/damage, additive for speed
+  displayHealth = (displayHealth as number) * (1 + 0.025 * boosts.health);
+  displayDamage = (displayDamage as number) * (1 + 0.025 * boosts.damage);
+  displaySpeed  = (displaySpeed  as number) + boosts.speed * 2;
+
+  // Step 3: enhancements — multiplicative (value=110 means ×1.1), speed is additive
+  for (const enh of activeEnhancements) {
+    if (enh.rwd.type === 'health') displayHealth = (displayHealth as number) * (enh.rwd.value as number) / 100;
+    else if (enh.rwd.type === 'damage') displayDamage = (displayDamage as number) * (enh.rwd.value as number) / 100;
+    else if (enh.rwd.type === 'speed') displaySpeed = (displaySpeed as number) + (enh.rwd.value as number);
+  }
+
+  displayHealth = Math.floor(displayHealth as number);
+  displayDamage = Math.floor(displayDamage as number);
+  displaySpeed  = Math.floor(displaySpeed  as number);
 
   const availablePoints = isOmega ? (level - 1) * POINTS_PER_LEVEL : 0;
   const allocatedPoints = Object.values(omegaAlloc).reduce((a, b) => a + b, 0);
@@ -345,7 +345,6 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
           <div className="flex flex-col gap-2">
             {BOOST_STATS.map(({ key, label: bLabel }) => {
               const cur = boosts[key];
-              const perBoost = key === 'speed' ? 2 : key === 'health' ? healthBoostPer : damageBoostPer;
               const pct = (cur / MAX_BOOSTS_PER_STAT) * 100;
               const atStatCap = cur >= MAX_BOOSTS_PER_STAT;
               return (
@@ -370,7 +369,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                     {cur} / {MAX_BOOSTS_PER_STAT}
                     {cur > 0 && (
                       <span className="ml-1 text-amber-400">
-                        +{key === 'speed' ? cur * 2 : cur * perBoost}
+                        {key === 'speed' ? `+${cur * 2}` : `+${(cur * 2.5).toFixed(0)}%`}
                       </span>
                     )}
                   </span>
