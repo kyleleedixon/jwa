@@ -292,7 +292,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
               )}
             </div>
             {creature.description && (
-              <p className="text-xs text-gray-400 mt-2 leading-relaxed line-clamp-2">{creature.description}</p>
+              <p className="text-xs text-gray-400 mt-2 leading-relaxed">{creature.description}</p>
             )}
           </div>
           <button onClick={onClose} className="shrink-0 text-gray-500 hover:text-white transition-colors">
