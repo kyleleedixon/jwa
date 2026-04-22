@@ -365,7 +365,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                   const best  = evoCostBest!.ingredients[i]?.dna ?? 0;
                   return (
                     <div key={uuid} className="flex items-center gap-2">
-                      <span className="text-gray-400 w-14 shrink-0 truncate">{ing?.name ?? uuid}</span>
+                      <span className="text-gray-400 w-28 shrink-0">{ing?.name ?? uuid}</span>
                       <span className="text-blue-300 font-semibold tabular-nums">{avg.toLocaleString()}</span>
                       <span className="text-gray-500 tabular-nums">({best.toLocaleString()}–{worst.toLocaleString()})</span>
                     </div>
