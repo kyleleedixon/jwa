@@ -65,14 +65,15 @@ function sum(arr: number[]): number {
 export function dnaToLevel(rarity: string, fromLevel: number, toLevel: number): number {
   const table = LEVEL_DNA[rarity];
   if (!table) return 0;
-  return sum(table.slice(fromLevel - 1, toLevel - 1));
+  const offset = rarity === 'omega' ? 1 : 0;
+  return sum(table.slice(fromLevel - 1 + offset, toLevel - 1 + offset));
 }
 
-// How many coins are needed to level from `fromLevel` to `toLevel`
 export function coinsToLevel(rarity: string, fromLevel: number, toLevel: number): number {
   const table = LEVEL_COINS[rarity];
   if (!table) return 0;
-  return sum(table.slice(fromLevel - 1, toLevel - 1));
+  const offset = rarity === 'omega' ? 1 : 0;
+  return sum(table.slice(fromLevel - 1 + offset, toLevel - 1 + offset));
 }
 
 // Full evolution cost including fusing ingredient DNA
