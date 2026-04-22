@@ -312,43 +312,46 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
         {(creature.ingredients.length > 0 || creature.hybrids.length > 0 || creature.resistance?.some(v => v > 0) || creature.dna_source.length > 0) && (
           <div className="px-5 py-3 border-b border-slate-700/60 flex flex-col gap-2">
 
-            {creature.ingredients.length > 0 && (
-              <div className="flex items-start gap-3">
-                <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider w-24 shrink-0 pt-1">Made From</span>
-                <div className="flex flex-wrap gap-1.5">
-                  {creature.ingredients.map(uuid => {
-                    const c = creatureByUuid.get(uuid);
-                    if (!c) return <span key={uuid} className="text-xs text-gray-500">{uuid.replace(/_/g, ' ')}</span>;
-                    return (
-                      <button key={uuid} onClick={() => onNavigate(c)} className="flex items-center gap-1 px-1.5 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 transition-colors">
-                        <div className="relative w-5 h-5 shrink-0">
-                          <Image src={c.image} alt={c.name} fill className="object-contain" unoptimized />
-                        </div>
-                        <span className="text-xs text-gray-300">{c.name}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            {creature.hybrids.length > 0 && (
-              <div className="flex items-start gap-3">
-                <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider w-24 shrink-0 pt-1">Used In</span>
-                <div className="flex flex-wrap gap-1.5">
-                  {creature.hybrids.map(uuid => {
-                    const c = creatureByUuid.get(uuid);
-                    if (!c) return <span key={uuid} className="text-xs text-gray-500">{uuid.replace(/_/g, ' ')}</span>;
-                    return (
-                      <button key={uuid} onClick={() => onNavigate(c)} className="flex items-center gap-1 px-1.5 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 transition-colors">
-                        <div className="relative w-5 h-5 shrink-0">
-                          <Image src={c.image} alt={c.name} fill className="object-contain" unoptimized />
-                        </div>
-                        <span className="text-xs text-gray-300">{c.name}</span>
-                      </button>
-                    );
-                  })}
-                </div>
+            {(creature.ingredients.length > 0 || creature.hybrids.length > 0) && (
+              <div className="flex items-start gap-6 flex-wrap">
+                {creature.ingredients.length > 0 && (
+                  <div className="flex items-start gap-2">
+                    <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider shrink-0 pt-1">Made From</span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {creature.ingredients.map(uuid => {
+                        const c = creatureByUuid.get(uuid);
+                        if (!c) return <span key={uuid} className="text-xs text-gray-500">{uuid.replace(/_/g, ' ')}</span>;
+                        return (
+                          <button key={uuid} onClick={() => onNavigate(c)} className="flex items-center gap-1 px-1.5 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 transition-colors">
+                            <div className="relative w-5 h-5 shrink-0">
+                              <Image src={c.image} alt={c.name} fill className="object-contain" unoptimized />
+                            </div>
+                            <span className="text-xs text-gray-300">{c.name}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+                {creature.hybrids.length > 0 && (
+                  <div className="flex items-start gap-2">
+                    <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider shrink-0 pt-1">Used In</span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {creature.hybrids.map(uuid => {
+                        const c = creatureByUuid.get(uuid);
+                        if (!c) return <span key={uuid} className="text-xs text-gray-500">{uuid.replace(/_/g, ' ')}</span>;
+                        return (
+                          <button key={uuid} onClick={() => onNavigate(c)} className="flex items-center gap-1 px-1.5 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 transition-colors">
+                            <div className="relative w-5 h-5 shrink-0">
+                              <Image src={c.image} alt={c.name} fill className="object-contain" unoptimized />
+                            </div>
+                            <span className="text-xs text-gray-300">{c.name}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
