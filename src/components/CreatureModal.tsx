@@ -691,6 +691,11 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                         <span className="text-xs text-gray-400">{STAT_LABELS[k]}</span>
                       </div>
                       <button
+                        onClick={() => changeAlloc(k, -10)}
+                        disabled={alloc === 0}
+                        className="w-8 h-7 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white text-[10px] font-bold shrink-0 flex items-center justify-center"
+                      >−10</button>
+                      <button
                         onClick={() => changeAlloc(k, -1)}
                         disabled={alloc === 0}
                         className="w-7 h-7 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold shrink-0 flex items-center justify-center"
@@ -708,6 +713,11 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                         disabled={alloc >= effectiveCap || remainingPoints === 0}
                         className="w-7 h-7 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold shrink-0 flex items-center justify-center"
                       >+</button>
+                      <button
+                        onClick={() => changeAlloc(k, 10)}
+                        disabled={alloc >= effectiveCap || remainingPoints === 0}
+                        className="w-8 h-7 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed text-white text-[10px] font-bold shrink-0 flex items-center justify-center"
+                      >+10</button>
                       <span className="text-xs font-mono text-gray-400 w-20 text-right shrink-0">
                         {alloc}/{effectiveCap}
                         <span className={`ml-1 ${bonus > 0 ? 'text-green-400' : 'text-gray-600'}`}>
