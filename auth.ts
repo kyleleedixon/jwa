@@ -20,10 +20,13 @@ async function isAuthorized(userId: string): Promise<boolean> {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  trustHost: true,
+  session: { maxAge: 30 * 24 * 60 * 60 },
   providers: [
     Discord({
       clientId: process.env.DISCORD_CLIENT_ID!,
       clientSecret: process.env.DISCORD_CLIENT_SECRET!,
+      authorization: { params: { prompt: 'none' } },
     }),
   ],
   callbacks: {
