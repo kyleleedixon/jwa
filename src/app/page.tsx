@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation';
 
 export default async function Home() {
   const session = await auth();
-  if (!session) redirect('/login');
+  if (!session?.user) redirect('/login');
 
   const creatures = creaturesData as Creature[];
   return <Dashboard creatures={creatures} lastModifiedDate={metaData.lastModifiedDate} changelog={changelogData} />;
