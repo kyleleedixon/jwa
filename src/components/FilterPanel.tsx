@@ -40,7 +40,7 @@ export default function FilterPanel({ creatures, filters, onToggle, onClear, onC
   const activeCount = Object.values(filters).reduce((n, s) => n + s.size, 0);
 
   return (
-    <aside className="w-72 shrink-0 flex flex-col overflow-y-auto">
+    <aside className="w-full shrink-0 flex flex-col overflow-y-auto">
       {/* panel header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-white font-semibold text-sm uppercase tracking-wider">Filters</h2>
