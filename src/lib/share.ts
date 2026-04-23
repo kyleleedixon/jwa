@@ -13,7 +13,7 @@ export function encodeShare(state: ShareState): string {
 
 export function decodeShare(encoded: string): ShareState | null {
   try {
-    const padded = encoded + '=='.slice((encoded.length + 3) % 4);
+    const padded = encoded + '='.repeat((4 - encoded.length % 4) % 4);
     const parsed = JSON.parse(atob(padded));
     if (!parsed?.c || parsed?.lv == null) return null;
     return {

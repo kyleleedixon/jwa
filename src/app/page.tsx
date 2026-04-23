@@ -11,5 +11,5 @@ export default async function Home() {
   if (!session?.user) redirect('/login');
 
   const creatures = creaturesData as Creature[];
-  return <Dashboard creatures={creatures} lastModifiedDate={metaData.lastModifiedDate} changelog={changelogData} />;
+  return <Dashboard creatures={creatures} lastModifiedDate={metaData.lastModifiedDate} version={metaData.version} changelog={changelogData} />;
 }
