@@ -3,8 +3,13 @@ import { Creature } from '@/types/creature';
 import creaturesData from '@/data/creatures.json';
 import metaData from '@/data/meta.json';
 import changelogData from '@/data/changelog.json';
+import { auth } from '@/../auth';
+import { redirect } from 'next/navigation';
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+  if (!session) redirect('/login');
+
   const creatures = creaturesData as Creature[];
   return <Dashboard creatures={creatures} lastModifiedDate={metaData.lastModifiedDate} changelog={changelogData} />;
 }
