@@ -106,7 +106,9 @@ function parseMoves(moveArray, moveType, moveNames) {
       delay: mv.delay,
       cooldown: mv.cooldown,
       priority: mv.priority,
-      ...(mv.icon && { icon: 'https://cdn.paleo.gg/games' + mv.icon }),
+      icon: mv.icon
+        ? 'https://cdn.paleo.gg/games' + mv.icon
+        : mv.uuid.startsWith('ot__') ? undefined : `https://cdn.paleo.gg/games/images/move/regular/${mv.uuid}.png`,
       effects: (mv.effects || []).map(e => ({
         action: e.action,
         target: e.target,
