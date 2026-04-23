@@ -1,8 +1,8 @@
 import NextAuth from 'next-auth';
 import Discord from 'next-auth/providers/discord';
 
-const GUILD_ID = process.env.DISCORD_GUILD_ID!;
-const ROLE_ID  = process.env.DISCORD_ROLE_ID!;
+const GUILD_ID  = process.env.DISCORD_GUILD_ID!;
+const ROLE_IDS  = [process.env.DISCORD_ROLE_ID_1!, process.env.DISCORD_ROLE_ID_2!];
 const BOT_TOKEN = process.env.DISCORD_BOT_TOKEN!;
 
 async function isAuthorized(userId: string): Promise<boolean> {
@@ -13,7 +13,7 @@ async function isAuthorized(userId: string): Promise<boolean> {
     );
     if (!res.ok) return false;
     const member = await res.json();
-    return (member.roles as string[]).includes(ROLE_ID);
+    return (member.roles as string[]).some(r => ROLE_IDS.includes(r));
   } catch {
     return false;
   }
