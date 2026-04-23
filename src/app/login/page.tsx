@@ -25,7 +25,7 @@ export default async function LoginPage({
             alt="Tea Rex Alliance"
             width={96}
             height={96}
-            className="rounded-full border-2 border-slate-600 shadow-xl"
+            className="rounded-2xl shadow-xl"
           />
           <div className="flex flex-col items-center gap-1">
             <h1 className="text-3xl font-bold text-white tracking-tight">
