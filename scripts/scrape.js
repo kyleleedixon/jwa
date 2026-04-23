@@ -183,6 +183,43 @@ async function sleep(ms) {
   return new Promise(r => setTimeout(r, ms));
 }
 
+const STAT_KEYS = ['health', 'damage', 'speed', 'armor', 'crit', 'critm'];
+
+function diffCreatures(oldList, newList) {
+  const oldMap = new Map(oldList.map(c => [c.uuid, c]));
+  const newMap = new Map(newList.map(c => [c.uuid, c]));
+  const changes = [];
+
+  for (const c of newList) {
+    if (!oldMap.has(c.uuid)) {
+      changes.push({ type: 'new', uuid: c.uuid, name: c.name, rarity: c.rarity });
+    }
+  }
+  for (const c of oldList) {
+    if (!newMap.has(c.uuid)) {
+      changes.push({ type: 'removed', uuid: c.uuid, name: c.name });
+    }
+  }
+  for (const c of newList) {
+    const o = oldMap.get(c.uuid);
+    if (!o) continue;
+    const stats = {};
+    for (const k of STAT_KEYS) {
+      if (o[k] !== c[k]) stats[k] = [o[k], c[k]];
+    }
+    if (Object.keys(stats).length > 0 || o.version !== c.version) {
+      changes.push({
+        type: 'updated',
+        uuid: c.uuid,
+        name: c.name,
+        ...(Object.keys(stats).length > 0 && { stats }),
+        ...(o.version !== c.version && { version: [o.version, c.version] }),
+      });
+    }
+  }
+  return changes;
+}
+
 async function main() {
   // Fetch last modified date from the dinodex index
   console.log('  Fetching dinodex metadata...');
@@ -216,6 +253,28 @@ async function main() {
 
   const outPath = path.join(__dirname, '../src/data/creatures.json');
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
+
+  // Diff against existing data before overwriting
+  const changelogPath = path.join(__dirname, '../src/data/changelog.json');
+  try {
+    const oldData = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+    const changes = diffCreatures(oldData, results);
+    if (changes.length > 0) {
+      const existing = JSON.parse(fs.readFileSync(changelogPath, 'utf8') || '[]');
+      existing.unshift({
+        date: new Date().toISOString().split('T')[0],
+        version: lastModifiedDate,
+        changes,
+      });
+      fs.writeFileSync(changelogPath, JSON.stringify(existing, null, 2));
+      console.log(`  Changelog: ${changes.length} changes recorded.`);
+    } else {
+      console.log('  Changelog: no stat/roster changes detected.');
+    }
+  } catch {
+    console.log('  Changelog: skipped (no existing data to diff against).');
+  }
+
   fs.writeFileSync(outPath, JSON.stringify(results, null, 2));
   console.log(`  Saved to ${outPath}`);
 

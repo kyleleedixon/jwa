@@ -7,12 +7,15 @@ import FilterPanel from './FilterPanel';
 import CreatureCard from './CreatureCard';
 import CreatureModal from './CreatureModal';
 import HelpModal from './HelpModal';
+import ChangelogModal from './ChangelogModal';
+import { decodeShare, clearShareFromURL } from '@/lib/share';
 
 const PAGE_SIZE = 60;
 
 interface Props {
   creatures: Creature[];
   lastModifiedDate: string | null;
+  changelog: { date: string; version: string; changes: unknown[] }[];
 }
 
 type Filters = Record<string, Set<string>>;
@@ -39,25 +42,41 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: 'critm', label: 'CRIT DMG' },
 ];
 
-export default function Dashboard({ creatures, lastModifiedDate }: Props) {
+export default function Dashboard({ creatures, lastModifiedDate, changelog }: Props) {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [page, setPage] = useState(1);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [selected, setSelected] = useState<Creature | null>(null);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [changelogOpen, setChangelogOpen] = useState(false);
+  const [sortKey, setSortKey] = useState<SortKey>('name');
+  const [sortDir, setSortDir] = useState<SortDir>('asc');
+
   useEffect(() => {
     if (window.innerWidth >= 768) setSidebarOpen(true);
   }, []);
-  const [selected, setSelected] = useState<Creature | null>(null);
-  const [helpOpen, setHelpOpen] = useState(false);
-  const [sortKey, setSortKey] = useState<SortKey>('name');
-  const [sortDir, setSortDir] = useState<SortDir>('asc');
+
+  // Open creature from share URL on mount
+  useEffect(() => {
+    const param = new URLSearchParams(window.location.search).get('share');
+    if (!param) return;
+    const state = decodeShare(param);
+    if (!state) return;
+    const creature = creatures.find(c => c.uuid === state.c);
+    if (creature) setSelected(creature);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleModalClose = useCallback(() => {
+    setSelected(null);
+    clearShareFromURL();
+  }, []);
 
   const handleToggle = useCallback((category: string, value: string) => {
     setFilters(prev => {
       const next = { ...prev, [category]: new Set(prev[category]) };
       if (next[category].has(value)) {
         next[category].delete(value);
-        // clear group_only when ability is unchecked
         if (category === 'ability_group') {
           next.group_only = new Set(prev.group_only);
           next.group_only.delete(value);
@@ -136,8 +155,22 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-900 text-white">
-      {selected && <CreatureModal creature={selected} creatures={creatures} onClose={() => setSelected(null)} onNavigate={setSelected} />}
+      {selected && (
+        <CreatureModal
+          creature={selected}
+          creatures={creatures}
+          onClose={handleModalClose}
+          onNavigate={setSelected}
+        />
+      )}
       {helpOpen && <HelpModal onClose={() => setHelpOpen(false)} />}
+      {changelogOpen && (
+        <ChangelogModal
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          entries={changelog as any}
+          onClose={() => setChangelogOpen(false)}
+        />
+      )}
 
       {/* mobile sidebar backdrop */}
       {sidebarOpen && (
@@ -179,14 +212,29 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
               className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-1.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
             />
           </div>
-          <button
-            onClick={() => setHelpOpen(true)}
-            className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-sm font-medium shrink-0"
-            aria-label="How to use"
-          >
-            <span className="w-4 h-4 rounded-full border border-current flex items-center justify-center text-[10px] font-bold leading-none shrink-0">?</span>
-            <span className="hidden md:inline">How to use</span>
-          </button>
+          <div className="flex items-center gap-1.5 shrink-0">
+            {changelog.length > 0 && (
+              <button
+                onClick={() => setChangelogOpen(true)}
+                className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-sm font-medium"
+                aria-label="What's new"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                </svg>
+                <span className="hidden md:inline">What&rsquo;s new</span>
+              </button>
+            )}
+            <button
+              onClick={() => setHelpOpen(true)}
+              className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-sm font-medium"
+              aria-label="How to use"
+            >
+              <span className="w-4 h-4 rounded-full border border-current flex items-center justify-center text-[10px] font-bold leading-none shrink-0">?</span>
+              <span className="hidden md:inline">How to use</span>
+            </button>
+          </div>
           <div className="flex items-center gap-2 shrink-0">
             {lastModifiedDate && (
               <span className="text-xs text-gray-500 hidden lg:inline">
@@ -201,7 +249,6 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
       </header>
 
       <div className="flex flex-1 max-w-screen-2xl mx-auto w-full px-3 sm:px-4 lg:px-6 py-3 sm:py-4 lg:py-6 gap-4 lg:gap-6">
-        {/* sidebar — drawer on mobile, inline on md+ */}
         {sidebarOpen && (
           <div className="fixed top-0 left-0 h-full z-30 md:relative md:z-auto md:top-auto md:h-auto">
             <div className="h-full md:h-auto bg-slate-900 md:bg-transparent border-r border-slate-700 md:border-0 p-4 md:p-0 pt-16 md:pt-0 overflow-y-auto w-72">
@@ -216,7 +263,6 @@ export default function Dashboard({ creatures, lastModifiedDate }: Props) {
           </div>
         )}
 
-        {/* grid */}
         <main className="flex-1 min-w-0">
           {filtered.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-gray-500">
