@@ -44,5 +44,6 @@ export default async function Home() {
   const session = await auth();
   if (!session?.user) redirect('/login');
 
-  return <Dashboard creatures={creatures} lastModifiedDate={metaData.lastModifiedDate} version={metaData.version} changelog={changelogData} />;
+  const { name, image } = session.user;
+  return <Dashboard creatures={creatures} lastModifiedDate={metaData.lastModifiedDate} version={metaData.version} changelog={changelogData} user={{ name: name ?? null, image: image ?? null }} />;
 }

@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useMemo, useCallback, useEffect } from 'react';
+import { signOut } from 'next-auth/react';
+import Image from 'next/image';
 import { Creature } from '@/types/creature';
 import { specialtyGroups, GROUP_SPECIALTIES_BY_GROUP, RESISTANCE_KEYS } from '@/lib/labels';
 import FilterPanel from './FilterPanel';
@@ -17,6 +19,7 @@ interface Props {
   lastModifiedDate: string | null;
   version: string;
   changelog: { date: string; version: string; changes: unknown[] }[];
+  user: { name: string | null; image: string | null };
 }
 
 type Filters = Record<string, Set<string>>;
@@ -43,7 +46,7 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: 'critm', label: 'CRIT DMG' },
 ];
 
-export default function Dashboard({ creatures, lastModifiedDate, version, changelog }: Props) {
+export default function Dashboard({ creatures, lastModifiedDate, version, changelog, user }: Props) {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [page, setPage] = useState(1);
@@ -236,16 +239,30 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
               <span className="hidden md:inline">How to use</span>
             </button>
           </div>
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-3 shrink-0">
             <span className="text-xs text-gray-600 hidden lg:inline">v{version}</span>
             {lastModifiedDate && (
               <span className="text-xs text-gray-500 hidden lg:inline">
                 Dino data: <span className="text-gray-300">{lastModifiedDate}</span>
               </span>
             )}
-            <span className="text-sm text-gray-400 whitespace-nowrap">
-              {filtered.length}<span className="hidden sm:inline"> / {creatures.length}</span>
+            <span className="text-sm text-gray-400 whitespace-nowrap hidden sm:inline">
+              {filtered.length} / {creatures.length}
             </span>
+            <div className="flex items-center gap-2 pl-2 border-l border-slate-700">
+              {user.image && (
+                <Image src={user.image} alt={user.name ?? 'User'} width={28} height={28} className="rounded-full shrink-0" unoptimized />
+              )}
+              {user.name && (
+                <span className="text-sm text-gray-300 hidden md:inline max-w-[120px] truncate">{user.name}</span>
+              )}
+              <button
+                onClick={() => signOut({ callbackUrl: '/login' })}
+                className="text-xs text-gray-500 hover:text-red-400 transition-colors px-2 py-1 rounded hover:bg-red-400/10 whitespace-nowrap"
+              >
+                Sign out
+              </button>
+            </div>
           </div>
         </div>
       </header>
