@@ -240,15 +240,6 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
             </button>
           </div>
           <div className="flex items-center gap-3 shrink-0">
-            <span className="text-xs text-gray-600 hidden lg:inline">v{version}</span>
-            {lastModifiedDate && (
-              <span className="text-xs text-gray-500 hidden lg:inline">
-                Dino data: <span className="text-gray-300">{lastModifiedDate}</span>
-              </span>
-            )}
-            <span className="text-sm text-gray-400 whitespace-nowrap hidden sm:inline">
-              {filtered.length} / {creatures.length}
-            </span>
             <div className="flex items-center gap-2 pl-2 border-l border-slate-700">
               {user.image && (
                 <Image src={user.image} alt={user.name ?? 'User'} width={28} height={28} className="rounded-full shrink-0" unoptimized />
@@ -338,6 +329,18 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
           )}
         </main>
       </div>
+
+      <footer className="border-t border-slate-800 px-4 py-2.5">
+        <div className="max-w-screen-2xl mx-auto flex items-center justify-between gap-4 text-xs text-gray-600">
+          <span>v{version}</span>
+          <div className="flex items-center gap-4">
+            {lastModifiedDate && (
+              <span>Paleo.gg data: <span className="text-gray-500">{lastModifiedDate}</span></span>
+            )}
+            <span><span className="text-gray-500">{filtered.length}</span> / {creatures.length} creatures</span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
