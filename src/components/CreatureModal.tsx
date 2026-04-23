@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Creature, Enhancement, Move } from '@/types/creature';
 import { RARITY_LABELS, CLASS_LABELS, HYBRID_TYPE_LABELS, RARITY_COLORS, RARITY_BG, CLASS_COLORS, label } from '@/lib/labels';
@@ -17,6 +17,7 @@ function statAtLevel(base: number, level: number): number {
 
 import { RESISTANCE_KEYS, RESISTANCE_LABELS, SPAWN_LABELS, label as labelFn } from '@/lib/labels';
 import { evolutionCost, RARITY_LEVEL_RANGE } from '@/lib/evolution';
+import { readShareFromURL, writeShareToURL } from '@/lib/share';
 
 interface Props {
   creature: Creature;
@@ -137,14 +138,30 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
   const [omegaAlloc, setOmegaAlloc] = useState<Record<string, number>>({});
   const [boosts, setBoosts] = useState<Record<BoostStat, number>>({ health: 0, damage: 0, speed: 0 });
   const [enhancementLevel, setEnhancementLevel] = useState(0);
+  const [copied, setCopied] = useState(false);
 
-  // Reset when creature changes
+  // Reset when creature changes, restoring share state if URL matches
   useEffect(() => {
-    setLevel(defaultLevel);
-    setOmegaAlloc({});
-    setBoosts({ health: 0, damage: 0, speed: 0 });
-    setEnhancementLevel(0);
+    const share = readShareFromURL();
+    if (share && share.c === creature.uuid) {
+      setLevel(Math.max(minLevel, Math.min(maxLevel, share.lv)));
+      setBoosts({ health: share.b[0] ?? 0, damage: share.b[1] ?? 0, speed: share.b[2] ?? 0 });
+      setEnhancementLevel(share.enh ?? 0);
+      setOmegaAlloc(share.p ?? {});
+    } else {
+      setLevel(defaultLevel);
+      setOmegaAlloc({});
+      setBoosts({ health: 0, damage: 0, speed: 0 });
+      setEnhancementLevel(0);
+    }
   }, [creature.uuid]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleShare = useCallback(() => {
+    writeShareToURL({ c: creature.uuid, lv: level, b: [boosts.health, boosts.damage, boosts.speed], enh: enhancementLevel, p: omegaAlloc });
+    navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }, [creature.uuid, level, boosts, enhancementLevel, omegaAlloc]);
 
   // When level drops, trim boosts that exceed new budget
   useEffect(() => {
@@ -310,11 +327,30 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
               <p className="text-xs text-gray-400 mt-2 leading-relaxed">{creature.description}</p>
             )}
           </div>
-          <button onClick={onClose} className="shrink-0 text-gray-500 hover:text-white transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
-          </button>
+          <div className="flex items-start gap-2 shrink-0">
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-xs font-medium"
+              title="Copy shareable link"
+            >
+              {copied ? (
+                <>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Copied!</span>
+                </>
+              ) : (
+                <>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                  <span>Share</span>
+                </>
+              )}
+            </button>
+            <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors pt-1">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* bio info — ingredients, hybrids, resistances, spawn */}
