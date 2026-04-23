@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import Discord from 'next-auth/providers/discord';
+import Credentials from 'next-auth/providers/credentials';
 
 const GUILD_ID  = process.env.DISCORD_GUILD_ID!;
 const ROLE_IDS  = [process.env.DISCORD_ROLE_ID_1!, process.env.DISCORD_ROLE_ID_2!];
@@ -28,9 +29,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientSecret: process.env.DISCORD_CLIENT_SECRET!,
       authorization: { params: { prompt: 'none' } },
     }),
+    Credentials({
+      credentials: { password: { type: 'password' } },
+      async authorize({ password }) {
+        const secret = process.env.ACCESS_CODE;
+        if (!secret || password !== secret) return null;
+        return { id: 'guest', name: 'Guest' };
+      },
+    }),
   ],
   callbacks: {
-    async signIn({ profile }) {
+    async signIn({ profile, account }) {
+      if (account?.provider === 'credentials') return true;
       if (!profile?.id) return false;
       return isAuthorized(profile.id as string);
     },

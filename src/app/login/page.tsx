@@ -2,6 +2,7 @@ import { auth } from '@/../auth';
 import { redirect } from 'next/navigation';
 import Image from 'next/image';
 import LoginButton from './LoginButton';
+import AccessCodeForm from './AccessCodeForm';
 
 export default async function LoginPage({
   searchParams,
@@ -46,6 +47,7 @@ export default async function LoginPage({
           )}
 
           <LoginButton />
+          <AccessCodeForm />
 
           <div className="flex flex-col gap-1.5 pt-1 border-t border-slate-700/60">
             <p className="text-center text-xs text-gray-500 font-medium">
