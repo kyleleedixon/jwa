@@ -155,12 +155,27 @@ export default function HelpModal({ onClose }: Props) {
             </Item>
           </Section>
 
+          <Section title="Shareable Builds">
+            <Item label="Share button">
+              Inside any creature modal, click the <Badge color="blue">Share</Badge> button in the top-right corner. This copies a link to your clipboard that encodes the creature&rsquo;s current level, boosts, enhancement tier, and Omega point allocation.
+            </Item>
+            <Item label="Opening a share link">
+              When someone opens a share link, the correct creature modal opens automatically with all settings restored exactly as you configured them — level, boosts, enhancements, and Omega points are all pre-filled.
+            </Item>
+            <Item label="Use cases">
+              Share a maxed boost spread with your alliance, compare two different Omega point builds, or link a specific creature during a team discussion. The recipient sees exactly what you see.
+            </Item>
+            <Item label="Sharing tip">
+              Set up the build first, then click <Badge color="blue">Share</Badge>. The link is always a snapshot of the current state — changing anything after copying means re-sharing.
+            </Item>
+          </Section>
+
           <Section title="Omega Creatures">
             <Item label="What are Omegas?">
               Omegas use a point-based stat customisation system. They still have a level slider, evolution costs, boosts, and a full move breakdown.
             </Item>
             <Item label="Points">
-              Every level-up grants <Badge color="green">7 points</Badge> to spend freely. The <strong className="text-white">Points</strong> panel shows each allocatable stat with a progress bar, − / + buttons, and the in-game stat icon. Use <Badge color="blue">Preset</Badge> to evenly distribute all available points, or <Badge>Reset</Badge> to clear them.
+              Every level-up grants <Badge color="green">7 points</Badge> to spend freely. The <strong className="text-white">Points</strong> panel shows each allocatable stat with a progress bar and <Badge>−10</Badge> <Badge>−</Badge> <Badge>+</Badge> <Badge>+10</Badge> buttons for fast allocation. Use <Badge color="blue">Preset</Badge> to evenly distribute all available points, or <Badge>Reset</Badge> to clear them.
             </Item>
             <Item label="Stat caps">
               Each stat has a point cap and an absolute value cap. The bar turns <span className="text-green-400">green</span> when a stat is maxed.
@@ -172,10 +187,13 @@ export default function HelpModal({ onClose }: Props) {
 
           <Section title="Data & Updates">
             <Item label="Source">
-              All data is scraped from <span className="text-blue-400">paleo.gg/games/jurassic-world-alive/dinodex</span>. The last scrape date appears in the top-right of the header.
+              All creature data is scraped from <span className="text-blue-400">paleo.gg/games/jurassic-world-alive/dinodex</span>. The <strong className="text-white">Dino data</strong> date in the header shows when that data was last pulled.
             </Item>
             <Item label="Auto-sync">
               A daily job checks whether paleo.gg has published a new data version. If the last-modified date has changed, the full scrape runs automatically and the site redeploys — no manual action needed.
+            </Item>
+            <Item label="App version">
+              The <strong className="text-white">v1.1.0</strong> label in the header tracks the Dinodex app itself — separate from the dino data date. Both are shown so you can tell the difference between a data update and a feature update.
             </Item>
             <Item label="Stats baseline">
               All stats are stored at level 26 (the game&rsquo;s standard comparison level). The level slider scales from this baseline using the game&rsquo;s own multiplier table.
