@@ -216,8 +216,8 @@ function calcDamage(
     }
   }
 
-  // Crit (expected value)
-  dmg *= (1 + (attacker.crit / 100) * (attacker.critm - 1));
+  // Crit (expected value) — critm is stored as percentage (e.g. 125 = 1.25×)
+  dmg *= (1 + (attacker.crit / 100) * (attacker.critm / 100 - 1));
 
   return Math.round(Math.max(0, dmg));
 }
