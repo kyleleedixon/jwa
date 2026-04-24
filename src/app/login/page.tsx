@@ -41,7 +41,7 @@ export default async function LoginPage({
             <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-sm text-red-400 text-center">
               {error === 'AccessDenied'
                 ? "Your Discord account doesn't have access. Make sure you have the required alliance role."
-                : 'Something went wrong. Please try again.'}
+                : 'Something went wrong. Try again, or check that Discord is not down.'}
             </div>
           )}
 
@@ -63,7 +63,7 @@ export default async function LoginPage({
               </span>
             </div>
             <p className="text-center text-[11px] text-gray-600 mt-0.5">
-              Alliance membership is verified via Discord roles.
+              You must be in the Tea Rex Alliance Discord server with one of these roles.
             </p>
           </div>
         </div>

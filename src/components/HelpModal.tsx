@@ -66,7 +66,7 @@ export default function HelpModal({ onClose }: Props) {
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-700 sticky top-0 bg-slate-900 z-10">
           <div>
             <h1 className="text-lg font-bold text-white">How to use the Dinodex</h1>
-            <p className="text-xs text-gray-500 mt-0.5">All creatures from Jurassic World Alive. Data auto-syncs daily from paleo.gg.</p>
+            <p className="text-xs text-gray-500 mt-0.5">All creatures from Jurassic World Alive. Data syncs automatically when paleo.gg publishes an update.</p>
           </div>
           <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -187,7 +187,7 @@ export default function HelpModal({ onClose }: Props) {
 
           <Section title="Data & Updates">
             <Item label="Source">
-              All creature data is scraped from <span className="text-blue-400">paleo.gg/games/jurassic-world-alive/dinodex</span>. The <strong className="text-white">Dino data</strong> date in the header shows when that data was last pulled.
+              All creature data is scraped from <a href="https://www.paleo.gg/games/jurassic-world-alive/dinodex" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">paleo.gg/games/jurassic-world-alive/dinodex</a>. The <strong className="text-white">Dino data</strong> date in the footer shows when that data was last pulled.
             </Item>
             <Item label="Auto-sync">
               A daily job checks whether paleo.gg has published a new data version. If the last-modified date has changed, the full scrape runs automatically and the site redeploys — no manual action needed.

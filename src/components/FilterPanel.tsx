@@ -129,7 +129,7 @@ export default function FilterPanel({ creatures, filters, onToggle, onClear, onC
                         if (!checked) onToggle('ability_group', group);
                         onToggle('group_only', group);
                       }}
-                      title="Group effects only"
+                      title="Only show creatures with group-targeting version of this ability"
                       className="shrink-0 flex items-center gap-1 ml-auto"
                     >
                       <span className={`text-[10px] transition-colors ${groupOnly ? 'text-blue-300' : 'text-gray-500'}`}>

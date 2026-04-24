@@ -311,7 +311,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
             <Image src={creature.image} alt={creature.name} width={72} height={72} className="object-contain" unoptimized />
           </div>
           <div className="flex-1 min-w-0">
-            <h2 className="text-xl font-bold text-white">{creature.name}</h2>
+            <h2 className="text-xl font-bold text-white leading-tight">{creature.name}</h2>
             <div className="flex flex-wrap gap-2 mt-1">
               <span className={`text-xs font-medium px-2 py-0.5 rounded border ${rarityColor} ${rarityBg}`}>
                 {label(RARITY_LABELS, creature.rarity)}
