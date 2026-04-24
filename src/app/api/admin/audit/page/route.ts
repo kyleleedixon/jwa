@@ -22,7 +22,6 @@ export async function GET(req: NextRequest) {
   )).filter(Boolean);
 
   const rows = entries.map((e: any) => {
-    const date = new Date(e.lastLogin).toLocaleString('en-AU', { timeZone: 'Australia/Sydney', dateStyle: 'medium', timeStyle: 'short' });
     const status = e.authorized
       ? `<span style="color:#4ade80;font-weight:600">✓ Authorized</span>`
       : `<span style="color:#f87171;font-weight:600">✗ Rejected</span>`;
@@ -32,7 +31,7 @@ export async function GET(req: NextRequest) {
     return `<tr>
       <td>${avatar}${e.name ?? '—'}</td>
       <td style="color:#94a3b8;font-size:12px">${e.discordId}</td>
-      <td>${date}</td>
+      <td class="ts" data-ts="${e.lastLogin}">${e.lastLogin}</td>
       <td>${status}</td>
     </tr>`;
   }).join('');
@@ -71,6 +70,12 @@ export async function GET(req: NextRequest) {
       ${rows || `<tr><td colspan="4" class="empty">No entries yet.</td></tr>`}
     </tbody>
   </table>
+  <script>
+    document.querySelectorAll('.ts').forEach(el => {
+      const d = new Date(el.dataset.ts);
+      el.textContent = d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+    });
+  </script>
 </body>
 </html>`;
 
