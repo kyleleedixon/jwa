@@ -27,9 +27,8 @@ async function writeAuditLog(entry: {
   authorized: boolean;
 }) {
   if (!process.env.BLOB_READ_WRITE_TOKEN) return;
-  const timestamp = new Date().toISOString();
-  const key = `audit/${timestamp}-${entry.discordId}.json`;
-  await put(key, JSON.stringify({ ...entry, timestamp }), {
+  const key = `audit/${entry.discordId}.json`;
+  await put(key, JSON.stringify({ ...entry, lastLogin: new Date().toISOString() }), {
     access: 'private',
     addRandomSuffix: false,
   });
