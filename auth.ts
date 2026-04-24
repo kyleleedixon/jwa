@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import Discord from 'next-auth/providers/discord';
+import { put } from '@vercel/blob';
 
 const GUILD_ID  = process.env.DISCORD_GUILD_ID!;
 const ROLE_IDS  = [process.env.DISCORD_ROLE_ID_1!, process.env.DISCORD_ROLE_ID_2!];
@@ -19,6 +20,21 @@ async function isAuthorized(userId: string): Promise<boolean> {
   }
 }
 
+async function writeAuditLog(entry: {
+  discordId: string;
+  name: string;
+  avatar?: string;
+  authorized: boolean;
+}) {
+  if (!process.env.BLOB_READ_WRITE_TOKEN) return;
+  const timestamp = new Date().toISOString();
+  const key = `audit/${timestamp}-${entry.discordId}.json`;
+  await put(key, JSON.stringify({ ...entry, timestamp }), {
+    access: 'public',
+    addRandomSuffix: false,
+  });
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
   session: { maxAge: 30 * 24 * 60 * 60 },
@@ -32,7 +48,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ profile }) {
       if (!profile?.id) return false;
-      return isAuthorized(profile.id as string);
+      const authorized = await isAuthorized(profile.id as string);
+      writeAuditLog({
+        discordId: profile.id as string,
+        name: (profile.username ?? profile.global_name ?? profile.name ?? '') as string,
+        avatar: profile.image_url as string | undefined,
+        authorized,
+      }).catch(() => {});
+      return authorized;
     },
     async session({ session, token }) {
       return session;

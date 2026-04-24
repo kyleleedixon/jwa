@@ -10,6 +10,7 @@
     "scrape": "node scripts/scrape.js"
   },
   "dependencies": {
+    "@vercel/blob": "^2.3.3",
     "axios": "^1.15.1",
     "cheerio": "^1.2.0",
     "next": "16.2.4",

@@ -135,6 +135,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
   const defaultLevel = isOmega ? 1 : 26;
 
   const [level, setLevel] = useState(defaultLevel);
+  const [fromLevel, setFromLevel] = useState(minLevel);
   const [omegaAlloc, setOmegaAlloc] = useState<Record<string, number>>({});
   const [boosts, setBoosts] = useState<Record<BoostStat, number>>({ health: 0, damage: 0, speed: 0 });
   const [enhancementLevel, setEnhancementLevel] = useState(0);
@@ -154,6 +155,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
       setBoosts({ health: 0, damage: 0, speed: 0 });
       setEnhancementLevel(0);
     }
+    setFromLevel(minLevel);
   }, [creature.uuid]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleShare = useCallback(() => {
@@ -277,11 +279,11 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
     });
   }
 
-  // Evolution cost (from creature's min level to current slider level)
   const ingRarities = creature.ingredients.map(uuid => creatureByUuid.get(uuid)?.rarity ?? '').filter(Boolean);
-  const evoCostAvg   = evolutionCost(creature.rarity, minLevel, level, ingRarities, 22);
-  const evoCostBest  = evolutionCost(creature.rarity, minLevel, level, ingRarities, 50);
-  const evoCostWorst = evolutionCost(creature.rarity, minLevel, level, ingRarities, 10);
+  const evoFrom = Math.min(fromLevel, level - 1);
+  const evoCostAvg   = evolutionCost(creature.rarity, evoFrom, level, ingRarities, 22);
+  const evoCostBest  = evolutionCost(creature.rarity, evoFrom, level, ingRarities, 50);
+  const evoCostWorst = evolutionCost(creature.rarity, evoFrom, level, ingRarities, 10);
 
   function changeAlloc(stat: string, delta: number) {
     setOmegaAlloc(prev => {
@@ -487,9 +489,23 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
         {/* evolution cost */}
         {level > minLevel && (
           <div className="px-5 py-4 border-b border-slate-700/60">
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-              Evolution Cost <span className="text-gray-600 normal-case font-normal">(Lv {minLevel} → {level})</span>
-            </h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                Evolution Cost <span className="text-gray-600 normal-case font-normal">(Lv {evoFrom} → {level})</span>
+              </h3>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] text-gray-500">From</span>
+                <select
+                  value={evoFrom}
+                  onChange={e => setFromLevel(Number(e.target.value))}
+                  className="text-xs bg-slate-700 border border-slate-600 rounded px-1.5 py-0.5 text-gray-300 outline-none focus:border-blue-500"
+                >
+                  {Array.from({ length: level - minLevel }, (_, i) => minLevel + i).map(lv => (
+                    <option key={lv} value={lv}>Lv {lv}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
             <div className="flex flex-col gap-2 text-xs">
               {/* coins row */}
               <div className="flex items-center gap-2">
