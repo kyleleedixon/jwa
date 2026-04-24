@@ -30,7 +30,7 @@ async function writeAuditLog(entry: {
   const timestamp = new Date().toISOString();
   const key = `audit/${timestamp}-${entry.discordId}.json`;
   await put(key, JSON.stringify({ ...entry, timestamp }), {
-    access: 'public',
+    access: 'private',
     addRandomSuffix: false,
   });
 }
