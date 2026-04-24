@@ -1,6 +1,8 @@
 import { NextRequest } from 'next/server';
 import { list, getDownloadUrl } from '@vercel/blob';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   const key = req.nextUrl.searchParams.get('key');
   if (!key || key !== process.env.AUDIT_KEY) {
@@ -76,5 +78,5 @@ export async function GET(req: NextRequest) {
 </body>
 </html>`;
 
-  return new Response(html, { headers: { 'Content-Type': 'text/html' } });
+  return new Response(html, { headers: { 'Content-Type': 'text/html', 'Cache-Control': 'no-store' } });
 }
