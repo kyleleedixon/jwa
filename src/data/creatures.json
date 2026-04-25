@@ -18306,7 +18306,8 @@
       "group_vulner",
       "swap_prevent",
       "nullify",
-      "cleanse"
+      "cleanse",
+      "daze"
     ],
     "dna_source": [
       "none"
@@ -26488,7 +26489,8 @@
       "damage_decrease",
       "crit_decrease",
       "speed_decrease",
-      "cleanse"
+      "cleanse",
+      "daze"
     ],
     "dna_source": [
       "none"
@@ -26751,7 +26753,8 @@
       "speed_decrease",
       "vulner",
       "nullify",
-      "cleanse"
+      "cleanse",
+      "daze"
     ],
     "dna_source": [
       "none"
@@ -27216,7 +27219,8 @@
       "has_special_active_ability",
       "shield",
       "taunt",
-      "damage_decrease"
+      "damage_decrease",
+      "daze"
     ],
     "dna_source": [
       "sanctuary",
@@ -78340,7 +78344,8 @@
       "damage_decrease",
       "crit_decrease",
       "heal_decrease",
-      "nullify"
+      "nullify",
+      "daze"
     ],
     "dna_source": [
       "none"
@@ -80957,7 +80962,8 @@
       "resistance_decrease_all",
       "nullify",
       "cleanse",
-      "heal"
+      "heal",
+      "daze"
     ],
     "dna_source": [
       "none"
