@@ -33,10 +33,15 @@ export default function FilterPanel({ creatures, filters, onToggle, onClear, onC
   const allHybridTypes = HYBRID_TYPE_ORDER.filter(h =>
     creatures.some(c => c.hybrid_type === h)
   );
-  const availableResistances = RESISTANCE_KEYS.filter(key => {
-    const idx = RESISTANCE_KEYS.indexOf(key);
-    return creatures.some(c => (c.resistance?.[idx] ?? 0) > 0);
-  });
+  const availableResistances = RESISTANCE_KEYS
+    .filter(key => {
+      const idx = RESISTANCE_KEYS.indexOf(key);
+      return creatures.some(c => (c.resistance?.[idx] ?? 0) > 0);
+    })
+    .sort((a, b) =>
+      (RESISTANCE_LABELS[a as typeof RESISTANCE_KEYS[number]] ?? a)
+        .localeCompare(RESISTANCE_LABELS[b as typeof RESISTANCE_KEYS[number]] ?? b)
+    );
   const activeCount = Object.values(filters).reduce((n, s) => n + s.size, 0);
 
   return (
