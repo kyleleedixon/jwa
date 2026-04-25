@@ -217,7 +217,9 @@ function calcDamage(
   }
 
   // Crit (expected value) — critm is stored as percentage (e.g. 125 = 1.25×)
-  dmg *= (1 + (attacker.crit / 100) * (attacker.critm / 100 - 1));
+  // Daze on attacker nullifies crit
+  const effectiveCrit = hasEffect(attacker, 'daze') ? 0 : attacker.crit;
+  dmg *= (1 + (effectiveCrit / 100) * (attacker.critm / 100 - 1));
 
   return Math.round(Math.max(0, dmg));
 }
@@ -369,6 +371,15 @@ function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: str
         if (effectiveMult > 0) {
           addEffect(defender, 'vulner', effectiveMult, eff.duration);
           events.push(`${defender.id} vulnerable (+${(effectiveMult * 100).toFixed(0)}% damage taken)`);
+        }
+        break;
+      }
+      case 'daze': {
+        if (!targetsOpponent) break;
+        const resist = resistFraction(defender, 'daze');
+        if (resist < 1) {
+          addEffect(defender, 'daze', 1, eff.duration);
+          events.push(`${defender.id} is dazed (crit nullified)`);
         }
         break;
       }

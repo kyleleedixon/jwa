@@ -141,6 +141,7 @@ export const SPECIALTY_LABELS: Record<string, string> = {
   cloak: 'Cloak',
   distraction: 'Distraction',
   group_distraction: 'Group Distraction',
+  daze: 'Daze',
 };
 
 export const SPECIALTY_GROUPS: Record<string, string> = {
@@ -245,6 +246,7 @@ export const SPECIALTY_GROUPS: Record<string, string> = {
   heal_decrease: 'Weakening',
   group_heal_decrease: 'Weakening',
   group_crit_decrease: 'Weakening',
+  daze: 'Weakening',
   group_armor_increase: 'Shielding',
   group_rend: 'Armor Bypass',
   group_resistance_decrease_all: 'Weakening',
