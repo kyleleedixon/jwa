@@ -193,7 +193,7 @@ export default function HelpModal({ onClose }: Props) {
               A daily job checks whether paleo.gg has published a new data version. If the last-modified date has changed, the full scrape runs automatically and the site redeploys — no manual action needed.
             </Item>
             <Item label="App version">
-              The <strong className="text-white">v1.1.1</strong> label in the footer tracks the Dinodex app itself — separate from the dino data date. Both are shown so you can tell the difference between a data update and a feature update.
+              The <strong className="text-white">v1.1.2</strong> label in the footer tracks the Dinodex app itself — separate from the dino data date. Both are shown so you can tell the difference between a data update and a feature update.
             </Item>
             <Item label="Stats baseline">
               All stats are stored at level 26 (the game&rsquo;s standard comparison level). The level slider scales from this baseline using the game&rsquo;s own multiplier table.
