@@ -317,6 +317,12 @@ export function scoreMoveForDamage(move: Move, attacker: Fighter, defender: Figh
     } else if (eff.action === 'rend') {
       const resist = resistFraction(defender, 'rend');
       score += defender.hp * (eff.multiplier ?? 0) * (1 - resist);
+    } else if (eff.action === 'stun') {
+      // Value a stun as the expected damage the opponent would have dealt that turn
+      const resist = resistFraction(defender, 'stun');
+      const stunChance = Math.max(0, 1 - resist);
+      const turns = eff.duration?.[0] ?? 1;
+      score += currentDamage(defender) * stunChance * turns * 0.8;
     }
   }
   return score;
@@ -675,7 +681,7 @@ export function simulateTeamBattle(
         ? [actA, actB, moveA, moveB, sideA, sideB]
         : [actB, actA, moveB, moveA, sideB, sideA];
 
-      if (first.stunTurns > 0) { first.stunTurns--; }
+      if (first.stunTurns > 0) { /* stunned — tickFighter will decrement */ }
       else {
         applyMove(firstMove, first, second, sink);
         if (second.hp > 0) for (const cm of counterMoves(second)) applyMove(cm, second, first, sink);
@@ -684,7 +690,7 @@ export function simulateTeamBattle(
       if (second.hp <= 0) {
         if (handleDeath(secondSide, first)) break outer;
       } else {
-        if (second.stunTurns > 0) { second.stunTurns--; }
+        if (second.stunTurns > 0) { /* stunned — tickFighter will decrement */ }
         else {
           applyMove(secondMove, second, first, sink);
           if (first.hp > 0) for (const cm of counterMoves(first)) applyMove(cm, first, second, sink);
@@ -694,7 +700,7 @@ export function simulateTeamBattle(
     } else if (aAttacks) {
       const actA = teamActive(sideA), tgt = teamActive(sideB);
       const move = chooseBestMove(actA, tgt);
-      if (actA.stunTurns > 0) { actA.stunTurns--; }
+      if (actA.stunTurns > 0) { /* stunned — tickFighter will decrement */ }
       else {
         applyMove(move, actA, tgt, sink);
         if (tgt.hp > 0) for (const cm of counterMoves(tgt)) applyMove(cm, tgt, actA, sink);
@@ -704,7 +710,7 @@ export function simulateTeamBattle(
     } else if (bAttacks) {
       const actB = teamActive(sideB), tgt = teamActive(sideA);
       const move = chooseBestMove(actB, tgt);
-      if (actB.stunTurns > 0) { actB.stunTurns--; }
+      if (actB.stunTurns > 0) { /* stunned — tickFighter will decrement */ }
       else {
         applyMove(move, actB, tgt, sink);
         if (tgt.hp > 0) for (const cm of counterMoves(tgt)) applyMove(cm, tgt, actB, sink);
