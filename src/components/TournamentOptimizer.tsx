@@ -18,12 +18,11 @@ const RARITY_BG: Record<string, string> = {
 
 function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
-function WinBar({ wins, losses, draws }: { wins: number; losses: number; draws: number }) {
-  const total = wins + losses + draws || 1;
+function WinBar({ wins, losses }: { wins: number; losses: number }) {
+  const total = wins + losses || 1;
   return (
     <div className="flex h-1.5 rounded-full overflow-hidden w-full gap-px">
       <div className="bg-green-500 rounded-l-full" style={{ width: `${wins / total * 100}%` }} />
-      <div className="bg-yellow-500" style={{ width: `${draws / total * 100}%` }} />
       <div className="bg-red-500 rounded-r-full flex-1" />
     </div>
   );
@@ -35,9 +34,13 @@ function TeamCard({ creature, rank, scores }: {
   scores: TournamentResult['scores'];
 }) {
   const sc = scores.find(s => s.creature.uuid === creature.uuid)!;
-  const total = sc.wins + sc.losses + sc.draws;
+  const hasTeam = sc.teamWins + sc.teamLosses > 0;
+  const pct = Math.round((hasTeam ? sc.teamWinRate : sc.winRate) * 100);
+  const w = hasTeam ? sc.teamWins : sc.wins;
+  const l = hasTeam ? sc.teamLosses : sc.losses;
+
   return (
-    <div className={`flex flex-col gap-2 p-3 rounded-xl border ${RARITY_BG[creature.rarity]} bg-opacity-50`}>
+    <div className={`flex flex-col gap-2 p-3 rounded-xl border ${RARITY_BG[creature.rarity]}`}>
       <div className="flex items-center gap-2">
         <span className="text-xs font-bold text-gray-500 w-4 shrink-0">#{rank}</span>
         <img src={creature.image} alt="" className="w-9 h-9 object-contain rounded bg-black/20 shrink-0" />
@@ -46,11 +49,12 @@ function TeamCard({ creature, rank, scores }: {
           <p className={`text-xs ${RARITY_COLORS[creature.rarity]}`}>{cap(creature.rarity)}</p>
         </div>
         <div className="ml-auto text-right shrink-0">
-          <p className="text-sm font-bold text-white">{Math.round(sc.winRate * 100)}%</p>
-          <p className="text-xs text-gray-500">{sc.wins}W {sc.losses}L</p>
+          <p className="text-sm font-bold text-white">{pct}%</p>
+          <p className="text-xs text-gray-500">{w}W {l}L</p>
         </div>
       </div>
-      <WinBar wins={sc.wins} losses={sc.losses} draws={sc.draws} />
+      <WinBar wins={w} losses={l} />
+      {hasTeam && <p className="text-[10px] text-gray-600">4v4 team rate</p>}
     </div>
   );
 }
@@ -85,25 +89,21 @@ export default function TournamentOptimizer({ creatures }: { creatures: Creature
 
   function runOptimizer() {
     startTransition(() => {
-      const r = runTournamentOptimizer(creatures, rules);
-      setResult(r);
+      setResult(runTournamentOptimizer(creatures, rules));
     });
   }
 
   const filteredScores = useMemo(() => {
     if (!result) return [];
     const q = filterQuery.toLowerCase().trim();
-    const scores = q
-      ? result.scores.filter(s => s.creature.name.toLowerCase().includes(q))
-      : result.scores;
-    return showAll ? scores : scores.slice(0, 30);
+    const list = q ? result.scores.filter(s => s.creature.name.toLowerCase().includes(q)) : result.scores;
+    return showAll ? list : list.slice(0, 30);
   }, [result, filterQuery, showAll]);
 
   const teamUuids = useMemo(() => new Set(result?.team.map(c => c.uuid) ?? []), [result]);
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
-      {/* Header */}
       <div className="border-b border-slate-800 px-4 sm:px-6 py-4 flex items-center gap-3">
         <a href="/" className="text-gray-400 hover:text-white transition-colors text-sm">← Dinodex</a>
         <span className="text-gray-700">/</span>
@@ -117,20 +117,15 @@ export default function TournamentOptimizer({ creatures }: { creatures: Creature
         <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 flex flex-col gap-5">
           <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Tournament Rules</h2>
 
-          {/* Rarities */}
           <div>
             <p className="text-xs text-gray-500 mb-2">Allowed rarities</p>
             <div className="flex flex-wrap gap-2">
               {ALL_RARITIES.map(r => {
                 const active = rules.rarities.includes(r);
                 return (
-                  <button
-                    key={r}
-                    onClick={() => toggleRarity(r)}
+                  <button key={r} onClick={() => toggleRarity(r)}
                     className={`px-3 py-1 rounded-full text-xs font-medium border transition-all ${
-                      active
-                        ? `${RARITY_BG[r]} ${RARITY_COLORS[r]}`
-                        : 'bg-slate-700/50 border-slate-600 text-gray-500 hover:border-slate-500'
+                      active ? `${RARITY_BG[r]} ${RARITY_COLORS[r]}` : 'bg-slate-700/50 border-slate-600 text-gray-500 hover:border-slate-500'
                     }`}
                   >
                     {cap(r)}
@@ -140,37 +135,25 @@ export default function TournamentOptimizer({ creatures }: { creatures: Creature
             </div>
           </div>
 
-          {/* Level */}
           <div>
             <p className="text-xs text-gray-500 mb-2">Level <span className="text-white font-semibold">{rules.level}</span></p>
-            <input
-              type="range" min={1} max={35} value={rules.level}
+            <input type="range" min={1} max={35} value={rules.level}
               onChange={e => { setRules(r => ({ ...r, level: Number(e.target.value) })); setResult(null); }}
               className="w-full max-w-xs accent-blue-500"
             />
           </div>
 
-          {/* Boosts */}
-          <div className="flex items-center gap-3">
-            <p className="text-xs text-gray-500">Stat boosts</p>
-            <button
-              onClick={() => { setRules(r => ({ ...r, boosts: !r.boosts })); setResult(null); }}
-              className={`relative w-10 h-5 rounded-full transition-colors ${rules.boosts ? 'bg-blue-500' : 'bg-slate-600'}`}
-            >
-              <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${rules.boosts ? 'translate-x-5' : ''}`} />
-            </button>
-            <span className="text-xs text-gray-400">{rules.boosts ? 'Enabled (not yet supported — disabled in sim)' : 'Disabled'}</span>
-          </div>
-
-          {/* Pool summary + run */}
           <div className="flex items-center gap-4 pt-1">
-            <p className="text-xs text-gray-500">
-              {poolSize} creatures in pool
-              {poolSize > 0 && <> · {Math.floor(poolSize * (poolSize - 1) / 2).toLocaleString()} matchups</>}
-            </p>
-            <button
-              onClick={runOptimizer}
-              disabled={isPending || rules.rarities.length === 0 || poolSize < 2}
+            <div className="flex flex-col gap-0.5">
+              <p className="text-xs text-gray-500">
+                {poolSize} creatures · {Math.floor(poolSize * (poolSize - 1) / 2).toLocaleString()} 1v1 matchups
+              </p>
+              <p className="text-xs text-gray-600">
+                + top 12 → 4v4 team phase ({(495).toLocaleString()} team battles)
+              </p>
+            </div>
+            <button onClick={runOptimizer}
+              disabled={isPending || rules.rarities.length === 0 || poolSize < 4}
               className="ml-auto px-5 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-gray-500 disabled:cursor-not-allowed transition-colors"
             >
               {isPending ? 'Running…' : 'Run Optimizer'}
@@ -181,10 +164,20 @@ export default function TournamentOptimizer({ creatures }: { creatures: Creature
         {/* Results */}
         {result && (
           <>
+            {/* Timing */}
+            <div className="flex items-center gap-4 text-xs text-gray-600">
+              <span>1v1 phase: {result.phase1Ms}ms</span>
+              <span>·</span>
+              <span>4v4 phase: {result.phase2Ms}ms ({result.phase2Battles.toLocaleString()} battles)</span>
+              <span>·</span>
+              <span>Total: {result.durationMs}ms</span>
+            </div>
+
             <div className="flex items-center gap-2">
               <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Recommended Team</h2>
-              <span className="text-xs text-gray-600 ml-auto">{result.durationMs}ms</span>
+              <span className="text-xs text-gray-600 ml-2">pick any 4 of these 8 each battle</span>
             </div>
+
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {result.team.map((c, i) => (
                 <TeamCard key={c.uuid} creature={c} rank={i + 1} scores={result.scores} />
@@ -193,48 +186,52 @@ export default function TournamentOptimizer({ creatures }: { creatures: Creature
 
             {/* Coverage stat */}
             {(() => {
+              const sc = result.scores.filter(s => teamUuids.has(s.creature.uuid));
               const covered = new Set<string>();
-              result.team.forEach(c => {
-                const sc = result.scores.find(s => s.creature.uuid === c.uuid)!;
-                sc.beats.forEach(u => covered.add(u));
+              sc.forEach(s => {
+                const cov = s.teamBeats.length > 0 ? s.teamBeats : s.beats;
+                cov.forEach(k => covered.add(k));
               });
-              const pct = Math.round(covered.size / (result.pool.length - 1) * 100);
+              const denom = result.scores.find(s => s.teamBeats.length > 0)
+                ? result.phase2Battles * 2  // rough denominator for team coverage
+                : result.pool.length - 1;
+              const pct = Math.min(100, Math.round(covered.size / Math.max(1, denom) * 100));
               return (
                 <p className="text-xs text-gray-500 -mt-2">
-                  This team covers <span className="text-white font-semibold">{covered.size}</span> of{' '}
-                  <span className="text-white font-semibold">{result.pool.length - 1}</span> opponents ({pct}%)
+                  Team covers <span className="text-white font-semibold">{covered.size.toLocaleString()}</span> opponent team combinations ({pct}%)
                 </p>
               );
             })()}
 
-            {/* Full rankings */}
+            {/* Rankings */}
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">All Creatures Ranked</h2>
-                <input
-                  value={filterQuery}
-                  onChange={e => setFilterQuery(e.target.value)}
+                <input value={filterQuery} onChange={e => setFilterQuery(e.target.value)}
                   placeholder="Filter…"
                   className="ml-auto px-3 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-sm text-white placeholder-gray-600 outline-none focus:border-slate-500 w-36"
                 />
               </div>
 
               <div className="bg-slate-800/40 border border-slate-700 rounded-xl overflow-hidden">
-                <div className="grid grid-cols-[2rem_1fr_5rem_4rem_4rem_4rem] items-center gap-2 px-3 py-2 border-b border-slate-700 text-xs text-gray-500 font-medium">
+                <div className="grid grid-cols-[2rem_1fr_5rem_4rem_4rem] items-center gap-2 px-3 py-2 border-b border-slate-700 text-xs text-gray-500 font-medium">
                   <span>#</span>
                   <span>Creature</span>
                   <span className="text-right">Win%</span>
                   <span className="text-right">W</span>
                   <span className="text-right">L</span>
-                  <span className="text-right">D</span>
                 </div>
-                {filteredScores.map((sc, i) => {
+                {filteredScores.map((sc) => {
                   const isTeam = teamUuids.has(sc.creature.uuid);
                   const rank = result.scores.indexOf(sc) + 1;
+                  const hasTeam = sc.teamWins + sc.teamLosses > 0;
+                  const pct = Math.round((hasTeam ? sc.teamWinRate : sc.winRate) * 100);
+                  const w = hasTeam ? sc.teamWins : sc.wins;
+                  const l = hasTeam ? sc.teamLosses : sc.losses;
+
                   return (
-                    <div
-                      key={sc.creature.uuid}
-                      className={`grid grid-cols-[2rem_1fr_5rem_4rem_4rem_4rem] items-center gap-2 px-3 py-2 border-b border-slate-700/50 last:border-0 text-sm transition-colors ${
+                    <div key={sc.creature.uuid}
+                      className={`grid grid-cols-[2rem_1fr_5rem_4rem_4rem] items-center gap-2 px-3 py-2 border-b border-slate-700/50 last:border-0 text-sm transition-colors ${
                         isTeam ? 'bg-blue-500/5' : 'hover:bg-slate-700/30'
                       }`}
                     >
@@ -243,24 +240,24 @@ export default function TournamentOptimizer({ creatures }: { creatures: Creature
                         <img src={sc.creature.image} alt="" className="w-7 h-7 object-contain rounded bg-black/20 shrink-0" />
                         <div className="min-w-0">
                           <p className="text-sm text-white truncate font-medium">{sc.creature.name}</p>
-                          <p className={`text-xs ${RARITY_COLORS[sc.creature.rarity]}`}>{cap(sc.creature.rarity)}</p>
+                          <p className={`text-xs ${RARITY_COLORS[sc.creature.rarity]}`}>
+                            {cap(sc.creature.rarity)}{hasTeam ? ' · 4v4' : ''}
+                          </p>
                         </div>
                         {isTeam && (
                           <span className="ml-1 shrink-0 text-xs bg-blue-500/20 border border-blue-500/40 text-blue-300 px-1.5 py-0.5 rounded-full font-medium">Team</span>
                         )}
                       </div>
-                      <span className="text-right font-semibold text-white">{Math.round(sc.winRate * 100)}%</span>
-                      <span className="text-right text-green-400">{sc.wins}</span>
-                      <span className="text-right text-red-400">{sc.losses}</span>
-                      <span className="text-right text-yellow-400">{sc.draws}</span>
+                      <span className="text-right font-semibold text-white">{pct}%</span>
+                      <span className="text-right text-green-400">{w}</span>
+                      <span className="text-right text-red-400">{l}</span>
                     </div>
                   );
                 })}
               </div>
 
               {!showAll && result.scores.length > 30 && !filterQuery && (
-                <button
-                  onClick={() => setShowAll(true)}
+                <button onClick={() => setShowAll(true)}
                   className="text-xs text-blue-400 hover:text-blue-300 transition-colors text-center py-1"
                 >
                   Show all {result.scores.length} creatures

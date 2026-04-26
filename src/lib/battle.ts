@@ -546,6 +546,191 @@ function tickFighter(f: Fighter, events: string[]) {
   if (f.stunTurns > 0) f.stunTurns -= 1;
 }
 
+// ─── Team Battle (4v4, first to 3 deaths wins) ───────────────────────────────
+
+export interface TeamBattleResult {
+  winner: 'A' | 'B' | 'draw';
+  deathsA: number;
+  deathsB: number;
+}
+
+interface TeamSide {
+  id: 'A' | 'B';
+  fighters: Fighter[];
+  activeIdx: number;
+  deaths: number;
+  justSwappedIn: boolean;
+}
+
+function teamActive(s: TeamSide): Fighter { return s.fighters[s.activeIdx]; }
+
+function estimateSwapInDamage(incoming: Fighter, opponent: Fighter): number {
+  let total = 0;
+  for (const move of incoming.creature.moves) {
+    if (move.type !== 'swap_in') continue;
+    const effs = moveEffects(incoming, move);
+    const bypassArmor = effs.some(e => e.action === 'bypass_armor');
+    const bypassDodge  = effs.some(e => e.action === 'bypass_dodge');
+    const removesShield = effs.some(e => e.action === 'remove_shield');
+    const isGroup = effs.some(e => e.action === 'attack' && (e.target === 'all_opponents' || e.target === 'team'));
+    for (const eff of effs) {
+      if (eff.action !== 'attack') continue;
+      const raw = calcDamage(incoming, opponent, eff.multiplier ?? 1, bypassArmor, bypassDodge, removesShield, false);
+      const isFlock = opponent.memberHp.length > 1;
+      total += (!isGroup && isFlock) ? Math.min(raw, opponent.memberHp[weakestAliveIdx(opponent)]) : raw;
+    }
+  }
+  return total;
+}
+
+function pickSwapTarget(side: TeamSide, opponent: Fighter): number {
+  if (side.justSwappedIn) return -1;
+  const act = teamActive(side);
+  if (hasEffect(act, 'swap_prevent')) return -1;
+
+  const myEV    = scoreMoveForDamage(chooseBestMove(act, opponent), act, opponent);
+  const theirEV = scoreMoveForDamage(chooseBestMove(opponent, act), opponent, act);
+  const ratio   = myEV / Math.max(1, theirEV);
+
+  // Only consider swapping when clearly losing this matchup
+  if (ratio >= 0.7 && act.hp / act.maxHp >= 0.35) return -1;
+
+  let bestIdx = -1, bestScore = myEV * 0.4; // must clear this threshold
+
+  for (let i = 0; i < side.fighters.length; i++) {
+    if (i === side.activeIdx || side.fighters[i].hp <= 0) continue;
+    const bench = side.fighters[i];
+    const siDmg = estimateSwapInDamage(bench, opponent);
+    const benchEV = scoreMoveForDamage(chooseBestMove(bench, opponent), bench, opponent);
+    const score = siDmg + benchEV * 0.8;
+    if (score > bestScore) { bestScore = score; bestIdx = i; }
+  }
+  return bestIdx;
+}
+
+function pickForcedReplacement(side: TeamSide, opponent: Fighter): number {
+  let best = -1, bestScore = -Infinity;
+  for (let i = 0; i < side.fighters.length; i++) {
+    if (i === side.activeIdx || side.fighters[i].hp <= 0) continue;
+    const score = scoreMoveForDamage(chooseBestMove(side.fighters[i], opponent), side.fighters[i], opponent);
+    if (score > bestScore) { bestScore = score; best = i; }
+  }
+  return best;
+}
+
+function doSwap(side: TeamSide, newIdx: number, opponent: Fighter) {
+  const leaving = teamActive(side);
+  const sink: string[] = [];
+  for (const move of leaving.creature.moves.filter(m => m.type === 'on_escape')) {
+    applyMove(move, leaving, opponent, sink);
+  }
+  side.activeIdx = newIdx;
+  side.justSwappedIn = true;
+  const incoming = teamActive(side);
+  for (const move of incoming.creature.moves.filter(m => m.type === 'swap_in')) {
+    applyMove(move, incoming, opponent, sink);
+  }
+}
+
+// Returns true if match should end (side hit 3 deaths or no replacements left)
+function handleDeath(dyingSide: TeamSide, opponent: Fighter): boolean {
+  dyingSide.deaths++;
+  if (dyingSide.deaths >= 3) return true;
+  const next = pickForcedReplacement(dyingSide, opponent);
+  if (next < 0) return true;
+  dyingSide.activeIdx = next;
+  dyingSide.justSwappedIn = false;
+  return false;
+}
+
+export function simulateTeamBattle(
+  teamA: Creature[], teamB: Creature[], config: BattleConfig,
+): TeamBattleResult {
+  const level = config.levelA;
+  const sideA: TeamSide = { id: 'A', fighters: teamA.map(c => initFighter('A', c, level, config.boostsA)), activeIdx: 0, deaths: 0, justSwappedIn: false };
+  const sideB: TeamSide = { id: 'B', fighters: teamB.map(c => initFighter('B', c, level, config.boostsB)), activeIdx: 0, deaths: 0, justSwappedIn: false };
+  const sink: string[] = [];
+
+  outer: for (let turn = 1; turn <= 200; turn++) {
+    // ── Swap phase (simultaneous) ──────────────────────────────────────────
+    const swapA = pickSwapTarget(sideA, teamActive(sideB));
+    const swapB = pickSwapTarget(sideB, teamActive(sideA));
+    if (swapA >= 0) doSwap(sideA, swapA, teamActive(sideB));
+    if (swapB >= 0) doSwap(sideB, swapB, teamActive(sideA));
+
+    // Deaths from swap-in moves
+    if (teamActive(sideB).hp <= 0 && handleDeath(sideB, teamActive(sideA))) break outer;
+    if (teamActive(sideA).hp <= 0 && handleDeath(sideA, teamActive(sideB))) break outer;
+
+    // ── Attack phase (non-swappers only) ──────────────────────────────────
+    const aAttacks = swapA < 0, bAttacks = swapB < 0;
+
+    if (aAttacks && bAttacks) {
+      const actA = teamActive(sideA), actB = teamActive(sideB);
+      const moveA = chooseBestMove(actA, actB), moveB = chooseBestMove(actB, actA);
+      const spdA = currentSpeed(actA), spdB = currentSpeed(actB);
+      const prioA = movePriority(actA, moveA) + (spdA >= spdB ? 0.5 : 0);
+      const prioB = movePriority(actB, moveB) + (spdB > spdA ? 0.5 : 0);
+      const [first, second, firstMove, secondMove, firstSide, secondSide] = prioA >= prioB
+        ? [actA, actB, moveA, moveB, sideA, sideB]
+        : [actB, actA, moveB, moveA, sideB, sideA];
+
+      if (first.stunTurns > 0) { first.stunTurns--; }
+      else {
+        applyMove(firstMove, first, second, sink);
+        if (second.hp > 0) for (const cm of counterMoves(second)) applyMove(cm, second, first, sink);
+      }
+
+      if (second.hp <= 0) {
+        if (handleDeath(secondSide, first)) break outer;
+      } else {
+        if (second.stunTurns > 0) { second.stunTurns--; }
+        else {
+          applyMove(secondMove, second, first, sink);
+          if (first.hp > 0) for (const cm of counterMoves(first)) applyMove(cm, first, second, sink);
+        }
+        if (first.hp <= 0 && handleDeath(firstSide, second)) break outer;
+      }
+    } else if (aAttacks) {
+      const actA = teamActive(sideA), tgt = teamActive(sideB);
+      const move = chooseBestMove(actA, tgt);
+      if (actA.stunTurns > 0) { actA.stunTurns--; }
+      else {
+        applyMove(move, actA, tgt, sink);
+        if (tgt.hp > 0) for (const cm of counterMoves(tgt)) applyMove(cm, tgt, actA, sink);
+      }
+      if (tgt.hp <= 0 && handleDeath(sideB, actA)) break outer;
+      if (actA.hp <= 0 && handleDeath(sideA, tgt)) break outer;
+    } else if (bAttacks) {
+      const actB = teamActive(sideB), tgt = teamActive(sideA);
+      const move = chooseBestMove(actB, tgt);
+      if (actB.stunTurns > 0) { actB.stunTurns--; }
+      else {
+        applyMove(move, actB, tgt, sink);
+        if (tgt.hp > 0) for (const cm of counterMoves(tgt)) applyMove(cm, tgt, actB, sink);
+      }
+      if (tgt.hp <= 0 && handleDeath(sideA, actB)) break outer;
+      if (actB.hp <= 0 && handleDeath(sideB, tgt)) break outer;
+    }
+
+    // ── End of turn ────────────────────────────────────────────────────────
+    tickFighter(teamActive(sideA), sink);
+    tickFighter(teamActive(sideB), sink);
+    sideA.justSwappedIn = false;
+    sideB.justSwappedIn = false;
+
+    if (sideA.deaths >= 3 || sideB.deaths >= 3) break outer;
+  }
+
+  let winner: 'A' | 'B' | 'draw';
+  if (sideA.deaths >= 3 && sideB.deaths >= 3) winner = 'draw';
+  else if (sideB.deaths >= 3) winner = 'A';
+  else if (sideA.deaths >= 3) winner = 'B';
+  else winner = sideA.deaths <= sideB.deaths ? 'A' : 'B';
+
+  return { winner, deathsA: sideA.deaths, deathsB: sideB.deaths };
+}
+
 // ─── Main simulation ──────────────────────────────────────────────────────────
 
 const MAX_TURNS = 50;
