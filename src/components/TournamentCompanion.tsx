@@ -5,7 +5,8 @@ import { Creature, Move } from '@/types/creature';
 import { Fighter, initFighter } from '@/lib/battle';
 import {
   cloneFighter, evaluateMoves, evaluateSwaps, regularMoves,
-  resolveMoveExchange, resolveMySwap, resolveOppSwap, resolveBothSwap,
+  resolveMoveExchange, resolveMoveWithRun, resolveMySwap, resolveOppSwap, resolveBothSwap,
+  hasRunEffect, nextAliveTeamIdx,
   MoveOption, SwapOption,
 } from '@/lib/companion';
 import { RARITY_COLORS, RARITY_BG } from '@/lib/labels';
@@ -139,10 +140,11 @@ function LiveCard({ fighter, label, deaths, isActive }: {
 
 // ── Move recommendation row ───────────────────────────────────────────────────
 
-function MoveRow({ opt, selected, onSelect }: {
+function MoveRow({ opt, selected, onSelect, isRun }: {
   opt: MoveOption;
   selected: boolean;
   onSelect: () => void;
+  isRun?: boolean;
 }) {
   return (
     <button
@@ -159,6 +161,7 @@ function MoveRow({ opt, selected, onSelect }: {
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <p className="font-medium text-white text-sm truncate">{opt.move.name}</p>
+          {isRun && <span className="text-xs text-purple-400 bg-purple-500/20 border border-purple-500/30 px-1.5 py-0.5 rounded font-medium shrink-0">+ Run</span>}
           {!opt.available && <span className="text-xs text-gray-600">CD</span>}
         </div>
         <p className="text-xs text-gray-500 mt-0.5">
@@ -301,9 +304,30 @@ export default function TournamentCompanion({ creatures }: { creatures: Creature
     const oppIsSwap = oppAction.type === 'swap';
 
     if (!myIsSwap && !oppIsSwap) {
-      // Both attack
       const myMove = meSlot.creature.moves.find(m => m.uuid === myAction.moveUuid)!;
-      const oppMove = oppSlot.creature.moves.find(m => m.uuid === oppAction.moveUuid)!;
+      const oppMove = oppSlot.creature.moves.find(m => m.uuid === (oppAction as Extract<OppAction, { type: 'move' }>).moveUuid)!;
+
+      if (hasRunEffect(myMove) && runAutoIdx >= 0) {
+        // Run move: attack + auto-exit → next alive steps in
+        const myIncomingFighter = cloneFighter(state.myTeam[runAutoIdx].fighter);
+        events = resolveMoveWithRun(meFighter, myIncomingFighter, oppFighter, myMove, oppMove);
+        const newState: GameState = {
+          ...state,
+          myTeam: state.myTeam.map((s, i) =>
+            i === state.myActiveIdx ? { ...s, fighter: meFighter } :
+            i === runAutoIdx ? { ...s, fighter: myIncomingFighter } : s
+          ),
+          myActiveIdx: runAutoIdx,
+          oppTeam: newOppTeam.map((s, i) => i === state.oppActiveIdx ? { ...s, fighter: oppFighter } : s),
+          log: [...state.log, ...events].slice(-20),
+        };
+        checkDeathsAndSet(newState);
+        setMyAction(null);
+        setOppAction(null);
+        return;
+      }
+
+      // Normal both-attack
       events = resolveMoveExchange(meFighter, oppFighter, myMove, oppMove);
     } else if (myIsSwap && !oppIsSwap) {
       // I swap, they attack
@@ -488,6 +512,17 @@ export default function TournamentCompanion({ creatures }: { creatures: Creature
   const bestMove = moveOptions[0] ?? null;
   const swapIsBetter = bestSwap !== null && bestMove !== null &&
     bestSwap.score > bestMove.score && bestSwap.winsMatchup;
+
+  // For run moves: which creature auto-steps in (next alive in team order)
+  const runAutoIdx = useMemo(() =>
+    game ? nextAliveTeamIdx(game.myTeam, game.myActiveIdx) : -1,
+    [game]
+  );
+  const selectedMoveHasRun = useMemo(() => {
+    if (!myAction || myAction.type !== 'move' || !myActive) return false;
+    const move = myActive.creature.moves.find(m => m.uuid === myAction.moveUuid);
+    return move ? hasRunEffect(move) : false;
+  }, [myAction, myActive]);
 
   const myMoveSelected = myAction?.type === 'move' ? myAction.moveUuid : null;
   const mySwapSelected = myAction?.type === 'swap' ? myAction.toIdx : null;
@@ -718,10 +753,26 @@ export default function TournamentCompanion({ creatures }: { creatures: Creature
               </h2>
               {moveOptions.map(opt => (
                 <MoveRow key={opt.move.uuid} opt={opt} selected={myMoveSelected === opt.move.uuid}
+                  isRun={hasRunEffect(opt.move)}
                   onSelect={() => setMyAction({ type: 'move', moveUuid: opt.move.uuid })}
                 />
               ))}
             </div>
+
+            {/* Run move callout: show which creature auto-steps in */}
+            {selectedMoveHasRun && runAutoIdx >= 0 && (
+              <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl border bg-purple-500/10 border-purple-500/30">
+                <span className="text-purple-400 shrink-0">↩</span>
+                <p className="text-xs text-purple-300">
+                  After this move, <span className="font-semibold">{game.myTeam[runAutoIdx].creature.name}</span> automatically steps in (next in team order)
+                </p>
+              </div>
+            )}
+            {selectedMoveHasRun && runAutoIdx < 0 && (
+              <div className="flex items-center gap-2 px-3 py-2 rounded-xl border bg-yellow-500/10 border-yellow-500/30">
+                <p className="text-xs text-yellow-300">No bench creatures left — run move used but no swap occurs</p>
+              </div>
+            )}
 
             {swapOptions.length > 0 && !swapIsBetter && (
               <div className="flex flex-col gap-2">

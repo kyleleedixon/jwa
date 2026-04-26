@@ -88,6 +88,20 @@ export function evaluateSwaps(bench: Fighter[], opp: Fighter, me: Fighter): Swap
   }).sort((a, b) => b.score - a.score);
 }
 
+export function hasRunEffect(move: Move): boolean {
+  return move.effects.some(e => e.action === 'run') ||
+    (move.if_alert?.effects.some(e => e.action === 'run') ?? false);
+}
+
+// Next alive fighter index after activeIdx (wraps through team in order)
+export function nextAliveTeamIdx(team: { alive: boolean }[], activeIdx: number): number {
+  for (let offset = 1; offset < team.length; offset++) {
+    const idx = (activeIdx + offset) % team.length;
+    if (idx !== activeIdx && team[idx].alive) return idx;
+  }
+  return -1;
+}
+
 // ── Turn resolution (mutates fighters in place) ───────────────────────────────
 
 // Both players used an attack move
@@ -121,6 +135,58 @@ export function resolveMoveExchange(
   }
 
   tickFighter(me, events);
+  tickFighter(opp, events);
+  return events;
+}
+
+// I used a run move — creature attacks then automatically exits, next alive steps in
+export function resolveMoveWithRun(
+  me: Fighter, myIncoming: Fighter,
+  opp: Fighter,
+  myMove: Move, oppMove: Move,
+): string[] {
+  const events: string[] = [];
+  const myPrio = movePriority(me, myMove) + (currentSpeed(me) >= currentSpeed(opp) ? 0.5 : 0);
+  const oppPrio = movePriority(opp, oppMove) + (currentSpeed(opp) > currentSpeed(me) ? 0.5 : 0);
+
+  if (myPrio >= oppPrio) {
+    // I go first: attack → run → opp hits my incoming creature
+    if (me.stunTurns > 0) {
+      me.stunTurns--;
+      events.push('You are stunned — can\'t run this turn');
+      // Fall back to normal exchange if stunned
+      if (opp.stunTurns > 0) { opp.stunTurns--; }
+      else { applyMove(oppMove, opp, me, events); if (me.hp > 0) for (const cm of counterMoves(me)) applyMove(cm, me, opp, events); }
+    } else {
+      applyMove(myMove, me, opp, events);
+      if (opp.hp > 0) for (const cm of counterMoves(opp)) applyMove(cm, opp, me, events);
+      // Run: on_escape from me, swap_in from incoming
+      for (const m of me.creature.moves.filter(m => m.type === 'on_escape')) applyMove(m, me, opp, events);
+      for (const m of myIncoming.creature.moves.filter(m => m.type === 'swap_in')) applyMove(m, myIncoming, opp, events);
+      events.push(`${me.creature.name} runs — ${myIncoming.creature.name} steps in`);
+      // Opp now attacks my incoming creature
+      if (opp.hp > 0) {
+        if (opp.stunTurns > 0) { opp.stunTurns--; events.push('Opponent is stunned!'); }
+        else { applyMove(oppMove, opp, myIncoming, events); if (myIncoming.hp > 0) for (const cm of counterMoves(myIncoming)) applyMove(cm, myIncoming, opp, events); }
+      }
+    }
+  } else {
+    // Opp goes first: attacks me → then I use run move → exit
+    if (opp.stunTurns > 0) { opp.stunTurns--; events.push('Opponent is stunned!'); }
+    else { applyMove(oppMove, opp, me, events); if (me.hp > 0) for (const cm of counterMoves(me)) applyMove(cm, me, opp, events); }
+    if (me.hp > 0) {
+      if (me.stunTurns > 0) { me.stunTurns--; events.push('You are stunned!'); }
+      else {
+        applyMove(myMove, me, opp, events);
+        if (opp.hp > 0) for (const cm of counterMoves(opp)) applyMove(cm, opp, me, events);
+        for (const m of me.creature.moves.filter(m => m.type === 'on_escape')) applyMove(m, me, opp, events);
+        for (const m of myIncoming.creature.moves.filter(m => m.type === 'swap_in')) applyMove(m, myIncoming, opp, events);
+        events.push(`${me.creature.name} runs — ${myIncoming.creature.name} steps in`);
+      }
+    }
+  }
+
+  tickFighter(myIncoming, events);
   tickFighter(opp, events);
   return events;
 }
