@@ -180,30 +180,41 @@ export function runTournamentOptimizer(
 
   const phase2Ms = Math.round(performance.now() - t2);
 
-  // ── Greedy team selection (coverage-maximising) ───────────────────────────
+  // ── Greedy team selection (coverage-maximising within phase-2 candidates) ─
+  // Only select from phase-2 tested creatures so coverage comparison is
+  // apples-to-apples (all in team-key space, not mixed with 1v1 UUID space).
+  const phase2Scores = scores.filter(s => s.teamsCount > 0);
   const team: Creature[] = [];
   const covered = new Set<string>();
   const picked  = new Set<string>();
 
-  while (team.length < 8 && team.length < pool.length) {
+  while (team.length < 8 && team.length < phase2Scores.length) {
     let bestScore = -1, bestIdx = -1;
 
-    for (let i = 0; i < scores.length; i++) {
-      const s = scores[i];
+    for (let i = 0; i < phase2Scores.length; i++) {
+      const s = phase2Scores[i];
       if (picked.has(s.creature.uuid)) continue;
-      const coverageSet = s.teamBeats.length > 0 ? s.teamBeats : s.beats;
-      const newCov  = coverageSet.filter(k => !covered.has(k)).length;
-      const rate    = s.teamBeats.length > 0 ? s.teamWinRate : s.winRate;
-      const slotScore = newCov * 1000 + Math.round(rate * 999);
+      const newCov    = s.teamBeats.filter(k => !covered.has(k)).length;
+      const slotScore = newCov * 1000 + Math.round(s.teamWinRate * 999);
       if (slotScore > bestScore) { bestScore = slotScore; bestIdx = i; }
     }
 
     if (bestIdx < 0) break;
-    const chosen = scores[bestIdx];
+    const chosen = phase2Scores[bestIdx];
     team.push(chosen.creature);
     picked.add(chosen.creature.uuid);
-    const cov = chosen.teamBeats.length > 0 ? chosen.teamBeats : chosen.beats;
-    cov.forEach(k => covered.add(k));
+    chosen.teamBeats.forEach(k => covered.add(k));
+  }
+
+  // Fill remaining slots from phase-1 if phase-2 pool is smaller than 8
+  if (team.length < 8) {
+    for (const s of scores) {
+      if (team.length >= 8) break;
+      if (!picked.has(s.creature.uuid)) {
+        team.push(s.creature);
+        picked.add(s.creature.uuid);
+      }
+    }
   }
 
   return {
