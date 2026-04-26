@@ -16,9 +16,9 @@ export interface CreatureScore {
   winRate: number;
   beats: string[];
   losesTo: string[];
-  // Phase 2 — 4v4 team
+  // Phase 2 — 4v4 vs benchmark
   teamWinRate: number;
-  teamBeats: string[]; // opponent team-keys this creature helped beat
+  teamBeats: string[]; // benchmark team-keys this creature helped beat
   teamsCount: number;  // how many 4-creature combos this creature appeared in
 }
 
@@ -33,7 +33,9 @@ export interface TournamentResult {
   phase2Battles: number;
 }
 
-const PHASE2_CANDIDATES = 12;
+// Top N candidates enter phase 2; benchmark opponents drawn from top M by 1v1
+const PHASE2_CANDIDATES = 20;
+const BENCHMARK_TOP     = 8;  // C(8,4) = 70 benchmark teams
 
 function teamKey(team: Creature[]): string {
   return team.map(c => c.uuid).join(',');
@@ -107,35 +109,20 @@ export function runTournamentOptimizer(
 
   scores.sort((a, b) => b.winRate - a.winRate || b.wins - a.wins);
 
-  // ── Phase 2: 4v4 all-vs-all among top candidates ─────────────────────────
+  // ── Phase 2: candidate teams vs fixed benchmark opponents ─────────────────
+  // Each of C(top-20, 4) = 4845 candidate teams fights each of C(top-8, 4) = 70
+  // benchmark teams. Benchmarks represent the strongest meta opposition.
+  // Total battles: ~340k — diverse enough that greedy coverage adds real value.
   const t2 = performance.now();
-  const n = Math.min(PHASE2_CANDIDATES, pool.length);
-  const candidates = scores.slice(0, n).map(s => s.creature);
-  const allTeams = combos(candidates, Math.min(4, candidates.length));
+  const n  = Math.min(PHASE2_CANDIDATES, pool.length);
+  const bn = Math.min(BENCHMARK_TOP, pool.length);
 
-  const teamWinsMap   = new Map<string, Set<string>>();
-  const teamLossesMap = new Map<string, Set<string>>();
-  for (const t of allTeams) {
-    teamWinsMap.set(teamKey(t), new Set());
-    teamLossesMap.set(teamKey(t), new Set());
-  }
+  const candidates       = scores.slice(0, n).map(s => s.creature);
+  const benchmarkCreatures = scores.slice(0, bn).map(s => s.creature);
 
-  for (let i = 0; i < allTeams.length; i++) {
-    for (let j = i + 1; j < allTeams.length; j++) {
-      const tA = allTeams[i], tB = allTeams[j];
-      const r = simulateTeamBattle(tA, tB, config);
-      const kA = teamKey(tA), kB = teamKey(tB);
-      if (r.winner === 'A') {
-        teamWinsMap.get(kA)!.add(kB);
-        teamLossesMap.get(kB)!.add(kA);
-      } else if (r.winner === 'B') {
-        teamWinsMap.get(kB)!.add(kA);
-        teamLossesMap.get(kA)!.add(kB);
-      }
-    }
-  }
+  const candidateTeams   = combos(candidates, Math.min(4, n));
+  const benchmarkTeams   = combos(benchmarkCreatures, Math.min(4, bn));
 
-  // Aggregate per-creature: team win counts and opponent teams beaten
   const creatureTeamBeats   = new Map<string, Set<string>>();
   const creatureTeamWins    = new Map<string, number>();
   const creatureTeamBattles = new Map<string, number>();
@@ -147,31 +134,37 @@ export function runTournamentOptimizer(
     creatureTeamsCount.set(c.uuid, 0);
   }
 
-  for (const team of allTeams) {
-    const tk = teamKey(team);
-    const w = teamWinsMap.get(tk)!.size;
-    const l = teamLossesMap.get(tk)!.size;
-    for (const c of team) {
-      for (const beaten of teamWinsMap.get(tk)!) creatureTeamBeats.get(c.uuid)!.add(beaten);
-      creatureTeamWins.set(c.uuid, (creatureTeamWins.get(c.uuid) ?? 0) + w);
-      creatureTeamBattles.set(c.uuid, (creatureTeamBattles.get(c.uuid) ?? 0) + w + l);
+  for (const candTeam of candidateTeams) {
+    const ck = teamKey(candTeam);
+    let teamWins = 0, teamBattles = 0;
+    const beatenKeys: string[] = [];
+
+    for (const benchTeam of benchmarkTeams) {
+      const bk = teamKey(benchTeam);
+      if (ck === bk) continue; // same team, skip
+      const r = simulateTeamBattle(candTeam, benchTeam, config);
+      if (r.winner !== 'draw') teamBattles++;
+      if (r.winner === 'A') { teamWins++; beatenKeys.push(bk); }
+    }
+
+    for (const c of candTeam) {
+      for (const bk of beatenKeys) creatureTeamBeats.get(c.uuid)!.add(bk);
+      creatureTeamWins.set(c.uuid, (creatureTeamWins.get(c.uuid) ?? 0) + teamWins);
+      creatureTeamBattles.set(c.uuid, (creatureTeamBattles.get(c.uuid) ?? 0) + teamBattles);
       creatureTeamsCount.set(c.uuid, (creatureTeamsCount.get(c.uuid) ?? 0) + 1);
     }
   }
 
-  // Patch scores with phase 2 data
   for (const s of scores) {
     const battles = creatureTeamBattles.get(s.creature.uuid) ?? 0;
     const wins    = creatureTeamWins.get(s.creature.uuid) ?? 0;
-    s.teamWinRate  = battles > 0 ? wins / battles : 0;
-    s.teamBeats    = [...(creatureTeamBeats.get(s.creature.uuid) ?? [])];
-    s.teamsCount   = creatureTeamsCount.get(s.creature.uuid) ?? 0;
+    s.teamWinRate = battles > 0 ? wins / battles : 0;
+    s.teamBeats   = [...(creatureTeamBeats.get(s.creature.uuid) ?? [])];
+    s.teamsCount  = creatureTeamsCount.get(s.creature.uuid) ?? 0;
   }
 
-  // Re-sort: phase-2 creatures ranked by team win rate first, rest by 1v1
   scores.sort((a, b) => {
-    const aP2 = a.teamsCount > 0;
-    const bP2 = b.teamsCount > 0;
+    const aP2 = a.teamsCount > 0, bP2 = b.teamsCount > 0;
     if (aP2 && bP2) return b.teamWinRate - a.teamWinRate || b.teamsCount - a.teamsCount;
     if (aP2) return -1;
     if (bP2) return 1;
@@ -180,9 +173,10 @@ export function runTournamentOptimizer(
 
   const phase2Ms = Math.round(performance.now() - t2);
 
-  // ── Greedy team selection (coverage-maximising within phase-2 candidates) ─
-  // Only select from phase-2 tested creatures so coverage comparison is
-  // apples-to-apples (all in team-key space, not mixed with 1v1 UUID space).
+  // ── Greedy team selection (coverage over benchmark team-key space) ─────────
+  // All 20 candidates are in the same coverage space (benchmark team keys),
+  // so greedy now finds genuine diversity: picks creature that beats benchmark
+  // teams not already covered by the current roster.
   const phase2Scores = scores.filter(s => s.teamsCount > 0);
   const team: Creature[] = [];
   const covered = new Set<string>();
@@ -206,7 +200,7 @@ export function runTournamentOptimizer(
     chosen.teamBeats.forEach(k => covered.add(k));
   }
 
-  // Fill remaining slots from phase-1 if phase-2 pool is smaller than 8
+  // Fallback: fill from phase-1 if fewer than 8 phase-2 candidates
   if (team.length < 8) {
     for (const s of scores) {
       if (team.length >= 8) break;
@@ -222,6 +216,6 @@ export function runTournamentOptimizer(
     phase1Ms, phase2Ms,
     durationMs: Math.round(performance.now() - t0),
     phase2Candidates: candidates.length,
-    phase2Battles: allTeams.length * (allTeams.length - 1) / 2,
+    phase2Battles: candidateTeams.length * benchmarkTeams.length,
   };
 }
