@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useTransition } from 'react';
+import { useState, useMemo } from 'react';
 import { Creature } from '@/types/creature';
 import { runTournamentOptimizer, TournamentResult, TournamentRules } from '@/lib/tournament';
 
@@ -68,7 +68,7 @@ export default function TournamentOptimizer({ creatures }: { creatures: Creature
 
   const [rules, setRules] = useState<TournamentRules>(defaultRules);
   const [result, setResult] = useState<TournamentResult | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const [isRunning, setIsRunning] = useState(false);
   const [filterQuery, setFilterQuery] = useState('');
   const [showAll, setShowAll] = useState(false);
 
@@ -88,9 +88,14 @@ export default function TournamentOptimizer({ creatures }: { creatures: Creature
   }
 
   function runOptimizer() {
-    startTransition(() => {
-      setResult(runTournamentOptimizer(creatures, rules));
-    });
+    setIsRunning(true);
+    setResult(null);
+    // defer so React can render the loading state before the heavy sync work
+    setTimeout(() => {
+      const r = runTournamentOptimizer(creatures, rules);
+      setResult(r);
+      setIsRunning(false);
+    }, 50);
   }
 
   const filteredScores = useMemo(() => {
@@ -144,19 +149,14 @@ export default function TournamentOptimizer({ creatures }: { creatures: Creature
           </div>
 
           <div className="flex items-center gap-4 pt-1">
-            <div className="flex flex-col gap-0.5">
-              <p className="text-xs text-gray-500">
-                {poolSize} creatures · {Math.floor(poolSize * (poolSize - 1) / 2).toLocaleString()} 1v1 matchups
-              </p>
-              <p className="text-xs text-gray-600">
-                + top 12 → 4v4 team phase ({(495).toLocaleString()} team battles)
-              </p>
-            </div>
+            <p className="text-xs text-gray-500">
+              {poolSize} creatures · 4v4, first to 3 deaths
+            </p>
             <button onClick={runOptimizer}
-              disabled={isPending || rules.rarities.length === 0 || poolSize < 4}
+              disabled={isRunning || rules.rarities.length === 0 || poolSize < 4}
               className="ml-auto px-5 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-gray-500 disabled:cursor-not-allowed transition-colors"
             >
-              {isPending ? 'Running…' : 'Run Optimizer'}
+              {isRunning ? 'Running…' : 'Run Optimizer'}
             </button>
           </div>
         </div>
