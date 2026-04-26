@@ -17,10 +17,9 @@ export interface CreatureScore {
   beats: string[];
   losesTo: string[];
   // Phase 2 — 4v4 team
-  teamWins: number;
-  teamLosses: number;
   teamWinRate: number;
   teamBeats: string[]; // opponent team-keys this creature helped beat
+  teamsCount: number;  // how many 4-creature combos this creature appeared in
 }
 
 export interface TournamentResult {
@@ -102,7 +101,7 @@ export function runTournamentOptimizer(
       winRate: total > 0 ? w / total : 0,
       beats: [...beats.get(c.uuid)!],
       losesTo: [...losesTo.get(c.uuid)!],
-      teamWins: 0, teamLosses: 0, teamWinRate: 0, teamBeats: [],
+      teamWinRate: 0, teamBeats: [], teamsCount: 0,
     };
   });
 
@@ -140,10 +139,12 @@ export function runTournamentOptimizer(
   const creatureTeamBeats   = new Map<string, Set<string>>();
   const creatureTeamWins    = new Map<string, number>();
   const creatureTeamBattles = new Map<string, number>();
+  const creatureTeamsCount  = new Map<string, number>();
   for (const c of candidates) {
     creatureTeamBeats.set(c.uuid, new Set());
     creatureTeamWins.set(c.uuid, 0);
     creatureTeamBattles.set(c.uuid, 0);
+    creatureTeamsCount.set(c.uuid, 0);
   }
 
   for (const team of allTeams) {
@@ -154,6 +155,7 @@ export function runTournamentOptimizer(
       for (const beaten of teamWinsMap.get(tk)!) creatureTeamBeats.get(c.uuid)!.add(beaten);
       creatureTeamWins.set(c.uuid, (creatureTeamWins.get(c.uuid) ?? 0) + w);
       creatureTeamBattles.set(c.uuid, (creatureTeamBattles.get(c.uuid) ?? 0) + w + l);
+      creatureTeamsCount.set(c.uuid, (creatureTeamsCount.get(c.uuid) ?? 0) + 1);
     }
   }
 
@@ -161,17 +163,16 @@ export function runTournamentOptimizer(
   for (const s of scores) {
     const battles = creatureTeamBattles.get(s.creature.uuid) ?? 0;
     const wins    = creatureTeamWins.get(s.creature.uuid) ?? 0;
-    s.teamWins     = wins;
-    s.teamLosses   = battles - wins;
     s.teamWinRate  = battles > 0 ? wins / battles : 0;
     s.teamBeats    = [...(creatureTeamBeats.get(s.creature.uuid) ?? [])];
+    s.teamsCount   = creatureTeamsCount.get(s.creature.uuid) ?? 0;
   }
 
   // Re-sort: phase-2 creatures ranked by team win rate first, rest by 1v1
   scores.sort((a, b) => {
-    const aP2 = creatureTeamBattles.has(a.creature.uuid);
-    const bP2 = creatureTeamBattles.has(b.creature.uuid);
-    if (aP2 && bP2) return b.teamWinRate - a.teamWinRate || b.teamWins - a.teamWins;
+    const aP2 = a.teamsCount > 0;
+    const bP2 = b.teamsCount > 0;
+    if (aP2 && bP2) return b.teamWinRate - a.teamWinRate || b.teamsCount - a.teamsCount;
     if (aP2) return -1;
     if (bP2) return 1;
     return b.winRate - a.winRate;

@@ -34,10 +34,8 @@ function TeamCard({ creature, rank, scores }: {
   scores: TournamentResult['scores'];
 }) {
   const sc = scores.find(s => s.creature.uuid === creature.uuid)!;
-  const hasTeam = sc.teamWins + sc.teamLosses > 0;
+  const hasTeam = sc.teamsCount > 0;
   const pct = Math.round((hasTeam ? sc.teamWinRate : sc.winRate) * 100);
-  const w = hasTeam ? sc.teamWins : sc.wins;
-  const l = hasTeam ? sc.teamLosses : sc.losses;
 
   return (
     <div className={`flex flex-col gap-2 p-3 rounded-xl border ${RARITY_BG[creature.rarity]}`}>
@@ -50,11 +48,11 @@ function TeamCard({ creature, rank, scores }: {
         </div>
         <div className="ml-auto text-right shrink-0">
           <p className="text-sm font-bold text-white">{pct}%</p>
-          <p className="text-xs text-gray-500">{w}W {l}L</p>
+          <p className="text-xs text-gray-500">{hasTeam ? `${sc.teamsCount} team combos` : `${sc.wins}W ${sc.losses}L`}</p>
         </div>
       </div>
-      <WinBar wins={w} losses={l} />
-      {hasTeam && <p className="text-[10px] text-gray-600">4v4 team rate</p>}
+      <WinBar wins={pct} losses={100 - pct} />
+      <p className="text-[10px] text-gray-600">{hasTeam ? '4v4 win rate' : '1v1 win rate'}</p>
     </div>
   );
 }
@@ -214,24 +212,21 @@ export default function TournamentOptimizer({ creatures }: { creatures: Creature
               </div>
 
               <div className="bg-slate-800/40 border border-slate-700 rounded-xl overflow-hidden">
-                <div className="grid grid-cols-[2rem_1fr_5rem_4rem_4rem] items-center gap-2 px-3 py-2 border-b border-slate-700 text-xs text-gray-500 font-medium">
+                <div className="grid grid-cols-[2rem_1fr_5rem_6rem] items-center gap-2 px-3 py-2 border-b border-slate-700 text-xs text-gray-500 font-medium">
                   <span>#</span>
                   <span>Creature</span>
                   <span className="text-right">Win%</span>
-                  <span className="text-right">W</span>
-                  <span className="text-right">L</span>
+                  <span className="text-right">Record</span>
                 </div>
                 {filteredScores.map((sc) => {
                   const isTeam = teamUuids.has(sc.creature.uuid);
                   const rank = result.scores.indexOf(sc) + 1;
-                  const hasTeam = sc.teamWins + sc.teamLosses > 0;
+                  const hasTeam = sc.teamsCount > 0;
                   const pct = Math.round((hasTeam ? sc.teamWinRate : sc.winRate) * 100);
-                  const w = hasTeam ? sc.teamWins : sc.wins;
-                  const l = hasTeam ? sc.teamLosses : sc.losses;
 
                   return (
                     <div key={sc.creature.uuid}
-                      className={`grid grid-cols-[2rem_1fr_5rem_4rem_4rem] items-center gap-2 px-3 py-2 border-b border-slate-700/50 last:border-0 text-sm transition-colors ${
+                      className={`grid grid-cols-[2rem_1fr_5rem_6rem] items-center gap-2 px-3 py-2 border-b border-slate-700/50 last:border-0 text-sm transition-colors ${
                         isTeam ? 'bg-blue-500/5' : 'hover:bg-slate-700/30'
                       }`}
                     >
@@ -240,17 +235,16 @@ export default function TournamentOptimizer({ creatures }: { creatures: Creature
                         <img src={sc.creature.image} alt="" className="w-7 h-7 object-contain rounded bg-black/20 shrink-0" />
                         <div className="min-w-0">
                           <p className="text-sm text-white truncate font-medium">{sc.creature.name}</p>
-                          <p className={`text-xs ${RARITY_COLORS[sc.creature.rarity]}`}>
-                            {cap(sc.creature.rarity)}{hasTeam ? ' · 4v4' : ''}
-                          </p>
+                          <p className={`text-xs ${RARITY_COLORS[sc.creature.rarity]}`}>{cap(sc.creature.rarity)}</p>
                         </div>
                         {isTeam && (
                           <span className="ml-1 shrink-0 text-xs bg-blue-500/20 border border-blue-500/40 text-blue-300 px-1.5 py-0.5 rounded-full font-medium">Team</span>
                         )}
                       </div>
                       <span className="text-right font-semibold text-white">{pct}%</span>
-                      <span className="text-right text-green-400">{w}</span>
-                      <span className="text-right text-red-400">{l}</span>
+                      <span className="text-right text-xs text-gray-500">
+                        {hasTeam ? `${sc.teamsCount} combos` : `${sc.wins}W ${sc.losses}L`}
+                      </span>
                     </div>
                   );
                 })}
