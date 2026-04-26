@@ -183,6 +183,7 @@ function calcDamage(
   bypassDodge: boolean,
   removedShield: boolean,
   bypassFlockCap: boolean = false,
+  consume: boolean = true,
 ): number {
   let dmg = currentDamage(attacker) * multiplier;
 
@@ -208,8 +209,7 @@ function calcDamage(
   if (!removedShield && hasEffect(defender, 'shield')) {
     const se = getEffect(defender, 'shield')!;
     dmg *= (1 - se.multiplier);
-    // Consume hit
-    if (se.hitsLeft > 0) {
+    if (consume && se.hitsLeft > 0) {
       se.hitsLeft -= 1;
       if (se.hitsLeft === 0) removeEffects(defender, 'shield');
     }
@@ -220,16 +220,15 @@ function calcDamage(
     if (hasEffect(defender, 'dodge')) {
       const de = getEffect(defender, 'dodge')!;
       dmg *= (1 - de.multiplier);
-      // Consume hit
-      if (de.hitsLeft > 0) {
+      if (consume && de.hitsLeft > 0) {
         de.hitsLeft -= 1;
         if (de.hitsLeft === 0) removeEffects(defender, 'dodge');
       }
     }
     if (hasEffect(defender, 'cloak')) {
-      dmg *= 0.5; // 50% dodge chance
+      dmg *= 0.5;
       const ce = getEffect(defender, 'cloak')!;
-      if (ce.hitsLeft > 0) {
+      if (consume && ce.hitsLeft > 0) {
         ce.hitsLeft -= 1;
         if (ce.hitsLeft === 0) removeEffects(defender, 'cloak');
       }
@@ -267,7 +266,7 @@ function scoreMoveForDamage(move: Move, attacker: Fighter, defender: Fighter): n
 
   for (const eff of effs) {
     if (eff.action === 'attack') {
-      score += calcDamage(attacker, defender, eff.multiplier ?? 1, bypassArmor, bypassDodge, removesShield, bypassFlockCap);
+      score += calcDamage(attacker, defender, eff.multiplier ?? 1, bypassArmor, bypassDodge, removesShield, bypassFlockCap, false);
     } else if (eff.action === 'dot') {
       const turns = eff.duration?.[0] ?? 2;
       const resist = resistFraction(defender, 'dot');
