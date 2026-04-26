@@ -236,13 +236,31 @@ export default function TournamentCompanion({ creatures }: { creatures: Creature
   const [level, setLevel] = useState(35);
   const [mySlots, setMySlots] = useState<(Creature | null)[]>([null, null, null, null]);
   const [oppCreature, setOppCreature] = useState<Creature | null>(null);
+  const [myStartIdx, setMyStartIdx] = useState(0);
   const [game, setGame] = useState<GameState | null>(null);
   const [myAction, setMyAction] = useState<MyAction | null>(null);
   const [oppAction, setOppAction] = useState<OppAction | null>(null);
   const [pendingOppSwapCreature, setPendingOppSwapCreature] = useState<Creature | null>(null);
 
   const pickedUuids = useMemo(() => mySlots.filter(Boolean).map(c => c!.uuid), [mySlots]);
+
+  // Rank my team vs opponent's starting creature by best-move damage score
+  const leadRanking = useMemo(() => {
+    if (!oppCreature || mySlots.some(s => !s)) return null;
+    const oppF = initFighter('B', oppCreature, level);
+    return (mySlots as Creature[]).map((c, idx) => {
+      const f = initFighter('A', c, level);
+      const opts = evaluateMoves(f, oppF);
+      const best = opts[0];
+      return { idx, creature: c, score: best?.score ?? 0, tag: best?.tag ?? 'neutral' as const, myDmg: best?.myDmg ?? 0, oppDmg: best?.oppDmg ?? 0, iGoFirst: best?.iGoFirst ?? false };
+    }).sort((a, b) => b.score - a.score);
+  }, [mySlots, oppCreature, level]);
   const canStart = mySlots.every(Boolean) && oppCreature !== null;
+
+  // Auto-select recommended lead whenever ranking updates
+  useMemo(() => {
+    if (leadRanking) setMyStartIdx(leadRanking[0].idx);
+  }, [leadRanking]);
 
   function startBattle() {
     if (!canStart) return;
@@ -256,7 +274,7 @@ export default function TournamentCompanion({ creatures }: { creatures: Creature
     setGame({
       level: lvl,
       myTeam,
-      myActiveIdx: 0,
+      myActiveIdx: myStartIdx,
       myDeaths: 0,
       oppTeam: [{ creature: oppCreature!, fighter: oppF, alive: true }],
       oppActiveIdx: 0,
@@ -498,6 +516,36 @@ export default function TournamentCompanion({ creatures }: { creatures: Creature
               ))}
             </div>
           </div>
+
+          {leadRanking && (
+            <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 flex flex-col gap-3">
+              <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Recommended Lead</h2>
+              <p className="text-xs text-gray-500">Ranked by expected first-turn outcome vs their starting creature. Tap to change your lead.</p>
+              <div className="flex flex-col gap-2">
+                {leadRanking.map((r, rank) => (
+                  <button key={r.idx} onClick={() => setMyStartIdx(r.idx)}
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl border text-left transition-all ${
+                      myStartIdx === r.idx
+                        ? 'bg-blue-600/30 border-blue-500/60 ring-1 ring-blue-500/40'
+                        : 'bg-slate-800 border-slate-700 hover:bg-slate-700/60'
+                    }`}
+                  >
+                    <span className="text-xs text-gray-600 w-4 shrink-0 text-center font-bold">{rank + 1}</span>
+                    <img src={r.creature.image} alt="" className="w-9 h-9 object-contain rounded-lg bg-black/20 shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-white truncate">{r.creature.name}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">
+                        {r.iGoFirst ? '⚡ First' : '🐢 Second'} · deals ~{r.myDmg.toLocaleString()} · takes ~{r.oppDmg.toLocaleString()}
+                      </p>
+                    </div>
+                    <span className={`shrink-0 text-xs font-medium px-2 py-0.5 rounded-full border ${TAG_STYLES[r.tag]}`}>
+                      {rank === 0 ? 'Lead' : cap(r.tag)}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 flex flex-col gap-4">
             <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Opponent's Starting Creature</h2>
