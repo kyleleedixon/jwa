@@ -217,8 +217,13 @@ function calcDamage(
   }
 
   // Crit (expected value) — critm is stored as percentage (e.g. 125 = 1.25×)
-  // Daze on attacker nullifies crit
-  const effectiveCrit = hasEffect(attacker, 'daze') ? 0 : attacker.crit;
+  // Apply crit_increase/decrease effects, then nullify if dazed
+  let effectiveCrit = attacker.crit;
+  for (const e of attacker.effects) {
+    if (e.action === 'crit_increase') effectiveCrit = Math.min(100, effectiveCrit + e.multiplier * 100);
+    if (e.action === 'crit_decrease') effectiveCrit = Math.max(0, effectiveCrit - e.multiplier * 100);
+  }
+  if (hasEffect(attacker, 'daze')) effectiveCrit = 0;
   dmg *= (1 + (effectiveCrit / 100) * (attacker.critm / 100 - 1));
 
   return Math.round(Math.max(0, dmg));
@@ -323,6 +328,21 @@ function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: str
         if (effectiveMult > 0) {
           addEffect(defender, 'damage_decrease', effectiveMult, eff.duration);
           events.push(`${defender.id} distracted (−${(effectiveMult * 100).toFixed(0)}% damage)`);
+        }
+        break;
+      }
+      case 'crit_increase': {
+        addEffect(target, 'crit_increase', eff.multiplier ?? 0, eff.duration);
+        events.push(`${target.id} +${((eff.multiplier ?? 0) * 100).toFixed(0)}% crit`);
+        break;
+      }
+      case 'crit_decrease': {
+        if (!targetsOpponent) break;
+        const resist = resistFraction(defender, 'crit_decrease');
+        const effectiveMult = (eff.multiplier ?? 0) * (1 - resist);
+        if (effectiveMult > 0) {
+          addEffect(defender, 'crit_decrease', effectiveMult, eff.duration);
+          events.push(`${defender.id} −${(effectiveMult * 100).toFixed(0)}% crit`);
         }
         break;
       }
