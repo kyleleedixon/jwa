@@ -146,6 +146,10 @@ function counterMoves(f: Fighter): Move[] {
   return f.creature.moves.filter(m => m.type === 'counter');
 }
 
+function swapInMoves(f: Fighter): Move[] {
+  return f.creature.moves.filter(m => m.type === 'swap_in');
+}
+
 // ─── Resistance ───────────────────────────────────────────────────────────────
 
 function resistFraction(defender: Fighter, action: string): number {
@@ -286,10 +290,10 @@ function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: str
       case 'dot': {
         if (!targetsOpponent) break;
         const resist = resistFraction(defender, 'dot');
-        const effectiveMult = (eff.multiplier ?? 0) * (1 - resist);
-        if (effectiveMult > 0) {
-          addEffect(defender, 'dot', effectiveMult, eff.duration);
-          events.push(`${attacker.id} applies DoT (${(effectiveMult * 100).toFixed(0)}% per turn)`);
+        const dmgPerTick = Math.round(currentDamage(attacker) * (eff.multiplier ?? 0) * (1 - resist));
+        if (dmgPerTick > 0) {
+          addEffect(defender, 'dot', dmgPerTick, eff.duration);
+          events.push(`${attacker.id} applies DoT (${dmgPerTick} per turn)`);
         }
         break;
       }
@@ -433,19 +437,11 @@ function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: str
 // ─── End-of-turn bookkeeping ──────────────────────────────────────────────────
 
 function tickFighter(f: Fighter, events: string[]) {
-  // DoT ticks
+  // DoT ticks — multiplier stores pre-computed absolute damage per tick
   const dot = getEffect(f, 'dot');
   if (dot) {
-    const dmg = Math.round(f.baseDamage * dot.multiplier); // DoT based on attacker's damage... but we store on defender
-    // DoT is stored on the fighter taking damage; multiplier was already adjusted
-    // Actually we stored it as a fraction of current damage at time of application
-    // We'll use the attacker's damage at time of tick — but we don't have the attacker anymore
-    // Simplification: DoT damage = f.maxHp * 0.05 per turn (10% if 0.2 multiplier of typical damage)
-    // Better: store raw DoT damage at application time
-    // For now multiply stored multiplier by fighter's own damage as approximation
-    const rawDmg = Math.round(f.baseDamage * dot.multiplier);
-    f.hp = Math.max(0, f.hp - rawDmg);
-    events.push(`${f.id} takes ${rawDmg} DoT damage`);
+    f.hp = Math.max(0, f.hp - dot.multiplier);
+    events.push(`${f.id} takes ${dot.multiplier} DoT damage`);
   }
 
   // Decrement effect durations
@@ -480,7 +476,21 @@ export function simulateBattle(creatureA: Creature, creatureB: Creature, config:
   const B = initFighter('B', creatureB, config.levelB, config.boostsB);
   const log: BattleLogEntry[] = [];
 
-  for (let turn = 1; turn <= MAX_TURNS; turn++) {
+  // Swap-in abilities fire at battle start, faster creature first
+  {
+    const [first, second] = currentSpeed(A) >= currentSpeed(B) ? [A, B] : [B, A];
+    for (const f of [first, second]) {
+      const opp = f === A ? B : A;
+      for (const move of swapInMoves(f)) {
+        if (opp.hp <= 0) break;
+        const events: string[] = [`${f.id} swap-in: ${move.name}`];
+        applyMove(move, f, opp, events);
+        log.push({ turn: 0, actor: f.id, moveName: `Swap-In: ${move.name}`, events, hpA: A.hp, hpB: B.hp });
+      }
+    }
+  }
+
+  for (let turn = 1; turn <= MAX_TURNS && A.hp > 0 && B.hp > 0; turn++) {
     // Determine action order this round
     const spdA = currentSpeed(A);
     const spdB = currentSpeed(B);
