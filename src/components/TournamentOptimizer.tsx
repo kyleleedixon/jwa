@@ -3,18 +3,14 @@
 import { useState, useMemo } from 'react';
 import { Creature } from '@/types/creature';
 import { runTournamentOptimizer, TournamentResult, TournamentRules } from '@/lib/tournament';
+import { RARITY_COLORS, RARITY_BG, RARITY_ORDER } from '@/lib/labels';
 
-const ALL_RARITIES = ['common', 'rare', 'epic', 'legendary', 'unique', 'apex', 'omega'];
-const RARITY_COLORS: Record<string, string> = {
-  common: 'text-gray-300', rare: 'text-blue-400', epic: 'text-purple-400',
-  legendary: 'text-yellow-400', unique: 'text-orange-400', apex: 'text-red-400', omega: 'text-pink-400',
-};
-const RARITY_BG: Record<string, string> = {
-  common: 'bg-gray-500/20 border-gray-500/40', rare: 'bg-blue-500/20 border-blue-500/40',
-  epic: 'bg-purple-500/20 border-purple-500/40', legendary: 'bg-yellow-500/20 border-yellow-500/40',
-  unique: 'bg-orange-500/20 border-orange-500/40', apex: 'bg-red-500/20 border-red-500/40',
-  omega: 'bg-pink-500/20 border-pink-500/40',
-};
+const ALL_RARITIES = RARITY_ORDER;
+
+// Border classes extracted from RARITY_COLORS for card outlines
+const RARITY_BORDER: Record<string, string> = Object.fromEntries(
+  Object.entries(RARITY_COLORS).map(([k, v]) => [k, v.split(' ').find(c => c.startsWith('border-')) ?? 'border-gray-500'])
+);
 
 function cap(s: string) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
@@ -38,7 +34,7 @@ function TeamRow({ creature, rank, scores }: {
   const pct = Math.round((hasTeam ? sc.teamWinRate : sc.winRate) * 100);
 
   return (
-    <div className={`flex items-center gap-3 px-4 py-3 rounded-xl border ${RARITY_BG[creature.rarity]}`}>
+    <div className={`flex items-center gap-3 px-4 py-3 rounded-xl border ${RARITY_BG[creature.rarity]} ${RARITY_BORDER[creature.rarity]}`}>
       <span className="text-sm font-bold text-gray-500 w-5 shrink-0 text-center">{rank}</span>
       <img src={creature.image} alt="" className="w-12 h-12 object-contain rounded-lg bg-black/20 shrink-0" />
       <div className="flex-1 min-w-0">
