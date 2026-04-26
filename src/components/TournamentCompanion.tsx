@@ -504,12 +504,23 @@ export default function TournamentCompanion({ creatures }: { creatures: Creature
           <h1 className="text-sm font-semibold text-white">Tournament Companion</h1>
         </div>
         <div className="max-w-xl mx-auto px-4 py-8 flex flex-col gap-6">
+
+          {/* Opponent first — visible before picking your team */}
+          <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 flex flex-col gap-4">
+            <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Opponent's Starting Creature</h2>
+            <CreaturePicker creatures={creatures} value={oppCreature}
+              exclude={[]}
+              onChange={setOppCreature}
+              placeholder="Their first creature…"
+            />
+          </div>
+
           <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 flex flex-col gap-4">
             <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Your Team (4 creatures)</h2>
             <div className="grid grid-cols-2 gap-2">
               {mySlots.map((c, i) => (
                 <CreaturePicker key={i} creatures={creatures} value={c}
-                  exclude={[...pickedUuids.filter(u => u !== c?.uuid), oppCreature?.uuid ?? ''].filter(Boolean)}
+                  exclude={pickedUuids.filter(u => u !== c?.uuid)}
                   onChange={creature => setMySlots(s => s.map((x, j) => j === i ? creature : x))}
                   placeholder={`Creature ${i + 1}`}
                 />
@@ -546,15 +557,6 @@ export default function TournamentCompanion({ creatures }: { creatures: Creature
               </div>
             </div>
           )}
-
-          <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 flex flex-col gap-4">
-            <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Opponent's Starting Creature</h2>
-            <CreaturePicker creatures={creatures} value={oppCreature}
-              exclude={pickedUuids}
-              onChange={setOppCreature}
-              placeholder="Their first creature…"
-            />
-          </div>
 
           <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 flex flex-col gap-3">
             <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Level</h2>
