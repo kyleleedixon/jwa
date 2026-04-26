@@ -24,14 +24,14 @@ export interface BattleConfig {
   boostsB?: BattleBoosts;
 }
 
-interface ActiveEffect {
+export interface ActiveEffect {
   action: string;
   multiplier: number;
   hitsLeft: number;  // -1 = unlimited; for shields/dodge consumed per hit
   turnsLeft: number; // -1 = permanent (rare)
 }
 
-interface Fighter {
+export interface Fighter {
   id: 'A' | 'B';
   creature: Creature;
   hp: number;
@@ -70,7 +70,7 @@ export interface BattleResult {
 
 // ─── Fighter initialisation ───────────────────────────────────────────────────
 
-function initFighter(id: 'A' | 'B', creature: Creature, level: number, boosts: BattleBoosts = { health: 0, damage: 0, speed: 0 }): Fighter {
+export function initFighter(id: 'A' | 'B', creature: Creature, level: number, boosts: BattleBoosts = { health: 0, damage: 0, speed: 0 }): Fighter {
   const hp  = Math.round(statAtLevel(creature.health, level) * (1 + 0.025 * boosts.health));
   const dmg = Math.round(statAtLevel(creature.damage, level) * (1 + 0.025 * boosts.damage));
   const spd = statAtLevel(creature.speed, level) + boosts.speed * 2;
@@ -129,7 +129,7 @@ function currentDamage(f: Fighter): number {
   return Math.max(0, dmg);
 }
 
-function currentSpeed(f: Fighter): number {
+export function currentSpeed(f: Fighter): number {
   let spd = f.baseSpeed;
   for (const e of f.effects) {
     if (e.action === 'speed_increase') spd += f.baseSpeed * e.multiplier;
@@ -148,7 +148,7 @@ function moveEffects(f: Fighter, move: Move): Move['effects'] {
   return inAlert(f, move) ? move.if_alert!.effects : move.effects;
 }
 
-function movePriority(f: Fighter, move: Move): number {
+export function movePriority(f: Fighter, move: Move): number {
   return inAlert(f, move) ? move.if_alert!.priority : move.priority;
 }
 
@@ -196,7 +196,7 @@ function applyMemberDamage(defender: Fighter, rawDmg: number): { applied: number
 
 // ─── Available moves ─────────────────────────────────────────────────────────
 
-function regularMoves(f: Fighter): Move[] {
+export function regularMoves(f: Fighter): Move[] {
   return f.creature.moves.filter(m => {
     if (m.type !== 'regular') return false;
     if ((f.cooldowns[m.uuid] ?? 0) > 0) return false;
@@ -205,7 +205,7 @@ function regularMoves(f: Fighter): Move[] {
   });
 }
 
-function counterMoves(f: Fighter): Move[] {
+export function counterMoves(f: Fighter): Move[] {
   return f.creature.moves.filter(m => m.type === 'counter');
 }
 
@@ -294,7 +294,7 @@ function calcDamage(
 
 // ─── Greedy move scorer ───────────────────────────────────────────────────────
 
-function scoreMoveForDamage(move: Move, attacker: Fighter, defender: Fighter): number {
+export function scoreMoveForDamage(move: Move, attacker: Fighter, defender: Fighter): number {
   let score = 0;
   const effs = moveEffects(attacker, move);
   const bypassArmor = effs.some(e => e.action === 'bypass_armor');
@@ -322,7 +322,7 @@ function scoreMoveForDamage(move: Move, attacker: Fighter, defender: Fighter): n
   return score;
 }
 
-function chooseBestMove(attacker: Fighter, defender: Fighter): Move {
+export function chooseBestMove(attacker: Fighter, defender: Fighter): Move {
   const available = regularMoves(attacker);
   // Fallback: find any regular move ignoring cooldowns (use the one with lowest cooldown if all blocked)
   if (available.length === 0) {
@@ -335,7 +335,7 @@ function chooseBestMove(attacker: Fighter, defender: Fighter): Move {
 
 // ─── Apply a move ─────────────────────────────────────────────────────────────
 
-function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: string[]) {
+export function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: string[]) {
   const effs = moveEffects(attacker, move);
   const bypassArmor = effs.some(e => e.action === 'bypass_armor');
   const bypassDodge = effs.some(e => e.action === 'bypass_dodge');
@@ -515,7 +515,7 @@ function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: str
 
 // ─── End-of-turn bookkeeping ──────────────────────────────────────────────────
 
-function tickFighter(f: Fighter, events: string[]) {
+export function tickFighter(f: Fighter, events: string[]) {
   // DoT ticks — multiplier stores pre-computed absolute damage per tick
   const dot = getEffect(f, 'dot');
   if (dot) {
@@ -564,7 +564,7 @@ interface TeamSide {
 
 function teamActive(s: TeamSide): Fighter { return s.fighters[s.activeIdx]; }
 
-function estimateSwapInDamage(incoming: Fighter, opponent: Fighter): number {
+export function estimateSwapInDamage(incoming: Fighter, opponent: Fighter): number {
   let total = 0;
   for (const move of incoming.creature.moves) {
     if (move.type !== 'swap_in') continue;

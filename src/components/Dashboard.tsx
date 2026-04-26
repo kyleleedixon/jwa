@@ -218,6 +218,18 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             <a
+              href="/companion"
+              className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-sm font-medium"
+              aria-label="Tournament Companion"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+              <span className="hidden md:inline">Companion</span>
+            </a>
+            <a
               href="/tournament"
               className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-sm font-medium"
               aria-label="Tournament Optimizer"
