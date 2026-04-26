@@ -196,9 +196,9 @@ function SwapRow({ opt, onSelect, selected }: {
           {opt.swapInDmg > 0 && ` · swap-in ~${opt.swapInDmg.toLocaleString()}`}
         </p>
       </div>
-      {opt.recommended && (
+      {opt.winsMatchup && (
         <span className="shrink-0 text-xs text-green-300 bg-green-500/20 border border-green-500/40 px-2 py-0.5 rounded-full font-medium">
-          Swap in
+          Wins
         </span>
       )}
     </button>
@@ -477,11 +477,17 @@ export default function TournamentCompanion({ creatures }: { creatures: Creature
   );
 
   const swapOptions = useMemo(() =>
-    myBench.length > 0 && oppActive
-      ? evaluateSwaps(myBench.map(s => s.fighter), oppActive.fighter)
+    myBench.length > 0 && oppActive && myActive
+      ? evaluateSwaps(myBench.map(s => s.fighter), oppActive.fighter, myActive.fighter)
       : [],
-    [myBench, oppActive]
+    [myBench, oppActive, myActive]
   );
+
+  // Best swap vs best move — used to decide whether to highlight swap
+  const bestSwap = swapOptions[0] ?? null;
+  const bestMove = moveOptions[0] ?? null;
+  const swapIsBetter = bestSwap !== null && bestMove !== null &&
+    bestSwap.score > bestMove.score && bestSwap.winsMatchup;
 
   const myMoveSelected = myAction?.type === 'move' ? myAction.moveUuid : null;
   const mySwapSelected = myAction?.type === 'swap' ? myAction.toIdx : null;
@@ -680,11 +686,36 @@ export default function TournamentCompanion({ creatures }: { creatures: Creature
           </div>
         )}
 
-        {/* Move recommendations */}
+        {/* Unified decision section */}
         {!battleOver && !needMyReplacement && !needOppReveal && myActive?.alive && oppActive?.alive && (
           <>
+            {/* Swap callout banner when swap beats staying */}
+            {swapIsBetter && bestSwap && (() => {
+              const actualTeamIdx = game.myTeam.findIndex(s => s.creature.uuid === bestSwap.fighter.creature.uuid);
+              return (
+                <button onClick={() => setMyAction({ type: 'swap', toIdx: actualTeamIdx })}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 text-left transition-all ${
+                    mySwapSelected === actualTeamIdx
+                      ? 'bg-green-600/30 border-green-400/80 ring-1 ring-green-400/40'
+                      : 'bg-green-500/10 border-green-500/50 hover:bg-green-500/20'
+                  }`}
+                >
+                  <span className="text-green-400 text-lg shrink-0">⇄</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-green-300">Consider swapping → {bestSwap.fighter.creature.name}</p>
+                    <p className="text-xs text-green-400/70 mt-0.5">
+                      Wins this matchup · swap-in ~{bestSwap.swapInDmg.toLocaleString()} · then deals ~{bestSwap.postSwapDmg.toLocaleString()} / takes ~{bestSwap.oppDmgVsNew.toLocaleString()}
+                    </p>
+                  </div>
+                  {mySwapSelected === actualTeamIdx && <span className="text-xs text-green-300 font-medium shrink-0">Selected</span>}
+                </button>
+              );
+            })()}
+
             <div className="flex flex-col gap-2">
-              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Move Recommendations</h2>
+              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                {swapIsBetter ? 'Or attack:' : 'Your moves'}
+              </h2>
               {moveOptions.map(opt => (
                 <MoveRow key={opt.move.uuid} opt={opt} selected={myMoveSelected === opt.move.uuid}
                   onSelect={() => setMyAction({ type: 'move', moveUuid: opt.move.uuid })}
@@ -692,11 +723,11 @@ export default function TournamentCompanion({ creatures }: { creatures: Creature
               ))}
             </div>
 
-            {swapOptions.length > 0 && (
+            {swapOptions.length > 0 && !swapIsBetter && (
               <div className="flex flex-col gap-2">
-                <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Swap Options</h2>
+                <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Swap options</h2>
                 {swapOptions.map((opt) => {
-                  const actualTeamIdx = game.myTeam.findIndex(s => s.fighter === opt.fighter || s.creature.uuid === opt.fighter.creature.uuid);
+                  const actualTeamIdx = game.myTeam.findIndex(s => s.creature.uuid === opt.fighter.creature.uuid);
                   return (
                     <SwapRow key={opt.fighter.creature.uuid} opt={opt} selected={mySwapSelected === actualTeamIdx}
                       onSelect={() => setMyAction({ type: 'swap', toIdx: actualTeamIdx })}

@@ -34,7 +34,8 @@ export interface SwapOption {
   swapInDmg: number;
   postSwapDmg: number;
   oppDmgVsNew: number;
-  recommended: boolean;
+  winsMatchup: boolean;
+  score: number; // comparable to MoveOption.score
 }
 
 // Evaluate all my regular moves vs current opponent and rank them
@@ -70,15 +71,21 @@ export function evaluateMoves(me: Fighter, opp: Fighter): MoveOption[] {
   }).sort((a, b) => b.score - a.score);
 }
 
-// Rank bench creatures vs current opponent
-export function evaluateSwaps(bench: Fighter[], opp: Fighter): SwapOption[] {
+// Rank bench creatures vs current opponent, with a score comparable to MoveOption.score
+export function evaluateSwaps(bench: Fighter[], opp: Fighter, me: Fighter): SwapOption[] {
+  const myCurrentScore = scoreMoveForDamage(chooseBestMove(me, opp), me, opp)
+    - scoreMoveForDamage(chooseBestMove(opp, me), opp, me);
+
   return bench.map((f, teamIdx) => {
     const swapInDmg = estimateSwapInDamage(f, opp);
     const postSwapDmg = scoreMoveForDamage(chooseBestMove(f, opp), f, opp);
     const oppDmgVsNew = scoreMoveForDamage(chooseBestMove(opp, f), opp, f);
-    const recommended = (swapInDmg + postSwapDmg * 0.8) > oppDmgVsNew * 0.7;
-    return { fighter: f, teamIdx, swapInDmg, postSwapDmg, oppDmgVsNew, recommended };
-  }).sort((a, b) => (b.swapInDmg + b.postSwapDmg * 0.8) - (a.swapInDmg + a.postSwapDmg * 0.8));
+    const netAfterSwap = swapInDmg + postSwapDmg - oppDmgVsNew;
+    const winsMatchup = netAfterSwap > 0;
+    // Bonus when swap genuinely improves the matchup beyond staying
+    const score = netAfterSwap + Math.max(0, netAfterSwap - myCurrentScore) * 0.5;
+    return { fighter: f, teamIdx, swapInDmg, postSwapDmg, oppDmgVsNew, winsMatchup, score };
+  }).sort((a, b) => b.score - a.score);
 }
 
 // ── Turn resolution (mutates fighters in place) ───────────────────────────────
