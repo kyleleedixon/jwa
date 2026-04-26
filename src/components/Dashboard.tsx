@@ -218,6 +218,16 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             <a
+              href="/tournament"
+              className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-sm font-medium"
+              aria-label="Tournament Optimizer"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+              </svg>
+              <span className="hidden md:inline">Tournament</span>
+            </a>
+            <a
               href="/battle"
               className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-sm font-medium"
               aria-label="Battle Simulator"
