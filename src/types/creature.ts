@@ -50,6 +50,7 @@ export interface Creature {
   image: string;
   moves: Move[];
   resistance: number[];
+  flock?: number;
   move_unlock_lv?: Record<string, number>;
   points?: OmegaPoints;
   enhancements?: Enhancement[];

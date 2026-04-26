@@ -167,6 +167,7 @@ function calcDamage(
   bypassArmor: boolean,
   bypassDodge: boolean,
   removedShield: boolean,
+  bypassFlockCap: boolean = false,
 ): number {
   let dmg = currentDamage(attacker) * multiplier;
 
@@ -230,6 +231,12 @@ function calcDamage(
   if (hasEffect(attacker, 'daze')) effectiveCrit = 0;
   dmg *= (1 + (effectiveCrit / 100) * (attacker.critm / 100 - 1));
 
+  // Flock cap: single-target attacks deal at most one member's worth of HP
+  if (!bypassFlockCap && (defender.creature.flock ?? 1) > 1) {
+    const memberHp = Math.floor(defender.maxHp / defender.creature.flock!);
+    dmg = Math.min(dmg, memberHp);
+  }
+
   return Math.round(Math.max(0, dmg));
 }
 
@@ -240,10 +247,11 @@ function scoreMoveForDamage(move: Move, attacker: Fighter, defender: Fighter): n
   const bypassArmor = move.effects.some(e => e.action === 'bypass_armor');
   const bypassDodge = move.effects.some(e => e.action === 'bypass_dodge');
   const removesShield = move.effects.some(e => e.action === 'remove_shield');
+  const bypassFlockCap = move.effects.some(e => e.action === 'attack' && (e.target === 'all_opponents' || e.target === 'team'));
 
   for (const eff of move.effects) {
     if (eff.action === 'attack') {
-      score += calcDamage(attacker, defender, eff.multiplier ?? 1, bypassArmor, bypassDodge, removesShield);
+      score += calcDamage(attacker, defender, eff.multiplier ?? 1, bypassArmor, bypassDodge, removesShield, bypassFlockCap);
     } else if (eff.action === 'dot') {
       const turns = eff.duration?.[0] ?? 2;
       const resist = resistFraction(defender, 'dot');
@@ -273,6 +281,7 @@ function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: str
   const bypassArmor = move.effects.some(e => e.action === 'bypass_armor');
   const bypassDodge = move.effects.some(e => e.action === 'bypass_dodge');
   const removesShield = move.effects.some(e => e.action === 'remove_shield');
+  const bypassFlockCap = move.effects.some(e => e.action === 'attack' && (e.target === 'all_opponents' || e.target === 'team'));
 
   for (const eff of move.effects) {
     // Determine target in 1v1 context
@@ -282,9 +291,10 @@ function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: str
 
     switch (eff.action) {
       case 'attack': {
-        const dmg = calcDamage(attacker, defender, eff.multiplier ?? 1, bypassArmor, bypassDodge, removesShield);
+        const dmg = calcDamage(attacker, defender, eff.multiplier ?? 1, bypassArmor, bypassDodge, removesShield, bypassFlockCap);
         defender.hp = Math.max(0, defender.hp - dmg);
-        events.push(`${attacker.id} deals ${dmg} damage`);
+        const flockNote = !bypassFlockCap && (defender.creature.flock ?? 1) > 1 ? ' [Flock cap]' : '';
+        events.push(`${attacker.id} deals ${dmg} damage${flockNote}`);
         break;
       }
       case 'dot': {

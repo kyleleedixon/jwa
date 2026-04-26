@@ -2741,7 +2741,8 @@
           "value": "ra__ea60ef5bef5b93549b01cd2e1260f37d"
         }
       }
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "alankyloceratops",
@@ -4771,7 +4772,8 @@
           "value": "ra__ad30b9becb1594a4d9885abe0a5a0477"
         }
       }
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "alloraptor",
@@ -8420,7 +8422,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "ankylodicurus",
@@ -10725,7 +10728,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "apatoceratops",
@@ -11991,7 +11995,8 @@
           "value": "ra__11a702300850bef49bca5443d5173355"
         }
       }
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "aquilamimus",
@@ -12319,7 +12324,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "aquilosaurus",
@@ -13658,7 +13664,8 @@
           "value": "ra__b8323965b68da234bba17c94d16f49ea"
         }
       }
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "aquisaurus",
@@ -13931,7 +13938,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "arambourgiania",
@@ -14270,7 +14278,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "archaeotherium",
@@ -16514,7 +16523,8 @@
           "value": "ra__d1f52bc0cdda6304dade9b3d3b2759bd"
         }
       }
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "ardontosaurus",
@@ -17124,7 +17134,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "argentinosaurus",
@@ -23259,7 +23270,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "beta",
@@ -30165,7 +30177,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "coelurosauravus",
@@ -30297,7 +30310,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "compsocaulus",
@@ -30632,7 +30646,8 @@
           "value": "ra__e8ff14374e6050e41aa904ab2119ce74"
         }
       }
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "compsognathus",
@@ -30817,7 +30832,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "compsognathus_gen_2",
@@ -30977,7 +30993,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "compsoraptor",
@@ -31347,7 +31364,8 @@
           "value": "ra__274fe9cb60b238e439e2ff5e43887dde"
         }
       }
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "compsovenator",
@@ -31723,7 +31741,8 @@
           "value": "ra__075aa999ae3d07744add6e00bd586734"
         }
       }
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "concakuisaurus",
@@ -41181,7 +41200,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "dodocevia",
@@ -41376,7 +41396,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "doedicurus",
@@ -43817,7 +43838,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "dreadnoughtus",
@@ -44801,7 +44823,8 @@
           "value": "ra__2191fd7bf032081449a755d28860652d"
         }
       }
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "echo",
@@ -56257,7 +56280,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "gryganyth",
@@ -67012,7 +67036,8 @@
         "crit": 45,
         "critm": 25
       }
-    }
+    },
+    "flock": 3
   },
   {
     "uuid": "leucistic_baryonyx",
@@ -67704,7 +67729,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "lystrosavis",
@@ -68058,7 +68084,8 @@
           "value": "ra__31e783a4924fcf349b7072b5ba297275"
         }
       }
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "lystrosuchus",
@@ -68331,7 +68358,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "lythronax",
@@ -75056,7 +75084,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "miragaia",
@@ -75461,7 +75490,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "monkeyondactylus",
@@ -75888,7 +75918,8 @@
           "value": "ra__d558e08e6141c3d408e0a0e608176cc7"
         }
       }
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "monolometrodon",
@@ -77836,7 +77867,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "mortem_rex",
@@ -89258,7 +89290,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "procerathomimus",
@@ -92019,7 +92052,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "purrolyth",
@@ -99553,7 +99587,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "sah_panthera",
@@ -105625,7 +105660,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "sinosauropteryx",
@@ -105720,7 +105756,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "sinraptor",
@@ -114307,7 +114344,8 @@
       0,
       0,
       0
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "tarbosaurus",
@@ -116738,7 +116776,8 @@
           "value": "ra__0becde614c63837479cf750025e7bc7e"
         }
       }
-    ]
+    ],
+    "flock": 3
   },
   {
     "uuid": "tiger",

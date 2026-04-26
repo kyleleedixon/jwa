@@ -168,6 +168,7 @@ async function fetchCreature(slug, moveNames) {
         image: `https://cdn.paleo.gg/games/jwa/images/creature/${d.uuid}.png`,
         moves,
         resistance: d.resistance || [],
+        ...(d.flock > 1 && { flock: d.flock }),
         ...(d.move_unlock_lv && Object.keys(d.move_unlock_lv).length > 0 && { move_unlock_lv: d.move_unlock_lv }),
         ...(d.points && { points: d.points }),
       };
