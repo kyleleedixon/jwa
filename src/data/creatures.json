@@ -74,7 +74,47 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "damage_increase",
+              "target": "self",
+              "multiplier": 0.25,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "speed_increase",
+              "target": "self",
+              "multiplier": 0.25,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 0.25,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.25
+            }
+          ]
+        }
       },
       {
         "uuid": "ab878daea8424264c974147418d95af7",
@@ -171,7 +211,36 @@
             "target": "fastest",
             "multiplier": 2
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "bypass_armor",
+              "target": "fastest"
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "fastest"
+            },
+            {
+              "action": "attack",
+              "target": "fastest",
+              "multiplier": 2
+            },
+            {
+              "action": "hot_contextual",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                3
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "24b13a8b60e6e644cbfec04920d1f818",
@@ -428,7 +497,24 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "damage_decrease",
+              "target": "attacker",
+              "multiplier": 0.15,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -1826,7 +1912,36 @@
               1
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 1.5
+            },
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "vulner",
+              "target": "highest_dmg",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                1
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "dc31f1039d2db1845b09463fe11da900",
@@ -2523,7 +2638,50 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.67,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "remove_dodge",
+              "target": "highest_dmg"
+            },
+            {
+              "action": "remove_cloak",
+              "target": "highest_dmg"
+            },
+            {
+              "action": "vulner",
+              "target": "highest_dmg",
+              "multiplier": 1,
+              "duration": [
+                2,
+                1
+              ]
+            },
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 1.5
+            }
+          ]
+        }
       },
       {
         "uuid": "1572970341bce1d4986521a6ed72a74b",
@@ -2943,7 +3101,42 @@
             "action": "remove_damage_decrease",
             "target": "self"
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 3,
+          "effects": [
+            {
+              "action": "shield",
+              "target": "self",
+              "multiplier": 1,
+              "duration": [
+                2,
+                8
+              ]
+            },
+            {
+              "action": "speed_decrease",
+              "target": "fastest",
+              "multiplier": 0.5,
+              "duration": [
+                1,
+                2
+              ]
+            },
+            {
+              "action": "vulner",
+              "target": "fastest",
+              "multiplier": 0.5,
+              "duration": [
+                1,
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "a37e1954bd671c3448241d4fb9449573",
@@ -3641,7 +3834,36 @@
             "target": "lowest_hp",
             "multiplier": 1
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_taunt",
+              "target": "most_pos"
+            },
+            {
+              "action": "remove_shield",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 1
+            },
+            {
+              "action": "remove_vulner",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "r__7be89e61a0ace0f4a8322ad4a5729887_d194bcf8c72daa741a1926dc994ebaf1",
@@ -4156,7 +4378,36 @@
               3
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "bypass_armor",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 1
+            },
+            {
+              "action": "dot",
+              "target": "lowest_hp",
+              "multiplier": 0.3,
+              "duration": [
+                3
+              ]
+            },
+            {
+              "action": "run",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "3e3370a0899dc4b4f977c20cc1a74c16",
@@ -4533,7 +4784,33 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 3,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "damage_decrease",
+              "target": "all_opponents",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "8aeb105eed4571d449b41f4b39763c7c",
@@ -4611,7 +4888,36 @@
             "action": "remove_crit_increase",
             "target": "lowest_hp"
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_shield",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "rend",
+              "target": "lowest_hp",
+              "multiplier": 0.4
+            },
+            {
+              "action": "remove_damage_increase",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "remove_crit_increase",
+              "target": "lowest_hp"
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__959127d742c617d49a0a56c1d88d6087_c211849c55bff5b4d98306cac7d4f922__66",
@@ -4640,7 +4946,33 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.67,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 0.65,
+              "duration": [
+                2,
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ra__ad30b9becb1594a4d9885abe0a5a0477",
@@ -7620,7 +7952,31 @@
               1
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 1,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 2
+            },
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "run",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "f1faa438e41029145880b933880b731a",
@@ -8806,7 +9162,43 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 1,
+          "cooldown": 3,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 1
+            },
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "taunt",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "shield",
+              "target": "self",
+              "multiplier": 1,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "2d5a8fb08ad53f64287eea0471e8bc65",
@@ -8859,7 +9251,29 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -9037,7 +9451,59 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "remove_dodge",
+              "target": "fastest"
+            },
+            {
+              "action": "remove_cloak",
+              "target": "fastest"
+            },
+            {
+              "action": "remove_speed_increase",
+              "target": "fastest"
+            },
+            {
+              "action": "vulner",
+              "target": "fastest",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                1
+              ]
+            },
+            {
+              "action": "attack",
+              "target": "fastest",
+              "multiplier": 1.5
+            },
+            {
+              "action": "shield",
+              "target": "team",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__f2e89d8aeb1e8ae4dbdfac2801faa980_997ed82d3ce0d2e40b64b55aee426b3a__50",
@@ -9076,7 +9542,43 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 1,
+          "cooldown": 3,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 1
+            },
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "taunt",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "shield",
+              "target": "self",
+              "multiplier": 1,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "1618a6d7ce70ffc4ba647ed2c74424c3",
@@ -9210,7 +9712,38 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "shield",
+              "target": "self",
+              "multiplier": 1,
+              "duration": [
+                1,
+                2
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "92f009ea5ca873b41bc518b7403be2fa",
@@ -10657,7 +11190,38 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "attack",
+              "target": "slowest",
+              "multiplier": 1.5
+            },
+            {
+              "action": "attack",
+              "target": "slowest",
+              "multiplier": 1.5
+            },
+            {
+              "action": "speed_increase",
+              "target": "self",
+              "multiplier": 0.3,
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ecf37309b52eaad4e95044c6763c7455",
@@ -10683,7 +11247,35 @@
         "uuid": "ot__@_ca50be4f3f0664446b6c6f23e3c9b4c0__33",
         "name": "Alert The Flock",
         "type": "swap_in",
-        "effects": []
+        "effects": [],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.667,
+              "duration": [
+                0
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "3e2a400b3f315aa49b934e8705cc88d9",
@@ -11715,7 +12307,58 @@
               1
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 1,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.5
+            },
+            {
+              "action": "speed_increase",
+              "target": "self",
+              "multiplier": 0.3,
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "bypass_armor",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 0.75
+            },
+            {
+              "action": "bypass_armor",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 0.75
+            }
+          ]
+        }
       },
       {
         "uuid": "456f3a054142d7147a141ccf0323ba9c",
@@ -11828,7 +12471,44 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_damage_increase",
+              "target": "highest_dmg"
+            },
+            {
+              "action": "remove_crit_increase",
+              "target": "highest_dmg"
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.67
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.67,
+              "duration": [
+                1,
+                2
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "8d9bba1c3e0c79c42b78bb2c9fde7c74",
@@ -12301,13 +12981,61 @@
               1
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 3,
+          "effects": [
+            {
+              "action": "shield",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                1,
+                2
+              ]
+            },
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.5
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "fastest"
+            },
+            {
+              "action": "attack",
+              "target": "fastest",
+              "multiplier": 1
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__@_a54ff500d664c6e4e808729c291e35c1__33",
         "name": "Counter Power Heal",
         "type": "counter",
-        "effects": []
+        "effects": [],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.1
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -13377,7 +14105,33 @@
             "action": "remove_all_pos",
             "target": "most_pos"
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "speed_increase",
+              "target": "self",
+              "multiplier": 0.25,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "remove_dodge",
+              "target": "self"
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.67
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__16e884e07f04ce64c92b9185ad4a2c9b_510c472008643b64fabed2375e1f5844__33",
@@ -13437,7 +14191,42 @@
             "target": "fastest",
             "multiplier": 0.75
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.5
+            },
+            {
+              "action": "damage_increase",
+              "target": "self",
+              "multiplier": 0.25,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "fastest"
+            },
+            {
+              "action": "attack",
+              "target": "fastest",
+              "multiplier": 1
+            }
+          ]
+        }
       },
       {
         "uuid": "d8a7e6999fa6bda49a826c05a9ad31f5",
@@ -13532,7 +14321,37 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "damage_increase",
+              "target": "self",
+              "multiplier": 0.15,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ra__b8323965b68da234bba17c94d16f49ea",
@@ -13855,7 +14674,42 @@
               1
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 3,
+          "effects": [
+            {
+              "action": "shield",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                1,
+                2
+              ]
+            },
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.5
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "fastest"
+            },
+            {
+              "action": "attack",
+              "target": "fastest",
+              "multiplier": 1
+            }
+          ]
+        }
       },
       {
         "uuid": "2d5a8fb08ad53f64287eea0471e8bc65",
@@ -13889,7 +14743,20 @@
         "uuid": "ot__@_a54ff500d664c6e4e808729c291e35c1__33",
         "name": "Counter Power Heal",
         "type": "counter",
-        "effects": []
+        "effects": [],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.1
+            }
+          ]
+        }
       },
       {
         "uuid": "2f0e128298029574cad817ef8a257b03",
@@ -14170,7 +15037,37 @@
             "target": "lowest_hp",
             "multiplier": 1
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_speed_decrease",
+              "target": "self"
+            },
+            {
+              "action": "remove_crit_decrease",
+              "target": "self"
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                3,
+                2
+              ]
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 1
+            }
+          ]
+        }
       },
       {
         "uuid": "7999600242613044abdd13a28c4c72af",
@@ -14261,7 +15158,29 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.67,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -14555,7 +15474,36 @@
               1
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 1.5
+            },
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "vulner",
+              "target": "highest_dmg",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                1
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "19d2ea48b00ca654b9cf2b129a18e226",
@@ -15190,7 +16138,36 @@
               1
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 1.5
+            },
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "vulner",
+              "target": "highest_dmg",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                1
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "f83d5a81d0575734198e98e9a0739a2e",
@@ -15515,7 +16492,57 @@
               1
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "bypass_alert",
+              "target": "all_opponents"
+            },
+            {
+              "action": "attack",
+              "target": "all_opponents",
+              "multiplier": 1.5
+            },
+            {
+              "action": "stun",
+              "target": "all_opponents",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "speed_decrease",
+              "target": "all_opponents",
+              "multiplier": 0.5,
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "vulner",
+              "target": "all_opponents",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                1
+              ]
+            },
+            {
+              "action": "armor_decrease",
+              "target": "all_opponents",
+              "multiplier": 0.3,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__2a853ba113163bd4d833ab279e4bfe0b_aae8dc7cb3f19f74983f24216fdb7fe2__50",
@@ -15548,7 +16575,53 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_shield",
+              "target": "all_opponents"
+            },
+            {
+              "action": "damage_increase",
+              "target": "team",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "crit_increase",
+              "target": "team",
+              "multiplier": 1,
+              "duration": [
+                2,
+                1
+              ]
+            },
+            {
+              "action": "shield",
+              "target": "team",
+              "multiplier": 1,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "taunt",
+              "target": "team",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "403ef6f2621c46145a0d375335f926fe",
@@ -16314,7 +17387,54 @@
             "target": "slowest",
             "multiplier": 1.5
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "speed_increase",
+              "target": "self",
+              "multiplier": 0.3,
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "bypass_armor",
+              "target": "slowest"
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "slowest"
+            },
+            {
+              "action": "attack",
+              "target": "slowest",
+              "multiplier": 1
+            },
+            {
+              "action": "bypass_armor",
+              "target": "slowest"
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "slowest"
+            },
+            {
+              "action": "attack",
+              "target": "slowest",
+              "multiplier": 1
+            }
+          ]
+        }
       },
       {
         "uuid": "c9ff6af383833c940bc8ce419025ce29",
@@ -16368,7 +17488,35 @@
         "uuid": "ot__@_ca50be4f3f0664446b6c6f23e3c9b4c0__66",
         "name": "Alert The Flock",
         "type": "swap_in",
-        "effects": []
+        "effects": [],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.667,
+              "duration": [
+                0
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "8d9bba1c3e0c79c42b78bb2c9fde7c74",
@@ -16946,7 +18094,37 @@
             "target": "lowest_hp",
             "multiplier": 1
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_speed_decrease",
+              "target": "self"
+            },
+            {
+              "action": "remove_crit_decrease",
+              "target": "self"
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                3,
+                2
+              ]
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 1
+            }
+          ]
+        }
       },
       {
         "uuid": "40c8aa2d3b63a264ea14a400573c2764",
@@ -17024,7 +18202,54 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.667,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "speed_increase",
+              "target": "self",
+              "multiplier": 0.1,
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "bypass_alert",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "all_opponents"
+            },
+            {
+              "action": "attack",
+              "target": "all_opponents",
+              "multiplier": 1
+            }
+          ]
+        }
       },
       {
         "uuid": "55571d2047e430a4187d577747ae2e9b",
@@ -17117,7 +18342,29 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.67,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -19443,7 +20690,45 @@
             "target": "team",
             "multiplier": 0.5
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "damage_increase",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "armor_increase",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 2
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "bba89e270ac511f449d36f1826b13370",
@@ -19939,7 +21224,24 @@
             "target": "fastest",
             "multiplier": 1.5
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "shield",
+              "target": "team",
+              "multiplier": 1,
+              "duration": [
+                2,
+                1
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "9b377daee5cd06c429e79649e3cf82f4",
@@ -21681,7 +22983,54 @@
             "target": "highest_dmg",
             "multiplier": 1.5
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "remove_damage_increase",
+              "target": "highest_dmg"
+            },
+            {
+              "action": "remove_crit_increase",
+              "target": "highest_dmg"
+            },
+            {
+              "action": "damage_decrease",
+              "target": "highest_dmg",
+              "multiplier": 1,
+              "duration": [
+                1,
+                2
+              ]
+            },
+            {
+              "action": "crit_decrease",
+              "target": "highest_dmg",
+              "multiplier": 1,
+              "duration": [
+                1,
+                2
+              ]
+            },
+            {
+              "action": "armor_increase",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "b53f5bd407b4eda4d978e88bc2968e55",
@@ -22170,7 +23519,41 @@
               3
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_vulner",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1.5
+            },
+            {
+              "action": "remove_taunt",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "all_opponents"
+            },
+            {
+              "action": "attack",
+              "target": "all_opponents",
+              "multiplier": 1.5
+            }
+          ]
+        }
       },
       {
         "uuid": "f0c6e15c6fa55b7438d5d5e42b110207",
@@ -23021,7 +24404,41 @@
               3
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_vulner",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1.5
+            },
+            {
+              "action": "remove_taunt",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "all_opponents"
+            },
+            {
+              "action": "attack",
+              "target": "all_opponents",
+              "multiplier": 1.5
+            }
+          ]
+        }
       },
       {
         "uuid": "ca19e71a8cc4a2146b209cb621ab5178",
@@ -25207,7 +26624,41 @@
               3
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_vulner",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1.5
+            },
+            {
+              "action": "remove_taunt",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "all_opponents"
+            },
+            {
+              "action": "attack",
+              "target": "all_opponents",
+              "multiplier": 1.5
+            }
+          ]
+        }
       },
       {
         "uuid": "801cf5c41aeacea49a07a15fd0a67442",
@@ -25474,7 +26925,29 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -29105,7 +30578,24 @@
             "target": "highest_hp",
             "multiplier": 1.5
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "bypass_armor",
+              "target": "highest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "highest_hp",
+              "multiplier": 2
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__151a15e250b3c704194d04cdc89242fc_5308f94bfa47f1c49ade480435f7dc31__50",
@@ -29137,7 +30627,41 @@
             "target": "highest_hp",
             "multiplier": 2
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "remove_shield",
+              "target": "highest_hp"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "highest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "highest_hp",
+              "multiplier": 1.66
+            },
+            {
+              "action": "run",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "5269bde3255808044b50d8ee3cae9138",
@@ -30078,7 +31602,54 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.667,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "speed_increase",
+              "target": "self",
+              "multiplier": 0.1,
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "bypass_alert",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "all_opponents"
+            },
+            {
+              "action": "attack",
+              "target": "all_opponents",
+              "multiplier": 1
+            }
+          ]
+        }
       },
       {
         "uuid": "f0599b0ecdd95dd4e9250e37faf339b9",
@@ -30160,7 +31731,33 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.67,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 0.65,
+              "duration": [
+                2,
+                2
+              ]
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -30264,7 +31861,35 @@
         "uuid": "ot__@_ca50be4f3f0664446b6c6f23e3c9b4c0__66",
         "name": "Alert The Flock",
         "type": "swap_in",
-        "effects": []
+        "effects": [],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.667,
+              "duration": [
+                0
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__959127d742c617d49a0a56c1d88d6087_c211849c55bff5b4d98306cac7d4f922__66",
@@ -30293,7 +31918,33 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.67,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 0.65,
+              "duration": [
+                2,
+                2
+              ]
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -30487,7 +32138,34 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 1.5
+            },
+            {
+              "action": "damage_decrease",
+              "target": "highest_dmg",
+              "multiplier": 0.25,
+              "duration": [
+                1,
+                2
+              ]
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            }
+          ]
+        }
       },
       {
         "uuid": "3086fbfaaec320d4586df9a069d27b3c",
@@ -30791,13 +32469,68 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 1.5
+            },
+            {
+              "action": "damage_decrease",
+              "target": "highest_dmg",
+              "multiplier": 0.25,
+              "duration": [
+                1,
+                2
+              ]
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__@_ca50be4f3f0664446b6c6f23e3c9b4c0__66",
         "name": "Alert The Flock",
         "type": "swap_in",
-        "effects": []
+        "effects": [],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.667,
+              "duration": [
+                0
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__264d27862c09a3046802c67a68657288_@__33",
@@ -30815,7 +32548,11 @@
               1
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "effects": []
+        }
       }
     ],
     "resistance": [
@@ -30897,7 +32634,29 @@
             "target": "lowest_hp",
             "multiplier": 1
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 1
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.667,
+              "duration": [
+                1,
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "d6d1d8185e79ee54eb34f2e44d4c3c91",
@@ -30958,7 +32717,35 @@
         "uuid": "ot__@_ca50be4f3f0664446b6c6f23e3c9b4c0__33",
         "name": "Alert The Flock",
         "type": "swap_in",
-        "effects": []
+        "effects": [],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.667,
+              "duration": [
+                0
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__264d27862c09a3046802c67a68657288_@__33",
@@ -30976,7 +32763,11 @@
               1
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "effects": []
+        }
       }
     ],
     "resistance": [
@@ -31061,7 +32852,29 @@
             "target": "lowest_hp",
             "multiplier": 1
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 1
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.667,
+              "duration": [
+                1,
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__9d9b8dbef1702c44a8a8fd470bd8dc13_d223b3664eaa9c446badc90721f6e4d1__33",
@@ -31098,7 +32911,37 @@
             "target": "lowest_hp",
             "multiplier": 1.5
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_shield",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "remove_taunt",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "bypass_armor",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 1.5
+            }
+          ]
+        }
       },
       {
         "uuid": "b2239442e54e13f4c9191558cf8f492c",
@@ -31433,7 +33276,29 @@
             "target": "lowest_hp",
             "multiplier": 1
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 1
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.667,
+              "duration": [
+                1,
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__243a98ea87299354083d55578f1ba2fa_c03d2f19a8341fd4e97d4185138c914b__33",
@@ -31466,7 +33331,37 @@
             "target": "lowest_hp",
             "multiplier": 1.5
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_shield",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "remove_taunt",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "bypass_armor",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 1.5
+            }
+          ]
+        }
       },
       {
         "uuid": "e0578b5b9764275448548f94d3bb07a3",
@@ -31601,7 +33496,29 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.67,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ra__075aa999ae3d07744add6e00bd586734",
@@ -33620,7 +35537,36 @@
             "target": "highest_hp",
             "multiplier": 1
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "resistance_decrease_all",
+              "target": "highest_hp",
+              "multiplier": 0.25,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "stun",
+              "target": "highest_hp",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "attack",
+              "target": "highest_hp",
+              "multiplier": 1
+            }
+          ]
+        }
       },
       {
         "uuid": "367d94ad3a4b591439a40da6954352c7",
@@ -33678,7 +35624,24 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "armor_increase",
+              "target": "self",
+              "multiplier": 0.35,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ra__a9d8b32ad9998b248b256f768466e5a9",
@@ -36975,7 +38938,24 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "armor_increase",
+              "target": "self",
+              "multiplier": 0.35,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "12becd281050dea448e260c0005d7cd1",
@@ -38256,7 +40236,45 @@
             "target": "highest_hp",
             "multiplier": 1.5
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "heal_decrease",
+              "target": "highest_hp",
+              "multiplier": 0.75,
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "attack",
+              "target": "highest_hp",
+              "multiplier": 1.5
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.67,
+              "duration": [
+                1,
+                1
+              ]
+            },
+            {
+              "action": "run",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "r__601ab9a279b20784cb31d899c85d3061_35c72d5de23b89d42bb58990d9ee23eb",
@@ -38402,7 +40420,29 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.67,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ra__7b991c133fec208418d3cd4b274004e2",
@@ -40840,7 +42880,36 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 25,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_shield",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 2.5
+            },
+            {
+              "action": "hot_contextual",
+              "target": "self",
+              "multiplier": 1,
+              "duration": [
+                1
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ab15d883b33cc2c4b8f5d8d778437ba7",
@@ -40901,7 +42970,37 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 25,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "damage_increase",
+              "target": "self",
+              "multiplier": 0.15,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ra__da3995cab114c6a448b79612546c8c8b",
@@ -41138,7 +43237,33 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 3,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "damage_decrease",
+              "target": "all_opponents",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__8557b78e8ed8f2a4eb7cd1e54bd98a4f_@__33",
@@ -41183,7 +43308,11 @@
             "action": "run",
             "target": "self"
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "effects": []
+        }
       }
     ],
     "resistance": [
@@ -41309,7 +43438,33 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 3,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "damage_decrease",
+              "target": "all_opponents",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "r__25d189ed355c5ea4188c8ade771e9c86_7fa738dfbb90c8f4eb2eb89b36d7adcf",
@@ -41379,7 +43534,11 @@
             "action": "run",
             "target": "self"
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "effects": []
+        }
       }
     ],
     "resistance": [
@@ -43428,7 +45587,41 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "damage_decrease",
+              "target": "lowest_hp",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 2
+            },
+            {
+              "action": "cloak",
+              "target": "self",
+              "multiplier": 2,
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "run",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "3086fbfaaec320d4586df9a069d27b3c",
@@ -51669,7 +53862,49 @@
             "target": "all_opponents",
             "multiplier": 2
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_cloak",
+              "target": "all_opponents"
+            },
+            {
+              "action": "remove_dodge",
+              "target": "all_opponents"
+            },
+            {
+              "action": "remove_shield",
+              "target": "all_opponents"
+            },
+            {
+              "action": "shield",
+              "target": "team",
+              "multiplier": 1,
+              "duration": [
+                1,
+                8
+              ]
+            },
+            {
+              "action": "bypass_alert",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "all_opponents"
+            },
+            {
+              "action": "attack",
+              "target": "all_opponents",
+              "multiplier": 2
+            }
+          ]
+        }
       },
       {
         "uuid": "1485d665a076e0f45ae2c64b84c0ad56",
@@ -52955,7 +55190,46 @@
         "uuid": "ot__@_ea4d24ea3eaa84346a7697056f1e20bc__33",
         "name": "Alert Showdown",
         "type": "swap_in",
-        "effects": []
+        "effects": [],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "heal_pct",
+              "target": "highest_dmg",
+              "multiplier": 1
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "highest_dmg",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "3258c1152ff01b74e929dd46373665e6",
@@ -53864,7 +56138,63 @@
         "uuid": "ot__@_d5e369c1c790bad4fb979638d6b88d59__50",
         "name": "Crushing Alert Showdown",
         "type": "swap_in",
-        "effects": []
+        "effects": [],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "heal_pct",
+              "target": "highest_dmg",
+              "multiplier": 1
+            },
+            {
+              "action": "speed_increase",
+              "target": "self",
+              "multiplier": 0.1,
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 0.2,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "highest_dmg",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ra__946773958240e7a40a2a51e582509868",
@@ -54570,7 +56900,29 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -54954,7 +57306,41 @@
             "target": "highest_dmg",
             "multiplier": 2
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_shield",
+              "target": "highest_dmg"
+            },
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 2
+            },
+            {
+              "action": "hot_contextual",
+              "target": "self",
+              "multiplier": 0.6,
+              "duration": [
+                3
+              ]
+            },
+            {
+              "action": "resistance_decrease_all",
+              "target": "highest_dmg",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "5f5c96292c9812246b5ef54f000c08f0",
@@ -56132,7 +58518,43 @@
             "target": "lowest_hp",
             "multiplier": 0.5
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "damage_increase",
+              "target": "self",
+              "multiplier": 0.15,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "heal_decrease",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 0.5
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__a99b54d3979f9684f80e3990d0fc023f_4d798e5cf5e59094fb314e34d48e56f0__33",
@@ -56189,7 +58611,33 @@
             "action": "remove_all_pos",
             "target": "most_pos"
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "speed_increase",
+              "target": "self",
+              "multiplier": 0.25,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "remove_dodge",
+              "target": "self"
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.67
+            }
+          ]
+        }
       },
       {
         "uuid": "8804756982024bd4c9b668e66722b343",
@@ -56263,7 +58711,37 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "damage_increase",
+              "target": "self",
+              "multiplier": 0.15,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -56525,7 +59003,63 @@
         "uuid": "ot__@_d5e369c1c790bad4fb979638d6b88d59__50",
         "name": "Crushing Alert Showdown",
         "type": "swap_in",
-        "effects": []
+        "effects": [],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "heal_pct",
+              "target": "highest_dmg",
+              "multiplier": 1
+            },
+            {
+              "action": "speed_increase",
+              "target": "self",
+              "multiplier": 0.1,
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 0.2,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "highest_dmg",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "cc5d98281867ecf43a789507564e0a95",
@@ -59747,7 +62281,46 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.667,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 0.75,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "damage_decrease",
+              "target": "highest_dmg",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "90a3046e0dd17004eab00a1e5c261c4c",
@@ -59824,7 +62397,23 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "damage_increase",
+              "target": "self",
+              "multiplier": 0.25,
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "0c76d79a553c6614cb8caaa127cf14e9",
@@ -62336,7 +64925,29 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "d02c995d91a9285409dc08c293f47ea9",
@@ -62684,7 +65295,40 @@
               1
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "remove_vulner",
+              "target": "self"
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 2
+            },
+            {
+              "action": "hot_contextual",
+              "target": "self",
+              "multiplier": 0.6,
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "5e7e6d27d6545754299b5ad551c355fd",
@@ -63267,7 +65911,23 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "cloak",
+              "target": "self",
+              "multiplier": 2.5,
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ra__1dc7606f736923f4a8d0db3596ff52a2",
@@ -66598,7 +69258,25 @@
             "target": "fastest",
             "multiplier": 2
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "fastest",
+              "multiplier": 2
+            },
+            {
+              "action": "heal_pct",
+              "target": "team",
+              "multiplier": 0.33
+            }
+          ]
+        }
       },
       {
         "uuid": "16f3658c59860d84c95cc1ed476428d6",
@@ -66926,7 +69604,46 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.33
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "armor_increase",
+              "target": "self",
+              "multiplier": 0.25,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "shield",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "a88584d0fa2ab8c4f81eb3cb64012cec",
@@ -67909,7 +70626,31 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 2
+            },
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "run",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "9ab309d1c6aea4c4b898150725f1b096",
@@ -69000,7 +71741,62 @@
               1
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "damage_decrease",
+              "target": "all_opponents",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "remove_shield",
+              "target": "all_opponents"
+            },
+            {
+              "action": "remove_damage_increase",
+              "target": "all_opponents"
+            },
+            {
+              "action": "remove_crit_increase",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_alert",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "all_opponents"
+            },
+            {
+              "action": "rend",
+              "target": "all_opponents",
+              "multiplier": 0.4
+            }
+          ]
+        }
       },
       {
         "uuid": "dead8166f345495409a0e97c60ec15be",
@@ -69091,7 +71887,51 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.67,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 1,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "damage_increase",
+              "target": "self",
+              "multiplier": 0.25,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1
+            }
+          ]
+        }
       },
       {
         "uuid": "ra__6ba7c83a67a8f6049adc91e5ebe6a6a3",
@@ -71221,7 +74061,32 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 2
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "run",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "1e4ea8c1e2333c5409b2f362d620b726",
@@ -73456,7 +76321,29 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "284798b38b0cd934c956b9989d58cf9f",
@@ -76282,7 +79169,49 @@
             "target": "fastest",
             "multiplier": 2
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 1,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "shield",
+              "target": "self",
+              "multiplier": 1,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "taunt",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "speed_decrease",
+              "target": "fastest",
+              "multiplier": 0.5,
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "attack",
+              "target": "fastest",
+              "multiplier": 2
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.5
+            }
+          ]
+        }
       },
       {
         "uuid": "d7302bbdc83fca146a033de931c5b2bb",
@@ -77811,7 +80740,24 @@
             "target": "highest_hp",
             "multiplier": 1.5
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "bypass_armor",
+              "target": "highest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "highest_hp",
+              "multiplier": 2
+            }
+          ]
+        }
       },
       {
         "uuid": "02d19cdc7f0328e48a35d52ace66ce3e",
@@ -77934,7 +80880,32 @@
             "target": "lowest_hp",
             "multiplier": 1
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "remove_shield",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "rend",
+              "target": "lowest_hp",
+              "multiplier": 0.6
+            }
+          ]
+        }
       },
       {
         "uuid": "2efbac9190e0c2142a5aeee211a8d5e2",
@@ -82407,7 +85378,37 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 1,
+              "duration": [
+                0
+              ]
+            },
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 1.5
+            },
+            {
+              "action": "damage_decrease",
+              "target": "highest_dmg",
+              "multiplier": 1,
+              "duration": [
+                1,
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "436e2e2c1323d8d4287bfa399d20daad",
@@ -82918,7 +85919,55 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "crit_increase",
+              "target": "team",
+              "multiplier": 1,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "speed_increase",
+              "target": "team",
+              "multiplier": 0.2,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "damage_increase",
+              "target": "team",
+              "multiplier": 0.15,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "remove_all_pos",
+              "target": "all_opponents"
+            },
+            {
+              "action": "damage_decrease",
+              "target": "all_opponents",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "4f5aff8d25a51c14ab1b40f6e63ada53",
@@ -83461,7 +86510,33 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "crit_increase",
+              "target": "team",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "damage_decrease",
+              "target": "all_opponents",
+              "multiplier": 1,
+              "duration": [
+                1,
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "8aeb105eed4571d449b41f4b39763c7c",
@@ -83776,7 +86851,55 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "crit_increase",
+              "target": "team",
+              "multiplier": 1,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "speed_increase",
+              "target": "team",
+              "multiplier": 0.2,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "damage_increase",
+              "target": "team",
+              "multiplier": 0.15,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "remove_all_pos",
+              "target": "all_opponents"
+            },
+            {
+              "action": "damage_decrease",
+              "target": "all_opponents",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "41dca8765e5d775488b937de0ab98ba5",
@@ -85322,7 +88445,30 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 75,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "armor_increase",
+              "target": "team",
+              "multiplier": 0.25,
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -85621,7 +88767,25 @@
             "target": "self",
             "multiplier": 0.05
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "attacker",
+              "multiplier": 0.5
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.1
+            }
+          ]
+        }
       },
       {
         "uuid": "2968ae2472147094b8f20fe64fc6b0d5",
@@ -85804,7 +88968,28 @@
             "action": "remove_all_neg",
             "target": "team"
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 1,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "team",
+              "multiplier": 2
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "team"
+            }
+          ]
+        }
       },
       {
         "uuid": "566d6b5e857d9f748a4365a4642eb7b1",
@@ -87759,7 +90944,40 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "damage_decrease",
+              "target": "highest_dmg",
+              "multiplier": 0.25,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ra__271f273bf03419c40868189878023593",
@@ -89895,7 +93113,37 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "armor_increase",
+              "target": "self",
+              "multiplier": 0.35,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "speed_decrease",
+              "target": "attacker",
+              "multiplier": 0.5,
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.15
+            }
+          ]
+        }
       },
       {
         "uuid": "48f01a38746b87a419d83d0518075d3c",
@@ -90460,7 +93708,33 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "team"
+            },
+            {
+              "action": "heal",
+              "target": "team",
+              "multiplier": 1.5
+            },
+            {
+              "action": "shield",
+              "target": "team",
+              "multiplier": 1,
+              "duration": [
+                1,
+                8
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "d9d33b6604a0d474c90ab550e6f8d386",
@@ -90986,7 +94260,36 @@
               3
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "bypass_armor",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 1
+            },
+            {
+              "action": "dot",
+              "target": "lowest_hp",
+              "multiplier": 0.3,
+              "duration": [
+                3
+              ]
+            },
+            {
+              "action": "run",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__6e680369c5c783746ade15fd507aa7aa_747e462a162dd3c4682a3a499203fc73__33",
@@ -91022,7 +94325,41 @@
             "action": "run",
             "target": "lowest_hp"
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 3,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "speed_increase",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "run",
+              "target": "lowest_hp"
+            }
+          ]
+        }
       },
       {
         "uuid": "33b1e533ac2e72241a4f010c20a2a520",
@@ -91584,7 +94921,38 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.5
+            },
+            {
+              "action": "armor_increase",
+              "target": "self",
+              "multiplier": 0.25,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                1
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "8f2a412eb5dd27c48be33aa1543f2290",
@@ -94215,7 +97583,38 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.5
+            },
+            {
+              "action": "armor_increase",
+              "target": "self",
+              "multiplier": 0.25,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                1
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "189fac0cfb758314388448848b48cc06",
@@ -94693,7 +98092,29 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.67,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ra__042fcf3de2f7b2747a77358d9125e624",
@@ -97742,7 +101163,41 @@
             "target": "highest_hp",
             "multiplier": 2
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "remove_shield",
+              "target": "highest_hp"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "highest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "highest_hp",
+              "multiplier": 1.66
+            },
+            {
+              "action": "run",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "c00359754bdec7e41ba1edd2372a63d9",
@@ -98005,7 +101460,36 @@
             "target": "highest_dmg",
             "multiplier": 2
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 1,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "remove_vulner",
+              "target": "self"
+            },
+            {
+              "action": "remove_shield",
+              "target": "highest_hp"
+            },
+            {
+              "action": "remove_taunt",
+              "target": "highest_hp"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "highest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "highest_hp",
+              "multiplier": 2
+            }
+          ]
+        }
       },
       {
         "uuid": "7f517ee1ba72d3d40a1cc0daf2927f65",
@@ -98476,7 +101960,28 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_all_pos",
+              "target": "all_opponents"
+            },
+            {
+              "action": "damage_decrease",
+              "target": "all_opponents",
+              "multiplier": 0.75,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "8aeb105eed4571d449b41f4b39763c7c",
@@ -98592,7 +102097,24 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "damage_decrease",
+              "target": "attacker",
+              "multiplier": 0.15,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "3086fbfaaec320d4586df9a069d27b3c",
@@ -98842,7 +102364,36 @@
             "action": "remove_vulner",
             "target": "self"
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_shield",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 1
+            },
+            {
+              "action": "remove_taunt",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "remove_vulner",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "r__fff1d533f9877c040b8f2b762bc473d9_2c001718d48366f49aece94125eb88eb",
@@ -99349,7 +102900,24 @@
             "target": "highest_dmg",
             "multiplier": 2
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 1.5
+            },
+            {
+              "action": "run",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "54b711214ea84c64d840108cf43c58f0",
@@ -99495,7 +103063,33 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 3,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "damage_decrease",
+              "target": "all_opponents",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "8aeb105eed4571d449b41f4b39763c7c",
@@ -99570,7 +103164,33 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 66,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.67,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "crit_increase",
+              "target": "self",
+              "multiplier": 0.65,
+              "duration": [
+                2,
+                2
+              ]
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -100820,7 +104440,44 @@
             "target": "highest_dmg",
             "multiplier": 1.5
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "swap_prevent",
+              "target": "highest_dmg",
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "damage_decrease",
+              "target": "highest_dmg",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 1.5
+            },
+            {
+              "action": "remove_swap_prevent",
+              "target": "self"
+            },
+            {
+              "action": "run",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "4c9bb845c38da9d439362a14ec2889ff",
@@ -104282,7 +107939,24 @@
             "action": "remove_speed_decrease",
             "target": "self"
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "attack",
+              "target": "attacker",
+              "multiplier": 1
+            }
+          ]
+        }
       },
       {
         "uuid": "22e47343728c32a42b83db25fe2c8489",
@@ -106339,7 +110013,54 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "armor_increase",
+              "target": "self",
+              "multiplier": 0.15,
+              "duration": [
+                1,
+                2
+              ]
+            },
+            {
+              "action": "remove_dodge",
+              "target": "fastest"
+            },
+            {
+              "action": "remove_cloak",
+              "target": "fastest"
+            },
+            {
+              "action": "remove_speed_increase",
+              "target": "fastest"
+            },
+            {
+              "action": "attack",
+              "target": "fastest",
+              "multiplier": 1
+            },
+            {
+              "action": "vulner",
+              "target": "fastest",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                1
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__da02213bc068ab145a25080407e30681_fbf5cb1f14225a64c94dee046b8d627e__50",
@@ -106375,7 +110096,37 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "speed_decrease",
+              "target": "all_opponents",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "bypass_alert",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "all_opponents"
+            },
+            {
+              "action": "attack",
+              "target": "all_opponents",
+              "multiplier": 1.75
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__f5f742637939f814f9f80df4b6364153_b0fc3d904dcc90c45bd2a761099c4aad__50",
@@ -106403,7 +110154,46 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "shield",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "armor_increase",
+              "target": "self",
+              "multiplier": 0.25,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "vulner",
+              "target": "highest_hp",
+              "multiplier": 0.5,
+              "duration": [
+                4,
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__1e543fc32af91b04e84de9a205f63e44_e24e538e573a4474db4eecaf2dc45f86__50",
@@ -106476,7 +110266,33 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.75
+            },
+            {
+              "action": "remove_all_pos",
+              "target": "self"
+            },
+            {
+              "action": "shield",
+              "target": "self",
+              "multiplier": 1,
+              "duration": [
+                1,
+                1
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__ef7d9ed30e554434f967bbc2cd3d9414_c201c55dd503806489705a858cd56d3a__50",
@@ -106496,7 +110312,24 @@
             "target": "attacker",
             "multiplier": 0.5
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_shield",
+              "target": "attacker"
+            },
+            {
+              "action": "attack",
+              "target": "attacker",
+              "multiplier": 0.5
+            }
+          ]
+        }
       },
       {
         "uuid": "ra__4ead2a8b617153247b42a98602825bce",
@@ -108100,7 +111933,29 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -110845,7 +114700,41 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "remove_all_pos",
+              "target": "highest_dmg"
+            },
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 2.5
+            },
+            {
+              "action": "vulner",
+              "target": "highest_dmg",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            },
+            {
+              "action": "run",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "f6022575a1cd6dc49a18d1e64a262017",
@@ -110995,7 +114884,37 @@
             "action": "remove_all_neg",
             "target": "self"
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.5
+            },
+            {
+              "action": "remove_all_neg",
+              "target": "self"
+            },
+            {
+              "action": "damage_increase",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "ra__6833eab152ef81f48827a295b4032433",
@@ -112750,7 +116669,32 @@
               4
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "dot",
+              "target": "highest_hp",
+              "multiplier": 0.33,
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "shield",
+              "target": "self",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "7308f8f9b2d9740408becec93c256e9d",
@@ -114164,7 +118108,29 @@
             "target": "lowest_hp",
             "multiplier": 1
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 1
+            },
+            {
+              "action": "dodge",
+              "target": "self",
+              "multiplier": 0.667,
+              "duration": [
+                1,
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "uuid": "d6d1d8185e79ee54eb34f2e44d4c3c91",
@@ -114236,7 +118202,37 @@
             "target": "lowest_hp",
             "multiplier": 1.5
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_shield",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "remove_taunt",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.333
+            },
+            {
+              "action": "bypass_armor",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 1.5
+            }
+          ]
+        }
       },
       {
         "uuid": "b3bec27c9f9e0a44b8e28cae4ba5a0e5",
@@ -115413,7 +119409,24 @@
             "target": "highest_dmg",
             "multiplier": 2
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 1,
+          "delay": 1,
+          "cooldown": 1,
+          "effects": [
+            {
+              "action": "bypass_dodge",
+              "target": "highest_dmg"
+            },
+            {
+              "action": "attack",
+              "target": "highest_dmg",
+              "multiplier": 2
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -118604,7 +122617,46 @@
         "uuid": "ot__@_ea4d24ea3eaa84346a7697056f1e20bc__33",
         "name": "Alert Showdown",
         "type": "swap_in",
-        "effects": []
+        "effects": [],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "stun",
+              "target": "highest_dmg",
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "heal_pct",
+              "target": "highest_dmg",
+              "multiplier": 1
+            },
+            {
+              "action": "swap_prevent",
+              "target": "self",
+              "duration": [
+                2
+              ]
+            },
+            {
+              "action": "swap_prevent",
+              "target": "highest_dmg",
+              "duration": [
+                2
+              ]
+            }
+          ]
+        }
       }
     ],
     "resistance": [
@@ -118838,7 +122890,25 @@
             "target": "self",
             "multiplier": 0.05
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "attack",
+              "target": "attacker",
+              "multiplier": 0.5
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.1
+            }
+          ]
+        }
       },
       {
         "uuid": "ae536176da0a6014bbe48929bfca3e97",
@@ -122810,7 +126880,50 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "bypass_alert",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "all_opponents"
+            },
+            {
+              "action": "attack",
+              "target": "all_opponents",
+              "multiplier": 1.5
+            },
+            {
+              "action": "damage_increase",
+              "target": "team",
+              "multiplier": 0.5,
+              "duration": [
+                2,
+                2
+              ]
+            },
+            {
+              "action": "speed_increase",
+              "target": "team",
+              "multiplier": 0.25,
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "heal_pct",
+              "target": "self",
+              "multiplier": 0.25
+            }
+          ]
+        }
       },
       {
         "uuid": "9fea9ad3c2b044c408ad825521ceae49",
@@ -125713,7 +129826,41 @@
             "target": "highest_hp",
             "multiplier": 2
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1
+            },
+            {
+              "action": "remove_shield",
+              "target": "highest_hp"
+            },
+            {
+              "action": "bypass_armor",
+              "target": "highest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "highest_hp",
+              "multiplier": 1.66
+            },
+            {
+              "action": "run",
+              "target": "self"
+            }
+          ]
+        }
       },
       {
         "uuid": "ot__d7c56d0acc302af44893332e71d435cf_caa618667b7bd1b498f6b563fcbcdeea__33",
@@ -125742,7 +129889,24 @@
               2
             ]
           }
-        ]
+        ],
+        "if_alert": {
+          "threshold": 33,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "remove_damage_decrease",
+              "target": "self"
+            },
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 1.5
+            }
+          ]
+        }
       },
       {
         "uuid": "54b711214ea84c64d840108cf43c58f0",

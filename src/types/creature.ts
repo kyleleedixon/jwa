@@ -17,6 +17,14 @@ export interface MoveEffect {
   duration?: number[];
 }
 
+export interface AlertVersion {
+  threshold: number;
+  priority: number;
+  delay: number;
+  cooldown: number;
+  effects: MoveEffect[];
+}
+
 export interface Move {
   uuid: string;
   name: string;
@@ -26,6 +34,7 @@ export interface Move {
   priority: number;
   icon?: string;
   effects: MoveEffect[];
+  if_alert?: AlertVersion;
 }
 
 export interface Creature {

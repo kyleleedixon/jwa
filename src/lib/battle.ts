@@ -131,6 +131,24 @@ function currentSpeed(f: Fighter): number {
   return Math.max(0, spd);
 }
 
+// ─── Alert helpers ────────────────────────────────────────────────────────────
+
+function inAlert(f: Fighter, move: Move): boolean {
+  return !!move.if_alert && (f.hp / f.maxHp * 100) <= move.if_alert.threshold;
+}
+
+function moveEffects(f: Fighter, move: Move): Move['effects'] {
+  return inAlert(f, move) ? move.if_alert!.effects : move.effects;
+}
+
+function movePriority(f: Fighter, move: Move): number {
+  return inAlert(f, move) ? move.if_alert!.priority : move.priority;
+}
+
+function moveCooldown(f: Fighter, move: Move): number {
+  return inAlert(f, move) ? move.if_alert!.cooldown : move.cooldown;
+}
+
 // ─── Available moves ─────────────────────────────────────────────────────────
 
 function regularMoves(f: Fighter): Move[] {
@@ -241,18 +259,19 @@ function calcDamage(
 
 function scoreMoveForDamage(move: Move, attacker: Fighter, defender: Fighter): number {
   let score = 0;
-  const bypassArmor = move.effects.some(e => e.action === 'bypass_armor');
-  const bypassDodge = move.effects.some(e => e.action === 'bypass_dodge');
-  const removesShield = move.effects.some(e => e.action === 'remove_shield');
-  const bypassFlockCap = move.effects.some(e => e.action === 'attack' && (e.target === 'all_opponents' || e.target === 'team'));
+  const effs = moveEffects(attacker, move);
+  const bypassArmor = effs.some(e => e.action === 'bypass_armor');
+  const bypassDodge = effs.some(e => e.action === 'bypass_dodge');
+  const removesShield = effs.some(e => e.action === 'remove_shield');
+  const bypassFlockCap = effs.some(e => e.action === 'attack' && (e.target === 'all_opponents' || e.target === 'team'));
 
-  for (const eff of move.effects) {
+  for (const eff of effs) {
     if (eff.action === 'attack') {
       score += calcDamage(attacker, defender, eff.multiplier ?? 1, bypassArmor, bypassDodge, removesShield, bypassFlockCap);
     } else if (eff.action === 'dot') {
       const turns = eff.duration?.[0] ?? 2;
       const resist = resistFraction(defender, 'dot');
-      score += currentDamage(attacker) * (eff.multiplier ?? 0) * turns * (1 - resist) * 0.7; // discount future ticks
+      score += currentDamage(attacker) * (eff.multiplier ?? 0) * turns * (1 - resist) * 0.7;
     } else if (eff.action === 'rend') {
       const resist = resistFraction(defender, 'rend');
       score += defender.hp * (eff.multiplier ?? 0) * (1 - resist);
@@ -275,12 +294,13 @@ function chooseBestMove(attacker: Fighter, defender: Fighter): Move {
 // ─── Apply a move ─────────────────────────────────────────────────────────────
 
 function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: string[]) {
-  const bypassArmor = move.effects.some(e => e.action === 'bypass_armor');
-  const bypassDodge = move.effects.some(e => e.action === 'bypass_dodge');
-  const removesShield = move.effects.some(e => e.action === 'remove_shield');
-  const bypassFlockCap = move.effects.some(e => e.action === 'attack' && (e.target === 'all_opponents' || e.target === 'team'));
+  const effs = moveEffects(attacker, move);
+  const bypassArmor = effs.some(e => e.action === 'bypass_armor');
+  const bypassDodge = effs.some(e => e.action === 'bypass_dodge');
+  const removesShield = effs.some(e => e.action === 'remove_shield');
+  const bypassFlockCap = effs.some(e => e.action === 'attack' && (e.target === 'all_opponents' || e.target === 'team'));
 
-  for (const eff of move.effects) {
+  for (const eff of effs) {
     // Determine target in 1v1 context
     const targetsSelf  = eff.target === 'self';
     const targetsOpponent = !targetsSelf && eff.target !== 'team' && eff.target !== 'lowest_hp_teammate';
@@ -288,9 +308,12 @@ function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: str
 
     switch (eff.action) {
       case 'attack': {
+        const memberHp = !bypassFlockCap && (defender.creature.flock ?? 1) > 1
+          ? Math.floor(defender.maxHp / defender.creature.flock!)
+          : Infinity;
         const dmg = calcDamage(attacker, defender, eff.multiplier ?? 1, bypassArmor, bypassDodge, removesShield, bypassFlockCap);
         defender.hp = Math.max(0, defender.hp - dmg);
-        const flockNote = !bypassFlockCap && (defender.creature.flock ?? 1) > 1 ? ' [Flock cap]' : '';
+        const flockNote = dmg === memberHp ? ' [Absorbed]' : '';
         events.push(`${attacker.id} deals ${dmg} damage${flockNote}`);
         break;
       }
@@ -437,8 +460,9 @@ function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: str
     }
   }
 
-  // Set cooldown
-  if (move.cooldown > 0) attacker.cooldowns[move.uuid] = move.cooldown + 1; // +1 because we decrement at start of next turn
+  // Set cooldown (use alert version cooldown if applicable)
+  const cd = moveCooldown(attacker, move);
+  if (cd > 0) attacker.cooldowns[move.uuid] = cd + 1; // +1 because we decrement at start of next turn
 }
 
 // ─── End-of-turn bookkeeping ──────────────────────────────────────────────────
@@ -490,8 +514,8 @@ export function simulateBattle(creatureA: Creature, creatureB: Creature, config:
     // Priority move selection (we need to pick moves first to check priority)
     const moveA = chooseBestMove(A, B);
     const moveB = chooseBestMove(B, A);
-    const prioA = moveA.priority + (spdA >= spdB ? 0.5 : 0);
-    const prioB = moveB.priority + (spdB > spdA ? 0.5 : 0);
+    const prioA = movePriority(A, moveA) + (spdA >= spdB ? 0.5 : 0);
+    const prioB = movePriority(B, moveB) + (spdB > spdA ? 0.5 : 0);
 
     const [first, second, firstMove, secondMove] = prioA >= prioB
       ? [A, B, moveA, moveB]
@@ -503,7 +527,8 @@ export function simulateBattle(creatureA: Creature, creatureB: Creature, config:
       if (first.stunTurns > 0) {
         events.push(`${first.id} is stunned — skips turn`);
       } else {
-        events.push(`${first.id} uses ${firstMove.name}`);
+        const firstAlert = inAlert(first, firstMove) ? ' [Alert]' : '';
+        events.push(`${first.id} uses ${firstMove.name}${firstAlert}`);
         applyMove(firstMove, first, second, events);
         // Apply counter moves from second (if still alive)
         if (second.hp > 0) {
@@ -523,7 +548,8 @@ export function simulateBattle(creatureA: Creature, creatureB: Creature, config:
       if (second.stunTurns > 0) {
         events.push(`${second.id} is stunned — skips turn`);
       } else {
-        events.push(`${second.id} uses ${secondMove.name}`);
+        const secondAlert = inAlert(second, secondMove) ? ' [Alert]' : '';
+        events.push(`${second.id} uses ${secondMove.name}${secondAlert}`);
         applyMove(secondMove, second, first, events);
         // Apply counter moves from first (if still alive)
         if (first.hp > 0) {

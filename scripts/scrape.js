@@ -115,6 +115,20 @@ function parseMoves(moveArray, moveType, moveNames) {
         ...(e.multiplier != null && { multiplier: e.multiplier }),
         ...(e.duration != null && { duration: e.duration }),
       })),
+      ...(mv.if_alert && {
+        if_alert: {
+          threshold: mv.if_alert.threshold,
+          priority: mv.if_alert.priority,
+          delay: mv.if_alert.delay,
+          cooldown: mv.if_alert.cooldown,
+          effects: (mv.if_alert.effects || []).map(e => ({
+            action: e.action,
+            target: e.target,
+            ...(e.multiplier != null && { multiplier: e.multiplier }),
+            ...(e.duration != null && { duration: e.duration }),
+          })),
+        },
+      }),
     };
   });
 }
