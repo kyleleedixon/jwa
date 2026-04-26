@@ -243,24 +243,20 @@ export default function TournamentCompanion({ creatures }: { creatures: Creature
   const [pendingOppSwapCreature, setPendingOppSwapCreature] = useState<Creature | null>(null);
 
   const pickedUuids = useMemo(() => mySlots.filter(Boolean).map(c => c!.uuid), [mySlots]);
+  const teamReady = mySlots.every(Boolean);
+  const leadChosen = teamReady && myStartIdx >= 0;
 
-  // Rank my team vs opponent's starting creature by best-move damage score
-  const leadRanking = useMemo(() => {
-    if (!oppCreature || mySlots.some(s => !s)) return null;
+  // Once opponent is revealed and lead chosen, auto-start battle
+  const canStart = leadChosen && oppCreature !== null;
+
+  // When opponent is set and lead is locked, compute matchup insight
+  const matchupInsight = useMemo(() => {
+    if (!oppCreature || !teamReady || myStartIdx < 0) return null;
     const oppF = initFighter('B', oppCreature, level);
-    return (mySlots as Creature[]).map((c, idx) => {
-      const f = initFighter('A', c, level);
-      const opts = evaluateMoves(f, oppF);
-      const best = opts[0];
-      return { idx, creature: c, score: best?.score ?? 0, tag: best?.tag ?? 'neutral' as const, myDmg: best?.myDmg ?? 0, oppDmg: best?.oppDmg ?? 0, iGoFirst: best?.iGoFirst ?? false };
-    }).sort((a, b) => b.score - a.score);
-  }, [mySlots, oppCreature, level]);
-  const canStart = mySlots.every(Boolean) && oppCreature !== null;
-
-  // Auto-select recommended lead whenever ranking updates
-  useMemo(() => {
-    if (leadRanking) setMyStartIdx(leadRanking[0].idx);
-  }, [leadRanking]);
+    const meF = initFighter('A', (mySlots as Creature[])[myStartIdx], level);
+    const opts = evaluateMoves(meF, oppF);
+    return opts[0] ?? null;
+  }, [oppCreature, mySlots, myStartIdx, level]);
 
   function startBattle() {
     if (!canStart) return;
@@ -505,75 +501,93 @@ export default function TournamentCompanion({ creatures }: { creatures: Creature
         </div>
         <div className="max-w-xl mx-auto px-4 py-8 flex flex-col gap-6">
 
-          {/* Opponent first — visible before picking your team */}
+          {/* Step 1: Your 4 creatures (what the game dealt you) */}
           <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 flex flex-col gap-4">
-            <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Opponent's Starting Creature</h2>
-            <CreaturePicker creatures={creatures} value={oppCreature}
-              exclude={[]}
-              onChange={setOppCreature}
-              placeholder="Their first creature…"
-            />
-          </div>
-
-          <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 flex flex-col gap-4">
-            <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Your Team (4 creatures)</h2>
+            <div className="flex items-center gap-2">
+              <span className="w-5 h-5 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold shrink-0">1</span>
+              <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Your 4 Creatures</h2>
+              <div className="ml-auto flex items-center gap-2">
+                <span className="text-xs text-gray-500">Level</span>
+                <input type="range" min={1} max={35} value={level}
+                  onChange={e => setLevel(Number(e.target.value))}
+                  className="w-20 accent-blue-500"
+                />
+                <span className="text-white font-semibold text-xs w-5">{level}</span>
+              </div>
+            </div>
             <div className="grid grid-cols-2 gap-2">
               {mySlots.map((c, i) => (
                 <CreaturePicker key={i} creatures={creatures} value={c}
                   exclude={pickedUuids.filter(u => u !== c?.uuid)}
-                  onChange={creature => setMySlots(s => s.map((x, j) => j === i ? creature : x))}
+                  onChange={creature => { setMySlots(s => s.map((x, j) => j === i ? creature : x)); setMyStartIdx(0); }}
                   placeholder={`Creature ${i + 1}`}
                 />
               ))}
             </div>
           </div>
 
-          {leadRanking && (
+          {/* Step 2: Pick your lead (before seeing opponent) */}
+          {teamReady && (
             <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 flex flex-col gap-3">
-              <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Recommended Lead</h2>
-              <p className="text-xs text-gray-500">Ranked by expected first-turn outcome vs their starting creature. Tap to change your lead.</p>
-              <div className="flex flex-col gap-2">
-                {leadRanking.map((r, rank) => (
-                  <button key={r.idx} onClick={() => setMyStartIdx(r.idx)}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl border text-left transition-all ${
-                      myStartIdx === r.idx
+              <div className="flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold shrink-0">2</span>
+                <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Choose Your Starting Creature</h2>
+              </div>
+              <p className="text-xs text-gray-500">Pick before seeing the opponent's lead.</p>
+              <div className="grid grid-cols-2 gap-2">
+                {(mySlots as Creature[]).map((c, i) => (
+                  <button key={i} onClick={() => setMyStartIdx(i)}
+                    className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-left transition-all ${
+                      myStartIdx === i
                         ? 'bg-blue-600/30 border-blue-500/60 ring-1 ring-blue-500/40'
                         : 'bg-slate-800 border-slate-700 hover:bg-slate-700/60'
                     }`}
                   >
-                    <span className="text-xs text-gray-600 w-4 shrink-0 text-center font-bold">{rank + 1}</span>
-                    <img src={r.creature.image} alt="" className="w-9 h-9 object-contain rounded-lg bg-black/20 shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{r.creature.name}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">
-                        {r.iGoFirst ? '⚡ First' : '🐢 Second'} · deals ~{r.myDmg.toLocaleString()} · takes ~{r.oppDmg.toLocaleString()}
-                      </p>
+                    <img src={c.image} alt="" className="w-9 h-9 object-contain rounded-lg bg-black/20 shrink-0" />
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-white truncate">{c.name}</p>
+                      <p className={`text-xs ${RARITY_COLORS[c.rarity].split(' ')[0]}`}>{cap(c.rarity)}</p>
                     </div>
-                    <span className={`shrink-0 text-xs font-medium px-2 py-0.5 rounded-full border ${TAG_STYLES[r.tag]}`}>
-                      {rank === 0 ? 'Lead' : cap(r.tag)}
-                    </span>
+                    {myStartIdx === i && (
+                      <span className="ml-auto shrink-0 text-xs text-blue-300 font-medium">Lead</span>
+                    )}
                   </button>
                 ))}
               </div>
             </div>
           )}
 
-          <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 flex flex-col gap-3">
-            <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Level</h2>
-            <div className="flex items-center gap-3">
-              <input type="range" min={1} max={35} value={level}
-                onChange={e => setLevel(Number(e.target.value))}
-                className="flex-1 accent-blue-500"
+          {/* Step 3: Reveal opponent's starting creature */}
+          {leadChosen && (
+            <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold shrink-0">3</span>
+                <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Opponent's Starting Creature</h2>
+              </div>
+              <CreaturePicker creatures={creatures} value={oppCreature}
+                exclude={[]}
+                onChange={setOppCreature}
+                placeholder="Now you can see their lead…"
               />
-              <span className="text-white font-semibold w-6 text-right">{level}</span>
+              {matchupInsight && oppCreature && (
+                <div className={`flex items-center gap-3 px-3 py-2.5 rounded-xl border ${TAG_STYLES[matchupInsight.tag]}`}>
+                  <img src={(mySlots as Creature[])[myStartIdx].image} alt="" className="w-8 h-8 object-contain rounded bg-black/20 shrink-0" />
+                  <div className="text-xs">
+                    <p className="font-medium">{matchupInsight.iGoFirst ? '⚡ You go first' : '🐢 They go first'} · {cap(matchupInsight.tag)} matchup</p>
+                    <p className="opacity-70 mt-0.5">Deals ~{matchupInsight.myDmg.toLocaleString()} · Takes ~{matchupInsight.oppDmg.toLocaleString()}</p>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
+          )}
 
-          <button onClick={startBattle} disabled={!canStart}
-            className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-semibold text-sm transition-colors"
-          >
-            Start Battle
-          </button>
+          {canStart && (
+            <button onClick={startBattle}
+              className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-colors"
+            >
+              Start Battle
+            </button>
+          )}
         </div>
       </div>
     );
