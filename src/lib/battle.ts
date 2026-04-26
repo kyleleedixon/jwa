@@ -45,6 +45,8 @@ interface Fighter {
   cooldowns: Record<string, number>;
   delayLeft: Record<string, number>;
   stunTurns: number;
+  memberHp: number[];   // per-member HP; length 1 for non-flock
+  memberMaxHp: number;  // max HP per member
 }
 
 export interface BattleLogEntry {
@@ -73,11 +75,16 @@ function initFighter(id: 'A' | 'B', creature: Creature, level: number, boosts: B
   const dmg = Math.round(statAtLevel(creature.damage, level) * (1 + 0.025 * boosts.damage));
   const spd = statAtLevel(creature.speed, level) + boosts.speed * 2;
 
+  const flockCount = creature.flock ?? 1;
+  const memberMaxHp = flockCount > 1 ? Math.floor(hp / flockCount) : hp;
+  const memberHp = Array.from({ length: flockCount }, () => memberMaxHp);
+  const totalHp = memberHp.reduce((s, v) => s + v, 0);
+
   const delayLeft: Record<string, number> = {};
   creature.moves.filter(m => m.type === 'regular' && m.delay > 0)
     .forEach(m => { delayLeft[m.uuid] = m.delay; });
 
-  return { id, creature, hp, maxHp: hp, baseDamage: dmg, baseSpeed: spd, armor: creature.armor, crit: creature.crit, critm: creature.critm, effects: [], cooldowns: {}, delayLeft, stunTurns: 0 };
+  return { id, creature, hp: totalHp, maxHp: totalHp, baseDamage: dmg, baseSpeed: spd, armor: creature.armor, crit: creature.crit, critm: creature.critm, effects: [], cooldowns: {}, delayLeft, stunTurns: 0, memberHp, memberMaxHp };
 }
 
 // ─── Effect helpers ───────────────────────────────────────────────────────────
@@ -149,6 +156,44 @@ function moveCooldown(f: Fighter, move: Move): number {
   return inAlert(f, move) ? move.if_alert!.cooldown : move.cooldown;
 }
 
+// ─── Flock helpers ────────────────────────────────────────────────────────────
+
+function weakestAliveIdx(f: Fighter): number {
+  let best = -1, bestHp = Infinity;
+  for (let i = 0; i < f.memberHp.length; i++) {
+    if (f.memberHp[i] > 0 && f.memberHp[i] < bestHp) { best = i; bestHp = f.memberHp[i]; }
+  }
+  return best >= 0 ? best : 0;
+}
+
+function syncHp(f: Fighter) {
+  f.hp = f.memberHp.reduce((s, v) => s + v, 0);
+}
+
+// Group attack: damage chains through members sequentially with overflow
+function applyGroupDamage(defender: Fighter, rawDmg: number): number {
+  let remaining = rawDmg, applied = 0;
+  for (let i = 0; i < defender.memberHp.length && remaining > 0; i++) {
+    if (defender.memberHp[i] <= 0) continue;
+    const taken = Math.min(defender.memberHp[i], remaining);
+    defender.memberHp[i] -= taken;
+    applied += taken;
+    remaining -= taken;
+  }
+  syncHp(defender);
+  return applied;
+}
+
+// Single-target attack: hits weakest alive member, capped at that member's HP
+function applyMemberDamage(defender: Fighter, rawDmg: number): { applied: number; absorbed: boolean } {
+  const idx = weakestAliveIdx(defender);
+  const cap = defender.memberHp[idx];
+  const applied = Math.min(rawDmg, cap);
+  defender.memberHp[idx] -= applied;
+  syncHp(defender);
+  return { applied, absorbed: rawDmg > cap };
+}
+
 // ─── Available moves ─────────────────────────────────────────────────────────
 
 function regularMoves(f: Fighter): Move[] {
@@ -182,7 +227,6 @@ function calcDamage(
   bypassArmor: boolean,
   bypassDodge: boolean,
   removedShield: boolean,
-  bypassFlockCap: boolean = false,
   consume: boolean = true,
 ): number {
   let dmg = currentDamage(attacker) * multiplier;
@@ -245,12 +289,6 @@ function calcDamage(
   if (hasEffect(attacker, 'daze')) effectiveCrit = 0;
   dmg *= (1 + (effectiveCrit / 100) * (attacker.critm / 100 - 1));
 
-  // Flock cap: single-target attacks deal at most one member's worth of HP
-  if (!bypassFlockCap && (defender.creature.flock ?? 1) > 1) {
-    const memberHp = Math.floor(defender.maxHp / defender.creature.flock!);
-    dmg = Math.min(dmg, memberHp);
-  }
-
   return Math.round(Math.max(0, dmg));
 }
 
@@ -262,11 +300,16 @@ function scoreMoveForDamage(move: Move, attacker: Fighter, defender: Fighter): n
   const bypassArmor = effs.some(e => e.action === 'bypass_armor');
   const bypassDodge = effs.some(e => e.action === 'bypass_dodge');
   const removesShield = effs.some(e => e.action === 'remove_shield');
-  const bypassFlockCap = effs.some(e => e.action === 'attack' && (e.target === 'all_opponents' || e.target === 'team'));
+  const isGroupAttack = effs.some(e => e.action === 'attack' && (e.target === 'all_opponents' || e.target === 'team'));
+  const isFlock = defender.memberHp.length > 1;
 
   for (const eff of effs) {
     if (eff.action === 'attack') {
-      score += calcDamage(attacker, defender, eff.multiplier ?? 1, bypassArmor, bypassDodge, removesShield, bypassFlockCap, false);
+      let dmg = calcDamage(attacker, defender, eff.multiplier ?? 1, bypassArmor, bypassDodge, removesShield, false);
+      if (!isGroupAttack && isFlock) {
+        dmg = Math.min(dmg, defender.memberHp[weakestAliveIdx(defender)]);
+      }
+      score += dmg;
     } else if (eff.action === 'dot') {
       const turns = eff.duration?.[0] ?? 2;
       const resist = resistFraction(defender, 'dot');
@@ -297,7 +340,8 @@ function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: str
   const bypassArmor = effs.some(e => e.action === 'bypass_armor');
   const bypassDodge = effs.some(e => e.action === 'bypass_dodge');
   const removesShield = effs.some(e => e.action === 'remove_shield');
-  const bypassFlockCap = effs.some(e => e.action === 'attack' && (e.target === 'all_opponents' || e.target === 'team'));
+  const isGroupAttack = effs.some(e => e.action === 'attack' && (e.target === 'all_opponents' || e.target === 'team'));
+  const isFlock = defender.memberHp.length > 1;
 
   for (const eff of effs) {
     // Determine target in 1v1 context
@@ -307,13 +351,18 @@ function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: str
 
     switch (eff.action) {
       case 'attack': {
-        const memberHp = !bypassFlockCap && (defender.creature.flock ?? 1) > 1
-          ? Math.floor(defender.maxHp / defender.creature.flock!)
-          : Infinity;
-        const dmg = calcDamage(attacker, defender, eff.multiplier ?? 1, bypassArmor, bypassDodge, removesShield, bypassFlockCap);
-        defender.hp = Math.max(0, defender.hp - dmg);
-        const flockNote = dmg === memberHp ? ' [Absorbed]' : '';
-        events.push(`${attacker.id} deals ${dmg} damage${flockNote}`);
+        const rawDmg = calcDamage(attacker, defender, eff.multiplier ?? 1, bypassArmor, bypassDodge, removesShield);
+        if (isGroupAttack && isFlock) {
+          const applied = applyGroupDamage(defender, rawDmg);
+          events.push(`${attacker.id} deals ${applied} damage (group)`);
+        } else if (!isGroupAttack && isFlock) {
+          const { applied, absorbed } = applyMemberDamage(defender, rawDmg);
+          const flockNote = absorbed ? ' [Absorbed]' : '';
+          events.push(`${attacker.id} deals ${applied} damage${flockNote}`);
+        } else {
+          defender.hp = Math.max(0, defender.hp - rawDmg);
+          events.push(`${attacker.id} deals ${rawDmg} damage`);
+        }
         break;
       }
       case 'dot': {
