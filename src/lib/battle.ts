@@ -116,8 +116,8 @@ function removeEffects(f: Fighter, action: string) {
 function currentDamage(f: Fighter): number {
   let dmg = f.baseDamage;
   for (const e of f.effects) {
-    if (e.action === 'damage_increase') dmg *= (1 + e.multiplier);
-    if (e.action === 'damage_decrease') dmg *= (1 - e.multiplier);
+    if (e.action === 'damage_increase') dmg += f.baseDamage * e.multiplier;
+    if (e.action === 'damage_decrease') dmg -= f.baseDamage * e.multiplier;
   }
   return Math.max(0, dmg);
 }
@@ -125,10 +125,10 @@ function currentDamage(f: Fighter): number {
 function currentSpeed(f: Fighter): number {
   let spd = f.baseSpeed;
   for (const e of f.effects) {
-    if (e.action === 'speed_increase') spd += e.multiplier;
-    if (e.action === 'speed_decrease') spd *= (1 - e.multiplier);
+    if (e.action === 'speed_increase') spd += f.baseSpeed * e.multiplier;
+    if (e.action === 'speed_decrease') spd -= f.baseSpeed * e.multiplier;
   }
-  return spd;
+  return Math.max(0, spd);
 }
 
 // ─── Available moves ─────────────────────────────────────────────────────────
@@ -348,7 +348,7 @@ function applyMove(move: Move, attacker: Fighter, defender: Fighter, events: str
       }
       case 'speed_increase': {
         addEffect(target, 'speed_increase', eff.multiplier ?? 0, eff.duration);
-        events.push(`${target.id} +${eff.multiplier} speed`);
+        events.push(`${target.id} +${((eff.multiplier ?? 0) * 100).toFixed(0)}% speed`);
         break;
       }
       case 'speed_decrease': {
