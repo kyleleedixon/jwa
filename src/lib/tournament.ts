@@ -173,23 +173,36 @@ export function runTournamentOptimizer(
 
   const phase2Ms = Math.round(performance.now() - t2);
 
-  // ── Greedy team selection (coverage over benchmark team-key space) ─────────
-  // All 20 candidates are in the same coverage space (benchmark team keys),
-  // so greedy now finds genuine diversity: picks creature that beats benchmark
-  // teams not already covered by the current roster.
+  // ── Greedy team selection (counter-coverage + strength) ─────────────────
+  // Each pick is scored by:
+  //   (# of current team's counters this creature beats) × 1000
+  //   + team win rate × 999 as tiebreak
+  //
+  // This creates real synergy: pick 1 = best raw creature, pick 2 = best
+  // at handling pick 1's weaknesses, pick 3 = covers remaining counters, etc.
+  // Uses 1v1 counter data (phase 1) for the diversity signal and 4v4 win rate
+  // (phase 2) for strength, drawing candidates from all 20 tested creatures.
   const phase2Scores = scores.filter(s => s.teamsCount > 0);
   const team: Creature[] = [];
-  const covered = new Set<string>();
-  const picked  = new Set<string>();
+  const picked = new Set<string>();
+
+  // Build a lookup: uuid → CreatureScore for fast counter access
+  const scoreByUuid = new Map(scores.map(s => [s.creature.uuid, s]));
 
   while (team.length < 8 && team.length < phase2Scores.length) {
+    // Collect every creature that beats someone currently on the team
+    const teamCounters = new Set<string>();
+    for (const c of team) {
+      scoreByUuid.get(c.uuid)?.losesTo.forEach(u => teamCounters.add(u));
+    }
+
     let bestScore = -1, bestIdx = -1;
 
     for (let i = 0; i < phase2Scores.length; i++) {
       const s = phase2Scores[i];
       if (picked.has(s.creature.uuid)) continue;
-      const newCov    = s.teamBeats.filter(k => !covered.has(k)).length;
-      const slotScore = newCov * 1000 + Math.round(s.teamWinRate * 999);
+      const countersCovered = s.beats.filter(u => teamCounters.has(u)).length;
+      const slotScore = countersCovered * 1000 + Math.round(s.teamWinRate * 999);
       if (slotScore > bestScore) { bestScore = slotScore; bestIdx = i; }
     }
 
@@ -197,10 +210,9 @@ export function runTournamentOptimizer(
     const chosen = phase2Scores[bestIdx];
     team.push(chosen.creature);
     picked.add(chosen.creature.uuid);
-    chosen.teamBeats.forEach(k => covered.add(k));
   }
 
-  // Fallback: fill from phase-1 if fewer than 8 phase-2 candidates
+  // Fallback: fill remaining slots from phase-1 if fewer than 8 phase-2 candidates
   if (team.length < 8) {
     for (const s of scores) {
       if (team.length >= 8) break;
