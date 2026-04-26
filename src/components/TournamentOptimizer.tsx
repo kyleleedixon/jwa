@@ -28,7 +28,7 @@ function WinBar({ wins, losses }: { wins: number; losses: number }) {
   );
 }
 
-function TeamCard({ creature, rank, scores }: {
+function TeamRow({ creature, rank, scores }: {
   creature: Creature;
   rank: number;
   scores: TournamentResult['scores'];
@@ -38,21 +38,20 @@ function TeamCard({ creature, rank, scores }: {
   const pct = Math.round((hasTeam ? sc.teamWinRate : sc.winRate) * 100);
 
   return (
-    <div className={`flex flex-col gap-2 p-3 rounded-xl border ${RARITY_BG[creature.rarity]}`}>
-      <div className="flex items-center gap-2">
-        <span className="text-xs font-bold text-gray-500 w-4 shrink-0">#{rank}</span>
-        <img src={creature.image} alt="" className="w-9 h-9 object-contain rounded bg-black/20 shrink-0" />
-        <div className="min-w-0">
-          <p className="text-sm font-semibold text-white truncate">{creature.name}</p>
-          <p className={`text-xs ${RARITY_COLORS[creature.rarity]}`}>{cap(creature.rarity)}</p>
-        </div>
-        <div className="ml-auto text-right shrink-0">
-          <p className="text-sm font-bold text-white">{pct}%</p>
-          <p className="text-xs text-gray-500">{hasTeam ? `${sc.teamsCount} team combos` : `${sc.wins}W ${sc.losses}L`}</p>
+    <div className={`flex items-center gap-3 px-4 py-3 rounded-xl border ${RARITY_BG[creature.rarity]}`}>
+      <span className="text-sm font-bold text-gray-500 w-5 shrink-0 text-center">{rank}</span>
+      <img src={creature.image} alt="" className="w-12 h-12 object-contain rounded-lg bg-black/20 shrink-0" />
+      <div className="flex-1 min-w-0">
+        <p className="font-semibold text-white">{creature.name}</p>
+        <p className={`text-xs mt-0.5 ${RARITY_COLORS[creature.rarity]}`}>{cap(creature.rarity)}</p>
+        <div className="flex items-center gap-2 mt-1.5">
+          <WinBar wins={pct} losses={100 - pct} />
         </div>
       </div>
-      <WinBar wins={pct} losses={100 - pct} />
-      <p className="text-[10px] text-gray-600">{hasTeam ? '4v4 win rate' : '1v1 win rate'}</p>
+      <div className="text-right shrink-0">
+        <p className="text-lg font-bold text-white">{pct}%</p>
+        <p className="text-xs text-gray-500">{hasTeam ? `${sc.teamsCount} combos` : `${sc.wins}W ${sc.losses}L`}</p>
+      </div>
     </div>
   );
 }
@@ -176,9 +175,9 @@ export default function TournamentOptimizer({ creatures }: { creatures: Creature
               <span className="text-xs text-gray-600 ml-2">pick any 4 of these 8 each battle</span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {result.team.map((c, i) => (
-                <TeamCard key={c.uuid} creature={c} rank={i + 1} scores={result.scores} />
+                <TeamRow key={c.uuid} creature={c} rank={i + 1} scores={result.scores} />
               ))}
             </div>
 
