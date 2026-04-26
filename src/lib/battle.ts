@@ -146,9 +146,6 @@ function counterMoves(f: Fighter): Move[] {
   return f.creature.moves.filter(m => m.type === 'counter');
 }
 
-function swapInMoves(f: Fighter): Move[] {
-  return f.creature.moves.filter(m => m.type === 'swap_in');
-}
 
 // ─── Resistance ───────────────────────────────────────────────────────────────
 
@@ -485,20 +482,6 @@ export function simulateBattle(creatureA: Creature, creatureB: Creature, config:
   const A = initFighter('A', creatureA, config.levelA, config.boostsA);
   const B = initFighter('B', creatureB, config.levelB, config.boostsB);
   const log: BattleLogEntry[] = [];
-
-  // Swap-in abilities fire at battle start, faster creature first
-  {
-    const [first, second] = currentSpeed(A) >= currentSpeed(B) ? [A, B] : [B, A];
-    for (const f of [first, second]) {
-      const opp = f === A ? B : A;
-      for (const move of swapInMoves(f)) {
-        if (opp.hp <= 0) break;
-        const events: string[] = [`${f.id} swap-in: ${move.name}`];
-        applyMove(move, f, opp, events);
-        log.push({ turn: 0, actor: f.id, moveName: `Swap-In: ${move.name}`, events, hpA: A.hp, hpB: B.hp });
-      }
-    }
-  }
 
   for (let turn = 1; turn <= MAX_TURNS && A.hp > 0 && B.hp > 0; turn++) {
     // Determine action order this round
