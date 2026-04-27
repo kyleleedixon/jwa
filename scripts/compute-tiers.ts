@@ -35,7 +35,7 @@ for (const group of RARITY_GROUPS) {
     level: LEVEL,
     computedAt: new Date().toISOString(),
     durationMs: t.durationMs,
-    entries: t.entries.map(e => ({
+    entries: t.entries.slice(0, 25).map(e => ({
       uuid:    e.creature.uuid,
       name:    e.creature.name,
       rarity:  e.creature.rarity,
