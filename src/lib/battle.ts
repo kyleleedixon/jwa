@@ -289,6 +289,15 @@ function calcDamage(
   if (hasEffect(attacker, 'daze')) effectiveCrit = 0;
   dmg *= (1 + (effectiveCrit / 100) * (attacker.critm / 100 - 1));
 
+  // Consume per-hit attacker damage buffs (e.g. damage_increase from a counter move)
+  if (consume) {
+    const di = getEffect(attacker, 'damage_increase');
+    if (di && di.hitsLeft > 0) {
+      di.hitsLeft -= 1;
+      if (di.hitsLeft === 0) removeEffects(attacker, 'damage_increase');
+    }
+  }
+
   return Math.round(Math.max(0, dmg));
 }
 
