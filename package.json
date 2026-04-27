@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "scrape": "node scripts/scrape.js"
+    "scrape": "node scripts/scrape.js && npx tsx scripts/compute-tiers.ts",
+    "compute-tiers": "npx tsx scripts/compute-tiers.ts"
   },
   "dependencies": {
     "@vercel/blob": "^2.3.3",
@@ -26,6 +27,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }
