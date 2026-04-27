@@ -11,8 +11,13 @@ const creatures = JSON.parse(readFileSync(creaturesPath, 'utf8')) as Creature[];
 
 const LEVEL = 26;
 
-process.stdout.write(`  Computing tier list (${creatures.length} creatures)…`);
-const t = computeTierList(creatures, RARITY_ORDER, LEVEL);
+// Omegas use a separate point-based progression system — their stats at any fixed
+// point allocation are not comparable to level 26 base stats for other rarities.
+// They are ranked separately at their cap stats (fully upgraded).
+const NON_OMEGA = RARITY_ORDER.filter(r => r !== 'omega');
+
+process.stdout.write(`  Computing tier list (non-omega, ${creatures.filter(c => NON_OMEGA.includes(c.rarity)).length} creatures)…`);
+const t = computeTierList(creatures, NON_OMEGA, LEVEL);
 
 const result = {
   level: LEVEL,

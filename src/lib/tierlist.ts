@@ -36,26 +36,6 @@ function assignTier(winRate: number): Tier {
   return 'D';
 }
 
-const OMEGA_STATS = ['health', 'damage', 'speed', 'armor', 'crit', 'critm'] as const;
-type OmegaStat = typeof OMEGA_STATS[number];
-
-// Fraction of the base→cap upgrade range applied to omega stats.
-// 0 = base stats, 1 = fully capped. 0.6 keeps omegas competitive with apex
-// without dominating — a well-built but not fully maxed omega.
-const OMEGA_UPGRADE_FRACTION = 0.6;
-
-function withOmegaStats(c: Creature): Creature {
-  if (!c.points) return c;
-  const { cap } = c.points;
-  const overrides: Partial<Record<OmegaStat, number>> = {};
-  for (const s of OMEGA_STATS) {
-    if (cap[s] != null) {
-      overrides[s] = Math.round((c[s] as number) + (cap[s] - (c[s] as number)) * OMEGA_UPGRADE_FRACTION);
-    }
-  }
-  return { ...c, ...overrides };
-}
-
 export function computeTierList(
   allCreatures: Creature[],
   rarities: string[],
@@ -66,8 +46,7 @@ export function computeTierList(
   const raw = rarities.length > 0
     ? allCreatures.filter(c => rarities.includes(c.rarity))
     : allCreatures;
-  // Omega creatures use 60% of base→cap upgrade range for fair comparison
-  const pool = raw.map(c => c.rarity === 'omega' ? withOmegaStats(c) : c);
+  const pool = raw;
 
   const beats   = new Map<string, Set<string>>();
   const losesTo = new Map<string, Set<string>>();
