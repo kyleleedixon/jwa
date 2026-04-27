@@ -461,12 +461,14 @@ export function applyMove(move: Move, attacker: Fighter, defender: Fighter, even
         break;
       }
       case 'heal': {
-        const healed = Math.round(target.maxHp * (eff.multiplier ?? 0));
+        // Heals X × base attack damage (not max HP)
+        const healed = Math.round(target.baseDamage * (eff.multiplier ?? 0));
         target.hp = Math.min(target.maxHp, target.hp + healed);
         events.push(`${target.id} heals ${healed} HP`);
         break;
       }
       case 'heal_pct': {
+        // Heals X% of max HP
         const healed = Math.round(target.maxHp * (eff.multiplier ?? 0));
         target.hp = Math.min(target.maxHp, target.hp + healed);
         events.push(`${target.id} heals ${healed} HP`);
