@@ -39,17 +39,19 @@ function assignTier(winRate: number): Tier {
 const OMEGA_STATS = ['health', 'damage', 'speed', 'armor', 'crit', 'critm'] as const;
 type OmegaStat = typeof OMEGA_STATS[number];
 
-// Return a shallow-cloned creature with omega points distributed evenly across stats
-function withEvenOmegaPoints(c: Creature): Creature {
+// Fraction of the base→cap upgrade range applied to omega stats.
+// 0 = base stats, 1 = fully capped. 0.6 keeps omegas competitive with apex
+// without dominating — a well-built but not fully maxed omega.
+const OMEGA_UPGRADE_FRACTION = 0.6;
+
+function withOmegaStats(c: Creature): Creature {
   if (!c.points) return c;
-  const { delta, pcap } = c.points;
-  const active = OMEGA_STATS.filter(s => (pcap[s] ?? 0) > 0);
-  const totalPcap = active.reduce((sum, s) => sum + (pcap[s] ?? 0), 0);
-  const evenShare = Math.floor(totalPcap / active.length);
+  const { cap } = c.points;
   const overrides: Partial<Record<OmegaStat, number>> = {};
-  for (const s of active) {
-    const pts = Math.min(evenShare, pcap[s] ?? 0);
-    overrides[s] = (c[s] as number) + pts * (delta[s] ?? 0);
+  for (const s of OMEGA_STATS) {
+    if (cap[s] != null) {
+      overrides[s] = Math.round((c[s] as number) + (cap[s] - (c[s] as number)) * OMEGA_UPGRADE_FRACTION);
+    }
   }
   return { ...c, ...overrides };
 }
@@ -64,8 +66,8 @@ export function computeTierList(
   const raw = rarities.length > 0
     ? allCreatures.filter(c => rarities.includes(c.rarity))
     : allCreatures;
-  // Omega creatures use even point distribution so their stats are comparable to other rarities
-  const pool = raw.map(c => c.rarity === 'omega' ? withEvenOmegaPoints(c) : c);
+  // Omega creatures use 60% of base→cap upgrade range for fair comparison
+  const pool = raw.map(c => c.rarity === 'omega' ? withOmegaStats(c) : c);
 
   const beats   = new Map<string, Set<string>>();
   const losesTo = new Map<string, Set<string>>();
