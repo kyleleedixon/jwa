@@ -35,15 +35,16 @@ for (const group of RARITY_GROUPS) {
     level: LEVEL,
     computedAt: new Date().toISOString(),
     durationMs: t.durationMs,
-    entries: t.entries.slice(0, 25).map(e => ({
+    entries: t.entries.slice(0, 25).map((e, rank) => ({
       uuid:    e.creature.uuid,
       name:    e.creature.name,
       rarity:  e.creature.rarity,
-      tier:    e.tier,
+      tier:    rank < 5 ? 'S' : rank < 12 ? 'A' : rank < 19 ? 'B' : 'C',
       winRate: Math.round(e.winRate * 1000) / 1000,
       wins:    e.wins,
       losses:  e.losses,
       draws:   e.draws,
+      poolSize: t.pool.length,
       beats:   e.beats,
       losesTo: e.losesTo,
     })),
