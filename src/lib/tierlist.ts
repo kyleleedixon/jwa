@@ -36,6 +36,24 @@ function assignTier(winRate: number): Tier {
   return 'D';
 }
 
+const OMEGA_STATS = ['health', 'damage', 'speed', 'armor', 'crit', 'critm'] as const;
+type OmegaStat = typeof OMEGA_STATS[number];
+
+// Return a shallow-cloned creature with omega points distributed evenly across stats
+function withEvenOmegaPoints(c: Creature): Creature {
+  if (!c.points) return c;
+  const { delta, pcap } = c.points;
+  const active = OMEGA_STATS.filter(s => (pcap[s] ?? 0) > 0);
+  const totalPcap = active.reduce((sum, s) => sum + (pcap[s] ?? 0), 0);
+  const evenShare = Math.floor(totalPcap / active.length);
+  const overrides: Partial<Record<OmegaStat, number>> = {};
+  for (const s of active) {
+    const pts = Math.min(evenShare, pcap[s] ?? 0);
+    overrides[s] = (c[s] as number) + pts * (delta[s] ?? 0);
+  }
+  return { ...c, ...overrides };
+}
+
 export function computeTierList(
   allCreatures: Creature[],
   rarities: string[],
@@ -43,9 +61,11 @@ export function computeTierList(
 ): TierListResult {
   const t0 = performance.now();
   const config: BattleConfig = { levelA: level, levelB: level };
-  const pool = rarities.length > 0
+  const raw = rarities.length > 0
     ? allCreatures.filter(c => rarities.includes(c.rarity))
     : allCreatures;
+  // Omega creatures use even point distribution so their stats are comparable to other rarities
+  const pool = raw.map(c => c.rarity === 'omega' ? withEvenOmegaPoints(c) : c);
 
   const beats   = new Map<string, Set<string>>();
   const losesTo = new Map<string, Set<string>>();
