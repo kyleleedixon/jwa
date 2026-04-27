@@ -218,16 +218,16 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             <a
-              href="/companion"
+              href="/tier-list"
               className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-sm font-medium"
-              aria-label="Tournament Companion"
+              aria-label="Tier List"
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                <path d="M2 17l10 5 10-5"/>
-                <path d="M2 12l10 5 10-5"/>
+                <path d="M18 20V10"/>
+                <path d="M12 20V4"/>
+                <path d="M6 20v-6"/>
               </svg>
-              <span className="hidden md:inline">Companion</span>
+              <span className="hidden md:inline">Tier List</span>
             </a>
             <a
               href="/tournament"
