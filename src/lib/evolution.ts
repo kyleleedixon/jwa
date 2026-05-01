@@ -118,8 +118,8 @@ export interface MaxLevelResult {
 }
 
 // Given available resources, find the highest level reachable from `fromLevel`.
-// For hybrids, pass ingredientRarities + availableIngDna; ownDna is derived from fusing.
-// For non-hybrids, pass availableOwnDna; ingredientRarities/availableIngDna are empty.
+// Cumulative cost is computed from fromLevel each step to match evolutionCost exactly
+// (avoids ceil-per-level vs ceil-of-total mismatch for hybrid fuse counts).
 export function maxLevelWithResources(
   rarity: string,
   fromLevel: number,
@@ -129,45 +129,40 @@ export function maxLevelWithResources(
   availableIngDna: number[],
   dnaPerFuse = 22,
 ): MaxLevelResult {
-  const coinTable     = LEVEL_COINS[rarity] ?? LEVEL_COINS.common;
-  const dnaTable      = LEVEL_DNA[rarity]   ?? LEVEL_DNA.common;
-  const offset        = rarity === 'omega' ? 1 : 0;
   const isHybrid      = ingredientRarities.some(Boolean);
   const ratios        = FUSE_DNA_RATIO[rarity] ?? {};
   const fuseCoinsEach = isHybrid ? (FUSE_COINS[rarity] ?? 0) : 0;
 
-  let coins  = availableCoins;
-  let ownDna = availableOwnDna;
-  const ingDna = [...availableIngDna];
   let level = fromLevel;
 
   while (level < 35) {
-    const idx          = level - 1 + offset;
-    const levelCoins   = coinTable[idx] ?? 0;
-    const ownDnaNeeded = dnaTable[idx] ?? 0;
-    let   totalCoins   = levelCoins;
-    const ingDnaNeeded = ingredientRarities.map(() => 0);
+    const target    = level + 1;
+    const totalDna  = dnaToLevel(rarity, fromLevel, target);
+    const coinsCost = coinsToLevel(rarity, fromLevel, target)
+      + (isHybrid && totalDna > 0 ? Math.ceil(totalDna / dnaPerFuse) * fuseCoinsEach : 0);
+    const ingNeeded = ingredientRarities.map(r =>
+      isHybrid && totalDna > 0 ? (ratios[r] ?? 0) * Math.ceil(totalDna / dnaPerFuse) : 0
+    );
 
-    if (isHybrid && ownDnaNeeded > 0) {
-      const fuses = Math.ceil(ownDnaNeeded / dnaPerFuse);
-      totalCoins += fuses * fuseCoinsEach;
-      for (let i = 0; i < ingredientRarities.length; i++) {
-        ingDnaNeeded[i] = (ratios[ingredientRarities[i]] ?? 0) * fuses;
-      }
-    }
+    if (availableCoins < coinsCost) break;
+    if (!isHybrid && availableOwnDna < totalDna) break;
+    if (isHybrid && availableIngDna.some((avail, i) => avail < ingNeeded[i])) break;
 
-    if (coins < totalCoins) break;
-    if (!isHybrid && ownDna < ownDnaNeeded) break;
-    if (isHybrid && ingDna.some((avail, i) => avail < ingDnaNeeded[i])) break;
-
-    coins -= totalCoins;
-    if (!isHybrid) {
-      ownDna -= ownDnaNeeded;
-    } else {
-      for (let i = 0; i < ingDna.length; i++) ingDna[i] -= ingDnaNeeded[i];
-    }
     level++;
   }
 
-  return { maxLevel: level, remainingCoins: coins, remainingDna: ownDna, remainingIngDna: ingDna };
+  // Remaining resources at the reached level
+  const usedDna   = dnaToLevel(rarity, fromLevel, level);
+  const usedFuses = isHybrid && usedDna > 0 ? Math.ceil(usedDna / dnaPerFuse) : 0;
+  const usedCoins = coinsToLevel(rarity, fromLevel, level) + usedFuses * fuseCoinsEach;
+  const remIngDna = availableIngDna.map((avail, i) =>
+    avail - (ratios[ingredientRarities[i]] ?? 0) * usedFuses
+  );
+
+  return {
+    maxLevel: level,
+    remainingCoins: availableCoins - usedCoins,
+    remainingDna: isHybrid ? 0 : availableOwnDna - usedDna,
+    remainingIngDna: remIngDna,
+  };
 }
