@@ -115,6 +115,20 @@ function parseMoves(moveArray, moveType, moveNames) {
         ...(e.multiplier != null && { multiplier: e.multiplier }),
         ...(e.duration != null && { duration: e.duration }),
       })),
+      ...(mv.if_alert && {
+        if_alert: {
+          threshold: mv.if_alert.threshold,
+          priority: mv.if_alert.priority,
+          delay: mv.if_alert.delay,
+          cooldown: mv.if_alert.cooldown,
+          effects: (mv.if_alert.effects || []).map(e => ({
+            action: e.action,
+            target: e.target,
+            ...(e.multiplier != null && { multiplier: e.multiplier }),
+            ...(e.duration != null && { duration: e.duration }),
+          })),
+        },
+      }),
     };
   });
 }
@@ -168,6 +182,7 @@ async function fetchCreature(slug, moveNames) {
         image: `https://cdn.paleo.gg/games/jwa/images/creature/${d.uuid}.png`,
         moves,
         resistance: d.resistance || [],
+        ...(d.flock > 1 && { flock: d.flock }),
         ...(d.move_unlock_lv && Object.keys(d.move_unlock_lv).length > 0 && { move_unlock_lv: d.move_unlock_lv }),
         ...(d.points && { points: d.points }),
       };

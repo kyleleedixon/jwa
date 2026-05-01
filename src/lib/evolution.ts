@@ -109,3 +109,65 @@ export function evolutionCost(
     ingredients,
   };
 }
+
+export interface MaxLevelResult {
+  maxLevel: number;
+  remainingCoins: number;
+  remainingDna: number;
+  remainingIngDna: number[];
+}
+
+// Given available resources, find the highest level reachable from `fromLevel`.
+// For hybrids, pass ingredientRarities + availableIngDna; ownDna is derived from fusing.
+// For non-hybrids, pass availableOwnDna; ingredientRarities/availableIngDna are empty.
+export function maxLevelWithResources(
+  rarity: string,
+  fromLevel: number,
+  availableCoins: number,
+  availableOwnDna: number,
+  ingredientRarities: string[],
+  availableIngDna: number[],
+  dnaPerFuse = 22,
+): MaxLevelResult {
+  const coinTable     = LEVEL_COINS[rarity] ?? LEVEL_COINS.common;
+  const dnaTable      = LEVEL_DNA[rarity]   ?? LEVEL_DNA.common;
+  const offset        = rarity === 'omega' ? 1 : 0;
+  const isHybrid      = ingredientRarities.some(Boolean);
+  const ratios        = FUSE_DNA_RATIO[rarity] ?? {};
+  const fuseCoinsEach = isHybrid ? (FUSE_COINS[rarity] ?? 0) : 0;
+
+  let coins  = availableCoins;
+  let ownDna = availableOwnDna;
+  const ingDna = [...availableIngDna];
+  let level = fromLevel;
+
+  while (level < 35) {
+    const idx          = level - 1 + offset;
+    const levelCoins   = coinTable[idx] ?? 0;
+    const ownDnaNeeded = dnaTable[idx] ?? 0;
+    let   totalCoins   = levelCoins;
+    const ingDnaNeeded = ingredientRarities.map(() => 0);
+
+    if (isHybrid && ownDnaNeeded > 0) {
+      const fuses = Math.ceil(ownDnaNeeded / dnaPerFuse);
+      totalCoins += fuses * fuseCoinsEach;
+      for (let i = 0; i < ingredientRarities.length; i++) {
+        ingDnaNeeded[i] = (ratios[ingredientRarities[i]] ?? 0) * fuses;
+      }
+    }
+
+    if (coins < totalCoins) break;
+    if (!isHybrid && ownDna < ownDnaNeeded) break;
+    if (isHybrid && ingDna.some((avail, i) => avail < ingDnaNeeded[i])) break;
+
+    coins -= totalCoins;
+    if (!isHybrid) {
+      ownDna -= ownDnaNeeded;
+    } else {
+      for (let i = 0; i < ingDna.length; i++) ingDna[i] -= ingDnaNeeded[i];
+    }
+    level++;
+  }
+
+  return { maxLevel: level, remainingCoins: coins, remainingDna: ownDna, remainingIngDna: ingDna };
+}

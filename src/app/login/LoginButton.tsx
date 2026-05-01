@@ -8,7 +8,7 @@ export default function LoginButton() {
 
   return (
     <button
-      onClick={() => { setLoading(true); signIn('discord', { callbackUrl: '/' }); }}
+      onClick={() => { setLoading(true); signIn('discord', { callbackUrl: window.location.origin }); }}
       disabled={loading}
       className="w-full flex items-center justify-center gap-3 bg-[#5865F2] hover:bg-[#4752C4] disabled:opacity-70 disabled:cursor-not-allowed transition-colors text-white font-semibold rounded-xl px-4 py-3 text-sm"
     >
