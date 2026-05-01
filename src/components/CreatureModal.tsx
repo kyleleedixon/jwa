@@ -299,15 +299,15 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
     const safeCoins  = isNaN(coins)  ? 0 : coins;
     const safeOwnDna = isNaN(ownDna) ? 0 : ownDna;
     if (!isHybrid) {
-      const r = maxLevelWithResources(creature.rarity, evoFrom, safeCoins, safeOwnDna, [], []);
+      const r = maxLevelWithResources(creature.rarity, fromLevel, safeCoins, safeOwnDna, [], []);
       return { best: r, avg: r, worst: r };
     }
     return {
-      best:  maxLevelWithResources(creature.rarity, evoFrom, safeCoins, 0, allIngRarities, ingArr, 50),
-      avg:   maxLevelWithResources(creature.rarity, evoFrom, safeCoins, 0, allIngRarities, ingArr, 22),
-      worst: maxLevelWithResources(creature.rarity, evoFrom, safeCoins, 0, allIngRarities, ingArr, 10),
+      best:  maxLevelWithResources(creature.rarity, fromLevel, safeCoins, 0, allIngRarities, ingArr, 50),
+      avg:   maxLevelWithResources(creature.rarity, fromLevel, safeCoins, 0, allIngRarities, ingArr, 22),
+      worst: maxLevelWithResources(creature.rarity, fromLevel, safeCoins, 0, allIngRarities, ingArr, 10),
     };
-  }, [calcCoins, calcDna, calcIngDna, creature.rarity, evoFrom, isHybrid]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [calcCoins, calcDna, calcIngDna, creature.rarity, fromLevel, isHybrid]); // eslint-disable-line react-hooks/exhaustive-deps
   const evoCostAvg   = evolutionCost(creature.rarity, evoFrom, level, ingRarities, 22);
   const evoCostBest  = evolutionCost(creature.rarity, evoFrom, level, ingRarities, 50);
   const evoCostWorst = evolutionCost(creature.rarity, evoFrom, level, ingRarities, 10);
@@ -578,7 +578,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
           <div className="flex items-baseline gap-2 mb-3">
             <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Max Level Calculator</h3>
             <span className="text-[10px] text-gray-500">
-              starting from <span className="text-blue-400 font-semibold">Lv {evoFrom}</span> — matches the <span className="text-gray-300">From</span> dropdown above
+              starting from <span className="text-blue-400 font-semibold">Lv {fromLevel}</span> — matches the <span className="text-gray-300">From</span> dropdown above
             </span>
           </div>
           <div className="flex flex-col gap-2">
@@ -636,7 +636,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                 <div className="mt-1 flex flex-col gap-1 text-xs">
                   {isHybrid && (
                     <div className="flex items-center gap-2 text-[10px] text-gray-500 uppercase tracking-wider pb-1">
-                      <span className="flex-1">Max level from Lv {evoFrom}</span>
+                      <span className="flex-1">Max level from Lv {fromLevel}</span>
                       <span className="w-20 text-right text-green-400">Best (50)</span>
                       <span className="w-20 text-right text-blue-300">Avg (22)</span>
                       <span className="w-20 text-right text-red-400">Worst (10)</span>
@@ -653,7 +653,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                     ) : (
                       <span className="text-green-300 font-semibold tabular-nums">
                         {calcResults.avg.maxLevel}
-                        <span className="text-xs font-normal text-gray-500 ml-1">(+{calcResults.avg.maxLevel - evoFrom} from Lv {evoFrom})</span>
+                        <span className="text-xs font-normal text-gray-500 ml-1">(+{calcResults.avg.maxLevel - fromLevel} from Lv {fromLevel})</span>
                       </span>
                     )}
                   </div>
