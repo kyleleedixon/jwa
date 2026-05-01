@@ -289,18 +289,23 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
   const allIngRarities = creature.ingredients.map(uuid => creatureByUuid.get(uuid)?.rarity ?? '');
   const isHybrid = creature.ingredients.length > 0;
 
-  const calcResult = useMemo(() => {
-    const coins  = parseInt(calcCoins,  10);
-    const ownDna = parseInt(calcDna,    10);
+  const calcResults = useMemo(() => {
+    const coins  = parseInt(calcCoins, 10);
+    const ownDna = parseInt(calcDna,   10);
     const ingArr = calcIngDna.map(s => parseInt(s, 10) || 0);
     if (!calcCoins && !calcDna && calcIngDna.every(s => !s)) return null;
-    return maxLevelWithResources(
-      creature.rarity, level,
-      isNaN(coins)  ? 0 : coins,
-      isNaN(ownDna) ? 0 : ownDna,
-      allIngRarities, ingArr,
-    );
-  }, [calcCoins, calcDna, calcIngDna, creature.rarity, creature.ingredients, level]); // eslint-disable-line react-hooks/exhaustive-deps
+    const safeCoins  = isNaN(coins)  ? 0 : coins;
+    const safeOwnDna = isNaN(ownDna) ? 0 : ownDna;
+    if (!isHybrid) {
+      const r = maxLevelWithResources(creature.rarity, level, safeCoins, safeOwnDna, [], []);
+      return { best: r, avg: r, worst: r };
+    }
+    return {
+      best:  maxLevelWithResources(creature.rarity, level, safeCoins, 0, allIngRarities, ingArr, 50),
+      avg:   maxLevelWithResources(creature.rarity, level, safeCoins, 0, allIngRarities, ingArr, 22),
+      worst: maxLevelWithResources(creature.rarity, level, safeCoins, 0, allIngRarities, ingArr, 10),
+    };
+  }, [calcCoins, calcDna, calcIngDna, creature.rarity, level, isHybrid]); // eslint-disable-line react-hooks/exhaustive-deps
   const evoFrom = Math.min(fromLevel, level - 1);
   const evoCostAvg   = evolutionCost(creature.rarity, evoFrom, level, ingRarities, 22);
   const evoCostBest  = evolutionCost(creature.rarity, evoFrom, level, ingRarities, 50);
@@ -623,24 +628,61 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                 })}
               </div>
             )}
-            {calcResult && (
-              calcResult.maxLevel > level ? (
-                <div className="mt-1 rounded-lg p-3 bg-green-500/10 border border-green-500/30">
-                  <div className="text-sm font-bold text-green-300">
-                    Max level: {calcResult.maxLevel}
-                    <span className="text-xs font-normal text-green-400/70 ml-2">
-                      (+{calcResult.maxLevel - level} {calcResult.maxLevel - level === 1 ? 'level' : 'levels'} from current)
-                    </span>
+            {calcResults && (
+              calcResults.avg.maxLevel > level ? (
+                <div className="mt-1 flex flex-col gap-1 text-xs">
+                  {isHybrid && (
+                    <div className="flex items-center gap-2 text-[10px] text-gray-500 uppercase tracking-wider pb-1">
+                      <span className="flex-1">Max level</span>
+                      <span className="w-20 text-right text-green-400">Best (50)</span>
+                      <span className="w-20 text-right text-blue-300">Avg (22)</span>
+                      <span className="w-20 text-right text-red-400">Worst (10)</span>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2">
+                    <span className="flex-1 text-gray-400">Level</span>
+                    {isHybrid ? (
+                      <>
+                        <span className="w-20 text-right text-green-400 font-semibold tabular-nums">{calcResults.best.maxLevel}</span>
+                        <span className="w-20 text-right text-blue-300 font-semibold tabular-nums">{calcResults.avg.maxLevel}</span>
+                        <span className="w-20 text-right text-red-400 font-semibold tabular-nums">{calcResults.worst.maxLevel}</span>
+                      </>
+                    ) : (
+                      <span className="text-green-300 font-semibold tabular-nums">
+                        {calcResults.avg.maxLevel}
+                        <span className="text-xs font-normal text-gray-500 ml-1">(+{calcResults.avg.maxLevel - level})</span>
+                      </span>
+                    )}
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">
-                    Remaining: {calcResult.remainingCoins.toLocaleString()} coins
-                    {!isHybrid && ` · ${calcResult.remainingDna.toLocaleString()} DNA`}
-                    {isHybrid && creature.ingredients.map((uuid, i) => {
-                      const ing = creatureByUuid.get(uuid);
-                      const rem = calcResult.remainingIngDna[i] ?? 0;
-                      return rem > 0 ? ` · ${rem.toLocaleString()} ${ing?.name ?? 'ing'} DNA` : null;
-                    })}
+                  <div className="flex items-center gap-2">
+                    <span className="flex-1 text-gray-400">Coins left</span>
+                    {isHybrid ? (
+                      <>
+                        <span className="w-20 text-right text-yellow-300 tabular-nums">{calcResults.best.remainingCoins.toLocaleString()}</span>
+                        <span className="w-20 text-right text-yellow-300 tabular-nums">{calcResults.avg.remainingCoins.toLocaleString()}</span>
+                        <span className="w-20 text-right text-yellow-300 tabular-nums">{calcResults.worst.remainingCoins.toLocaleString()}</span>
+                      </>
+                    ) : (
+                      <span className="text-yellow-300 tabular-nums">{calcResults.avg.remainingCoins.toLocaleString()}</span>
+                    )}
                   </div>
+                  {!isHybrid && (
+                    <div className="flex items-center gap-2">
+                      <span className="flex-1 text-gray-400">DNA left</span>
+                      <span className="text-blue-300 tabular-nums">{calcResults.avg.remainingDna.toLocaleString()}</span>
+                    </div>
+                  )}
+                  {isHybrid && creature.ingredients.map((uuid, i) => {
+                    const ing = creatureByUuid.get(uuid);
+                    return (
+                      <div key={uuid} className="flex items-center gap-2">
+                        <span className="flex-1 text-gray-400 truncate">{ing?.name ?? uuid} left</span>
+                        <span className="w-20 text-right text-blue-300 tabular-nums">{(calcResults.best.remainingIngDna[i] ?? 0).toLocaleString()}</span>
+                        <span className="w-20 text-right text-blue-300 tabular-nums">{(calcResults.avg.remainingIngDna[i] ?? 0).toLocaleString()}</span>
+                        <span className="w-20 text-right text-blue-300 tabular-nums">{(calcResults.worst.remainingIngDna[i] ?? 0).toLocaleString()}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="mt-1 rounded-lg p-3 bg-slate-800/60 border border-slate-700 text-xs text-gray-400">
