@@ -632,7 +632,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
               </div>
             )}
             {calcResults && (
-              calcResults.avg.maxLevel > level ? (
+              calcResults.avg.maxLevel > fromLevel ? (
                 <div className="mt-1 flex flex-col gap-1 text-xs">
                   {isHybrid && (
                     <div className="flex items-center gap-2 text-[10px] text-gray-500 uppercase tracking-wider pb-1">
@@ -689,7 +689,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                 </div>
               ) : (
                 <div className="mt-1 rounded-lg p-3 bg-slate-800/60 border border-slate-700 text-xs text-gray-400">
-                  Not enough resources to level up from {level}.
+                  Not enough resources to level up from {fromLevel}.
                 </div>
               )
             )}
