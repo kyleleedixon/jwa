@@ -16,7 +16,7 @@ function statAtLevel(base: number, level: number): number {
 }
 
 import { RESISTANCE_KEYS, RESISTANCE_LABELS, SPAWN_LABELS, label as labelFn } from '@/lib/labels';
-import { evolutionCost, RARITY_LEVEL_RANGE } from '@/lib/evolution';
+import { evolutionCost, maxLevelWithResources, RARITY_LEVEL_RANGE } from '@/lib/evolution';
 import { readShareFromURL, writeShareToURL } from '@/lib/share';
 
 interface Props {
@@ -140,6 +140,9 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
   const [boosts, setBoosts] = useState<Record<BoostStat, number>>({ health: 0, damage: 0, speed: 0 });
   const [enhancementLevel, setEnhancementLevel] = useState(0);
   const [copied, setCopied] = useState(false);
+  const [calcCoins, setCalcCoins] = useState('');
+  const [calcDna, setCalcDna] = useState('');
+  const [calcIngDna, setCalcIngDna] = useState<string[]>(() => creature.ingredients.map(() => ''));
 
   // Reset when creature changes, restoring share state if URL matches
   useEffect(() => {
@@ -156,6 +159,9 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
       setEnhancementLevel(0);
     }
     setFromLevel(minLevel);
+    setCalcCoins('');
+    setCalcDna('');
+    setCalcIngDna(creature.ingredients.map(() => ''));
   }, [creature.uuid]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleShare = useCallback(() => {
@@ -280,6 +286,21 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
   }
 
   const ingRarities = creature.ingredients.map(uuid => creatureByUuid.get(uuid)?.rarity ?? '').filter(Boolean);
+  const allIngRarities = creature.ingredients.map(uuid => creatureByUuid.get(uuid)?.rarity ?? '');
+  const isHybrid = creature.ingredients.length > 0;
+
+  const calcResult = useMemo(() => {
+    const coins  = parseInt(calcCoins,  10);
+    const ownDna = parseInt(calcDna,    10);
+    const ingArr = calcIngDna.map(s => parseInt(s, 10) || 0);
+    if (!calcCoins && !calcDna && calcIngDna.every(s => !s)) return null;
+    return maxLevelWithResources(
+      creature.rarity, level,
+      isNaN(coins)  ? 0 : coins,
+      isNaN(ownDna) ? 0 : ownDna,
+      allIngRarities, ingArr,
+    );
+  }, [calcCoins, calcDna, calcIngDna, creature.rarity, creature.ingredients, level]); // eslint-disable-line react-hooks/exhaustive-deps
   const evoFrom = Math.min(fromLevel, level - 1);
   const evoCostAvg   = evolutionCost(creature.rarity, evoFrom, level, ingRarities, 22);
   const evoCostBest  = evolutionCost(creature.rarity, evoFrom, level, ingRarities, 50);
@@ -545,6 +566,90 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
             </div>
           </div>
         )}
+
+        {/* max level calculator */}
+        <div className="px-5 py-4 border-b border-slate-700/60">
+          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+            Max Level Calculator
+            <span className="ml-2 text-gray-600 normal-case font-normal">— enter resources on hand</span>
+          </h3>
+          <div className="flex flex-col gap-2">
+            <div className={`grid gap-2 ${isHybrid ? 'grid-cols-1' : 'grid-cols-2'}`}>
+              <div>
+                <label className="text-[10px] text-gray-500 uppercase tracking-wider block mb-1">Coins</label>
+                <input
+                  type="text" inputMode="numeric"
+                  value={calcCoins}
+                  onChange={e => setCalcCoins(e.target.value.replace(/\D/g, ''))}
+                  placeholder="0"
+                  className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-1.5 text-sm text-yellow-200 placeholder-gray-600 focus:outline-none focus:border-yellow-500 transition-colors"
+                />
+              </div>
+              {!isHybrid && (
+                <div>
+                  <label className="text-[10px] text-gray-500 uppercase tracking-wider block mb-1">DNA</label>
+                  <input
+                    type="text" inputMode="numeric"
+                    value={calcDna}
+                    onChange={e => setCalcDna(e.target.value.replace(/\D/g, ''))}
+                    placeholder="0"
+                    className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-1.5 text-sm text-blue-200 placeholder-gray-600 focus:outline-none focus:border-blue-500 transition-colors"
+                  />
+                </div>
+              )}
+            </div>
+            {isHybrid && (
+              <div className="grid grid-cols-2 gap-2">
+                {creature.ingredients.map((uuid, i) => {
+                  const ing = creatureByUuid.get(uuid);
+                  return (
+                    <div key={uuid}>
+                      <label className="text-[10px] text-gray-500 uppercase tracking-wider block mb-1 truncate">
+                        {ing?.name ?? uuid} DNA
+                      </label>
+                      <input
+                        type="text" inputMode="numeric"
+                        value={calcIngDna[i] ?? ''}
+                        onChange={e => setCalcIngDna(prev => {
+                          const next = [...prev];
+                          next[i] = e.target.value.replace(/\D/g, '');
+                          return next;
+                        })}
+                        placeholder="0"
+                        className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-1.5 text-sm text-blue-200 placeholder-gray-600 focus:outline-none focus:border-blue-500 transition-colors"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            {calcResult && (
+              calcResult.maxLevel > level ? (
+                <div className="mt-1 rounded-lg p-3 bg-green-500/10 border border-green-500/30">
+                  <div className="text-sm font-bold text-green-300">
+                    Max level: {calcResult.maxLevel}
+                    <span className="text-xs font-normal text-green-400/70 ml-2">
+                      (+{calcResult.maxLevel - level} {calcResult.maxLevel - level === 1 ? 'level' : 'levels'} from current)
+                    </span>
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    Remaining: {calcResult.remainingCoins.toLocaleString()} coins
+                    {!isHybrid && ` · ${calcResult.remainingDna.toLocaleString()} DNA`}
+                    {isHybrid && creature.ingredients.map((uuid, i) => {
+                      const ing = creatureByUuid.get(uuid);
+                      const rem = calcResult.remainingIngDna[i] ?? 0;
+                      return rem > 0 ? ` · ${rem.toLocaleString()} ${ing?.name ?? 'ing'} DNA` : null;
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <div className="mt-1 rounded-lg p-3 bg-slate-800/60 border border-slate-700 text-xs text-gray-400">
+                  Not enough resources to level up from {level}.
+                </div>
+              )
+            )}
+          </div>
+        </div>
 
         {/* boosts allocator */}
         <div className="px-5 py-4 border-b border-slate-700/60">
