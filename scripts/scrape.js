@@ -296,7 +296,8 @@ async function main() {
   console.log(`  Saved to ${outPath}`);
 
   const metaPath = path.join(__dirname, '../src/data/meta.json');
-  fs.writeFileSync(metaPath, JSON.stringify({ lastModifiedDate }, null, 2));
+  const existingMeta = JSON.parse(fs.readFileSync(metaPath, 'utf8') || '{}');
+  fs.writeFileSync(metaPath, JSON.stringify({ ...existingMeta, lastModifiedDate }, null, 2));
   console.log(`  Saved meta to ${metaPath}`);
 }
 
