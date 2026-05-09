@@ -297,6 +297,20 @@ async function main() {
     console.log('  Changelog: skipped (no existing data to diff against).');
   }
 
+  // Preserve fields not scraped from paleo.gg (e.g. enhancements)
+  try {
+    const oldData = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+    const oldMap = new Map(oldData.map(c => [c.uuid, c]));
+    const PRESERVE = ['enhancements'];
+    for (const c of results) {
+      const old = oldMap.get(c.uuid);
+      if (!old) continue;
+      for (const key of PRESERVE) {
+        if (old[key] && !c[key]) c[key] = old[key];
+      }
+    }
+  } catch { /* first run, nothing to preserve */ }
+
   fs.writeFileSync(outPath, JSON.stringify(results, null, 2));
   console.log(`  Saved to ${outPath}`);
 
