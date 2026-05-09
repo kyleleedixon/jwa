@@ -38,6 +38,8 @@ export interface ActiveEffect {
 export interface Fighter {
   id: 'A' | 'B';
   creature: Creature;
+  level: number;
+  unlockedMoves: Set<string>; // uuids of moves available at this level
   hp: number;
   maxHp: number;
   baseDamage: number;
@@ -110,16 +112,24 @@ export function initFighter(
     }
   }
 
+  // Moves unlocked at this level (respects move_unlock_lv for omegas)
+  const unlockMap = creature.move_unlock_lv ?? {};
+  const unlockedMoves = new Set(
+    creature.moves
+      .filter(m => (unlockMap[m.uuid] ?? 0) <= level)
+      .map(m => m.uuid)
+  );
+
   const flockCount = creature.flock ?? 1;
   const memberMaxHp = flockCount > 1 ? Math.floor(hp / flockCount) : hp;
   const memberHp = Array.from({ length: flockCount }, () => memberMaxHp);
   const totalHp = memberHp.reduce((s, v) => s + v, 0);
 
   const delayLeft: Record<string, number> = {};
-  creature.moves.filter(m => m.type === 'regular' && m.delay > 0)
+  creature.moves.filter(m => m.type === 'regular' && m.delay > 0 && unlockedMoves.has(m.uuid))
     .forEach(m => { delayLeft[m.uuid] = m.delay; });
 
-  return { id, creature, hp: totalHp, maxHp: totalHp, baseDamage: dmg, baseSpeed: spd, armor, crit, critm, effects: [], cooldowns: {}, delayLeft, stunTurns: 0, memberHp, memberMaxHp };
+  return { id, creature, level, unlockedMoves, hp: totalHp, maxHp: totalHp, baseDamage: dmg, baseSpeed: spd, armor, crit, critm, effects: [], cooldowns: {}, delayLeft, stunTurns: 0, memberHp, memberMaxHp };
 }
 
 // ─── Effect helpers ───────────────────────────────────────────────────────────
@@ -234,6 +244,7 @@ function applyMemberDamage(defender: Fighter, rawDmg: number): { applied: number
 export function regularMoves(f: Fighter): Move[] {
   return f.creature.moves.filter(m => {
     if (m.type !== 'regular') return false;
+    if (!f.unlockedMoves.has(m.uuid)) return false;
     if ((f.cooldowns[m.uuid] ?? 0) > 0) return false;
     if ((f.delayLeft[m.uuid] ?? 0) > 0) return false;
     return true;

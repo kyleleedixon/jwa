@@ -193,7 +193,11 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
           })() : config.creature && (
             /* Regular boosts for non-omegas */
             (() => {
-              const budget = config.level;
+              const boostMax = config.creature?.enhancements
+                ?.slice(0, config.enhancementLevel)
+                .filter(e => e.rwd.type === 'boost_max')
+                .reduce((s, e) => s + (e.rwd.value as number), 0) ?? 0;
+              const budget = config.level + boostMax;
               const total = config.boosts.health + config.boosts.damage + config.boosts.speed;
               const over = total > budget;
               return (
