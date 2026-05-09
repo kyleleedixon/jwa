@@ -207,6 +207,10 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
           <h1 className="font-bold text-base sm:text-lg text-white tracking-tight shrink-0">
             JWA <span className="text-blue-400">Dinodex</span>
           </h1>
+          <nav className="hidden sm:flex items-center gap-1 shrink-0">
+            <a href="/tier-list" className="px-2.5 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-slate-700 transition-colors">Tier List</a>
+            <a href="/battle" className="px-2.5 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-slate-700 transition-colors">Battle Sim</a>
+          </nav>
           <div className="flex-1 min-w-0">
             <input
               type="text"
