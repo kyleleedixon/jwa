@@ -24,6 +24,7 @@ interface Props {
   creatures: Creature[];
   onClose: () => void;
   onNavigate: (c: Creature) => void;
+  tierRank?: { rank: number; tier: string; winRate: number };
 }
 
 const MOVE_TYPE_LABELS: Record<string, string> = {
@@ -126,7 +127,7 @@ const BOOST_STATS: { key: BoostStat; label: string }[] = [
   { key: 'speed',  label: 'Speed'  },
 ];
 
-export default function CreatureModal({ creature, creatures, onClose, onNavigate }: Props) {
+export default function CreatureModal({ creature, creatures, onClose, onNavigate, tierRank }: Props) {
   const creatureByUuid = useMemo(() => new Map(creatures.map(c => [c.uuid, c])), [creatures]);
 
   const isOmega = creature.rarity === 'omega';
@@ -338,7 +339,20 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
             <Image src={creature.image} alt={creature.name} width={72} height={72} className="object-contain" unoptimized />
           </div>
           <div className="flex-1 min-w-0">
-            <h2 className="text-xl font-bold text-white leading-tight">{creature.name}</h2>
+            <div className="flex items-center gap-2 mb-0.5">
+              <h2 className="text-xl font-bold text-white leading-tight">{creature.name}</h2>
+              {tierRank && (
+                <span className={`text-xs font-bold px-2 py-0.5 rounded border shrink-0 ${
+                  tierRank.tier === 'S' ? 'bg-red-500/30 text-red-200 border-red-400/50' :
+                  tierRank.tier === 'A' ? 'bg-orange-500/30 text-orange-200 border-orange-400/50' :
+                  tierRank.tier === 'B' ? 'bg-yellow-500/30 text-yellow-200 border-yellow-400/50' :
+                  tierRank.tier === 'C' ? 'bg-blue-500/30 text-blue-200 border-blue-400/50' :
+                  'bg-slate-500/30 text-slate-300 border-slate-400/50'
+                }`}>
+                  {tierRank.tier} #{tierRank.rank} · {Math.round(tierRank.winRate * 100)}%
+                </span>
+              )}
+            </div>
             <div className="flex flex-wrap gap-2 mt-1">
               <span className={`text-xs font-medium px-2 py-0.5 rounded border ${rarityColor} ${rarityBg}`}>
                 {label(RARITY_LABELS, creature.rarity)}

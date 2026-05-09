@@ -44,16 +44,33 @@ const pool = creatures.map(c =>
 process.stdout.write(`  Computing tier list (${pool.length} creatures, omegas auto-allocated)…`);
 const t = computeTierList(pool, [], LEVEL);
 
+const top25 = t.entries.slice(0, 25);
+
+// Rank-based tiers for top 25 display
+function rankTier(rank: number): string {
+  return rank < 5 ? 'S' : rank < 12 ? 'A' : rank < 19 ? 'B' : 'C';
+}
+
+// Win-rate threshold tiers for full pool
+function winRateTier(winRate: number): string {
+  if (winRate >= 0.70) return 'S';
+  if (winRate >= 0.55) return 'A';
+  if (winRate >= 0.40) return 'B';
+  if (winRate >= 0.25) return 'C';
+  return 'D';
+}
+
 const result = {
   level: LEVEL,
   computedAt: new Date().toISOString(),
   durationMs: t.durationMs,
-  entries: t.entries.slice(0, 25).map((e, rank) => ({
+  // Full details for top 25 (used by tier list page)
+  entries: top25.map((e, rank) => ({
     uuid:     e.creature.uuid,
     name:     e.creature.name,
     rarity:   e.creature.rarity,
     image:    e.creature.image,
-    tier:     rank < 5 ? 'S' : rank < 12 ? 'A' : rank < 19 ? 'B' : 'C',
+    tier:     rankTier(rank),
     winRate:  Math.round(e.winRate * 1000) / 1000,
     wins:     e.wins,
     losses:   e.losses,
@@ -61,6 +78,13 @@ const result = {
     poolSize: t.pool.length,
     beats:    e.beats,
     losesTo:  e.losesTo,
+  })),
+  // Rank + tier for every creature (used by Dinodex badges)
+  allRanks: t.entries.map((e, rank) => ({
+    uuid:    e.creature.uuid,
+    rank:    rank + 1,
+    tier:    rank < 25 ? rankTier(rank) : winRateTier(e.winRate),
+    winRate: Math.round(e.winRate * 1000) / 1000,
   })),
 };
 

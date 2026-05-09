@@ -20,7 +20,7 @@ interface Props {
   version: string;
   changelog: { date: string; version: string; changes: unknown[] }[];
   user: { name: string | null; image: string | null };
-  tierRanks: Record<string, { rank: number; tier: 'S' | 'A' | 'B' | 'C' | 'D' }>;
+  tierRanks: Record<string, { rank: number; tier: 'S' | 'A' | 'B' | 'C' | 'D'; winRate: number }>;
 }
 
 type Filters = Record<string, Set<string>>;
@@ -166,6 +166,7 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
           creatures={creatures}
           onClose={handleModalClose}
           onNavigate={setSelected}
+          tierRank={tierRanks[selected.uuid]}
         />
       )}
       {helpOpen && <HelpModal onClose={() => setHelpOpen(false)} />}

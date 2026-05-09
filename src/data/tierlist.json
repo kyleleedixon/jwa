@@ -1,7 +1,7 @@
 {
   "level": 26,
-  "computedAt": "2026-05-09T16:09:20.552Z",
-  "durationMs": 3016,
+  "computedAt": "2026-05-09T16:25:01.719Z",
+  "durationMs": 3183,
   "entries": [
     {
       "uuid": "mastodonsaurus",
@@ -12826,6 +12826,2996 @@
         "tyrannodactylus",
         "yuxisaurus"
       ]
+    }
+  ],
+  "allRanks": [
+    {
+      "uuid": "mastodonsaurus",
+      "rank": 1,
+      "tier": "S",
+      "winRate": 0.984
+    },
+    {
+      "uuid": "rajadorixis",
+      "rank": 2,
+      "tier": "S",
+      "winRate": 0.968
+    },
+    {
+      "uuid": "atromolistis",
+      "rank": 3,
+      "tier": "S",
+      "winRate": 0.964
+    },
+    {
+      "uuid": "clever_girl",
+      "rank": 4,
+      "tier": "S",
+      "winRate": 0.96
+    },
+    {
+      "uuid": "aquignathus",
+      "rank": 5,
+      "tier": "S",
+      "winRate": 0.956
+    },
+    {
+      "uuid": "ceranosaurus",
+      "rank": 6,
+      "tier": "A",
+      "winRate": 0.954
+    },
+    {
+      "uuid": "distortus_rex",
+      "rank": 7,
+      "tier": "A",
+      "winRate": 0.954
+    },
+    {
+      "uuid": "becklerizaurus",
+      "rank": 8,
+      "tier": "A",
+      "winRate": 0.952
+    },
+    {
+      "uuid": "titanotholus",
+      "rank": 9,
+      "tier": "A",
+      "winRate": 0.952
+    },
+    {
+      "uuid": "monolomoth",
+      "rank": 10,
+      "tier": "A",
+      "winRate": 0.95
+    },
+    {
+      "uuid": "centrolophus_lux",
+      "rank": 11,
+      "tier": "A",
+      "winRate": 0.942
+    },
+    {
+      "uuid": "plateorex",
+      "rank": 12,
+      "tier": "A",
+      "winRate": 0.94
+    },
+    {
+      "uuid": "stegosaurus_ungulatus",
+      "rank": 13,
+      "tier": "B",
+      "winRate": 0.94
+    },
+    {
+      "uuid": "becklejara",
+      "rank": 14,
+      "tier": "B",
+      "winRate": 0.936
+    },
+    {
+      "uuid": "atrocomaxima",
+      "rank": 15,
+      "tier": "B",
+      "winRate": 0.932
+    },
+    {
+      "uuid": "cerastegotops",
+      "rank": 16,
+      "tier": "B",
+      "winRate": 0.932
+    },
+    {
+      "uuid": "baryotor",
+      "rank": 17,
+      "tier": "B",
+      "winRate": 0.928
+    },
+    {
+      "uuid": "indochicyon",
+      "rank": 18,
+      "tier": "B",
+      "winRate": 0.922
+    },
+    {
+      "uuid": "eremocanis",
+      "rank": 19,
+      "tier": "B",
+      "winRate": 0.915
+    },
+    {
+      "uuid": "fukuiraptor",
+      "rank": 20,
+      "tier": "C",
+      "winRate": 0.915
+    },
+    {
+      "uuid": "leaellynasaura",
+      "rank": 21,
+      "tier": "C",
+      "winRate": 0.913
+    },
+    {
+      "uuid": "toro",
+      "rank": 22,
+      "tier": "C",
+      "winRate": 0.913
+    },
+    {
+      "uuid": "compsovenator",
+      "rank": 23,
+      "tier": "C",
+      "winRate": 0.911
+    },
+    {
+      "uuid": "geminideus",
+      "rank": 24,
+      "tier": "C",
+      "winRate": 0.909
+    },
+    {
+      "uuid": "little_eatie",
+      "rank": 25,
+      "tier": "C",
+      "winRate": 0.909
+    },
+    {
+      "uuid": "atrocimoloch",
+      "rank": 26,
+      "tier": "S",
+      "winRate": 0.907
+    },
+    {
+      "uuid": "glyptosavis",
+      "rank": 27,
+      "tier": "S",
+      "winRate": 0.905
+    },
+    {
+      "uuid": "nominrex",
+      "rank": 28,
+      "tier": "S",
+      "winRate": 0.901
+    },
+    {
+      "uuid": "megatyrannus",
+      "rank": 29,
+      "tier": "S",
+      "winRate": 0.897
+    },
+    {
+      "uuid": "indonemys",
+      "rank": 30,
+      "tier": "S",
+      "winRate": 0.895
+    },
+    {
+      "uuid": "protonodon",
+      "rank": 31,
+      "tier": "S",
+      "winRate": 0.895
+    },
+    {
+      "uuid": "carcharodontosaurus",
+      "rank": 32,
+      "tier": "S",
+      "winRate": 0.893
+    },
+    {
+      "uuid": "herranotor",
+      "rank": 33,
+      "tier": "S",
+      "winRate": 0.891
+    },
+    {
+      "uuid": "alankydactylus",
+      "rank": 34,
+      "tier": "S",
+      "winRate": 0.887
+    },
+    {
+      "uuid": "pyrorixis",
+      "rank": 35,
+      "tier": "S",
+      "winRate": 0.887
+    },
+    {
+      "uuid": "dakotacurus",
+      "rank": 36,
+      "tier": "S",
+      "winRate": 0.885
+    },
+    {
+      "uuid": "monkeyondactylus",
+      "rank": 37,
+      "tier": "S",
+      "winRate": 0.885
+    },
+    {
+      "uuid": "nomingia",
+      "rank": 38,
+      "tier": "S",
+      "winRate": 0.885
+    },
+    {
+      "uuid": "cryolophosaurus",
+      "rank": 39,
+      "tier": "S",
+      "winRate": 0.883
+    },
+    {
+      "uuid": "gigantspinosaurus",
+      "rank": 40,
+      "tier": "S",
+      "winRate": 0.881
+    },
+    {
+      "uuid": "mutadon",
+      "rank": 41,
+      "tier": "S",
+      "winRate": 0.879
+    },
+    {
+      "uuid": "tiger",
+      "rank": 42,
+      "tier": "S",
+      "winRate": 0.877
+    },
+    {
+      "uuid": "rativates",
+      "rank": 43,
+      "tier": "S",
+      "winRate": 0.875
+    },
+    {
+      "uuid": "yuxisaurus",
+      "rank": 44,
+      "tier": "S",
+      "winRate": 0.873
+    },
+    {
+      "uuid": "ichthyovenator",
+      "rank": 45,
+      "tier": "S",
+      "winRate": 0.871
+    },
+    {
+      "uuid": "junior",
+      "rank": 46,
+      "tier": "S",
+      "winRate": 0.871
+    },
+    {
+      "uuid": "geosternbergia",
+      "rank": 47,
+      "tier": "S",
+      "winRate": 0.861
+    },
+    {
+      "uuid": "apatoceratops",
+      "rank": 48,
+      "tier": "S",
+      "winRate": 0.857
+    },
+    {
+      "uuid": "blonde",
+      "rank": 49,
+      "tier": "S",
+      "winRate": 0.857
+    },
+    {
+      "uuid": "aquiraptor",
+      "rank": 50,
+      "tier": "S",
+      "winRate": 0.855
+    },
+    {
+      "uuid": "magnaraptor",
+      "rank": 51,
+      "tier": "S",
+      "winRate": 0.855
+    },
+    {
+      "uuid": "atrocodistis",
+      "rank": 52,
+      "tier": "S",
+      "winRate": 0.853
+    },
+    {
+      "uuid": "australotitan",
+      "rank": 53,
+      "tier": "S",
+      "winRate": 0.853
+    },
+    {
+      "uuid": "yutyrannus",
+      "rank": 54,
+      "tier": "S",
+      "winRate": 0.851
+    },
+    {
+      "uuid": "megalocevia",
+      "rank": 55,
+      "tier": "S",
+      "winRate": 0.849
+    },
+    {
+      "uuid": "plateopikasaurus",
+      "rank": 56,
+      "tier": "S",
+      "winRate": 0.849
+    },
+    {
+      "uuid": "fukuitops",
+      "rank": 57,
+      "tier": "S",
+      "winRate": 0.847
+    },
+    {
+      "uuid": "lambeosaurus",
+      "rank": 58,
+      "tier": "S",
+      "winRate": 0.845
+    },
+    {
+      "uuid": "aquilotae",
+      "rank": 59,
+      "tier": "S",
+      "winRate": 0.843
+    },
+    {
+      "uuid": "ankylos_lux",
+      "rank": 60,
+      "tier": "S",
+      "winRate": 0.841
+    },
+    {
+      "uuid": "aquicomilus",
+      "rank": 61,
+      "tier": "S",
+      "winRate": 0.841
+    },
+    {
+      "uuid": "rebirth_t_rex",
+      "rank": 62,
+      "tier": "S",
+      "winRate": 0.839
+    },
+    {
+      "uuid": "skoonametrodon",
+      "rank": 63,
+      "tier": "S",
+      "winRate": 0.839
+    },
+    {
+      "uuid": "alacranix",
+      "rank": 64,
+      "tier": "S",
+      "winRate": 0.837
+    },
+    {
+      "uuid": "pierce",
+      "rank": 65,
+      "tier": "S",
+      "winRate": 0.837
+    },
+    {
+      "uuid": "ovinnolophosaurus",
+      "rank": 66,
+      "tier": "S",
+      "winRate": 0.835
+    },
+    {
+      "uuid": "segnosaurus",
+      "rank": 67,
+      "tier": "S",
+      "winRate": 0.835
+    },
+    {
+      "uuid": "aquilosaurus",
+      "rank": 68,
+      "tier": "S",
+      "winRate": 0.831
+    },
+    {
+      "uuid": "ceratosaurus",
+      "rank": 69,
+      "tier": "S",
+      "winRate": 0.831
+    },
+    {
+      "uuid": "haast_maximus",
+      "rank": 70,
+      "tier": "S",
+      "winRate": 0.831
+    },
+    {
+      "uuid": "megamimus",
+      "rank": 71,
+      "tier": "S",
+      "winRate": 0.831
+    },
+    {
+      "uuid": "sah_panthera",
+      "rank": 72,
+      "tier": "S",
+      "winRate": 0.829
+    },
+    {
+      "uuid": "ampelorex",
+      "rank": 73,
+      "tier": "S",
+      "winRate": 0.823
+    },
+    {
+      "uuid": "rajadotholus",
+      "rank": 74,
+      "tier": "S",
+      "winRate": 0.821
+    },
+    {
+      "uuid": "rebirth_spinosaurus_gen_2",
+      "rank": 75,
+      "tier": "S",
+      "winRate": 0.821
+    },
+    {
+      "uuid": "concatoloch",
+      "rank": 76,
+      "tier": "S",
+      "winRate": 0.817
+    },
+    {
+      "uuid": "deinomimus",
+      "rank": 77,
+      "tier": "S",
+      "winRate": 0.815
+    },
+    {
+      "uuid": "ovylenken",
+      "rank": 78,
+      "tier": "S",
+      "winRate": 0.815
+    },
+    {
+      "uuid": "nyctopteryx",
+      "rank": 79,
+      "tier": "S",
+      "winRate": 0.813
+    },
+    {
+      "uuid": "big_eatie",
+      "rank": 80,
+      "tier": "S",
+      "winRate": 0.811
+    },
+    {
+      "uuid": "becklolyth",
+      "rank": 81,
+      "tier": "S",
+      "winRate": 0.809
+    },
+    {
+      "uuid": "sinraptor",
+      "rank": 82,
+      "tier": "S",
+      "winRate": 0.805
+    },
+    {
+      "uuid": "compsoraptor",
+      "rank": 83,
+      "tier": "S",
+      "winRate": 0.801
+    },
+    {
+      "uuid": "draco_intrepidus",
+      "rank": 84,
+      "tier": "S",
+      "winRate": 0.801
+    },
+    {
+      "uuid": "monkeydactyl",
+      "rank": 85,
+      "tier": "S",
+      "winRate": 0.801
+    },
+    {
+      "uuid": "tenontorex",
+      "rank": 86,
+      "tier": "S",
+      "winRate": 0.801
+    },
+    {
+      "uuid": "erythrosuchus",
+      "rank": 87,
+      "tier": "S",
+      "winRate": 0.797
+    },
+    {
+      "uuid": "gryganyth",
+      "rank": 88,
+      "tier": "S",
+      "winRate": 0.797
+    },
+    {
+      "uuid": "borealopelta",
+      "rank": 89,
+      "tier": "S",
+      "winRate": 0.795
+    },
+    {
+      "uuid": "saurophaganax",
+      "rank": 90,
+      "tier": "S",
+      "winRate": 0.795
+    },
+    {
+      "uuid": "vectispinus",
+      "rank": 91,
+      "tier": "S",
+      "winRate": 0.793
+    },
+    {
+      "uuid": "tyrannosaur_doe",
+      "rank": 92,
+      "tier": "S",
+      "winRate": 0.791
+    },
+    {
+      "uuid": "becklophosaurus",
+      "rank": 93,
+      "tier": "S",
+      "winRate": 0.787
+    },
+    {
+      "uuid": "shantunrax",
+      "rank": 94,
+      "tier": "S",
+      "winRate": 0.785
+    },
+    {
+      "uuid": "draco_lux",
+      "rank": 95,
+      "tier": "S",
+      "winRate": 0.783
+    },
+    {
+      "uuid": "estemmenosuchus",
+      "rank": 96,
+      "tier": "S",
+      "winRate": 0.781
+    },
+    {
+      "uuid": "magnapyritor",
+      "rank": 97,
+      "tier": "S",
+      "winRate": 0.779
+    },
+    {
+      "uuid": "kentrosaurus",
+      "rank": 98,
+      "tier": "S",
+      "winRate": 0.777
+    },
+    {
+      "uuid": "93_classic_t_rex",
+      "rank": 99,
+      "tier": "S",
+      "winRate": 0.771
+    },
+    {
+      "uuid": "ankylodactylus",
+      "rank": 100,
+      "tier": "S",
+      "winRate": 0.771
+    },
+    {
+      "uuid": "tyrannometrodon",
+      "rank": 101,
+      "tier": "S",
+      "winRate": 0.771
+    },
+    {
+      "uuid": "olorotitan",
+      "rank": 102,
+      "tier": "S",
+      "winRate": 0.769
+    },
+    {
+      "uuid": "lystrosavis",
+      "rank": 103,
+      "tier": "S",
+      "winRate": 0.767
+    },
+    {
+      "uuid": "red",
+      "rank": 104,
+      "tier": "S",
+      "winRate": 0.767
+    },
+    {
+      "uuid": "skoonasaurus",
+      "rank": 105,
+      "tier": "S",
+      "winRate": 0.767
+    },
+    {
+      "uuid": "trykovenator",
+      "rank": 106,
+      "tier": "S",
+      "winRate": 0.767
+    },
+    {
+      "uuid": "ceratosaurus_gen_2",
+      "rank": 107,
+      "tier": "S",
+      "winRate": 0.761
+    },
+    {
+      "uuid": "aquisaurus",
+      "rank": 108,
+      "tier": "S",
+      "winRate": 0.757
+    },
+    {
+      "uuid": "baryosaurus",
+      "rank": 109,
+      "tier": "S",
+      "winRate": 0.757
+    },
+    {
+      "uuid": "concatosaurus",
+      "rank": 110,
+      "tier": "S",
+      "winRate": 0.757
+    },
+    {
+      "uuid": "crichtomoloch",
+      "rank": 111,
+      "tier": "S",
+      "winRate": 0.757
+    },
+    {
+      "uuid": "hadros_lux",
+      "rank": 112,
+      "tier": "S",
+      "winRate": 0.757
+    },
+    {
+      "uuid": "kentrorex",
+      "rank": 113,
+      "tier": "S",
+      "winRate": 0.757
+    },
+    {
+      "uuid": "titanotarkus",
+      "rank": 114,
+      "tier": "S",
+      "winRate": 0.755
+    },
+    {
+      "uuid": "sarcomantarx",
+      "rank": 115,
+      "tier": "S",
+      "winRate": 0.753
+    },
+    {
+      "uuid": "giganspinoceratops",
+      "rank": 116,
+      "tier": "S",
+      "winRate": 0.751
+    },
+    {
+      "uuid": "pantherator",
+      "rank": 117,
+      "tier": "S",
+      "winRate": 0.751
+    },
+    {
+      "uuid": "trykosaurus",
+      "rank": 118,
+      "tier": "S",
+      "winRate": 0.751
+    },
+    {
+      "uuid": "ardontognathus",
+      "rank": 119,
+      "tier": "S",
+      "winRate": 0.746
+    },
+    {
+      "uuid": "titanotor",
+      "rank": 120,
+      "tier": "S",
+      "winRate": 0.746
+    },
+    {
+      "uuid": "acrocanthops",
+      "rank": 121,
+      "tier": "S",
+      "winRate": 0.744
+    },
+    {
+      "uuid": "dilozorion",
+      "rank": 122,
+      "tier": "S",
+      "winRate": 0.742
+    },
+    {
+      "uuid": "masiakasaurus",
+      "rank": 123,
+      "tier": "S",
+      "winRate": 0.742
+    },
+    {
+      "uuid": "parasaurolophus_lux",
+      "rank": 124,
+      "tier": "S",
+      "winRate": 0.742
+    },
+    {
+      "uuid": "styracosaurus_lux",
+      "rank": 125,
+      "tier": "S",
+      "winRate": 0.74
+    },
+    {
+      "uuid": "pyrosuchus",
+      "rank": 126,
+      "tier": "S",
+      "winRate": 0.738
+    },
+    {
+      "uuid": "segnotherisaurus",
+      "rank": 127,
+      "tier": "S",
+      "winRate": 0.738
+    },
+    {
+      "uuid": "andrewtops",
+      "rank": 128,
+      "tier": "S",
+      "winRate": 0.73
+    },
+    {
+      "uuid": "albertocevia",
+      "rank": 129,
+      "tier": "S",
+      "winRate": 0.728
+    },
+    {
+      "uuid": "erlidominus",
+      "rank": 130,
+      "tier": "S",
+      "winRate": 0.726
+    },
+    {
+      "uuid": "rebel",
+      "rank": 131,
+      "tier": "S",
+      "winRate": 0.726
+    },
+    {
+      "uuid": "centroceratops",
+      "rank": 132,
+      "tier": "S",
+      "winRate": 0.724
+    },
+    {
+      "uuid": "rebirth_spinosaurus",
+      "rank": 133,
+      "tier": "S",
+      "winRate": 0.724
+    },
+    {
+      "uuid": "brunette",
+      "rank": 134,
+      "tier": "S",
+      "winRate": 0.722
+    },
+    {
+      "uuid": "proto_lux",
+      "rank": 135,
+      "tier": "S",
+      "winRate": 0.722
+    },
+    {
+      "uuid": "rajakylosaurus",
+      "rank": 136,
+      "tier": "S",
+      "winRate": 0.72
+    },
+    {
+      "uuid": "constrictoraptor",
+      "rank": 137,
+      "tier": "S",
+      "winRate": 0.718
+    },
+    {
+      "uuid": "stygidaryx",
+      "rank": 138,
+      "tier": "S",
+      "winRate": 0.718
+    },
+    {
+      "uuid": "scelidosaurus",
+      "rank": 139,
+      "tier": "S",
+      "winRate": 0.716
+    },
+    {
+      "uuid": "indoraptor",
+      "rank": 140,
+      "tier": "S",
+      "winRate": 0.71
+    },
+    {
+      "uuid": "smilonemys",
+      "rank": 141,
+      "tier": "S",
+      "winRate": 0.71
+    },
+    {
+      "uuid": "spinosaurus_aegyptiacus",
+      "rank": 142,
+      "tier": "S",
+      "winRate": 0.71
+    },
+    {
+      "uuid": "dsungascorpios",
+      "rank": 143,
+      "tier": "S",
+      "winRate": 0.708
+    },
+    {
+      "uuid": "erlikospyx",
+      "rank": 144,
+      "tier": "S",
+      "winRate": 0.708
+    },
+    {
+      "uuid": "plateosaurus",
+      "rank": 145,
+      "tier": "S",
+      "winRate": 0.706
+    },
+    {
+      "uuid": "pteranokyrie",
+      "rank": 146,
+      "tier": "S",
+      "winRate": 0.706
+    },
+    {
+      "uuid": "imperatosuchus",
+      "rank": 147,
+      "tier": "S",
+      "winRate": 0.704
+    },
+    {
+      "uuid": "nanotyrannus",
+      "rank": 148,
+      "tier": "S",
+      "winRate": 0.7
+    },
+    {
+      "uuid": "ampelosaurus",
+      "rank": 149,
+      "tier": "A",
+      "winRate": 0.698
+    },
+    {
+      "uuid": "ankyntrosaurus",
+      "rank": 150,
+      "tier": "A",
+      "winRate": 0.698
+    },
+    {
+      "uuid": "aerospinosaurus",
+      "rank": 151,
+      "tier": "A",
+      "winRate": 0.696
+    },
+    {
+      "uuid": "mammolania",
+      "rank": 152,
+      "tier": "A",
+      "winRate": 0.694
+    },
+    {
+      "uuid": "poukandactylus",
+      "rank": 153,
+      "tier": "A",
+      "winRate": 0.694
+    },
+    {
+      "uuid": "alankyloceratops",
+      "rank": 154,
+      "tier": "A",
+      "winRate": 0.692
+    },
+    {
+      "uuid": "titanosaurus",
+      "rank": 155,
+      "tier": "A",
+      "winRate": 0.692
+    },
+    {
+      "uuid": "indominus_rex",
+      "rank": 156,
+      "tier": "A",
+      "winRate": 0.688
+    },
+    {
+      "uuid": "nyctosaurus",
+      "rank": 157,
+      "tier": "A",
+      "winRate": 0.688
+    },
+    {
+      "uuid": "quetzaljara",
+      "rank": 158,
+      "tier": "A",
+      "winRate": 0.688
+    },
+    {
+      "uuid": "allodrigues",
+      "rank": 159,
+      "tier": "A",
+      "winRate": 0.686
+    },
+    {
+      "uuid": "quetzorion",
+      "rank": 160,
+      "tier": "A",
+      "winRate": 0.684
+    },
+    {
+      "uuid": "tyrannodactylus",
+      "rank": 161,
+      "tier": "A",
+      "winRate": 0.684
+    },
+    {
+      "uuid": "panthera_blytheae",
+      "rank": 162,
+      "tier": "A",
+      "winRate": 0.682
+    },
+    {
+      "uuid": "rebirth_raptor",
+      "rank": 163,
+      "tier": "A",
+      "winRate": 0.68
+    },
+    {
+      "uuid": "giganyx",
+      "rank": 164,
+      "tier": "A",
+      "winRate": 0.678
+    },
+    {
+      "uuid": "tyrannosaur_buck",
+      "rank": 165,
+      "tier": "A",
+      "winRate": 0.678
+    },
+    {
+      "uuid": "skorpiostegotops",
+      "rank": 166,
+      "tier": "A",
+      "winRate": 0.676
+    },
+    {
+      "uuid": "pterovexus",
+      "rank": 167,
+      "tier": "A",
+      "winRate": 0.672
+    },
+    {
+      "uuid": "diloracheirus",
+      "rank": 168,
+      "tier": "A",
+      "winRate": 0.67
+    },
+    {
+      "uuid": "entelolania",
+      "rank": 169,
+      "tier": "A",
+      "winRate": 0.668
+    },
+    {
+      "uuid": "gigaspikasaur",
+      "rank": 170,
+      "tier": "A",
+      "winRate": 0.666
+    },
+    {
+      "uuid": "smilocephalosaurus",
+      "rank": 171,
+      "tier": "A",
+      "winRate": 0.666
+    },
+    {
+      "uuid": "ardentismaxima",
+      "rank": 172,
+      "tier": "A",
+      "winRate": 0.662
+    },
+    {
+      "uuid": "geminititan",
+      "rank": 173,
+      "tier": "A",
+      "winRate": 0.662
+    },
+    {
+      "uuid": "aenocyonyx",
+      "rank": 174,
+      "tier": "A",
+      "winRate": 0.66
+    },
+    {
+      "uuid": "refrenantem",
+      "rank": 175,
+      "tier": "A",
+      "winRate": 0.66
+    },
+    {
+      "uuid": "nanophosaurus",
+      "rank": 176,
+      "tier": "A",
+      "winRate": 0.656
+    },
+    {
+      "uuid": "segnoraptor",
+      "rank": 177,
+      "tier": "A",
+      "winRate": 0.656
+    },
+    {
+      "uuid": "dracovenator",
+      "rank": 178,
+      "tier": "A",
+      "winRate": 0.646
+    },
+    {
+      "uuid": "sarcosaurus",
+      "rank": 179,
+      "tier": "A",
+      "winRate": 0.646
+    },
+    {
+      "uuid": "diorajasaur",
+      "rank": 180,
+      "tier": "A",
+      "winRate": 0.64
+    },
+    {
+      "uuid": "thylaconyx",
+      "rank": 181,
+      "tier": "A",
+      "winRate": 0.638
+    },
+    {
+      "uuid": "monomimus",
+      "rank": 182,
+      "tier": "A",
+      "winRate": 0.636
+    },
+    {
+      "uuid": "albertospinos",
+      "rank": 183,
+      "tier": "A",
+      "winRate": 0.634
+    },
+    {
+      "uuid": "alloraptor",
+      "rank": 184,
+      "tier": "A",
+      "winRate": 0.634
+    },
+    {
+      "uuid": "rajatholus",
+      "rank": 185,
+      "tier": "A",
+      "winRate": 0.632
+    },
+    {
+      "uuid": "utarinex",
+      "rank": 186,
+      "tier": "A",
+      "winRate": 0.624
+    },
+    {
+      "uuid": "arctovasilas",
+      "rank": 187,
+      "tier": "A",
+      "winRate": 0.62
+    },
+    {
+      "uuid": "saurolyth",
+      "rank": 188,
+      "tier": "A",
+      "winRate": 0.618
+    },
+    {
+      "uuid": "animantarx",
+      "rank": 189,
+      "tier": "A",
+      "winRate": 0.616
+    },
+    {
+      "uuid": "grylenken",
+      "rank": 190,
+      "tier": "A",
+      "winRate": 0.616
+    },
+    {
+      "uuid": "dodocevia",
+      "rank": 191,
+      "tier": "A",
+      "winRate": 0.612
+    },
+    {
+      "uuid": "angel",
+      "rank": 192,
+      "tier": "A",
+      "winRate": 0.61
+    },
+    {
+      "uuid": "argenteryx",
+      "rank": 193,
+      "tier": "A",
+      "winRate": 0.61
+    },
+    {
+      "uuid": "antarctovenator",
+      "rank": 194,
+      "tier": "A",
+      "winRate": 0.6
+    },
+    {
+      "uuid": "concakuisaurus",
+      "rank": 195,
+      "tier": "A",
+      "winRate": 0.6
+    },
+    {
+      "uuid": "ceramagnus",
+      "rank": 196,
+      "tier": "A",
+      "winRate": 0.596
+    },
+    {
+      "uuid": "gorgotrebax",
+      "rank": 197,
+      "tier": "A",
+      "winRate": 0.596
+    },
+    {
+      "uuid": "homalocephale",
+      "rank": 198,
+      "tier": "A",
+      "winRate": 0.594
+    },
+    {
+      "uuid": "testacornibus",
+      "rank": 199,
+      "tier": "A",
+      "winRate": 0.594
+    },
+    {
+      "uuid": "mortem_rex",
+      "rank": 200,
+      "tier": "A",
+      "winRate": 0.592
+    },
+    {
+      "uuid": "entelomoth",
+      "rank": 201,
+      "tier": "A",
+      "winRate": 0.588
+    },
+    {
+      "uuid": "preondactylus",
+      "rank": 202,
+      "tier": "A",
+      "winRate": 0.586
+    },
+    {
+      "uuid": "ankylosaurus",
+      "rank": 203,
+      "tier": "A",
+      "winRate": 0.579
+    },
+    {
+      "uuid": "dakotaraptor",
+      "rank": 204,
+      "tier": "A",
+      "winRate": 0.579
+    },
+    {
+      "uuid": "aerotitan",
+      "rank": 205,
+      "tier": "A",
+      "winRate": 0.577
+    },
+    {
+      "uuid": "compsocaulus",
+      "rank": 206,
+      "tier": "A",
+      "winRate": 0.577
+    },
+    {
+      "uuid": "therizinosaurus",
+      "rank": 207,
+      "tier": "A",
+      "winRate": 0.573
+    },
+    {
+      "uuid": "thylos_intrepidus",
+      "rank": 208,
+      "tier": "A",
+      "winRate": 0.573
+    },
+    {
+      "uuid": "paramoloch",
+      "rank": 209,
+      "tier": "A",
+      "winRate": 0.571
+    },
+    {
+      "uuid": "wuerhosaurus",
+      "rank": 210,
+      "tier": "A",
+      "winRate": 0.571
+    },
+    {
+      "uuid": "megalania",
+      "rank": 211,
+      "tier": "A",
+      "winRate": 0.569
+    },
+    {
+      "uuid": "sinokotaraptor",
+      "rank": 212,
+      "tier": "A",
+      "winRate": 0.567
+    },
+    {
+      "uuid": "hydra_boa",
+      "rank": 213,
+      "tier": "A",
+      "winRate": 0.563
+    },
+    {
+      "uuid": "skoolasaurus",
+      "rank": 214,
+      "tier": "A",
+      "winRate": 0.563
+    },
+    {
+      "uuid": "albertosaurus",
+      "rank": 215,
+      "tier": "A",
+      "winRate": 0.561
+    },
+    {
+      "uuid": "oviraptor_gen_2",
+      "rank": 216,
+      "tier": "A",
+      "winRate": 0.559
+    },
+    {
+      "uuid": "dreadactylus",
+      "rank": 217,
+      "tier": "A",
+      "winRate": 0.553
+    },
+    {
+      "uuid": "ardontosaurus",
+      "rank": 218,
+      "tier": "B",
+      "winRate": 0.549
+    },
+    {
+      "uuid": "panthera",
+      "rank": 219,
+      "tier": "B",
+      "winRate": 0.549
+    },
+    {
+      "uuid": "dracoceratosaurus",
+      "rank": 220,
+      "tier": "B",
+      "winRate": 0.547
+    },
+    {
+      "uuid": "nodopatotitan",
+      "rank": 221,
+      "tier": "B",
+      "winRate": 0.547
+    },
+    {
+      "uuid": "megaraptor",
+      "rank": 222,
+      "tier": "B",
+      "winRate": 0.545
+    },
+    {
+      "uuid": "brontolasmus",
+      "rank": 223,
+      "tier": "B",
+      "winRate": 0.541
+    },
+    {
+      "uuid": "allosinosaurus",
+      "rank": 224,
+      "tier": "B",
+      "winRate": 0.539
+    },
+    {
+      "uuid": "pteranodon",
+      "rank": 225,
+      "tier": "B",
+      "winRate": 0.539
+    },
+    {
+      "uuid": "baryonyx",
+      "rank": 226,
+      "tier": "B",
+      "winRate": 0.535
+    },
+    {
+      "uuid": "skorpiodactylus",
+      "rank": 227,
+      "tier": "B",
+      "winRate": 0.535
+    },
+    {
+      "uuid": "acrocanthosaurus",
+      "rank": 228,
+      "tier": "B",
+      "winRate": 0.531
+    },
+    {
+      "uuid": "deinotops",
+      "rank": 229,
+      "tier": "B",
+      "winRate": 0.527
+    },
+    {
+      "uuid": "diplodocus",
+      "rank": 230,
+      "tier": "B",
+      "winRate": 0.527
+    },
+    {
+      "uuid": "glyptoceras",
+      "rank": 231,
+      "tier": "B",
+      "winRate": 0.525
+    },
+    {
+      "uuid": "megalosuchus",
+      "rank": 232,
+      "tier": "B",
+      "winRate": 0.523
+    },
+    {
+      "uuid": "baryothus",
+      "rank": 233,
+      "tier": "B",
+      "winRate": 0.521
+    },
+    {
+      "uuid": "ghost",
+      "rank": 234,
+      "tier": "B",
+      "winRate": 0.521
+    },
+    {
+      "uuid": "baryonyx_gen_2",
+      "rank": 235,
+      "tier": "B",
+      "winRate": 0.519
+    },
+    {
+      "uuid": "phorurex",
+      "rank": 236,
+      "tier": "B",
+      "winRate": 0.519
+    },
+    {
+      "uuid": "poukaidei",
+      "rank": 237,
+      "tier": "B",
+      "winRate": 0.519
+    },
+    {
+      "uuid": "protoceratops",
+      "rank": 238,
+      "tier": "B",
+      "winRate": 0.517
+    },
+    {
+      "uuid": "edaphocevia",
+      "rank": 239,
+      "tier": "B",
+      "winRate": 0.513
+    },
+    {
+      "uuid": "anurognathus",
+      "rank": 240,
+      "tier": "B",
+      "winRate": 0.503
+    },
+    {
+      "uuid": "diabloceratops",
+      "rank": 241,
+      "tier": "B",
+      "winRate": 0.503
+    },
+    {
+      "uuid": "rexy",
+      "rank": 242,
+      "tier": "B",
+      "winRate": 0.501
+    },
+    {
+      "uuid": "parasauthops",
+      "rank": 243,
+      "tier": "B",
+      "winRate": 0.499
+    },
+    {
+      "uuid": "sarcorixis",
+      "rank": 244,
+      "tier": "B",
+      "winRate": 0.499
+    },
+    {
+      "uuid": "tyrannosaurus_rex",
+      "rank": 245,
+      "tier": "B",
+      "winRate": 0.499
+    },
+    {
+      "uuid": "spinoconstrictor",
+      "rank": 246,
+      "tier": "B",
+      "winRate": 0.491
+    },
+    {
+      "uuid": "herrerasaurus",
+      "rank": 247,
+      "tier": "B",
+      "winRate": 0.489
+    },
+    {
+      "uuid": "indotaurus",
+      "rank": 248,
+      "tier": "B",
+      "winRate": 0.481
+    },
+    {
+      "uuid": "nodosaurus",
+      "rank": 249,
+      "tier": "B",
+      "winRate": 0.481
+    },
+    {
+      "uuid": "coelhaast",
+      "rank": 250,
+      "tier": "B",
+      "winRate": 0.479
+    },
+    {
+      "uuid": "giganotosaurus",
+      "rank": 251,
+      "tier": "B",
+      "winRate": 0.475
+    },
+    {
+      "uuid": "saurornitholestes",
+      "rank": 252,
+      "tier": "B",
+      "winRate": 0.475
+    },
+    {
+      "uuid": "archaeopteryx",
+      "rank": 253,
+      "tier": "B",
+      "winRate": 0.471
+    },
+    {
+      "uuid": "thoradolosaur",
+      "rank": 254,
+      "tier": "B",
+      "winRate": 0.469
+    },
+    {
+      "uuid": "diplovenator",
+      "rank": 255,
+      "tier": "B",
+      "winRate": 0.467
+    },
+    {
+      "uuid": "shantungosaurus",
+      "rank": 256,
+      "tier": "B",
+      "winRate": 0.467
+    },
+    {
+      "uuid": "arctocanis",
+      "rank": 257,
+      "tier": "B",
+      "winRate": 0.465
+    },
+    {
+      "uuid": "graciliraptor",
+      "rank": 258,
+      "tier": "B",
+      "winRate": 0.465
+    },
+    {
+      "uuid": "compsognathus",
+      "rank": 259,
+      "tier": "B",
+      "winRate": 0.463
+    },
+    {
+      "uuid": "dsungaia",
+      "rank": 260,
+      "tier": "B",
+      "winRate": 0.463
+    },
+    {
+      "uuid": "monostegotops",
+      "rank": 261,
+      "tier": "B",
+      "winRate": 0.463
+    },
+    {
+      "uuid": "rajasaurus",
+      "rank": 262,
+      "tier": "B",
+      "winRate": 0.463
+    },
+    {
+      "uuid": "grypolyth",
+      "rank": 263,
+      "tier": "B",
+      "winRate": 0.457
+    },
+    {
+      "uuid": "microraptor",
+      "rank": 264,
+      "tier": "B",
+      "winRate": 0.455
+    },
+    {
+      "uuid": "megalotops",
+      "rank": 265,
+      "tier": "B",
+      "winRate": 0.453
+    },
+    {
+      "uuid": "scutophicyon",
+      "rank": 266,
+      "tier": "B",
+      "winRate": 0.451
+    },
+    {
+      "uuid": "lystrosuchus",
+      "rank": 267,
+      "tier": "B",
+      "winRate": 0.449
+    },
+    {
+      "uuid": "diplocaulus",
+      "rank": 268,
+      "tier": "B",
+      "winRate": 0.447
+    },
+    {
+      "uuid": "spinotops",
+      "rank": 269,
+      "tier": "B",
+      "winRate": 0.445
+    },
+    {
+      "uuid": "ankylodicurus",
+      "rank": 270,
+      "tier": "B",
+      "winRate": 0.443
+    },
+    {
+      "uuid": "argentavis",
+      "rank": 271,
+      "tier": "B",
+      "winRate": 0.443
+    },
+    {
+      "uuid": "rinchicyon",
+      "rank": 272,
+      "tier": "B",
+      "winRate": 0.443
+    },
+    {
+      "uuid": "monolorhino",
+      "rank": 273,
+      "tier": "B",
+      "winRate": 0.441
+    },
+    {
+      "uuid": "ankylomoloch",
+      "rank": 274,
+      "tier": "B",
+      "winRate": 0.439
+    },
+    {
+      "uuid": "deinotherium",
+      "rank": 275,
+      "tier": "B",
+      "winRate": 0.439
+    },
+    {
+      "uuid": "scorpius_rex_gen_3",
+      "rank": 276,
+      "tier": "B",
+      "winRate": 0.439
+    },
+    {
+      "uuid": "troodoboa",
+      "rank": 277,
+      "tier": "B",
+      "winRate": 0.437
+    },
+    {
+      "uuid": "euoplocephalus",
+      "rank": 278,
+      "tier": "B",
+      "winRate": 0.435
+    },
+    {
+      "uuid": "tarbognathus",
+      "rank": 279,
+      "tier": "B",
+      "winRate": 0.435
+    },
+    {
+      "uuid": "oviraptor",
+      "rank": 280,
+      "tier": "B",
+      "winRate": 0.433
+    },
+    {
+      "uuid": "alankylosaurus",
+      "rank": 281,
+      "tier": "B",
+      "winRate": 0.431
+    },
+    {
+      "uuid": "troodon",
+      "rank": 282,
+      "tier": "B",
+      "winRate": 0.429
+    },
+    {
+      "uuid": "dakotanops",
+      "rank": 283,
+      "tier": "B",
+      "winRate": 0.423
+    },
+    {
+      "uuid": "indoraptor_gen_2",
+      "rank": 284,
+      "tier": "B",
+      "winRate": 0.423
+    },
+    {
+      "uuid": "elasmotherium",
+      "rank": 285,
+      "tier": "B",
+      "winRate": 0.419
+    },
+    {
+      "uuid": "koolasuchus",
+      "rank": 286,
+      "tier": "B",
+      "winRate": 0.419
+    },
+    {
+      "uuid": "koreanosaurus",
+      "rank": 287,
+      "tier": "B",
+      "winRate": 0.419
+    },
+    {
+      "uuid": "eremoceros",
+      "rank": 288,
+      "tier": "B",
+      "winRate": 0.416
+    },
+    {
+      "uuid": "dimodactylus",
+      "rank": 289,
+      "tier": "B",
+      "winRate": 0.412
+    },
+    {
+      "uuid": "doedicurus",
+      "rank": 290,
+      "tier": "B",
+      "winRate": 0.41
+    },
+    {
+      "uuid": "tyrannolophosaur",
+      "rank": 291,
+      "tier": "B",
+      "winRate": 0.408
+    },
+    {
+      "uuid": "darwezopteryx",
+      "rank": 292,
+      "tier": "B",
+      "winRate": 0.404
+    },
+    {
+      "uuid": "mammotherium",
+      "rank": 293,
+      "tier": "B",
+      "winRate": 0.404
+    },
+    {
+      "uuid": "eremotherium",
+      "rank": 294,
+      "tier": "B",
+      "winRate": 0.402
+    },
+    {
+      "uuid": "tragodistis",
+      "rank": 295,
+      "tier": "B",
+      "winRate": 0.402
+    },
+    {
+      "uuid": "crichtonsaurus",
+      "rank": 296,
+      "tier": "B",
+      "winRate": 0.4
+    },
+    {
+      "uuid": "ornithomimus",
+      "rank": 297,
+      "tier": "B",
+      "winRate": 0.4
+    },
+    {
+      "uuid": "stegodeus",
+      "rank": 298,
+      "tier": "B",
+      "winRate": 0.4
+    },
+    {
+      "uuid": "spinoceratops",
+      "rank": 299,
+      "tier": "C",
+      "winRate": 0.398
+    },
+    {
+      "uuid": "indolycan",
+      "rank": 300,
+      "tier": "C",
+      "winRate": 0.396
+    },
+    {
+      "uuid": "dsungaripterus",
+      "rank": 301,
+      "tier": "C",
+      "winRate": 0.392
+    },
+    {
+      "uuid": "smilodon",
+      "rank": 302,
+      "tier": "C",
+      "winRate": 0.392
+    },
+    {
+      "uuid": "concavenator",
+      "rank": 303,
+      "tier": "C",
+      "winRate": 0.39
+    },
+    {
+      "uuid": "gryposuchus",
+      "rank": 304,
+      "tier": "C",
+      "winRate": 0.388
+    },
+    {
+      "uuid": "pyroraptor",
+      "rank": 305,
+      "tier": "C",
+      "winRate": 0.388
+    },
+    {
+      "uuid": "enteloceros",
+      "rank": 306,
+      "tier": "C",
+      "winRate": 0.384
+    },
+    {
+      "uuid": "erlikogamma",
+      "rank": 307,
+      "tier": "C",
+      "winRate": 0.384
+    },
+    {
+      "uuid": "secodontosaurus",
+      "rank": 308,
+      "tier": "C",
+      "winRate": 0.384
+    },
+    {
+      "uuid": "ovilophomoloch",
+      "rank": 309,
+      "tier": "C",
+      "winRate": 0.38
+    },
+    {
+      "uuid": "titanoboa",
+      "rank": 310,
+      "tier": "C",
+      "winRate": 0.38
+    },
+    {
+      "uuid": "velosrhacos",
+      "rank": 311,
+      "tier": "C",
+      "winRate": 0.38
+    },
+    {
+      "uuid": "bajatonodon",
+      "rank": 312,
+      "tier": "C",
+      "winRate": 0.378
+    },
+    {
+      "uuid": "dreadnoughtus",
+      "rank": 313,
+      "tier": "C",
+      "winRate": 0.378
+    },
+    {
+      "uuid": "scutosaurus",
+      "rank": 314,
+      "tier": "C",
+      "winRate": 0.372
+    },
+    {
+      "uuid": "procerathomimus",
+      "rank": 315,
+      "tier": "C",
+      "winRate": 0.368
+    },
+    {
+      "uuid": "dodo",
+      "rank": 316,
+      "tier": "C",
+      "winRate": 0.366
+    },
+    {
+      "uuid": "dracorex",
+      "rank": 317,
+      "tier": "C",
+      "winRate": 0.366
+    },
+    {
+      "uuid": "kelenken",
+      "rank": 318,
+      "tier": "C",
+      "winRate": 0.366
+    },
+    {
+      "uuid": "tuoramoloch",
+      "rank": 319,
+      "tier": "C",
+      "winRate": 0.366
+    },
+    {
+      "uuid": "carbotoceratops",
+      "rank": 320,
+      "tier": "C",
+      "winRate": 0.362
+    },
+    {
+      "uuid": "tryostronix",
+      "rank": 321,
+      "tier": "C",
+      "winRate": 0.362
+    },
+    {
+      "uuid": "pyrritator",
+      "rank": 322,
+      "tier": "C",
+      "winRate": 0.358
+    },
+    {
+      "uuid": "marsupial_lion",
+      "rank": 323,
+      "tier": "C",
+      "winRate": 0.354
+    },
+    {
+      "uuid": "keratoporcus",
+      "rank": 324,
+      "tier": "C",
+      "winRate": 0.352
+    },
+    {
+      "uuid": "rinchenia",
+      "rank": 325,
+      "tier": "C",
+      "winRate": 0.35
+    },
+    {
+      "uuid": "sphaerotholus",
+      "rank": 326,
+      "tier": "C",
+      "winRate": 0.35
+    },
+    {
+      "uuid": "thylacosmilus",
+      "rank": 327,
+      "tier": "C",
+      "winRate": 0.35
+    },
+    {
+      "uuid": "allosaurus_gen_2",
+      "rank": 328,
+      "tier": "C",
+      "winRate": 0.348
+    },
+    {
+      "uuid": "ankylocodon",
+      "rank": 329,
+      "tier": "C",
+      "winRate": 0.348
+    },
+    {
+      "uuid": "utasinoraptor",
+      "rank": 330,
+      "tier": "C",
+      "winRate": 0.348
+    },
+    {
+      "uuid": "aquilops",
+      "rank": 331,
+      "tier": "C",
+      "winRate": 0.346
+    },
+    {
+      "uuid": "beelzebufo",
+      "rank": 332,
+      "tier": "C",
+      "winRate": 0.344
+    },
+    {
+      "uuid": "entelochops",
+      "rank": 333,
+      "tier": "C",
+      "winRate": 0.344
+    },
+    {
+      "uuid": "phorusaura",
+      "rank": 334,
+      "tier": "C",
+      "winRate": 0.344
+    },
+    {
+      "uuid": "argentinosaurus",
+      "rank": 335,
+      "tier": "C",
+      "winRate": 0.342
+    },
+    {
+      "uuid": "monolometrodon",
+      "rank": 336,
+      "tier": "C",
+      "winRate": 0.338
+    },
+    {
+      "uuid": "beta",
+      "rank": 337,
+      "tier": "C",
+      "winRate": 0.336
+    },
+    {
+      "uuid": "spinotahraptor",
+      "rank": 338,
+      "tier": "C",
+      "winRate": 0.336
+    },
+    {
+      "uuid": "aquilamimus",
+      "rank": 339,
+      "tier": "C",
+      "winRate": 0.334
+    },
+    {
+      "uuid": "gorgonops",
+      "rank": 340,
+      "tier": "C",
+      "winRate": 0.334
+    },
+    {
+      "uuid": "blue",
+      "rank": 341,
+      "tier": "C",
+      "winRate": 0.332
+    },
+    {
+      "uuid": "rodrigues_solitaire",
+      "rank": 342,
+      "tier": "C",
+      "winRate": 0.332
+    },
+    {
+      "uuid": "nodopatosaurus",
+      "rank": 343,
+      "tier": "C",
+      "winRate": 0.324
+    },
+    {
+      "uuid": "sonorasaurus",
+      "rank": 344,
+      "tier": "C",
+      "winRate": 0.324
+    },
+    {
+      "uuid": "carnotarkus",
+      "rank": 345,
+      "tier": "C",
+      "winRate": 0.318
+    },
+    {
+      "uuid": "monolophosaurus",
+      "rank": 346,
+      "tier": "C",
+      "winRate": 0.314
+    },
+    {
+      "uuid": "tyrannosaurus_rex_gen_2",
+      "rank": 347,
+      "tier": "C",
+      "winRate": 0.314
+    },
+    {
+      "uuid": "carbonemys",
+      "rank": 348,
+      "tier": "C",
+      "winRate": 0.31
+    },
+    {
+      "uuid": "moschops",
+      "rank": 349,
+      "tier": "C",
+      "winRate": 0.31
+    },
+    {
+      "uuid": "scorpius_rex",
+      "rank": 350,
+      "tier": "C",
+      "winRate": 0.31
+    },
+    {
+      "uuid": "gorgosuchus",
+      "rank": 351,
+      "tier": "C",
+      "winRate": 0.308
+    },
+    {
+      "uuid": "allosaurus",
+      "rank": 352,
+      "tier": "C",
+      "winRate": 0.306
+    },
+    {
+      "uuid": "echo",
+      "rank": 353,
+      "tier": "C",
+      "winRate": 0.306
+    },
+    {
+      "uuid": "compsognathus_gen_2",
+      "rank": 354,
+      "tier": "C",
+      "winRate": 0.304
+    },
+    {
+      "uuid": "diloranosaurus",
+      "rank": 355,
+      "tier": "C",
+      "winRate": 0.304
+    },
+    {
+      "uuid": "koolabourgiana",
+      "rank": 356,
+      "tier": "C",
+      "winRate": 0.304
+    },
+    {
+      "uuid": "phorusrhacos",
+      "rank": 357,
+      "tier": "C",
+      "winRate": 0.304
+    },
+    {
+      "uuid": "struthiomimus",
+      "rank": 358,
+      "tier": "C",
+      "winRate": 0.302
+    },
+    {
+      "uuid": "woolly_rhino",
+      "rank": 359,
+      "tier": "C",
+      "winRate": 0.3
+    },
+    {
+      "uuid": "haast_eagle",
+      "rank": 360,
+      "tier": "C",
+      "winRate": 0.296
+    },
+    {
+      "uuid": "antarctopelta",
+      "rank": 361,
+      "tier": "C",
+      "winRate": 0.294
+    },
+    {
+      "uuid": "dimetrodon",
+      "rank": 362,
+      "tier": "C",
+      "winRate": 0.294
+    },
+    {
+      "uuid": "pteraquetzal",
+      "rank": 363,
+      "tier": "C",
+      "winRate": 0.29
+    },
+    {
+      "uuid": "stegoceras",
+      "rank": 364,
+      "tier": "C",
+      "winRate": 0.286
+    },
+    {
+      "uuid": "arctops",
+      "rank": 365,
+      "tier": "C",
+      "winRate": 0.284
+    },
+    {
+      "uuid": "dilophosaurus",
+      "rank": 366,
+      "tier": "C",
+      "winRate": 0.284
+    },
+    {
+      "uuid": "indominus_rex_gen_2",
+      "rank": 367,
+      "tier": "C",
+      "winRate": 0.284
+    },
+    {
+      "uuid": "ophiacodon",
+      "rank": 368,
+      "tier": "C",
+      "winRate": 0.284
+    },
+    {
+      "uuid": "sinosauropteryx",
+      "rank": 369,
+      "tier": "C",
+      "winRate": 0.284
+    },
+    {
+      "uuid": "leucistic_baryonyx",
+      "rank": 370,
+      "tier": "C",
+      "winRate": 0.282
+    },
+    {
+      "uuid": "dracoceratops",
+      "rank": 371,
+      "tier": "C",
+      "winRate": 0.28
+    },
+    {
+      "uuid": "moros_intrepidus",
+      "rank": 372,
+      "tier": "C",
+      "winRate": 0.28
+    },
+    {
+      "uuid": "stegoceratops",
+      "rank": 373,
+      "tier": "C",
+      "winRate": 0.28
+    },
+    {
+      "uuid": "andrewtodon",
+      "rank": 374,
+      "tier": "C",
+      "winRate": 0.278
+    },
+    {
+      "uuid": "dilophoboa",
+      "rank": 375,
+      "tier": "C",
+      "winRate": 0.278
+    },
+    {
+      "uuid": "ovilophosaurus",
+      "rank": 376,
+      "tier": "C",
+      "winRate": 0.278
+    },
+    {
+      "uuid": "purussaurus",
+      "rank": 377,
+      "tier": "C",
+      "winRate": 0.276
+    },
+    {
+      "uuid": "inostherium",
+      "rank": 378,
+      "tier": "C",
+      "winRate": 0.272
+    },
+    {
+      "uuid": "glyptodon",
+      "rank": 379,
+      "tier": "C",
+      "winRate": 0.27
+    },
+    {
+      "uuid": "koolasuchus_gen_2",
+      "rank": 380,
+      "tier": "C",
+      "winRate": 0.268
+    },
+    {
+      "uuid": "megistocurus",
+      "rank": 381,
+      "tier": "C",
+      "winRate": 0.268
+    },
+    {
+      "uuid": "tarbosaurus",
+      "rank": 382,
+      "tier": "C",
+      "winRate": 0.268
+    },
+    {
+      "uuid": "utahraptor",
+      "rank": 383,
+      "tier": "C",
+      "winRate": 0.266
+    },
+    {
+      "uuid": "amargocephalus",
+      "rank": 384,
+      "tier": "C",
+      "winRate": 0.264
+    },
+    {
+      "uuid": "scorpius_rex_gen_2",
+      "rank": 385,
+      "tier": "C",
+      "winRate": 0.262
+    },
+    {
+      "uuid": "stygimoloch",
+      "rank": 386,
+      "tier": "C",
+      "winRate": 0.262
+    },
+    {
+      "uuid": "ailurarctos",
+      "rank": 387,
+      "tier": "C",
+      "winRate": 0.26
+    },
+    {
+      "uuid": "cervalces",
+      "rank": 388,
+      "tier": "C",
+      "winRate": 0.258
+    },
+    {
+      "uuid": "dimetrodon_gen_2",
+      "rank": 389,
+      "tier": "C",
+      "winRate": 0.258
+    },
+    {
+      "uuid": "megalonyx",
+      "rank": 390,
+      "tier": "C",
+      "winRate": 0.256
+    },
+    {
+      "uuid": "megalosaurus",
+      "rank": 391,
+      "tier": "C",
+      "winRate": 0.256
+    },
+    {
+      "uuid": "velociraptor",
+      "rank": 392,
+      "tier": "C",
+      "winRate": 0.254
+    },
+    {
+      "uuid": "lythronax",
+      "rank": 393,
+      "tier": "C",
+      "winRate": 0.252
+    },
+    {
+      "uuid": "nundasuchus",
+      "rank": 394,
+      "tier": "C",
+      "winRate": 0.252
+    },
+    {
+      "uuid": "archaeotherium",
+      "rank": 395,
+      "tier": "D",
+      "winRate": 0.249
+    },
+    {
+      "uuid": "meiolania",
+      "rank": 396,
+      "tier": "D",
+      "winRate": 0.249
+    },
+    {
+      "uuid": "spinotasuchus",
+      "rank": 397,
+      "tier": "D",
+      "winRate": 0.249
+    },
+    {
+      "uuid": "edaphosaurus",
+      "rank": 398,
+      "tier": "D",
+      "winRate": 0.247
+    },
+    {
+      "uuid": "inostrancevia",
+      "rank": 399,
+      "tier": "D",
+      "winRate": 0.247
+    },
+    {
+      "uuid": "erlikosaurus_gen_2",
+      "rank": 400,
+      "tier": "D",
+      "winRate": 0.243
+    },
+    {
+      "uuid": "brontotherium",
+      "rank": 401,
+      "tier": "D",
+      "winRate": 0.241
+    },
+    {
+      "uuid": "deinonychus",
+      "rank": 402,
+      "tier": "D",
+      "winRate": 0.239
+    },
+    {
+      "uuid": "giraffatitan",
+      "rank": 403,
+      "tier": "D",
+      "winRate": 0.239
+    },
+    {
+      "uuid": "gorgosaurus",
+      "rank": 404,
+      "tier": "D",
+      "winRate": 0.239
+    },
+    {
+      "uuid": "deinosuchus",
+      "rank": 405,
+      "tier": "D",
+      "winRate": 0.237
+    },
+    {
+      "uuid": "majundasuchus",
+      "rank": 406,
+      "tier": "D",
+      "winRate": 0.233
+    },
+    {
+      "uuid": "erlikosaurus",
+      "rank": 407,
+      "tier": "D",
+      "winRate": 0.227
+    },
+    {
+      "uuid": "megalogaia",
+      "rank": 408,
+      "tier": "D",
+      "winRate": 0.227
+    },
+    {
+      "uuid": "delta",
+      "rank": 409,
+      "tier": "D",
+      "winRate": 0.225
+    },
+    {
+      "uuid": "skorpiovenator",
+      "rank": 410,
+      "tier": "D",
+      "winRate": 0.225
+    },
+    {
+      "uuid": "entelodon",
+      "rank": 411,
+      "tier": "D",
+      "winRate": 0.223
+    },
+    {
+      "uuid": "haast_eagle_gen_2",
+      "rank": 412,
+      "tier": "D",
+      "winRate": 0.223
+    },
+    {
+      "uuid": "pachycephalosaurus",
+      "rank": 413,
+      "tier": "D",
+      "winRate": 0.221
+    },
+    {
+      "uuid": "quetzalcoatlus",
+      "rank": 414,
+      "tier": "D",
+      "winRate": 0.221
+    },
+    {
+      "uuid": "tenontosaurus",
+      "rank": 415,
+      "tier": "D",
+      "winRate": 0.219
+    },
+    {
+      "uuid": "lystrosaurus",
+      "rank": 416,
+      "tier": "D",
+      "winRate": 0.217
+    },
+    {
+      "uuid": "pyroraptor_gen_2",
+      "rank": 417,
+      "tier": "D",
+      "winRate": 0.217
+    },
+    {
+      "uuid": "bumpy",
+      "rank": 418,
+      "tier": "D",
+      "winRate": 0.213
+    },
+    {
+      "uuid": "tapejara",
+      "rank": 419,
+      "tier": "D",
+      "winRate": 0.213
+    },
+    {
+      "uuid": "sinoceratops",
+      "rank": 420,
+      "tier": "D",
+      "winRate": 0.209
+    },
+    {
+      "uuid": "spinonyx",
+      "rank": 421,
+      "tier": "D",
+      "winRate": 0.209
+    },
+    {
+      "uuid": "centrosaurus",
+      "rank": 422,
+      "tier": "D",
+      "winRate": 0.199
+    },
+    {
+      "uuid": "coelurosauravus",
+      "rank": 423,
+      "tier": "D",
+      "winRate": 0.199
+    },
+    {
+      "uuid": "proceratosaurus",
+      "rank": 424,
+      "tier": "D",
+      "winRate": 0.199
+    },
+    {
+      "uuid": "majundaboa",
+      "rank": 425,
+      "tier": "D",
+      "winRate": 0.197
+    },
+    {
+      "uuid": "scolosaurus",
+      "rank": 426,
+      "tier": "D",
+      "winRate": 0.197
+    },
+    {
+      "uuid": "titanoboa_gen_2",
+      "rank": 427,
+      "tier": "D",
+      "winRate": 0.197
+    },
+    {
+      "uuid": "bajadasaurus",
+      "rank": 428,
+      "tier": "D",
+      "winRate": 0.193
+    },
+    {
+      "uuid": "pulmonoscorpius",
+      "rank": 429,
+      "tier": "D",
+      "winRate": 0.193
+    },
+    {
+      "uuid": "purutaurus",
+      "rank": 430,
+      "tier": "D",
+      "winRate": 0.191
+    },
+    {
+      "uuid": "amargasaurus",
+      "rank": 431,
+      "tier": "D",
+      "winRate": 0.185
+    },
+    {
+      "uuid": "suchotator",
+      "rank": 432,
+      "tier": "D",
+      "winRate": 0.181
+    },
+    {
+      "uuid": "apatosaurus",
+      "rank": 433,
+      "tier": "D",
+      "winRate": 0.177
+    },
+    {
+      "uuid": "diplocaulus_gen_2",
+      "rank": 434,
+      "tier": "D",
+      "winRate": 0.177
+    },
+    {
+      "uuid": "postimetrodon",
+      "rank": 435,
+      "tier": "D",
+      "winRate": 0.175
+    },
+    {
+      "uuid": "scaphotator",
+      "rank": 436,
+      "tier": "D",
+      "winRate": 0.173
+    },
+    {
+      "uuid": "armbrusters_wolf",
+      "rank": 437,
+      "tier": "D",
+      "winRate": 0.171
+    },
+    {
+      "uuid": "alanqa",
+      "rank": 438,
+      "tier": "D",
+      "winRate": 0.169
+    },
+    {
+      "uuid": "majungasaurus",
+      "rank": 439,
+      "tier": "D",
+      "winRate": 0.167
+    },
+    {
+      "uuid": "tuojiangosaurus",
+      "rank": 440,
+      "tier": "D",
+      "winRate": 0.167
+    },
+    {
+      "uuid": "arctalces",
+      "rank": 441,
+      "tier": "D",
+      "winRate": 0.163
+    },
+    {
+      "uuid": "tanycolagreus",
+      "rank": 442,
+      "tier": "D",
+      "winRate": 0.163
+    },
+    {
+      "uuid": "andrewsarchus",
+      "rank": 443,
+      "tier": "D",
+      "winRate": 0.157
+    },
+    {
+      "uuid": "megistotherium",
+      "rank": 444,
+      "tier": "D",
+      "winRate": 0.155
+    },
+    {
+      "uuid": "fukuimimus",
+      "rank": 445,
+      "tier": "D",
+      "winRate": 0.153
+    },
+    {
+      "uuid": "gallimimus",
+      "rank": 446,
+      "tier": "D",
+      "winRate": 0.151
+    },
+    {
+      "uuid": "dire_wolf",
+      "rank": 447,
+      "tier": "D",
+      "winRate": 0.149
+    },
+    {
+      "uuid": "dilophosaurus_gen_2",
+      "rank": 448,
+      "tier": "D",
+      "winRate": 0.147
+    },
+    {
+      "uuid": "deinocheirus",
+      "rank": 449,
+      "tier": "D",
+      "winRate": 0.137
+    },
+    {
+      "uuid": "purrolyth",
+      "rank": 450,
+      "tier": "D",
+      "winRate": 0.137
+    },
+    {
+      "uuid": "woolly_mammoth",
+      "rank": 451,
+      "tier": "D",
+      "winRate": 0.137
+    },
+    {
+      "uuid": "tsintamoth",
+      "rank": 452,
+      "tier": "D",
+      "winRate": 0.129
+    },
+    {
+      "uuid": "ankylosaurus_gen_2",
+      "rank": 453,
+      "tier": "D",
+      "winRate": 0.127
+    },
+    {
+      "uuid": "carnotaurus",
+      "rank": 454,
+      "tier": "D",
+      "winRate": 0.125
+    },
+    {
+      "uuid": "diplotator",
+      "rank": 455,
+      "tier": "D",
+      "winRate": 0.125
+    },
+    {
+      "uuid": "monolophosaurus_gen_2",
+      "rank": 456,
+      "tier": "D",
+      "winRate": 0.125
+    },
+    {
+      "uuid": "arctodus",
+      "rank": 457,
+      "tier": "D",
+      "winRate": 0.123
+    },
+    {
+      "uuid": "charlie",
+      "rank": 458,
+      "tier": "D",
+      "winRate": 0.121
+    },
+    {
+      "uuid": "quetzalcoatlus_gen_2",
+      "rank": 459,
+      "tier": "D",
+      "winRate": 0.121
+    },
+    {
+      "uuid": "thylacotator",
+      "rank": 460,
+      "tier": "D",
+      "winRate": 0.117
+    },
+    {
+      "uuid": "andrewtherium",
+      "rank": 461,
+      "tier": "D",
+      "winRate": 0.109
+    },
+    {
+      "uuid": "edmontoguanodon",
+      "rank": 462,
+      "tier": "D",
+      "winRate": 0.109
+    },
+    {
+      "uuid": "purussaurus_gen_2",
+      "rank": 463,
+      "tier": "D",
+      "winRate": 0.109
+    },
+    {
+      "uuid": "tupandactylus",
+      "rank": 464,
+      "tier": "D",
+      "winRate": 0.107
+    },
+    {
+      "uuid": "nasutoceratops",
+      "rank": 465,
+      "tier": "D",
+      "winRate": 0.101
+    },
+    {
+      "uuid": "dracorex_gen_2",
+      "rank": 466,
+      "tier": "D",
+      "winRate": 0.099
+    },
+    {
+      "uuid": "maiasaura",
+      "rank": 467,
+      "tier": "D",
+      "winRate": 0.099
+    },
+    {
+      "uuid": "einiasuchus",
+      "rank": 468,
+      "tier": "D",
+      "winRate": 0.097
+    },
+    {
+      "uuid": "eucladoceros",
+      "rank": 469,
+      "tier": "D",
+      "winRate": 0.095
+    },
+    {
+      "uuid": "megaloceros",
+      "rank": 470,
+      "tier": "D",
+      "winRate": 0.089
+    },
+    {
+      "uuid": "miragaia",
+      "rank": 471,
+      "tier": "D",
+      "winRate": 0.087
+    },
+    {
+      "uuid": "amphicyon",
+      "rank": 472,
+      "tier": "D",
+      "winRate": 0.085
+    },
+    {
+      "uuid": "iguanodon",
+      "rank": 473,
+      "tier": "D",
+      "winRate": 0.085
+    },
+    {
+      "uuid": "fukuisaurus",
+      "rank": 474,
+      "tier": "D",
+      "winRate": 0.076
+    },
+    {
+      "uuid": "irritator_gen_2",
+      "rank": 475,
+      "tier": "D",
+      "winRate": 0.074
+    },
+    {
+      "uuid": "stygimoloch_gen_2",
+      "rank": 476,
+      "tier": "D",
+      "winRate": 0.074
+    },
+    {
+      "uuid": "ouranosaurus",
+      "rank": 477,
+      "tier": "D",
+      "winRate": 0.072
+    },
+    {
+      "uuid": "triceratops_gen_2",
+      "rank": 478,
+      "tier": "D",
+      "winRate": 0.07
+    },
+    {
+      "uuid": "kaprosuchus",
+      "rank": 479,
+      "tier": "D",
+      "winRate": 0.068
+    },
+    {
+      "uuid": "hatzegopteryx",
+      "rank": 480,
+      "tier": "D",
+      "winRate": 0.064
+    },
+    {
+      "uuid": "edmontosaurus",
+      "rank": 481,
+      "tier": "D",
+      "winRate": 0.062
+    },
+    {
+      "uuid": "spinosaurus_gen_2",
+      "rank": 482,
+      "tier": "D",
+      "winRate": 0.062
+    },
+    {
+      "uuid": "stegouros",
+      "rank": 483,
+      "tier": "D",
+      "winRate": 0.062
+    },
+    {
+      "uuid": "spinosaurus",
+      "rank": 484,
+      "tier": "D",
+      "winRate": 0.054
+    },
+    {
+      "uuid": "irritator",
+      "rank": 485,
+      "tier": "D",
+      "winRate": 0.05
+    },
+    {
+      "uuid": "brachiosaurus",
+      "rank": 486,
+      "tier": "D",
+      "winRate": 0.038
+    },
+    {
+      "uuid": "stegosaurus",
+      "rank": 487,
+      "tier": "D",
+      "winRate": 0.038
+    },
+    {
+      "uuid": "parasaurolophus",
+      "rank": 488,
+      "tier": "D",
+      "winRate": 0.02
+    },
+    {
+      "uuid": "triceratops",
+      "rank": 489,
+      "tier": "D",
+      "winRate": 0.02
+    },
+    {
+      "uuid": "darwinopterus",
+      "rank": 490,
+      "tier": "D",
+      "winRate": 0.018
+    },
+    {
+      "uuid": "postosuchus",
+      "rank": 491,
+      "tier": "D",
+      "winRate": 0.016
+    },
+    {
+      "uuid": "dimorphodon",
+      "rank": 492,
+      "tier": "D",
+      "winRate": 0.014
+    },
+    {
+      "uuid": "sarcosuchus",
+      "rank": 493,
+      "tier": "D",
+      "winRate": 0.014
+    },
+    {
+      "uuid": "suchomimus",
+      "rank": 494,
+      "tier": "D",
+      "winRate": 0.014
+    },
+    {
+      "uuid": "einiosaurus",
+      "rank": 495,
+      "tier": "D",
+      "winRate": 0.012
+    },
+    {
+      "uuid": "tsintaosaurus",
+      "rank": 496,
+      "tier": "D",
+      "winRate": 0.008
+    },
+    {
+      "uuid": "scaphognathus",
+      "rank": 497,
+      "tier": "D",
+      "winRate": 0.006
+    },
+    {
+      "uuid": "arambourgiania",
+      "rank": 498,
+      "tier": "D",
+      "winRate": 0.002
     }
   ]
 }

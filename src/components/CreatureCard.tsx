@@ -22,7 +22,7 @@ const TIER_BADGE: Record<string, string> = {
 
 interface Props {
   creature: Creature;
-  tierRank?: { rank: number; tier: string };
+  tierRank?: { rank: number; tier: string; winRate: number };
 }
 
 export default function CreatureCard({ creature, tierRank }: Props) {
