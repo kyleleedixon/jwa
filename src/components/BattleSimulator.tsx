@@ -80,11 +80,11 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
   }
 
   return (
-    <div className={`flex flex-col gap-3 flex-1 min-w-0 ${side === 'right' ? 'items-end' : 'items-start'}`}>
+    <div className={`flex flex-col gap-3 flex-1 min-w-0 items-start ${side === 'right' ? 'sm:items-end' : ''}`}>
       <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{label}</div>
 
       {/* Creature selector */}
-      <div ref={ref} className="relative w-full max-w-xs">
+      <div ref={ref} className="relative w-full">
         <button
           onClick={() => setOpen(o => !o)}
           className="w-full flex items-center gap-2 px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm hover:border-slate-500 transition-colors text-left"
@@ -134,7 +134,7 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
       {config.creature && (
         <>
           {/* Level */}
-          <div className="w-full max-w-xs flex items-center gap-3">
+          <div className="w-full flex items-center gap-3">
             <span className="text-xs text-gray-400 w-12 shrink-0">Lv {config.level}</span>
             <input
               type="range" min={minLv} max={maxLv} value={config.level}
@@ -158,7 +158,7 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
               onChange({ ...config, omegaAlloc: { ...config.omegaAlloc, [stat]: next } });
             }
             return (
-              <div className="w-full max-w-xs flex flex-col gap-1.5">
+              <div className="w-full flex flex-col gap-1.5">
                 <div className="flex items-center justify-between mb-0.5">
                   <span className="text-[10px] text-gray-500 uppercase tracking-wider">Omega Points</span>
                   <span className={`text-[10px] font-mono font-semibold ${remaining === 0 ? 'text-green-400' : 'text-yellow-400'}`}>
@@ -201,7 +201,7 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
               const total = config.boosts.health + config.boosts.damage + config.boosts.speed;
               const over = total > budget;
               return (
-                <div className="w-full max-w-xs flex flex-col gap-1.5">
+                <div className="w-full flex flex-col gap-1.5">
                   {(['health','damage','speed'] as const).map(stat => (
                     <div key={stat} className="flex items-center gap-2">
                       <span className="text-xs text-gray-500 w-14 capitalize shrink-0">{stat} {config.boosts[stat]}</span>
@@ -227,7 +227,7 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
 
           {/* Enhancements — requires level 30+ */}
           {config.creature?.enhancements && config.creature.enhancements.length > 0 && config.level >= 30 && (
-            <div className="w-full max-w-xs flex flex-col gap-1.5">
+            <div className="w-full flex flex-col gap-1.5">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-gray-500 uppercase tracking-wider">Enhancements</span>
                 <span className={`text-[10px] font-semibold ${config.enhancementLevel === config.creature.enhancements.length ? 'text-green-400' : 'text-blue-400'}`}>
@@ -397,9 +397,9 @@ export default function BattleSimulator({ creatures }: { creatures: Creature[] }
 
       <div className="max-w-2xl mx-auto px-4 py-8 flex flex-col gap-6">
         {/* Pickers */}
-        <div className="flex gap-6 items-start">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-stretch sm:items-start">
           <CreaturePicker label="Fighter A" creatures={sorted} config={slotA} onChange={updateSlotA} side="left" />
-          <div className="text-2xl font-bold text-slate-600 shrink-0 pt-8">vs</div>
+          <div className="text-2xl font-bold text-slate-600 shrink-0 sm:pt-8 text-center sm:text-left">vs</div>
           <CreaturePicker label="Fighter B" creatures={sorted} config={slotB} onChange={updateSlotB} side="right" />
         </div>
 
