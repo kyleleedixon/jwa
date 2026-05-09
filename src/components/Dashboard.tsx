@@ -20,7 +20,7 @@ interface Props {
   version: string;
   changelog: { date: string; version: string; changes: unknown[] }[];
   user: { name: string | null; image: string | null };
-  tierRanks: Record<string, { rank: number; tier: 'S' | 'A' | 'B' | 'C' | 'D'; winRate: number }>;
+  tierRanks: Record<string, { rank: number; tier: 'S' | 'A' | 'B' | 'C' | 'D' | null; winRate: number }>;
 }
 
 type Filters = Record<string, Set<string>>;

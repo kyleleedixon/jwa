@@ -24,7 +24,7 @@ interface Props {
   creatures: Creature[];
   onClose: () => void;
   onNavigate: (c: Creature) => void;
-  tierRank?: { rank: number; tier: string; winRate: number };
+  tierRank?: { rank: number; tier: string | null; winRate: number };
 }
 
 const MOVE_TYPE_LABELS: Record<string, string> = {
@@ -352,9 +352,9 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
                   tierRank.tier === 'A' ? 'bg-orange-500/30 text-orange-200 border-orange-400/50' :
                   tierRank.tier === 'B' ? 'bg-yellow-500/30 text-yellow-200 border-yellow-400/50' :
                   tierRank.tier === 'C' ? 'bg-blue-500/30 text-blue-200 border-blue-400/50' :
-                  'bg-slate-500/30 text-slate-300 border-slate-400/50'
+                  'bg-slate-700/50 text-slate-300 border-slate-500/50'
                 }`}>
-                  {tierRank.tier} #{tierRank.rank} · {Math.round(tierRank.winRate * 100)}%
+                  {tierRank.tier ? `${tierRank.tier} #${tierRank.rank}` : `#${tierRank.rank}`} · {Math.round(tierRank.winRate * 100)}%
                 </span>
               )}
             </div>

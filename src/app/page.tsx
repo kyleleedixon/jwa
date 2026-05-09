@@ -48,8 +48,8 @@ export default async function Home() {
   const { name, image } = session.user;
   const tierRanks = Object.fromEntries(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (tierlistData as any).allRanks.map((e: { uuid: string; rank: number; tier: string; winRate: number }) =>
-      [e.uuid, { rank: e.rank, tier: e.tier as 'S' | 'A' | 'B' | 'C' | 'D', winRate: e.winRate }]
+    (tierlistData as any).allRanks.map((e: { uuid: string; rank: number; tier: string | null; winRate: number }) =>
+      [e.uuid, { rank: e.rank, tier: e.tier as 'S' | 'A' | 'B' | 'C' | 'D' | null, winRate: e.winRate }]
     )
   );
   return <Dashboard creatures={creatures} lastModifiedDate={metaData.lastModifiedDate} version={metaData.version} changelog={changelogData} user={{ name: name ?? null, image: image ?? null }} tierRanks={tierRanks} />;

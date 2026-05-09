@@ -83,7 +83,7 @@ const result = {
   allRanks: t.entries.map((e, rank) => ({
     uuid:    e.creature.uuid,
     rank:    rank + 1,
-    tier:    rank < 25 ? rankTier(rank) : 'D',
+    tier:    rank < 25 ? rankTier(rank) : null,
     winRate: Math.round(e.winRate * 1000) / 1000,
   })),
 };

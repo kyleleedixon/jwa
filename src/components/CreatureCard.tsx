@@ -22,7 +22,7 @@ const TIER_BADGE: Record<string, string> = {
 
 interface Props {
   creature: Creature;
-  tierRank?: { rank: number; tier: string; winRate: number };
+  tierRank?: { rank: number; tier: string | null; winRate: number };
 }
 
 export default function CreatureCard({ creature, tierRank }: Props) {
@@ -46,8 +46,8 @@ export default function CreatureCard({ creature, tierRank }: Props) {
           unoptimized
         />
         {tierRank && (
-          <span className={`absolute top-1.5 left-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded border ${TIER_BADGE[tierRank.tier] ?? TIER_BADGE.D}`}>
-            {tierRank.tier} #{tierRank.rank}
+          <span className={`absolute top-1.5 left-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded border ${tierRank.tier ? (TIER_BADGE[tierRank.tier] ?? TIER_BADGE.D) : 'bg-slate-700/80 text-slate-300 border-slate-500/60'}`}>
+            {tierRank.tier ? `${tierRank.tier} #${tierRank.rank}` : `#${tierRank.rank}`}
           </span>
         )}
       </div>
