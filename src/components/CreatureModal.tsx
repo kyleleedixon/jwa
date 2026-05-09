@@ -206,6 +206,11 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
     setOmegaAlloc(next);
   }, [level]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Enhancements require level 30+
+  useEffect(() => {
+    if (level < 30) setEnhancementLevel(0);
+  }, [level]);
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', handler);
@@ -760,8 +765,8 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
           </div>
         </div>
 
-        {/* enhancements */}
-        {creature.enhancements && creature.enhancements.length > 0 && (
+        {/* enhancements — requires level 30+ */}
+        {creature.enhancements && creature.enhancements.length > 0 && level >= 30 && (
           <div className="px-5 py-4 border-b border-slate-700/60">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Enhancements</h3>

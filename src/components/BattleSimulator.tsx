@@ -74,6 +74,11 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
     setQuery('');
   }
 
+  function handleLevelChange(newLevel: number) {
+    const reset = newLevel < 30 && config.enhancementLevel > 0 ? { enhancementLevel: 0 } : {};
+    onChange({ ...config, level: newLevel, ...reset });
+  }
+
   return (
     <div className={`flex flex-col gap-3 flex-1 min-w-0 ${side === 'right' ? 'items-end' : 'items-start'}`}>
       <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{label}</div>
@@ -133,7 +138,7 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
             <span className="text-xs text-gray-400 w-12 shrink-0">Lv {config.level}</span>
             <input
               type="range" min={minLv} max={maxLv} value={config.level}
-              onChange={e => onChange({ ...config, level: Number(e.target.value) })}
+              onChange={e => handleLevelChange(Number(e.target.value))}
               className="flex-1 accent-blue-500"
             />
           </div>
@@ -215,8 +220,8 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
             })()
           )}
 
-          {/* Enhancements */}
-          {config.creature?.enhancements && config.creature.enhancements.length > 0 && (
+          {/* Enhancements — requires level 30+ */}
+          {config.creature?.enhancements && config.creature.enhancements.length > 0 && config.level >= 30 && (
             <div className="w-full max-w-xs flex flex-col gap-1.5">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-gray-500 uppercase tracking-wider">Enhancements</span>
