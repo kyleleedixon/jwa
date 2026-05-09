@@ -167,6 +167,8 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
                   return (
                     <div key={k} className="flex items-center gap-1.5">
                       <span className="text-[10px] text-gray-500 w-10 shrink-0">{STAT_LABELS[k]}</span>
+                      <button onClick={() => changeAlloc(k, -10)} disabled={alloc === 0}
+                        className="w-7 h-5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 text-white text-[10px] font-bold shrink-0 flex items-center justify-center">−10</button>
                       <button onClick={() => changeAlloc(k, -1)} disabled={alloc === 0}
                         className="w-5 h-5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 text-white text-xs font-bold shrink-0 flex items-center justify-center">−</button>
                       <div className="flex-1 h-1.5 bg-slate-700 rounded-full overflow-hidden">
@@ -175,6 +177,8 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
                       </div>
                       <button onClick={() => changeAlloc(k, 1)} disabled={alloc >= effectiveCap || remaining === 0}
                         className="w-5 h-5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 text-white text-xs font-bold shrink-0 flex items-center justify-center">+</button>
+                      <button onClick={() => changeAlloc(k, 10)} disabled={alloc >= effectiveCap || remaining === 0}
+                        className="w-7 h-5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 text-white text-[10px] font-bold shrink-0 flex items-center justify-center">+10</button>
                       <span className="text-[10px] text-gray-500 w-8 text-right shrink-0">{alloc}/{effectiveCap}</span>
                     </div>
                   );

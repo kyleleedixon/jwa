@@ -36,11 +36,6 @@ export default function CreatureCard({ creature, tierRank }: Props) {
     >
       {/* image */}
       <div className={`relative w-full aspect-square ${rarityBg}`}>
-        {tierRank && (
-          <span className={`absolute top-1.5 left-1.5 z-10 text-[10px] font-bold px-1.5 py-0.5 rounded border ${TIER_BADGE[tierRank.tier] ?? TIER_BADGE.D}`}>
-            {tierRank.tier} #{tierRank.rank}
-          </span>
-        )}
         <Image
           src={creature.image}
           alt={creature.name}
@@ -50,6 +45,11 @@ export default function CreatureCard({ creature, tierRank }: Props) {
           onError={(e) => { (e.target as HTMLImageElement).style.opacity = '0.3'; }}
           unoptimized
         />
+        {tierRank && (
+          <span className={`absolute top-1.5 left-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded border ${TIER_BADGE[tierRank.tier] ?? TIER_BADGE.D}`}>
+            {tierRank.tier} #{tierRank.rank}
+          </span>
+        )}
       </div>
 
       {/* info */}
