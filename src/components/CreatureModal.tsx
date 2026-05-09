@@ -190,7 +190,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
   // When level drops, trim omega allocations that exceed new budget
   useEffect(() => {
     if (!isOmega || !creature.points) return;
-    const budget = (level - 1) * POINTS_PER_LEVEL;
+    const budget = level * POINTS_PER_LEVEL;
     const total = Object.values(omegaAlloc).reduce((a, b) => a + b, 0);
     if (total <= budget) return;
     // trim proportionally by zeroing from the end
@@ -266,7 +266,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
   displayDamage = Math.floor(displayDamage as number);
   displaySpeed  = Math.floor(displaySpeed  as number);
 
-  const availablePoints = isOmega ? (level - 1) * POINTS_PER_LEVEL : 0;
+  const availablePoints = isOmega ? level * POINTS_PER_LEVEL : 0;
   const allocatedPoints = Object.values(omegaAlloc).reduce((a, b) => a + b, 0);
   const remainingPoints = availablePoints - allocatedPoints;
 

@@ -124,21 +124,28 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
           </div>
 
           {/* Boosts */}
-          <div className="w-full max-w-xs flex flex-col gap-1.5">
-            {(['health','damage','speed'] as const).map(stat => (
-              <div key={stat} className="flex items-center gap-2">
-                <span className="text-xs text-gray-500 w-14 capitalize shrink-0">{stat} {config.boosts[stat]}</span>
-                <input
-                  type="range" min={0} max={20} value={config.boosts[stat]}
-                  onChange={e => onChange({ ...config, boosts: { ...config.boosts, [stat]: Number(e.target.value) } })}
-                  className="flex-1 accent-blue-500"
-                />
+          {(() => {
+            const isOmega = config.creature?.rarity === 'omega';
+            const budget = isOmega ? config.level * 7 : config.level;
+            const used = config.boosts.health + config.boosts.damage + config.boosts.speed;
+            return (
+              <div className="w-full max-w-xs flex flex-col gap-1.5">
+                {(['health','damage','speed'] as const).map(stat => (
+                  <div key={stat} className="flex items-center gap-2">
+                    <span className="text-xs text-gray-500 w-14 capitalize shrink-0">{stat} {config.boosts[stat]}</span>
+                    <input
+                      type="range" min={0} max={20} value={config.boosts[stat]}
+                      onChange={e => onChange({ ...config, boosts: { ...config.boosts, [stat]: Number(e.target.value) } })}
+                      className="flex-1 accent-blue-500"
+                    />
+                  </div>
+                ))}
+                <p className="text-[10px] text-gray-600 mt-0.5">
+                  {used} / {budget} {isOmega ? 'omega points used' : 'boosts used'}
+                </p>
               </div>
-            ))}
-            <p className="text-[10px] text-gray-600 mt-0.5">
-              {config.boosts.health + config.boosts.damage + config.boosts.speed} / {config.level} boosts used
-            </p>
-          </div>
+            );
+          })()}
         </>
       )}
     </div>
