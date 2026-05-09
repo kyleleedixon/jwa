@@ -48,11 +48,15 @@ jobs:
         if: steps.check.outputs.stale == 'true'
         run: node scripts/scrape.js
 
+      - name: Recompute tier list
+        if: steps.check.outputs.stale == 'true'
+        run: npx tsx scripts/compute-tiers.ts
+
       - name: Commit and push updated data
         if: steps.check.outputs.stale == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/data/creatures.json src/data/meta.json src/data/changelog.json
+          git add src/data/creatures.json src/data/meta.json src/data/changelog.json src/data/tierlist.json
           git diff --cached --quiet || git commit -m "chore: auto-scrape paleo.gg (${{ steps.check.outputs.remote }})"
           git push
