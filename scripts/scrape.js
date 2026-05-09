@@ -189,6 +189,7 @@ async function fetchCreature(slug, moveNames) {
         ...(d.flock > 1 && { flock: d.flock }),
         ...(d.move_unlock_lv && Object.keys(d.move_unlock_lv).length > 0 && { move_unlock_lv: d.move_unlock_lv }),
         ...(d.points && { points: d.points }),
+        ...(d.enhancements && d.enhancements.length > 0 && { enhancements: d.enhancements }),
       };
     } catch (err) {
       if (attempt === 3) {

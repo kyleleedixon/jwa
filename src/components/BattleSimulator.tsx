@@ -183,21 +183,32 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
             );
           })() : config.creature && (
             /* Regular boosts for non-omegas */
-            <div className="w-full max-w-xs flex flex-col gap-1.5">
-              {(['health','damage','speed'] as const).map(stat => (
-                <div key={stat} className="flex items-center gap-2">
-                  <span className="text-xs text-gray-500 w-14 capitalize shrink-0">{stat} {config.boosts[stat]}</span>
-                  <input
-                    type="range" min={0} max={20} value={config.boosts[stat]}
-                    onChange={e => onChange({ ...config, boosts: { ...config.boosts, [stat]: Number(e.target.value) } })}
-                    className="flex-1 accent-blue-500"
-                  />
+            (() => {
+              const budget = config.level;
+              const total = config.boosts.health + config.boosts.damage + config.boosts.speed;
+              const over = total > budget;
+              return (
+                <div className="w-full max-w-xs flex flex-col gap-1.5">
+                  {(['health','damage','speed'] as const).map(stat => {
+                    const others = total - config.boosts[stat];
+                    const cap = Math.min(20, Math.max(0, budget - others));
+                    return (
+                      <div key={stat} className="flex items-center gap-2">
+                        <span className="text-xs text-gray-500 w-14 capitalize shrink-0">{stat} {config.boosts[stat]}</span>
+                        <input
+                          type="range" min={0} max={cap} value={Math.min(config.boosts[stat], cap)}
+                          onChange={e => onChange({ ...config, boosts: { ...config.boosts, [stat]: Number(e.target.value) } })}
+                          className="flex-1 accent-blue-500"
+                        />
+                      </div>
+                    );
+                  })}
+                  <p className={`text-[10px] mt-0.5 ${over ? 'text-red-400' : 'text-gray-600'}`}>
+                    {total} / {budget} boosts used
+                  </p>
                 </div>
-              ))}
-              <p className="text-[10px] text-gray-600 mt-0.5">
-                {config.boosts.health + config.boosts.damage + config.boosts.speed} / {config.level} boosts used
-              </p>
-            </div>
+              );
+            })()
           )}
 
           {/* Enhancements */}
