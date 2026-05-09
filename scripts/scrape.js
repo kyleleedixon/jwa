@@ -88,8 +88,12 @@ const SLUGS = [
 
 const BASE_URL = 'https://www.paleo.gg/games/jurassic-world-alive/dinodex/';
 const HEADERS = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36' };
-const CONCURRENCY = 8;
+const CONCURRENCY = 5;
 const DELAY_MS = 300;
+
+// Prevent MaxListenersExceededWarning from concurrent TLS connections
+require('https').globalAgent.setMaxListeners(20);
+require('http').globalAgent.setMaxListeners(20);
 
 function parsePageProps(html) {
   const match = html.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/);
@@ -296,7 +300,8 @@ async function main() {
   console.log(`  Saved to ${outPath}`);
 
   const metaPath = path.join(__dirname, '../src/data/meta.json');
-  fs.writeFileSync(metaPath, JSON.stringify({ lastModifiedDate }, null, 2));
+  const existingMeta = JSON.parse(fs.readFileSync(metaPath, 'utf8') || '{}');
+  fs.writeFileSync(metaPath, JSON.stringify({ ...existingMeta, lastModifiedDate }, null, 2));
   console.log(`  Saved meta to ${metaPath}`);
 }
 
