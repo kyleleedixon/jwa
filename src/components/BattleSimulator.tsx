@@ -123,29 +123,28 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
             />
           </div>
 
-          {/* Boosts */}
-          {(() => {
-            const isOmega = config.creature?.rarity === 'omega';
-            const budget = isOmega ? config.level * 7 : config.level;
-            const used = config.boosts.health + config.boosts.damage + config.boosts.speed;
-            return (
-              <div className="w-full max-w-xs flex flex-col gap-1.5">
-                {(['health','damage','speed'] as const).map(stat => (
-                  <div key={stat} className="flex items-center gap-2">
-                    <span className="text-xs text-gray-500 w-14 capitalize shrink-0">{stat} {config.boosts[stat]}</span>
-                    <input
-                      type="range" min={0} max={20} value={config.boosts[stat]}
-                      onChange={e => onChange({ ...config, boosts: { ...config.boosts, [stat]: Number(e.target.value) } })}
-                      className="flex-1 accent-blue-500"
-                    />
-                  </div>
-                ))}
-                <p className="text-[10px] text-gray-600 mt-0.5">
-                  {used} / {budget} {isOmega ? 'omega points used' : 'boosts used'}
-                </p>
-              </div>
-            );
-          })()}
+          {/* Boosts (non-omega only) */}
+          {config.creature?.rarity !== 'omega' ? (
+            <div className="w-full max-w-xs flex flex-col gap-1.5">
+              {(['health','damage','speed'] as const).map(stat => (
+                <div key={stat} className="flex items-center gap-2">
+                  <span className="text-xs text-gray-500 w-14 capitalize shrink-0">{stat} {config.boosts[stat]}</span>
+                  <input
+                    type="range" min={0} max={20} value={config.boosts[stat]}
+                    onChange={e => onChange({ ...config, boosts: { ...config.boosts, [stat]: Number(e.target.value) } })}
+                    className="flex-1 accent-blue-500"
+                  />
+                </div>
+              ))}
+              <p className="text-[10px] text-gray-600 mt-0.5">
+                {config.boosts.health + config.boosts.damage + config.boosts.speed} / {config.level} boosts used
+              </p>
+            </div>
+          ) : (
+            <p className="text-[10px] text-gray-500 max-w-xs">
+              Omegas use omega points — simulated at base stats for this level.
+            </p>
+          )}
         </>
       )}
     </div>
@@ -286,7 +285,6 @@ export default function BattleSimulator({ creatures }: { creatures: Creature[] }
         <a href="/" className="text-gray-400 hover:text-white transition-colors text-sm">← Dinodex</a>
         <span className="text-gray-700">/</span>
         <h1 className="text-sm font-semibold text-white">Battle Simulator</h1>
-        <span className="ml-auto text-xs text-yellow-500/80 bg-yellow-500/10 border border-yellow-500/20 px-2 py-0.5 rounded-full font-medium">Beta</span>
       </div>
 
       <div className="max-w-2xl mx-auto px-4 py-8 flex flex-col gap-6">
