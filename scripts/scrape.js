@@ -88,8 +88,12 @@ const SLUGS = [
 
 const BASE_URL = 'https://www.paleo.gg/games/jurassic-world-alive/dinodex/';
 const HEADERS = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36' };
-const CONCURRENCY = 8;
+const CONCURRENCY = 5;
 const DELAY_MS = 300;
+
+// Prevent MaxListenersExceededWarning from concurrent TLS connections
+require('https').globalAgent.setMaxListeners(20);
+require('http').globalAgent.setMaxListeners(20);
 
 function parsePageProps(html) {
   const match = html.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/);
@@ -185,6 +189,7 @@ async function fetchCreature(slug, moveNames) {
         ...(d.flock > 1 && { flock: d.flock }),
         ...(d.move_unlock_lv && Object.keys(d.move_unlock_lv).length > 0 && { move_unlock_lv: d.move_unlock_lv }),
         ...(d.points && { points: d.points }),
+        ...(d.enhancements && d.enhancements.length > 0 && { enhancements: d.enhancements }),
       };
     } catch (err) {
       if (attempt === 3) {
@@ -291,6 +296,20 @@ async function main() {
   } catch {
     console.log('  Changelog: skipped (no existing data to diff against).');
   }
+
+  // Preserve fields not scraped from paleo.gg (e.g. enhancements)
+  try {
+    const oldData = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+    const oldMap = new Map(oldData.map(c => [c.uuid, c]));
+    const PRESERVE = ['enhancements'];
+    for (const c of results) {
+      const old = oldMap.get(c.uuid);
+      if (!old) continue;
+      for (const key of PRESERVE) {
+        if (old[key] && !c[key]) c[key] = old[key];
+      }
+    }
+  } catch { /* first run, nothing to preserve */ }
 
   fs.writeFileSync(outPath, JSON.stringify(results, null, 2));
   console.log(`  Saved to ${outPath}`);

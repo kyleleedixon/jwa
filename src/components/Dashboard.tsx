@@ -20,6 +20,7 @@ interface Props {
   version: string;
   changelog: { date: string; version: string; changes: unknown[] }[];
   user: { name: string | null; image: string | null };
+  tierRanks: Record<string, { rank: number; tier: 'S' | 'A' | 'B' | 'C' | 'D'; winRate: number }>;
 }
 
 type Filters = Record<string, Set<string>>;
@@ -46,7 +47,7 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: 'critm', label: 'CRIT DMG' },
 ];
 
-export default function Dashboard({ creatures, lastModifiedDate, version, changelog, user }: Props) {
+export default function Dashboard({ creatures, lastModifiedDate, version, changelog, user, tierRanks }: Props) {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [page, setPage] = useState(1);
@@ -165,6 +166,7 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
           creatures={creatures}
           onClose={handleModalClose}
           onNavigate={setSelected}
+          tierRank={tierRanks[selected.uuid]}
         />
       )}
       {helpOpen && <HelpModal onClose={() => setHelpOpen(false)} />}
@@ -187,7 +189,7 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
       {/* header */}
       <header className="border-b border-slate-700 bg-slate-900/95 sticky top-0 z-10 backdrop-blur">
         <div className="max-w-screen-2xl mx-auto px-3 sm:px-4 lg:px-6 py-2.5 sm:py-3 flex flex-col gap-2">
-          {/* top row: filters + title + actions + user */}
+          {/* top row: filters + title + nav + actions + user */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => setSidebarOpen(o => !o)}
@@ -209,6 +211,10 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
             <h1 className="font-bold text-base sm:text-lg text-white tracking-tight shrink-0">
               JWA <span className="text-blue-400">Dinodex</span>
             </h1>
+            <nav className="hidden sm:flex items-center gap-1 shrink-0">
+              <a href="/tier-list" className="px-2.5 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-slate-700 transition-colors">Tier List</a>
+              <a href="/battle" className="px-2.5 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-slate-700 transition-colors">Battle Sim</a>
+            </nav>
             {/* search: hidden on mobile (shown in second row), visible sm+ */}
             <div className="hidden sm:block flex-1 min-w-0">
               <input
@@ -322,7 +328,7 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 sm:gap-3">
                 {visible.map(c => (
                   <div key={c.uuid} onClick={() => setSelected(c)}>
-                    <CreatureCard creature={c} />
+                    <CreatureCard creature={c} tierRank={tierRanks[c.uuid]} />
                   </div>
                 ))}
               </div>

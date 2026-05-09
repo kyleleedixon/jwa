@@ -12,11 +12,20 @@ import {
   RARITY_ORDER,
 } from '@/lib/labels';
 
+const TIER_BADGE: Record<string, string> = {
+  S: 'bg-red-500/80 text-red-100 border-red-400/60',
+  A: 'bg-orange-500/80 text-orange-100 border-orange-400/60',
+  B: 'bg-yellow-500/80 text-yellow-100 border-yellow-400/60',
+  C: 'bg-blue-500/80 text-blue-100 border-blue-400/60',
+  D: 'bg-slate-500/80 text-slate-200 border-slate-400/60',
+};
+
 interface Props {
   creature: Creature;
+  tierRank?: { rank: number; tier: string; winRate: number };
 }
 
-export default function CreatureCard({ creature }: Props) {
+export default function CreatureCard({ creature, tierRank }: Props) {
   const rarityColor = RARITY_COLORS[creature.rarity] ?? 'text-gray-300 border-gray-500';
   const rarityBg = RARITY_BG[creature.rarity] ?? 'bg-gray-500/20';
   const classColor = CLASS_COLORS[creature.class] ?? 'text-gray-400';
@@ -36,6 +45,11 @@ export default function CreatureCard({ creature }: Props) {
           onError={(e) => { (e.target as HTMLImageElement).style.opacity = '0.3'; }}
           unoptimized
         />
+        {tierRank && (
+          <span className={`absolute top-1.5 left-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded border ${TIER_BADGE[tierRank.tier] ?? TIER_BADGE.D}`}>
+            {tierRank.tier} #{tierRank.rank}
+          </span>
+        )}
       </div>
 
       {/* info */}

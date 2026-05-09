@@ -1,1 +1,119 @@
-[]
+[
+  {
+    "date": "2026-05-09",
+    "version": "2026-05-03",
+    "changes": [
+      {
+        "type": "updated",
+        "uuid": "aquilosaurus",
+        "name": "Aquilosaurus",
+        "stats": {
+          "damage": [
+            1600,
+            1650
+          ]
+        }
+      },
+      {
+        "type": "updated",
+        "uuid": "ardentismaxima",
+        "name": "Ardentismaxima",
+        "stats": {
+          "critm": [
+            125,
+            150
+          ]
+        }
+      },
+      {
+        "type": "updated",
+        "uuid": "fukuitops",
+        "name": "Fukuitops",
+        "stats": {
+          "health": [
+            4900,
+            4800
+          ]
+        }
+      },
+      {
+        "type": "updated",
+        "uuid": "glyptosavis",
+        "name": "Glyptosavis",
+        "stats": {
+          "critm": [
+            140,
+            150
+          ]
+        }
+      },
+      {
+        "type": "updated",
+        "uuid": "ovylenken",
+        "name": "Ovylenken",
+        "stats": {
+          "health": [
+            4000,
+            4150
+          ],
+          "damage": [
+            1250,
+            1450
+          ],
+          "speed": [
+            131,
+            132
+          ]
+        }
+      },
+      {
+        "type": "updated",
+        "uuid": "paramoloch",
+        "name": "Paramoloch",
+        "stats": {
+          "health": [
+            4350,
+            4600
+          ]
+        }
+      },
+      {
+        "type": "updated",
+        "uuid": "proto_lux",
+        "name": "Proto Lux",
+        "stats": {
+          "damage": [
+            1550,
+            1500
+          ]
+        }
+      },
+      {
+        "type": "updated",
+        "uuid": "pyrosuchus",
+        "name": "Pyrosuchus",
+        "stats": {
+          "health": [
+            3750,
+            4000
+          ],
+          "armor": [
+            15,
+            20
+          ]
+        }
+      },
+      {
+        "type": "updated",
+        "uuid": "titanotholus",
+        "name": "Titanotholus",
+        "stats": {
+          "damage": [
+            1600,
+            1500
+          ]
+        }
+      }
+    ]
+  }
+]
