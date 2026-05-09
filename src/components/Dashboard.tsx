@@ -263,15 +263,17 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
               </div>
             </div>
           </div>
-          {/* search: full-width second row on mobile only */}
-          <div className="sm:hidden">
+          {/* search + nav: second row on mobile only */}
+          <div className="sm:hidden flex items-center gap-2">
             <input
               type="text"
               placeholder="Search…"
               value={search}
               onChange={e => { setSearch(e.target.value); setPage(1); }}
-              className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
+              className="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
             />
+            <a href="/tier-list" className="shrink-0 px-2.5 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white bg-slate-700 hover:bg-slate-600 transition-colors whitespace-nowrap">Tier List</a>
+            <a href="/battle" className="shrink-0 px-2.5 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white bg-slate-700 hover:bg-slate-600 transition-colors whitespace-nowrap">Battle</a>
           </div>
         </div>
       </header>
