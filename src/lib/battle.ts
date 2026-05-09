@@ -22,6 +22,10 @@ export interface BattleConfig {
   levelB: number;
   boostsA?: BattleBoosts;
   boostsB?: BattleBoosts;
+  omegaAllocA?: Record<string, number>;
+  omegaAllocB?: Record<string, number>;
+  enhancementLevelA?: number;
+  enhancementLevelB?: number;
 }
 
 export interface ActiveEffect {
@@ -70,10 +74,41 @@ export interface BattleResult {
 
 // ─── Fighter initialisation ───────────────────────────────────────────────────
 
-export function initFighter(id: 'A' | 'B', creature: Creature, level: number, boosts: BattleBoosts = { health: 0, damage: 0, speed: 0 }): Fighter {
-  const hp  = Math.round(statAtLevel(creature.health, level) * (1 + 0.025 * boosts.health));
-  const dmg = Math.round(statAtLevel(creature.damage, level) * (1 + 0.025 * boosts.damage));
-  const spd = statAtLevel(creature.speed, level) + boosts.speed * 2;
+export function initFighter(
+  id: 'A' | 'B',
+  creature: Creature,
+  level: number,
+  boosts: BattleBoosts = { health: 0, damage: 0, speed: 0 },
+  omegaAlloc?: Record<string, number>,
+  enhancementLevel?: number,
+): Fighter {
+  let hp: number, dmg: number, spd: number, armor: number, crit: number, critm: number;
+
+  if (creature.rarity === 'omega' && creature.points && omegaAlloc) {
+    const { delta, cap } = creature.points;
+    hp    = Math.min(creature.health + (omegaAlloc.health ?? 0) * (delta.health ?? 0), cap.health ?? Infinity);
+    dmg   = Math.min(creature.damage + (omegaAlloc.damage ?? 0) * (delta.damage ?? 0), cap.damage ?? Infinity);
+    spd   = Math.min(creature.speed  + (omegaAlloc.speed  ?? 0) * (delta.speed  ?? 0), cap.speed  ?? Infinity);
+    armor = Math.min(creature.armor  + (omegaAlloc.armor  ?? 0) * (delta.armor  ?? 0), cap.armor  ?? creature.armor);
+    crit  = Math.min(creature.crit   + (omegaAlloc.crit   ?? 0) * (delta.crit   ?? 0), cap.crit   ?? creature.crit);
+    critm = Math.min(creature.critm  + (omegaAlloc.critm  ?? 0) * (delta.critm  ?? 0), cap.critm  ?? creature.critm);
+  } else {
+    hp    = Math.round(statAtLevel(creature.health, level) * (1 + 0.025 * boosts.health));
+    dmg   = Math.round(statAtLevel(creature.damage, level) * (1 + 0.025 * boosts.damage));
+    spd   = statAtLevel(creature.speed, level) + boosts.speed * 2;
+    armor = creature.armor;
+    crit  = creature.crit;
+    critm = creature.critm;
+  }
+
+  // Enhancements: multiplicative for HP/DMG (value=110 → ×1.1), additive for speed
+  if (enhancementLevel && creature.enhancements) {
+    for (const enh of creature.enhancements.slice(0, enhancementLevel)) {
+      if (enh.rwd.type === 'health')  hp  = Math.floor(hp  * (enh.rwd.value as number) / 100);
+      else if (enh.rwd.type === 'damage') dmg = Math.floor(dmg * (enh.rwd.value as number) / 100);
+      else if (enh.rwd.type === 'speed')  spd += enh.rwd.value as number;
+    }
+  }
 
   const flockCount = creature.flock ?? 1;
   const memberMaxHp = flockCount > 1 ? Math.floor(hp / flockCount) : hp;
@@ -84,7 +119,7 @@ export function initFighter(id: 'A' | 'B', creature: Creature, level: number, bo
   creature.moves.filter(m => m.type === 'regular' && m.delay > 0)
     .forEach(m => { delayLeft[m.uuid] = m.delay; });
 
-  return { id, creature, hp: totalHp, maxHp: totalHp, baseDamage: dmg, baseSpeed: spd, armor: creature.armor, crit: creature.crit, critm: creature.critm, effects: [], cooldowns: {}, delayLeft, stunTurns: 0, memberHp, memberMaxHp };
+  return { id, creature, hp: totalHp, maxHp: totalHp, baseDamage: dmg, baseSpeed: spd, armor, crit, critm, effects: [], cooldowns: {}, delayLeft, stunTurns: 0, memberHp, memberMaxHp };
 }
 
 // ─── Effect helpers ───────────────────────────────────────────────────────────
@@ -711,8 +746,8 @@ export function simulateTeamBattle(
   teamA: Creature[], teamB: Creature[], config: BattleConfig,
 ): TeamBattleResult {
   const level = config.levelA;
-  const sideA: TeamSide = { id: 'A', fighters: teamA.map(c => initFighter('A', c, level, config.boostsA)), activeIdx: 0, deaths: 0, justSwappedIn: false };
-  const sideB: TeamSide = { id: 'B', fighters: teamB.map(c => initFighter('B', c, level, config.boostsB)), activeIdx: 0, deaths: 0, justSwappedIn: false };
+  const sideA: TeamSide = { id: 'A', fighters: teamA.map(c => initFighter('A', c, level, config.boostsA, config.omegaAllocA, config.enhancementLevelA)), activeIdx: 0, deaths: 0, justSwappedIn: false };
+  const sideB: TeamSide = { id: 'B', fighters: teamB.map(c => initFighter('B', c, level, config.boostsB, config.omegaAllocB, config.enhancementLevelB)), activeIdx: 0, deaths: 0, justSwappedIn: false };
   const sink: string[] = [];
 
   outer: for (let turn = 1; turn <= 200; turn++) {
@@ -800,8 +835,8 @@ export function simulateTeamBattle(
 const MAX_TURNS = 50;
 
 export function simulateBattle(creatureA: Creature, creatureB: Creature, config: BattleConfig): BattleResult {
-  const A = initFighter('A', creatureA, config.levelA, config.boostsA);
-  const B = initFighter('B', creatureB, config.levelB, config.boostsB);
+  const A = initFighter('A', creatureA, config.levelA, config.boostsA, config.omegaAllocA, config.enhancementLevelA);
+  const B = initFighter('B', creatureB, config.levelB, config.boostsB, config.omegaAllocB, config.enhancementLevelB);
   const log: BattleLogEntry[] = [];
 
   for (let turn = 1; turn <= MAX_TURNS && A.hp > 0 && B.hp > 0; turn++) {

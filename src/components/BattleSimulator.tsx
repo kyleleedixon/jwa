@@ -12,14 +12,29 @@ const RARITY_COLORS: Record<string, string> = {
   legendary: 'text-yellow-400', unique: 'text-orange-400', apex: 'text-red-400', omega: 'text-pink-400',
 };
 
+const STAT_KEYS = ['health', 'damage', 'speed', 'armor', 'crit', 'critm'] as const;
+const STAT_LABELS: Record<string, string> = { health: 'HP', damage: 'DMG', speed: 'SPD', armor: 'ARM', crit: 'Crit', critm: 'CritM' };
+
 interface SlotConfig {
   creature: Creature | null;
   level: number;
   boosts: BattleBoosts;
+  omegaAlloc: Record<string, number>;
+  enhancementLevel: number;
 }
 
 function emptySlot(): SlotConfig {
-  return { creature: null, level: 26, boosts: { health: 0, damage: 0, speed: 0 } };
+  return { creature: null, level: 26, boosts: { health: 0, damage: 0, speed: 0 }, omegaAlloc: {}, enhancementLevel: 0 };
+}
+
+function enhLabel(enh: { rwd: { type: string; value: number | string } }): string {
+  const { type, value } = enh.rwd;
+  if (type === 'health') return `+${value}% HP`;
+  if (type === 'damage') return `+${value}% DMG`;
+  if (type === 'speed') return `+${value} SPD`;
+  if (type === 'boost_max') return `+${value} Boost`;
+  if (type === 'moves_reactive') return 'New Move';
+  return type;
 }
 
 interface CreaturePickerProps {
@@ -54,7 +69,7 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
 
   function selectCreature(c: Creature) {
     const minL = MIN_LEVEL[c.rarity] ?? 1;
-    onChange({ ...config, creature: c, level: Math.max(config.level, minL) });
+    onChange({ ...config, creature: c, level: Math.max(config.level, minL), omegaAlloc: {}, enhancementLevel: 0 });
     setOpen(false);
     setQuery('');
   }
@@ -123,8 +138,51 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
             />
           </div>
 
-          {/* Boosts (non-omega only) */}
-          {config.creature?.rarity !== 'omega' ? (
+          {/* Omega point sliders */}
+          {config.creature?.rarity === 'omega' && config.creature.points ? (() => {
+            const { delta, pcap, cap } = config.creature.points;
+            const budget = config.level * 7;
+            const allocated = Object.values(config.omegaAlloc).reduce((s, v) => s + v, 0);
+            const remaining = budget - allocated;
+            const activeStats = STAT_KEYS.filter(k => (delta[k] ?? 0) > 0 && (pcap[k] ?? 0) > 0);
+            function changeAlloc(stat: string, d: number) {
+              const cur = config.omegaAlloc[stat] ?? 0;
+              const base = (config.creature as unknown as Record<string, number>)[stat] ?? 0;
+              const effectiveCap = Math.min(pcap[stat] ?? 0, Math.floor(((cap[stat] ?? Infinity) - base) / (delta[stat] ?? 1)));
+              const next = Math.max(0, Math.min(effectiveCap, cur + d, cur + remaining));
+              onChange({ ...config, omegaAlloc: { ...config.omegaAlloc, [stat]: next } });
+            }
+            return (
+              <div className="w-full max-w-xs flex flex-col gap-1.5">
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[10px] text-gray-500 uppercase tracking-wider">Omega Points</span>
+                  <span className={`text-[10px] font-mono font-semibold ${remaining === 0 ? 'text-green-400' : 'text-yellow-400'}`}>
+                    {allocated} / {budget}
+                  </span>
+                </div>
+                {activeStats.map(k => {
+                  const alloc = config.omegaAlloc[k] ?? 0;
+                  const base = (config.creature as unknown as Record<string, number>)[k] ?? 0;
+                  const effectiveCap = Math.min(pcap[k] ?? 0, Math.floor(((cap[k] ?? Infinity) - base) / (delta[k] ?? 1)));
+                  return (
+                    <div key={k} className="flex items-center gap-1.5">
+                      <span className="text-[10px] text-gray-500 w-10 shrink-0">{STAT_LABELS[k]}</span>
+                      <button onClick={() => changeAlloc(k, -1)} disabled={alloc === 0}
+                        className="w-5 h-5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 text-white text-xs font-bold shrink-0 flex items-center justify-center">−</button>
+                      <div className="flex-1 h-1.5 bg-slate-700 rounded-full overflow-hidden">
+                        <div className={`h-full rounded-full ${alloc >= effectiveCap ? 'bg-green-500' : 'bg-pink-500'}`}
+                          style={{ width: `${effectiveCap > 0 ? (alloc / effectiveCap) * 100 : 0}%` }} />
+                      </div>
+                      <button onClick={() => changeAlloc(k, 1)} disabled={alloc >= effectiveCap || remaining === 0}
+                        className="w-5 h-5 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 text-white text-xs font-bold shrink-0 flex items-center justify-center">+</button>
+                      <span className="text-[10px] text-gray-500 w-8 text-right shrink-0">{alloc}/{effectiveCap}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })() : config.creature && (
+            /* Regular boosts for non-omegas */
             <div className="w-full max-w-xs flex flex-col gap-1.5">
               {(['health','damage','speed'] as const).map(stat => (
                 <div key={stat} className="flex items-center gap-2">
@@ -140,10 +198,31 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
                 {config.boosts.health + config.boosts.damage + config.boosts.speed} / {config.level} boosts used
               </p>
             </div>
-          ) : (
-            <p className="text-[10px] text-gray-500 max-w-xs">
-              Omegas use omega points — simulated at base stats for this level.
-            </p>
+          )}
+
+          {/* Enhancements */}
+          {config.creature?.enhancements && config.creature.enhancements.length > 0 && (
+            <div className="w-full max-w-xs flex flex-col gap-1.5">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] text-gray-500 uppercase tracking-wider">Enhancements</span>
+                <span className={`text-[10px] font-semibold ${config.enhancementLevel === config.creature.enhancements.length ? 'text-green-400' : 'text-blue-400'}`}>
+                  {config.enhancementLevel} / {config.creature.enhancements.length}
+                </span>
+              </div>
+              <div className="flex gap-1">
+                {config.creature.enhancements.map((enh, i) => (
+                  <button key={i}
+                    onClick={() => onChange({ ...config, enhancementLevel: config.enhancementLevel === i + 1 ? i : i + 1 })}
+                    className={`flex-1 text-center rounded py-1 px-0.5 text-[10px] font-medium transition-colors border ${
+                      i < config.enhancementLevel
+                        ? 'bg-violet-600/20 border-violet-500/50 text-violet-300'
+                        : 'bg-slate-800 border-slate-700 text-gray-500 hover:border-slate-500 hover:text-gray-300'
+                    }`}>
+                    {enhLabel(enh)}
+                  </button>
+                ))}
+              </div>
+            </div>
           )}
         </>
       )}
@@ -267,6 +346,10 @@ export default function BattleSimulator({ creatures }: { creatures: Creature[] }
         levelB: slotB.level,
         boostsA: slotA.boosts,
         boostsB: slotB.boosts,
+        omegaAllocA: slotA.omegaAlloc,
+        omegaAllocB: slotB.omegaAlloc,
+        enhancementLevelA: slotA.enhancementLevel,
+        enhancementLevelB: slotB.enhancementLevel,
       });
       setResult(r);
     } catch (e) {
