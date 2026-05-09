@@ -311,7 +311,7 @@ export default function TierList({ entries, level, computedAt }: Props) {
         })}
 
         <p className="text-xs text-gray-600 text-center pb-4">
-          Full 1v1 round-robin simulation across all {entries[0]?.poolSize ?? '?'} non-omega creatures at Lv {level} · auto-updated each paleo.gg scrape · Omegas excluded (incomparable point system)
+          Full 1v1 round-robin simulation across all {entries[0]?.poolSize ?? '?'} creatures at Lv {level} · Omegas simulated with auto-allocated points · auto-updated each paleo.gg scrape
         </p>
       </div>
     </div>

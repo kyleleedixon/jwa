@@ -2,7 +2,6 @@ import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { Creature } from '../src/types/creature';
 import { computeTierList } from '../src/lib/tierlist';
-import { RARITY_ORDER } from '../src/lib/labels';
 
 const creaturesPath = join(__dirname, '../src/data/creatures.json');
 const outPath       = join(__dirname, '../src/data/tierlist.json');
@@ -11,13 +10,39 @@ const creatures = JSON.parse(readFileSync(creaturesPath, 'utf8')) as Creature[];
 
 const LEVEL = 26;
 
-// Omegas use a separate point-based progression system — their stats at any fixed
-// point allocation are not comparable to level 26 base stats for other rarities.
-// They are ranked separately at their cap stats (fully upgraded).
-const NON_OMEGA = RARITY_ORDER.filter(r => r !== 'omega');
+// Greedy point allocation: damage → health → speed → critm → crit → armor
+const POINT_PRIORITY = ['damage', 'health', 'speed', 'critm', 'crit', 'armor'];
 
-process.stdout.write(`  Computing tier list (non-omega, ${creatures.filter(c => NON_OMEGA.includes(c.rarity)).length} creatures)…`);
-const t = computeTierList(creatures, NON_OMEGA, LEVEL);
+function applyOmegaPoints(creature: Creature, level: number): Creature {
+  if (!creature.points) return creature;
+  const { delta, pcap } = creature.points;
+  let remaining = level * 7;
+  const alloc: Record<string, number> = {};
+  for (const stat of POINT_PRIORITY) {
+    if (remaining <= 0) break;
+    const max = pcap[stat] ?? 0;
+    if (max <= 0) continue;
+    alloc[stat] = Math.min(max, remaining);
+    remaining -= alloc[stat];
+  }
+  return {
+    ...creature,
+    health: creature.health + (alloc.health ?? 0) * (delta.health ?? 0),
+    damage: creature.damage + (alloc.damage ?? 0) * (delta.damage ?? 0),
+    speed:  creature.speed  + (alloc.speed  ?? 0) * (delta.speed  ?? 0),
+    armor:  creature.armor  + (alloc.armor  ?? 0) * (delta.armor  ?? 0),
+    crit:   creature.crit   + (alloc.crit   ?? 0) * (delta.crit   ?? 0),
+    critm:  creature.critm  + (alloc.critm  ?? 0) * (delta.critm  ?? 0),
+  };
+}
+
+// Pre-bake omega points into base stats so statAtLevel(stat, 26) = stat (multiplier = 1.0)
+const pool = creatures.map(c =>
+  c.rarity === 'omega' ? applyOmegaPoints(c, LEVEL) : c
+);
+
+process.stdout.write(`  Computing tier list (${pool.length} creatures, omegas auto-allocated)…`);
+const t = computeTierList(pool, [], LEVEL);
 
 const result = {
   level: LEVEL,
