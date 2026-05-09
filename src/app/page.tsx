@@ -3,6 +3,7 @@ import { Creature } from '@/types/creature';
 import creaturesData from '@/data/creatures.json';
 import metaData from '@/data/meta.json';
 import changelogData from '@/data/changelog.json';
+import tierlistData from '@/data/tierlist.json';
 import { auth } from '@/../auth';
 import { redirect } from 'next/navigation';
 import { decodeShare } from '@/lib/share';
@@ -45,5 +46,8 @@ export default async function Home() {
   if (!session?.user) redirect('/login');
 
   const { name, image } = session.user;
-  return <Dashboard creatures={creatures} lastModifiedDate={metaData.lastModifiedDate} version={metaData.version} changelog={changelogData} user={{ name: name ?? null, image: image ?? null }} />;
+  const tierRanks = Object.fromEntries(
+    tierlistData.entries.map((e, i) => [e.uuid, { rank: i + 1, tier: e.tier as 'S' | 'A' | 'B' | 'C' | 'D' }])
+  );
+  return <Dashboard creatures={creatures} lastModifiedDate={metaData.lastModifiedDate} version={metaData.version} changelog={changelogData} user={{ name: name ?? null, image: image ?? null }} tierRanks={tierRanks} />;
 }

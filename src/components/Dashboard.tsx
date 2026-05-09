@@ -20,6 +20,7 @@ interface Props {
   version: string;
   changelog: { date: string; version: string; changes: unknown[] }[];
   user: { name: string | null; image: string | null };
+  tierRanks: Record<string, { rank: number; tier: 'S' | 'A' | 'B' | 'C' | 'D' }>;
 }
 
 type Filters = Record<string, Set<string>>;
@@ -46,7 +47,7 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: 'critm', label: 'CRIT DMG' },
 ];
 
-export default function Dashboard({ creatures, lastModifiedDate, version, changelog, user }: Props) {
+export default function Dashboard({ creatures, lastModifiedDate, version, changelog, user, tierRanks }: Props) {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [page, setPage] = useState(1);
@@ -314,7 +315,7 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 sm:gap-3">
                 {visible.map(c => (
                   <div key={c.uuid} onClick={() => setSelected(c)}>
-                    <CreatureCard creature={c} />
+                    <CreatureCard creature={c} tierRank={tierRanks[c.uuid]} />
                   </div>
                 ))}
               </div>
