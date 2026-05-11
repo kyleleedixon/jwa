@@ -86,7 +86,7 @@ export default function HelpModal({ onClose }: Props) {
               Click the <Badge>Filters</Badge> button in the header to show or hide the filter panel. A blue number badge shows how many filters are active. On desktop the panel is open by default; on mobile it slides in as a drawer.
             </Item>
             <Item label="Sorting">
-              Use the sort bar above the grid to sort by <Badge>Name</Badge> <Badge>HP</Badge> <Badge>DMG</Badge> <Badge>SPD</Badge> <Badge>ARM</Badge> <Badge>CRIT</Badge> or <Badge>CRIT DMG</Badge>. Clicking a stat defaults to highest-first; clicking again reverses.
+              Use the sort bar above the grid to sort by <Badge>Name</Badge> <Badge>Tier Rank</Badge> <Badge>HP</Badge> <Badge>DMG</Badge> <Badge>SPD</Badge> <Badge>ARM</Badge> <Badge>CRIT</Badge> or <Badge>CRIT DMG</Badge>. Clicking a stat defaults to highest-first; clicking again reverses. Tier Rank sorts by simulation rank — #1 at the top — with unranked creatures at the end.
             </Item>
             <Item label="Load more">
               The grid shows 60 creatures at a time. Scroll to the bottom and click <Badge>Load more</Badge> to see the next batch.
@@ -164,13 +164,13 @@ export default function HelpModal({ onClose }: Props) {
               The top 25 creatures are assigned a tier by rank: <Badge color="red">S</Badge> ranks 1–4 · <Badge color="orange">A</Badge> 5–11 · <Badge color="yellow">B</Badge> 12–18 · <Badge color="blue">C</Badge> 19–24. Ranks 25 and below are listed without a tier.
             </Item>
             <Item label="Omegas">
-              Omega creatures are included with points auto-allocated using a greedy priority order (Damage → Health → Speed → Crit DMG → Crit → Armor) to represent a reasonable optimised build.
+              Omega creatures are included with points auto-allocated using a greedy priority order (Damage → Health → Speed → Crit DMG → Crit → Armor) to represent a reasonable optimised build. The exact build used is shown in the detail panel when you tap an Omega card.
             </Item>
             <Item label="Auto-refresh">
               The tier list recomputes automatically after every daily data scrape, so rankings stay current whenever paleo.gg publishes new stats.
             </Item>
             <Item label="Detail view">
-              Tap any card on the tier list to see which creatures it beats, which it loses to, and its full win/loss/draw record.
+              Tap any card on the tier list to see which creatures it beats, which it loses to, and its full win/loss/draw record. Omega cards additionally show an <Badge color="violet">Omega Build</Badge> section with the point allocation and final simulated stats.
             </Item>
           </Section>
 
