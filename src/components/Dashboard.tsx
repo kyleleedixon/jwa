@@ -34,11 +34,12 @@ const EMPTY_FILTERS: Filters = {
   resistance: new Set(),
 };
 
-type SortKey = 'name' | 'health' | 'damage' | 'speed' | 'armor' | 'crit' | 'critm';
+type SortKey = 'name' | 'health' | 'damage' | 'speed' | 'armor' | 'crit' | 'critm' | 'rank';
 type SortDir = 'asc' | 'desc';
 
 const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: 'name', label: 'Name' },
+  { key: 'rank', label: 'Tier Rank' },
   { key: 'health', label: 'HP' },
   { key: 'damage', label: 'DMG' },
   { key: 'speed', label: 'SPD' },
@@ -104,7 +105,7 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
       if (prev === key) {
         setSortDir(d => d === 'asc' ? 'desc' : 'asc');
       } else {
-        setSortDir(key === 'name' ? 'asc' : 'desc');
+        setSortDir(key === 'name' || key === 'rank' ? 'asc' : 'desc');
       }
       return key;
     });
@@ -145,12 +146,16 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
     list.sort((a, b) => {
       let cmp = 0;
       if (sortKey === 'name') cmp = a.name.localeCompare(b.name);
-      else cmp = (a[sortKey] as number) - (b[sortKey] as number);
+      else if (sortKey === 'rank') {
+        const ra = tierRanks[a.uuid]?.rank ?? Infinity;
+        const rb = tierRanks[b.uuid]?.rank ?? Infinity;
+        cmp = ra - rb;
+      } else cmp = (a[sortKey] as number) - (b[sortKey] as number);
       return sortDir === 'asc' ? cmp : -cmp;
     });
 
     return list;
-  }, [creatures, search, filters, sortKey, sortDir]);
+  }, [creatures, search, filters, sortKey, sortDir, tierRanks]);
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const visible = filtered.slice(0, page * PAGE_SIZE);
