@@ -13,8 +13,8 @@ const LEVEL = 26;
 // Greedy point allocation: damage → health → speed → critm → crit → armor
 const POINT_PRIORITY = ['damage', 'health', 'speed', 'critm', 'crit', 'armor'];
 
-function applyOmegaPoints(creature: Creature, level: number): Creature {
-  if (!creature.points) return creature;
+function applyOmegaPoints(creature: Creature, level: number): { creature: Creature; alloc: Record<string, number> } {
+  if (!creature.points) return { creature, alloc: {} };
   const { delta, pcap } = creature.points;
   let remaining = level * 7;
   const alloc: Record<string, number> = {};
@@ -26,20 +26,27 @@ function applyOmegaPoints(creature: Creature, level: number): Creature {
     remaining -= alloc[stat];
   }
   return {
-    ...creature,
-    health: creature.health + (alloc.health ?? 0) * (delta.health ?? 0),
-    damage: creature.damage + (alloc.damage ?? 0) * (delta.damage ?? 0),
-    speed:  creature.speed  + (alloc.speed  ?? 0) * (delta.speed  ?? 0),
-    armor:  creature.armor  + (alloc.armor  ?? 0) * (delta.armor  ?? 0),
-    crit:   creature.crit   + (alloc.crit   ?? 0) * (delta.crit   ?? 0),
-    critm:  creature.critm  + (alloc.critm  ?? 0) * (delta.critm  ?? 0),
+    creature: {
+      ...creature,
+      health: creature.health + (alloc.health ?? 0) * (delta.health ?? 0),
+      damage: creature.damage + (alloc.damage ?? 0) * (delta.damage ?? 0),
+      speed:  creature.speed  + (alloc.speed  ?? 0) * (delta.speed  ?? 0),
+      armor:  creature.armor  + (alloc.armor  ?? 0) * (delta.armor  ?? 0),
+      crit:   creature.crit   + (alloc.crit   ?? 0) * (delta.crit   ?? 0),
+      critm:  creature.critm  + (alloc.critm  ?? 0) * (delta.critm  ?? 0),
+    },
+    alloc,
   };
 }
 
 // Pre-bake omega points into base stats so statAtLevel(stat, 26) = stat (multiplier = 1.0)
-const pool = creatures.map(c =>
-  c.rarity === 'omega' ? applyOmegaPoints(c, LEVEL) : c
-);
+const omegaAllocs = new Map<string, Record<string, number>>();
+const pool = creatures.map(c => {
+  if (c.rarity !== 'omega') return c;
+  const { creature, alloc } = applyOmegaPoints(c, LEVEL);
+  omegaAllocs.set(c.uuid, alloc);
+  return creature;
+});
 
 process.stdout.write(`  Computing tier list (${pool.length} creatures, omegas auto-allocated)…`);
 const t = computeTierList(pool, [], LEVEL);
@@ -65,20 +72,36 @@ const result = {
   computedAt: new Date().toISOString(),
   durationMs: t.durationMs,
   // Full details for top 25 (used by tier list page)
-  entries: top25.map((e, rank) => ({
-    uuid:     e.creature.uuid,
-    name:     e.creature.name,
-    rarity:   e.creature.rarity,
-    image:    e.creature.image,
-    tier:     rankTier(rank),
-    winRate:  Math.round(e.winRate * 1000) / 1000,
-    wins:     e.wins,
-    losses:   e.losses,
-    draws:    e.draws,
-    poolSize: t.pool.length,
-    beats:    e.beats,
-    losesTo:  e.losesTo,
-  })),
+  entries: top25.map((e, rank) => {
+    const entry: Record<string, unknown> = {
+      uuid:     e.creature.uuid,
+      name:     e.creature.name,
+      rarity:   e.creature.rarity,
+      image:    e.creature.image,
+      tier:     rankTier(rank),
+      winRate:  Math.round(e.winRate * 1000) / 1000,
+      wins:     e.wins,
+      losses:   e.losses,
+      draws:    e.draws,
+      poolSize: t.pool.length,
+      beats:    e.beats,
+      losesTo:  e.losesTo,
+    };
+    if (e.creature.rarity === 'omega') {
+      entry.omegaBuild = {
+        alloc: omegaAllocs.get(e.creature.uuid) ?? {},
+        stats: {
+          health: e.creature.health,
+          damage: e.creature.damage,
+          speed:  e.creature.speed,
+          armor:  e.creature.armor,
+          crit:   e.creature.crit,
+          critm:  e.creature.critm,
+        },
+      };
+    }
+    return entry;
+  }),
   // Rank + tier for every creature (used by Dinodex badges)
   allRanks: t.entries.map((e, rank) => ({
     uuid:    e.creature.uuid,

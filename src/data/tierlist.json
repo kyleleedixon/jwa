@@ -1,7 +1,7 @@
 {
   "level": 26,
-  "computedAt": "2026-05-11T03:09:25.427Z",
-  "durationMs": 3348,
+  "computedAt": "2026-05-11T03:27:06.882Z",
+  "durationMs": 3324,
   "entries": [
     {
       "uuid": "mastodonsaurus",
@@ -514,7 +514,21 @@
         "rajadorixis",
         "segnosaurus",
         "yutyrannus"
-      ]
+      ],
+      "omegaBuild": {
+        "alloc": {
+          "damage": 89,
+          "health": 93
+        },
+        "stats": {
+          "health": 5435,
+          "damage": 2675,
+          "speed": 105,
+          "armor": 4,
+          "crit": 5,
+          "critm": 125
+        }
+      }
     },
     {
       "uuid": "rajadorixis",
@@ -2566,7 +2580,21 @@
         "styracosaurus_lux",
         "titanotholus",
         "utarinex"
-      ]
+      ],
+      "omegaBuild": {
+        "alloc": {
+          "damage": 115,
+          "health": 67
+        },
+        "stats": {
+          "health": 4650,
+          "damage": 2800,
+          "speed": 119,
+          "armor": 0,
+          "crit": 30,
+          "critm": 125
+        }
+      }
     },
     {
       "uuid": "monolomoth",
@@ -7182,7 +7210,21 @@
         "toro",
         "yutyrannus",
         "yuxisaurus"
-      ]
+      ],
+      "omegaBuild": {
+        "alloc": {
+          "damage": 120,
+          "health": 62
+        },
+        "stats": {
+          "health": 4900,
+          "damage": 2150,
+          "speed": 100,
+          "armor": 10,
+          "crit": 5,
+          "critm": 125
+        }
+      }
     },
     {
       "uuid": "olorotitan",
@@ -7695,7 +7737,21 @@
         "tiger",
         "yutyrannus",
         "yuxisaurus"
-      ]
+      ],
+      "omegaBuild": {
+        "alloc": {
+          "damage": 96,
+          "health": 86
+        },
+        "stats": {
+          "health": 4680,
+          "damage": 1935,
+          "speed": 103,
+          "armor": 5,
+          "crit": 0,
+          "critm": 125
+        }
+      }
     },
     {
       "uuid": "becklejara",
@@ -10773,7 +10829,21 @@
         "styracosaurus_lux",
         "tiger",
         "utarinex"
-      ]
+      ],
+      "omegaBuild": {
+        "alloc": {
+          "damage": 104,
+          "health": 78
+        },
+        "stats": {
+          "health": 4270,
+          "damage": 2610,
+          "speed": 117,
+          "armor": 10,
+          "crit": 20,
+          "critm": 125
+        }
+      }
     },
     {
       "uuid": "spinotops",
@@ -12825,7 +12895,21 @@
         "titanotarkus",
         "titanotholus",
         "yutyrannus"
-      ]
+      ],
+      "omegaBuild": {
+        "alloc": {
+          "damage": 112,
+          "health": 70
+        },
+        "stats": {
+          "health": 4120,
+          "damage": 2075,
+          "speed": 107,
+          "armor": 5,
+          "crit": 5,
+          "critm": 125
+        }
+      }
     }
   ],
   "allRanks": [

@@ -5,6 +5,11 @@ import Image from 'next/image';
 import { Tier } from '@/lib/tierlist';
 import { RARITY_COLORS, RARITY_LABELS } from '@/lib/labels';
 
+export interface OmegaBuild {
+  alloc: Record<string, number>;
+  stats: { health: number; damage: number; speed: number; armor: number; crit: number; critm: number };
+}
+
 export interface TierEntry {
   uuid: string;
   name: string;
@@ -18,6 +23,7 @@ export interface TierEntry {
   poolSize: number;
   beats: string[];
   losesTo: string[];
+  omegaBuild?: OmegaBuild;
 }
 
 interface Props {
@@ -200,6 +206,40 @@ function DetailPanel({
           </div>
 
           <p className="text-xs text-gray-500 mb-5">Tested against {entry.poolSize - 1} creatures</p>
+
+          {entry.omegaBuild && (() => {
+            const { alloc, stats } = entry.omegaBuild;
+            const budget = level * 7;
+            const used = Object.values(alloc).reduce((s, v) => s + v, 0);
+            const STAT_ROWS: { key: keyof typeof stats; label: string }[] = [
+              { key: 'health', label: 'HP' },
+              { key: 'damage', label: 'DMG' },
+              { key: 'speed',  label: 'SPD' },
+              { key: 'armor',  label: 'ARM' },
+              { key: 'crit',   label: 'CRIT' },
+              { key: 'critm',  label: 'CRIT DMG' },
+            ];
+            return (
+              <div className="mb-5">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-xs font-semibold text-purple-400 uppercase tracking-wider">Omega Build</h3>
+                  <span className="text-xs text-gray-500">{used} / {budget} pts</span>
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                  {STAT_ROWS.map(({ key, label }) => {
+                    const pts = alloc[key] ?? 0;
+                    return (
+                      <div key={key} className={`rounded-lg p-2 text-center ${pts > 0 ? 'bg-purple-500/10 border border-purple-500/20' : 'bg-slate-700/30 border border-slate-700'}`}>
+                        <div className="text-[10px] text-gray-400 uppercase tracking-wide">{label}</div>
+                        <div className="text-sm font-bold text-white">{stats[key].toLocaleString()}</div>
+                        {pts > 0 && <div className="text-[10px] text-purple-400">{pts} pts</div>}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })()}
 
           {entry.beats.length > 0 && (
             <div className="mb-5">
