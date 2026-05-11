@@ -405,9 +405,9 @@ export function applyMove(move: Move, attacker: Fighter, defender: Fighter, even
   const isFlock = defender.memberHp.length > 1;
 
   for (const eff of effs) {
-    // Determine target in 1v1 context
-    const targetsSelf  = eff.target === 'self';
-    const targetsOpponent = !targetsSelf && eff.target !== 'team' && eff.target !== 'lowest_hp_teammate';
+    // Determine target in 1v1 context; team/teammate effects apply to self
+    const targetsSelf  = eff.target === 'self' || eff.target === 'team' || eff.target === 'lowest_hp_teammate';
+    const targetsOpponent = !targetsSelf;
     const target = targetsSelf ? attacker : defender;
 
     switch (eff.action) {
