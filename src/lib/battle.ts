@@ -370,6 +370,16 @@ function calcDamage(
   return Math.round(Math.max(0, dmg));
 }
 
+// ─── Opponent capability checks ──────────────────────────────────────────────
+// These look at what the opponent can actually do on their next turn so that
+// defensive move values reflect the real battlefield state, not just base stats.
+
+function opponentMovesHaveAction(defender: Fighter, action: string): boolean {
+  return regularMoves(defender).some(m =>
+    moveEffects(defender, m).some(e => e.action === action)
+  );
+}
+
 // ─── Greedy move scorer ───────────────────────────────────────────────────────
 
 export function scoreMoveForDamage(move: Move, attacker: Fighter, defender: Fighter): number {
@@ -408,7 +418,16 @@ export function scoreMoveForDamage(move: Move, attacker: Fighter, defender: Figh
       const resist = resistFraction(defender, 'vulner');
       score += currentDamage(attacker) * (eff.multiplier ?? 0) * (1 - resist) * 0.5;
     } else if (eff.action === 'shield' && (eff.target === 'self' || eff.target === 'team')) {
-      score += currentDamage(defender) * (eff.multiplier ?? 0) * 0.5;
+      // Shield is less valuable if the opponent can strip it next turn
+      const canStrip = opponentMovesHaveAction(defender, 'remove_shield') || opponentMovesHaveAction(defender, 'remove_all_pos');
+      score += currentDamage(defender) * (eff.multiplier ?? 0) * (canStrip ? 0.2 : 0.5);
+    } else if (eff.action === 'dodge' && (eff.target === 'self' || eff.target === 'team')) {
+      // Dodge is nearly worthless if the opponent has bypass_dodge available this turn
+      const canBypass = opponentMovesHaveAction(defender, 'bypass_dodge');
+      score += currentDamage(defender) * (eff.multiplier ?? 0) * (canBypass ? 0.15 : 0.65);
+    } else if (eff.action === 'damage_increase' && (eff.target === 'self' || eff.target === 'team')) {
+      // Value as future damage boost over ~2 attacks
+      score += currentDamage(attacker) * (eff.multiplier ?? 0) * 0.4;
     } else if (eff.action === 'heal' && (eff.target === 'self' || eff.target === 'team')) {
       const healAmt = attacker.baseDamage * (eff.multiplier ?? 0);
       score += Math.min(healAmt, attacker.maxHp - attacker.hp) * 0.6;
