@@ -26,6 +26,8 @@ export interface BattleConfig {
   omegaAllocB?: Record<string, number>;
   enhancementLevelA?: number;
   enhancementLevelB?: number;
+  swapInA?: boolean;
+  swapInB?: boolean;
 }
 
 export interface ActiveEffect {
@@ -849,6 +851,44 @@ export function simulateBattle(creatureA: Creature, creatureB: Creature, config:
   const A = initFighter('A', creatureA, config.levelA, config.boostsA, config.omegaAllocA, config.enhancementLevelA);
   const B = initFighter('B', creatureB, config.levelB, config.boostsB, config.omegaAllocB, config.enhancementLevelB);
   const log: BattleLogEntry[] = [];
+
+  // ── Pre-battle swap-in phase ────────────────────────────────────────────────
+  const swapInA = config.swapInA ?? false;
+  const swapInB = config.swapInB ?? false;
+
+  if (swapInA && !swapInB) {
+    // B gets a free hit on A before A can act
+    const freeMove = chooseBestMove(B, A);
+    const events: string[] = [`B uses ${freeMove.name} (free hit — A swapping in)`];
+    applyMove(freeMove, B, A, events);
+    log.push({ turn: 0, actor: 'B', moveName: freeMove.name, events, hpA: A.hp, hpB: B.hp });
+    // A's passive swap_in moves fire (if any)
+    const siMoves = A.creature.moves.filter(m => m.type === 'swap_in');
+    if (siMoves.length > 0 && A.hp > 0) {
+      const siEvents: string[] = [`A triggers swap-in ability`];
+      for (const m of siMoves) applyMove(m, A, B, siEvents);
+      log.push({ turn: 0, actor: 'A', moveName: 'Swap In', events: siEvents, hpA: A.hp, hpB: B.hp });
+    }
+  } else if (swapInB && !swapInA) {
+    // A gets a free hit on B before B can act
+    const freeMove = chooseBestMove(A, B);
+    const events: string[] = [`A uses ${freeMove.name} (free hit — B swapping in)`];
+    applyMove(freeMove, A, B, events);
+    log.push({ turn: 0, actor: 'A', moveName: freeMove.name, events, hpA: A.hp, hpB: B.hp });
+    // B's passive swap_in moves fire (if any)
+    const siMoves = B.creature.moves.filter(m => m.type === 'swap_in');
+    if (siMoves.length > 0 && B.hp > 0) {
+      const siEvents: string[] = [`B triggers swap-in ability`];
+      for (const m of siMoves) applyMove(m, B, A, siEvents);
+      log.push({ turn: 0, actor: 'B', moveName: 'Swap In', events: siEvents, hpA: A.hp, hpB: B.hp });
+    }
+  } else if (swapInA && swapInB) {
+    // Simultaneous swap — no free hits, but both swap_in moves fire
+    const events: string[] = ['Both swap in simultaneously'];
+    for (const m of A.creature.moves.filter(m => m.type === 'swap_in')) applyMove(m, A, B, events);
+    for (const m of B.creature.moves.filter(m => m.type === 'swap_in')) applyMove(m, B, A, events);
+    log.push({ turn: 0, actor: 'system', moveName: 'Swap In', events, hpA: A.hp, hpB: B.hp });
+  }
 
   for (let turn = 1; turn <= MAX_TURNS && A.hp > 0 && B.hp > 0; turn++) {
     // Determine action order this round

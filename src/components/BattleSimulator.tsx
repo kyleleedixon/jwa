@@ -21,10 +21,11 @@ interface SlotConfig {
   boosts: BattleBoosts;
   omegaAlloc: Record<string, number>;
   enhancementLevel: number;
+  swapIn: boolean;
 }
 
 function emptySlot(): SlotConfig {
-  return { creature: null, level: 26, boosts: { health: 0, damage: 0, speed: 0 }, omegaAlloc: {}, enhancementLevel: 0 };
+  return { creature: null, level: 26, boosts: { health: 0, damage: 0, speed: 0 }, omegaAlloc: {}, enhancementLevel: 0, swapIn: false };
 }
 
 function enhLabel(enh: { rwd: { type: string; value: number | string } }): string {
@@ -133,6 +134,17 @@ function CreaturePicker({ label, creatures, config, onChange, side }: CreaturePi
 
       {config.creature && (
         <>
+          {/* Swap in toggle */}
+          <label className="flex items-center gap-2 cursor-pointer select-none">
+            <div
+              onClick={() => onChange({ ...config, swapIn: !config.swapIn })}
+              className={`relative w-8 h-4 rounded-full transition-colors ${config.swapIn ? 'bg-orange-500' : 'bg-slate-600'}`}
+            >
+              <div className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-transform ${config.swapIn ? 'translate-x-4' : 'translate-x-0.5'}`} />
+            </div>
+            <span className="text-xs text-gray-400">Swaps in <span className="text-gray-600">(opponent gets free hit)</span></span>
+          </label>
+
           {/* Level */}
           <div className="w-full flex items-center gap-3">
             <span className="text-xs text-gray-400 w-12 shrink-0">Lv {config.level}</span>
@@ -376,6 +388,8 @@ export default function BattleSimulator({ creatures }: { creatures: Creature[] }
         omegaAllocB: slotB.omegaAlloc,
         enhancementLevelA: slotA.enhancementLevel,
         enhancementLevelB: slotB.enhancementLevel,
+        swapInA: slotA.swapIn,
+        swapInB: slotB.swapIn,
       });
       setResult(r);
     } catch (e) {
