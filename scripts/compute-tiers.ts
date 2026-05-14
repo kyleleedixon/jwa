@@ -58,20 +58,20 @@ function utilityBonus(creature: Creature): number {
   const hasPriority = creature.moves.some(m => m.type === 'regular' && m.priority > 0);
 
   let bonus = 0;
-  if (moveTypes.has('swap_in'))   bonus += 0.060;
-  if (moveTypes.has('on_escape')) bonus += 0.045;
-  if (moveTypes.has('counter'))   bonus += 0.030;
-  if (hasPriority)                bonus += 0.030;
-  bonus += (Math.min(creature.specialty.length, 20) / 20) * 0.045;
+  if (moveTypes.has('swap_in'))   bonus += 0.040;
+  if (moveTypes.has('on_escape')) bonus += 0.030;
+  if (moveTypes.has('counter'))   bonus += 0.020;
+  if (hasPriority)                bonus += 0.020;
+  bonus += (Math.min(creature.specialty.length, 20) / 20) * 0.030;
 
   for (const s of creature.specialty) {
-    if (SETUP_DEBUFFS.has(s)) bonus += 0.025;
-    if (s === 'cheat_death')  bonus += 0.040;
+    if (SETUP_DEBUFFS.has(s)) bonus += 0.015;
+    if (s === 'cheat_death')  bonus += 0.025;
   }
   const groupCount = creature.specialty.filter(s => s.startsWith('group_') || s === 'target_all_opponents' || s === 'target_team').length;
-  bonus += Math.min(groupCount * 0.020, 0.080);
+  bonus += Math.min(groupCount * 0.015, 0.050);
 
-  return bonus;
+  return Math.min(bonus, 0.20);
 }
 
 // Diminishing returns above 0.85 win rate so high-utility mid-tier creatures
