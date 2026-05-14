@@ -197,7 +197,7 @@ export default function HelpModal({ onClose }: Props) {
               After simulating, click <Badge>Show battle log</Badge> below the result to step through every turn — moves chosen, damage dealt, effects applied, and HP remaining. Swap-in events appear as turn 0 before the main fight.
             </Item>
             <Item label="Move accuracy">
-              The sim picks the best available move each turn based on estimated output — factoring in direct damage, DoT, rend, stuns, setup debuffs, vulnerability, healing, and shields. Second-life (cheat death) and resistance-decrease mechanics are fully simulated. It does not model player decision-making, swap strategies, or reactive move triggers — treat results as a rough power comparison, not a guaranteed outcome.
+              The sim picks the best available move each turn based on estimated output — factoring in direct damage, DoT, rend, stuns, setup debuffs, vulnerability, healing, shields, dodge, and self-buffs. Defensive moves are scored with opponent awareness: dodge value scales with how often the opponent can actually bypass it (based on their bypass cooldown cycle), and shields are discounted when the opponent has a strip move ready. Second-life (cheat death) and resistance-decrease mechanics are fully simulated. It does not model swap strategies or reactive move triggers — treat results as a strong power comparison, not a guaranteed outcome.
             </Item>
           </Section>
 
