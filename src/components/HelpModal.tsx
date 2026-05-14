@@ -160,6 +160,9 @@ export default function HelpModal({ onClose }: Props) {
             <Item label="Overview">
               The <a href="/tier-list" className="text-blue-400 hover:underline">Tier List</a> ranks every creature by running a full round-robin 1v1 simulation at level 26 — each creature fights every other creature and the results are tallied into a win rate.
             </Item>
+            <Item label="Utility adjustment">
+              Pure 1v1 results undervalue creatures whose strength is team-based. The final ranking applies a small utility bonus on top of win rate to credit swap-in pressure, on-escape moves, counter moves, priority moves, setup debuffs (damage reduction, crit reduction, heal reduction, vulnerability, resistance decrease), group and AOE abilities, and second-life (cheat death) mechanics. The bonus is capped so it nudges rankings without overriding battle performance.
+            </Item>
             <Item label="Tiers">
               The top 25 creatures are assigned a tier by rank: <Badge color="red">S</Badge> ranks 1–4 · <Badge color="orange">A</Badge> 5–11 · <Badge color="yellow">B</Badge> 12–18 · <Badge color="blue">C</Badge> 19–24. Ranks 25 and below are listed without a tier.
             </Item>
@@ -194,7 +197,7 @@ export default function HelpModal({ onClose }: Props) {
               After simulating, click <Badge>Show battle log</Badge> below the result to step through every turn — moves chosen, damage dealt, effects applied, and HP remaining. Swap-in events appear as turn 0 before the main fight.
             </Item>
             <Item label="Move accuracy">
-              The sim picks the best available move each turn based on estimated damage output. It does not model player decision-making, swap strategies, or reactive move triggers — treat results as a rough power comparison, not a guaranteed outcome.
+              The sim picks the best available move each turn based on estimated output — factoring in direct damage, DoT, rend, stuns, setup debuffs, vulnerability, healing, and shields. Second-life (cheat death) and resistance-decrease mechanics are fully simulated. It does not model player decision-making, swap strategies, or reactive move triggers — treat results as a rough power comparison, not a guaranteed outcome.
             </Item>
           </Section>
 
