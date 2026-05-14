@@ -270,8 +270,9 @@ function HpBar({ current, max, color }: { current: number; max: number; color: s
 
 function ResultPanel({ result, slotA, slotB }: { result: BattleResult; slotA: SlotConfig; slotB: SlotConfig }) {
   const [expanded, setExpanded] = useState(false);
-  const nameA = slotA.creature!.name;
-  const nameB = slotB.creature!.name;
+  const sameName = slotA.creature!.name === slotB.creature!.name;
+  const nameA = sameName ? `${slotA.creature!.name} (A)` : slotA.creature!.name;
+  const nameB = sameName ? `${slotB.creature!.name} (B)` : slotB.creature!.name;
   const winnerName = result.winner === 'A' ? nameA : result.winner === 'B' ? nameB : null;
   const pctA = Math.round((result.hpA / result.maxHpA) * 100);
   const pctB = Math.round((result.hpB / result.maxHpB) * 100);
