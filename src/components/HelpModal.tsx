@@ -187,8 +187,11 @@ export default function HelpModal({ onClose }: Props) {
             <Item label="Enhancements">
               Creatures with enhancements show toggle buttons when set to level 30 or above. Activate steps one at a time — each step applies its stat bonus to the simulation.
             </Item>
+            <Item label="Swap in">
+              Toggle <Badge color="orange">Swaps in</Badge> on either fighter to simulate a swap-in scenario. The opposing fighter gets one free hit before the swapping creature can act, then any passive swap-in ability fires. If both fighters are set to swap in simultaneously, their swap-in abilities both trigger but neither gets a free hit.
+            </Item>
             <Item label="Battle log">
-              After simulating, click <Badge>Show battle log</Badge> below the result to step through every turn — moves chosen, damage dealt, effects applied, and HP remaining.
+              After simulating, click <Badge>Show battle log</Badge> below the result to step through every turn — moves chosen, damage dealt, effects applied, and HP remaining. Swap-in events appear as turn 0 before the main fight.
             </Item>
             <Item label="Move accuracy">
               The sim picks the best available move each turn based on estimated damage output. It does not model player decision-making, swap strategies, or reactive move triggers — treat results as a rough power comparison, not a guaranteed outcome.
