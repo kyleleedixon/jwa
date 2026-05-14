@@ -380,6 +380,19 @@ function opponentMovesHaveAction(defender: Fighter, action: string): boolean {
   );
 }
 
+// Returns the fraction of dodge duration that is genuinely protected.
+// If bypass_dodge has cooldown C, the opponent can bypass 1 in every C+1 turns,
+// so C/(C+1) of the dodge window provides real protection.
+function dodgeEffectiveFraction(defender: Fighter): number {
+  const bypassMoves = defender.creature.moves.filter(m =>
+    m.type === 'regular' && moveEffects(defender, m).some(e => e.action === 'bypass_dodge')
+  );
+  if (bypassMoves.length === 0) return 1.0;
+  const minCooldown = Math.min(...bypassMoves.map(m => moveCooldown(defender, m)));
+  if (minCooldown === 0) return 0.1; // no cooldown — almost always bypassable
+  return minCooldown / (minCooldown + 1);
+}
+
 // ─── Greedy move scorer ───────────────────────────────────────────────────────
 
 export function scoreMoveForDamage(move: Move, attacker: Fighter, defender: Fighter): number {
@@ -422,9 +435,9 @@ export function scoreMoveForDamage(move: Move, attacker: Fighter, defender: Figh
       const canStrip = opponentMovesHaveAction(defender, 'remove_shield') || opponentMovesHaveAction(defender, 'remove_all_pos');
       score += currentDamage(defender) * (eff.multiplier ?? 0) * (canStrip ? 0.2 : 0.5);
     } else if (eff.action === 'dodge' && (eff.target === 'self' || eff.target === 'team')) {
-      // Dodge is nearly worthless if the opponent has bypass_dodge available this turn
-      const canBypass = opponentMovesHaveAction(defender, 'bypass_dodge');
-      score += currentDamage(defender) * (eff.multiplier ?? 0) * (canBypass ? 0.15 : 0.65);
+      // Value scales with how much of the dodge duration is actually protected,
+      // based on the opponent's bypass_dodge cooldown cycle.
+      score += currentDamage(defender) * (eff.multiplier ?? 0) * dodgeEffectiveFraction(defender) * 0.65;
     } else if (eff.action === 'damage_increase' && (eff.target === 'self' || eff.target === 'team')) {
       // Value as future damage boost over ~2 attacks
       score += currentDamage(attacker) * (eff.multiplier ?? 0) * 0.4;
