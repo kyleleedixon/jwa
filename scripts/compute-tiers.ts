@@ -48,8 +48,49 @@ const pool = creatures.map(c => {
   return creature;
 });
 
+const SETUP_DEBUFFS = new Set(['damage_decrease', 'crit_decrease', 'heal_decrease', 'vulner', 'resistance_decrease_all']);
+
+// Utility bonus rewards team-value traits that 1v1 simulation can't capture:
+// swap-in pressure, escape enablement, persistent counters, priority moves,
+// setup debuffs that weaken opponents for teammates, and group/AOE abilities.
+function utilityBonus(creature: Creature): number {
+  const moveTypes = new Set(creature.moves.map(m => m.type));
+  const hasPriority = creature.moves.some(m => m.type === 'regular' && m.priority > 0);
+
+  let bonus = 0;
+  if (moveTypes.has('swap_in'))   bonus += 0.060;
+  if (moveTypes.has('on_escape')) bonus += 0.045;
+  if (moveTypes.has('counter'))   bonus += 0.030;
+  if (hasPriority)                bonus += 0.030;
+  bonus += (Math.min(creature.specialty.length, 20) / 20) * 0.045;
+
+  for (const s of creature.specialty) {
+    if (SETUP_DEBUFFS.has(s)) bonus += 0.025;
+    if (s === 'cheat_death')  bonus += 0.040;
+  }
+  const groupCount = creature.specialty.filter(s => s.startsWith('group_') || s === 'target_all_opponents' || s === 'target_team').length;
+  bonus += Math.min(groupCount * 0.020, 0.080);
+
+  return bonus;
+}
+
+// Diminishing returns above 0.85 win rate so high-utility mid-tier creatures
+// can climb without displacing genuinely dominant ones.
+function adjustedScore(winRate: number, bonus: number): number {
+  const base = winRate <= 0.85 ? winRate : 0.85 + (winRate - 0.85) * 0.3;
+  return base + bonus;
+}
+
 process.stdout.write(`  Computing tier list (${pool.length} creatures, omegas auto-allocated)…`);
 const t = computeTierList(pool, [], LEVEL);
+
+// Re-sort entries by adjusted score so ranks and tiers reflect utility value.
+t.entries.forEach(e => { (e as { utilityBonus?: number }).utilityBonus = utilityBonus(e.creature); });
+t.entries.sort((a, b) => {
+  const aScore = adjustedScore(a.winRate, (a as { utilityBonus?: number }).utilityBonus ?? 0);
+  const bScore = adjustedScore(b.winRate, (b as { utilityBonus?: number }).utilityBonus ?? 0);
+  return bScore - aScore || b.wins - a.wins;
+});
 
 const top25 = t.entries.slice(0, 25);
 
@@ -78,8 +119,9 @@ const result = {
       name:     e.creature.name,
       rarity:   e.creature.rarity,
       image:    e.creature.image,
-      tier:     rankTier(rank),
-      winRate:  Math.round(e.winRate * 1000) / 1000,
+      tier:         rankTier(rank),
+      winRate:      Math.round(e.winRate * 1000) / 1000,
+      utilityBonus: Math.round(((e as { utilityBonus?: number }).utilityBonus ?? 0) * 1000) / 1000,
       wins:     e.wins,
       losses:   e.losses,
       draws:    e.draws,
@@ -104,10 +146,11 @@ const result = {
   }),
   // Rank + tier for every creature (used by Dinodex badges)
   allRanks: t.entries.map((e, rank) => ({
-    uuid:    e.creature.uuid,
-    rank:    rank + 1,
-    tier:    rank < 25 ? rankTier(rank) : null,
-    winRate: Math.round(e.winRate * 1000) / 1000,
+    uuid:         e.creature.uuid,
+    rank:         rank + 1,
+    tier:         rank < 25 ? rankTier(rank) : null,
+    winRate:      Math.round(e.winRate * 1000) / 1000,
+    utilityBonus: Math.round(((e as { utilityBonus?: number }).utilityBonus ?? 0) * 1000) / 1000,
   })),
 };
 

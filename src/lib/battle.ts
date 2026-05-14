@@ -9,6 +9,7 @@ const RESISTANCE_KEYS = ['rst_crit_decrease','rst_dot','rst_damage_decrease','rs
 const RESISTANCE_FOR_ACTION: Record<string, number> = {
   dot: 1, damage_decrease: 2, rend: 3, speed_decrease: 4, stun: 5,
   swap_prevent: 6, taunt: 7, vulner: 8, armor_decrease: 9, crit_decrease: 0,
+  resistance_decrease_all: 10, heal_decrease: 11,
 };
 
 export function statAtLevel(base: number, level: number): number {
@@ -53,6 +54,7 @@ export interface Fighter {
   cooldowns: Record<string, number>;
   delayLeft: Record<string, number>;
   stunTurns: number;
+  cheatDeathAvailable: boolean;
   memberHp: number[];   // per-member HP; length 1 for non-flock
   memberMaxHp: number;  // max HP per member
 }
@@ -131,7 +133,7 @@ export function initFighter(
   creature.moves.filter(m => m.type === 'regular' && m.delay > 0 && unlockedMoves.has(m.uuid))
     .forEach(m => { delayLeft[m.uuid] = m.delay; });
 
-  return { id, creature, level, unlockedMoves, hp: totalHp, maxHp: totalHp, baseDamage: dmg, baseSpeed: spd, armor, crit, critm, effects: [], cooldowns: {}, delayLeft, stunTurns: 0, memberHp, memberMaxHp };
+  return { id, creature, level, unlockedMoves, hp: totalHp, maxHp: totalHp, baseDamage: dmg, baseSpeed: spd, armor, crit, critm, effects: [], cooldowns: {}, delayLeft, stunTurns: 0, cheatDeathAvailable: creature.specialty?.includes('cheat_death') ?? false, memberHp, memberMaxHp };
 }
 
 // ─── Effect helpers ───────────────────────────────────────────────────────────
@@ -241,6 +243,22 @@ function applyMemberDamage(defender: Fighter, rawDmg: number): { applied: number
   return { applied, absorbed: rawDmg > cap };
 }
 
+// ─── Cheat death ─────────────────────────────────────────────────────────────
+
+const NEGATIVE_EFFECTS = ['damage_decrease','speed_decrease','dot','vulner','armor_decrease','crit_decrease','daze','resistance_decrease_all'];
+
+// Returns true if the creature is truly dead; false if cheat_death saved it.
+function tryRevive(f: Fighter, events: string[]): boolean {
+  if (f.hp > 0) return false;
+  if (!f.cheatDeathAvailable) return true;
+  f.cheatDeathAvailable = false;
+  f.hp = Math.round(f.maxHp * 0.25);
+  f.effects = f.effects.filter(e => !NEGATIVE_EFFECTS.includes(e.action));
+  f.stunTurns = 0;
+  events.push(`${f.id} cheats death — revives at ${f.hp} HP`);
+  return false;
+}
+
 // ─── Available moves ─────────────────────────────────────────────────────────
 
 export function regularMoves(f: Fighter): Move[] {
@@ -263,7 +281,10 @@ export function counterMoves(f: Fighter): Move[] {
 function resistFraction(defender: Fighter, action: string): number {
   const idx = RESISTANCE_FOR_ACTION[action];
   if (idx === undefined) return 0;
-  return (defender.creature.resistance?.[idx] ?? 0) / 100;
+  let resist = (defender.creature.resistance?.[idx] ?? 0) / 100;
+  const rda = getEffect(defender, 'resistance_decrease_all');
+  if (rda) resist = Math.max(0, resist - rda.multiplier);
+  return resist;
 }
 
 // ─── Damage calculation ───────────────────────────────────────────────────────
@@ -375,11 +396,25 @@ export function scoreMoveForDamage(move: Move, attacker: Fighter, defender: Figh
       const resist = resistFraction(defender, 'rend');
       score += defender.hp * (eff.multiplier ?? 0) * (1 - resist);
     } else if (eff.action === 'stun') {
-      // Value a stun as the expected damage the opponent would have dealt that turn
       const resist = resistFraction(defender, 'stun');
       const stunChance = Math.max(0, 1 - resist);
       const turns = eff.duration?.[0] ?? 1;
       score += currentDamage(defender) * stunChance * turns * 0.8;
+    } else if (eff.action === 'damage_decrease' && eff.target !== 'self' && eff.target !== 'team') {
+      const resist = resistFraction(defender, 'damage_decrease');
+      const turns = eff.duration ? (eff.duration.length > 1 ? eff.duration[1] : eff.duration[0]) : 2;
+      score += currentDamage(defender) * (eff.multiplier ?? 0) * turns * (1 - resist) * 0.5;
+    } else if (eff.action === 'vulner' && eff.target !== 'self' && eff.target !== 'team') {
+      const resist = resistFraction(defender, 'vulner');
+      score += currentDamage(attacker) * (eff.multiplier ?? 0) * (1 - resist) * 0.5;
+    } else if (eff.action === 'shield' && (eff.target === 'self' || eff.target === 'team')) {
+      score += currentDamage(defender) * (eff.multiplier ?? 0) * 0.5;
+    } else if (eff.action === 'heal' && (eff.target === 'self' || eff.target === 'team')) {
+      const healAmt = attacker.baseDamage * (eff.multiplier ?? 0);
+      score += Math.min(healAmt, attacker.maxHp - attacker.hp) * 0.6;
+    } else if (eff.action === 'heal_pct' && (eff.target === 'self' || eff.target === 'team')) {
+      const healAmt = attacker.maxHp * (eff.multiplier ?? 0);
+      score += Math.min(healAmt, attacker.maxHp - attacker.hp) * 0.6;
     }
   }
   return score;
@@ -566,6 +601,16 @@ export function applyMove(move: Move, attacker: Fighter, defender: Fighter, even
         }
         break;
       }
+      case 'resistance_decrease_all': {
+        if (!targetsOpponent) break;
+        const resist = resistFraction(defender, 'resistance_decrease_all');
+        const effectiveMult = (eff.multiplier ?? 0) * (1 - resist);
+        if (effectiveMult > 0) {
+          addEffect(defender, 'resistance_decrease_all', effectiveMult, eff.duration);
+          events.push(`${defender.id} all resistances −${(effectiveMult * 100).toFixed(0)}%`);
+        }
+        break;
+      }
       case 'swap_prevent': {
         if (!targetsOpponent) break;
         const resist = resistFraction(defender, 'swap_prevent');
@@ -607,8 +652,7 @@ export function applyMove(move: Move, attacker: Fighter, defender: Fighter, even
       case 'remove_speed_increase':  removeEffects(target, 'speed_increase');  break;
       case 'remove_speed_decrease':  removeEffects(target, 'speed_decrease');  break;
       case 'remove_all_neg': {
-        const negEffects = ['damage_decrease','speed_decrease','stun','dot','vulner','armor_decrease','crit_decrease'];
-        negEffects.forEach(a => removeEffects(target, a));
+        NEGATIVE_EFFECTS.forEach(a => removeEffects(target, a));
         break;
       }
       case 'remove_all_pos': {
@@ -746,6 +790,14 @@ function doSwap(side: TeamSide, newIdx: number, opponent: Fighter) {
 
 // Returns true if match should end (side hit 3 deaths or no replacements left)
 function handleDeath(dyingSide: TeamSide, opponent: Fighter): boolean {
+  const dying = teamActive(dyingSide);
+  if (dying.cheatDeathAvailable) {
+    dying.cheatDeathAvailable = false;
+    dying.hp = Math.round(dying.maxHp * 0.25);
+    dying.effects = dying.effects.filter(e => !NEGATIVE_EFFECTS.includes(e.action));
+    dying.stunTurns = 0;
+    return false;
+  }
   dyingSide.deaths++;
   if (dyingSide.deaths >= 3) return true;
   const next = pickForcedReplacement(dyingSide, opponent);
@@ -923,7 +975,11 @@ export function simulateBattle(creatureA: Creature, creatureB: Creature, config:
       log.push({ turn, actor: first.id, moveName: first.stunTurns > 0 ? 'Stunned' : firstMove.name, events, hpA: A.hp, hpB: B.hp });
     }
 
-    if (second.hp <= 0) break;
+    if (second.hp <= 0) {
+      const re: string[] = [];
+      if (tryRevive(second, re)) break;
+      if (re.length) log.push({ turn, actor: 'system', moveName: 'Cheat Death', events: re, hpA: A.hp, hpB: B.hp });
+    }
 
     // Second fighter's action
     {
@@ -944,7 +1000,11 @@ export function simulateBattle(creatureA: Creature, creatureB: Creature, config:
       log.push({ turn, actor: second.id, moveName: second.stunTurns > 0 ? 'Stunned' : secondMove.name, events, hpA: A.hp, hpB: B.hp });
     }
 
-    if (first.hp <= 0) break;
+    if (first.hp <= 0) {
+      const re: string[] = [];
+      if (tryRevive(first, re)) break;
+      if (re.length) log.push({ turn, actor: 'system', moveName: 'Cheat Death', events: re, hpA: A.hp, hpB: B.hp });
+    }
 
     // End of round — tick both
     const tickEvents: string[] = [];
@@ -954,7 +1014,13 @@ export function simulateBattle(creatureA: Creature, creatureB: Creature, config:
       log.push({ turn, actor: 'system', moveName: 'End of round', events: tickEvents, hpA: A.hp, hpB: B.hp });
     }
 
-    if (A.hp <= 0 || B.hp <= 0) break;
+    if (A.hp <= 0 || B.hp <= 0) {
+      const re: string[] = [];
+      const aDead = A.hp <= 0 && tryRevive(A, re);
+      const bDead = B.hp <= 0 && tryRevive(B, re);
+      if (re.length) log.push({ turn, actor: 'system', moveName: 'Cheat Death', events: re, hpA: A.hp, hpB: B.hp });
+      if (aDead || bDead) break;
+    }
   }
 
   let winner: 'A' | 'B' | 'draw';
