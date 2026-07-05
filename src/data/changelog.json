@@ -1,5 +1,41 @@
 [
   {
+    "date": "2026-07-05",
+    "version": "2026-07-03",
+    "changes": [
+      {
+        "type": "updated",
+        "uuid": "becklejara",
+        "name": "Becklejara",
+        "stats": {
+          "health": [
+            4900,
+            4700
+          ],
+          "damage": [
+            1650,
+            1450
+          ]
+        }
+      },
+      {
+        "type": "updated",
+        "uuid": "becklerizaurus",
+        "name": "Becklerizaurus",
+        "stats": {
+          "health": [
+            5000,
+            4750
+          ],
+          "damage": [
+            1600,
+            1500
+          ]
+        }
+      }
+    ]
+  },
+  {
     "date": "2026-05-09",
     "version": "2026-05-03",
     "changes": [

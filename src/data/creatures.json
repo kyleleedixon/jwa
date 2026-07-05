@@ -1822,8 +1822,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "arena",
-      "pass"
+      "arena"
     ],
     "health": 3900,
     "damage": 1350,
@@ -4286,7 +4285,6 @@
     "hybrid_type": "mega_hybrid",
     "specialty": [
       "has_special_active_ability",
-      "has_special_passive_ability",
       "has_swap_in_ability",
       "has_on_escape_ability",
       "has_counter_ability",
@@ -4313,7 +4311,9 @@
       "spinotasuchus",
       "albertosaurus"
     ],
-    "hybrids": [],
+    "hybrids": [
+      "shantrospinos"
+    ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/albertospinos.png",
     "moves": [
       {
@@ -5790,8 +5790,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "arena",
-      "pass"
+      "arena"
     ],
     "health": 5250,
     "damage": 1000,
@@ -5941,6 +5940,7 @@
       "euoplocephalus"
     ],
     "hybrids": [
+      "coelocephalus",
       "tragodistis"
     ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/amargocephalus.png",
@@ -6619,8 +6619,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "arena",
-      "pass"
+      "arena"
     ],
     "health": 5000,
     "damage": 1200,
@@ -7517,7 +7516,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/bypass_armor_damage_debuff_cleanse.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_bypass_armor_damage_debuff_cleanse.png",
         "effects": [
           {
             "action": "remove_vulner",
@@ -10133,8 +10132,7 @@
     "dna_source": [
       "sanctuary",
       "everywhere",
-      "local_area_3",
-      "everywhere_tuesday"
+      "local_area_3"
     ],
     "health": 4200,
     "damage": 1000,
@@ -10280,6 +10278,7 @@
       "kentrosaurus"
     ],
     "hybrids": [
+      "paralitrosaurus",
       "trykosaurus"
     ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/ankyntrosaurus.png",
@@ -15242,7 +15241,6 @@
     ],
     "dna_source": [
       "sanctuary",
-      "everywhere_monday",
       "continent_NA/SA/US"
     ],
     "health": 4200,
@@ -16242,8 +16240,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "strike_towers",
-      "pass"
+      "strike_towers"
     ],
     "health": 3000,
     "damage": 1400,
@@ -18461,9 +18458,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "everywhere_monday",
-      "arena",
-      "isla_events"
+      "arena"
     ],
     "health": 5400,
     "damage": 1150,
@@ -18641,8 +18636,7 @@
       "swap_prevent"
     ],
     "dna_source": [
-      "arena",
-      "pass"
+      "arena"
     ],
     "health": 4500,
     "damage": 1300,
@@ -19613,6 +19607,7 @@
       "vulner",
       "group_vulner",
       "swap_prevent",
+      "daze",
       "nullify",
       "cleanse"
     ],
@@ -22939,8 +22934,8 @@
     "dna_source": [
       "none"
     ],
-    "health": 4900,
-    "damage": 1650,
+    "health": 4700,
+    "damage": 1450,
     "speed": 125,
     "armor": 0,
     "crit": 5,
@@ -23001,7 +22996,7 @@
         "name": "Alert Shrieking Dodge",
         "type": "regular",
         "delay": 0,
-        "cooldown": 1,
+        "cooldown": 2,
         "priority": 0,
         "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/threshold_dodgingshriek.png",
         "effects": [
@@ -23037,7 +23032,7 @@
           "threshold": 50,
           "priority": 1,
           "delay": 0,
-          "cooldown": 1,
+          "cooldown": 2,
           "effects": [
             {
               "action": "remove_damage_increase",
@@ -23073,10 +23068,6 @@
                 2,
                 4
               ]
-            },
-            {
-              "action": "remove_all_neg",
-              "target": "self"
             }
           ]
         }
@@ -23325,15 +23316,15 @@
     "resistance": [
       50,
       100,
-      50,
+      0,
       33,
-      75,
+      50,
       100,
       50,
       0,
-      75,
-      0,
       50,
+      0,
+      0,
       0,
       0
     ],
@@ -23464,7 +23455,6 @@
       "group_bypass_armor",
       "bypass_dodge",
       "group_bypass_dodge",
-      "shield",
       "dodge",
       "damage_increase",
       "crit_increase",
@@ -23473,13 +23463,14 @@
       "damage_decrease",
       "crit_decrease",
       "heal_decrease",
+      "swap_prevent",
       "nullify"
     ],
     "dna_source": [
       "none"
     ],
-    "health": 5000,
-    "damage": 1600,
+    "health": 4750,
+    "damage": 1500,
     "speed": 127,
     "armor": 15,
     "crit": 20,
@@ -23727,36 +23718,26 @@
         ]
       },
       {
-        "uuid": "801cf5c41aeacea49a07a15fd0a67442",
-        "name": "Defensive Counter Strike",
+        "uuid": "60397a523a7e9c641b0e14e3cbe81f4a",
+        "name": "Darting Counter",
         "type": "counter",
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/images/move/regular/801cf5c41aeacea49a07a15fd0a67442.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/counter_speed_attack 1.png",
         "effects": [
           {
-            "action": "shield",
-            "target": "self",
-            "multiplier": 0.5,
-            "duration": [
-              2,
-              4
-            ]
+            "action": "attack",
+            "target": "attacker",
+            "multiplier": 1
           },
           {
             "action": "speed_increase",
             "target": "self",
-            "multiplier": 0.25,
+            "multiplier": 0.2,
             "duration": [
-              2,
-              4
+              1
             ]
-          },
-          {
-            "action": "attack",
-            "target": "attacker",
-            "multiplier": 0.5
           }
         ]
       },
@@ -23809,48 +23790,19 @@
         ]
       },
       {
-        "uuid": "14b82f01b06290045a8b34794bf345c3",
-        "name": "Anger On Escape",
+        "uuid": "132b2baaf90442445a05d6901cea3e97",
+        "name": "No Escape",
         "type": "on_escape",
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/images/move/regular/14b82f01b06290045a8b34794bf345c3.png",
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/132b2baaf90442445a05d6901cea3e97.png",
         "effects": [
           {
-            "action": "remove_damage_decrease",
-            "target": "self"
-          },
-          {
-            "action": "heal",
-            "target": "self",
-            "multiplier": 1.5
-          },
-          {
-            "action": "speed_increase",
-            "target": "self",
-            "multiplier": 0.33,
+            "action": "swap_prevent",
+            "target": "escapee",
             "duration": [
-              2,
-              4
-            ]
-          },
-          {
-            "action": "damage_increase",
-            "target": "self",
-            "multiplier": 0.33,
-            "duration": [
-              2,
-              4
-            ]
-          },
-          {
-            "action": "crit_increase",
-            "target": "self",
-            "multiplier": 0.33,
-            "duration": [
-              2,
-              4
+              1
             ]
           }
         ]
@@ -23876,7 +23828,7 @@
       50,
       100,
       0,
-      100,
+      50,
       100,
       100,
       0,
@@ -26378,8 +26330,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "strike_towers",
-      "isla_events"
+      "strike_towers"
     ],
     "health": 4200,
     "damage": 1200,
@@ -26805,8 +26756,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "strike_towers",
-      "pass"
+      "strike_towers"
     ],
     "health": 4400,
     "damage": 1100,
@@ -27873,7 +27823,6 @@
     ],
     "dna_source": [
       "sanctuary",
-      "everywhere_friday",
       "raid"
     ],
     "health": 3600,
@@ -28023,6 +27972,7 @@
       "damage_decrease",
       "crit_decrease",
       "speed_decrease",
+      "daze",
       "cleanse"
     ],
     "dna_source": [
@@ -28285,6 +28235,7 @@
       "crit_decrease",
       "group_crit_decrease",
       "vulner",
+      "daze",
       "nullify",
       "cleanse"
     ],
@@ -28750,7 +28701,8 @@
       "has_special_active_ability",
       "shield",
       "taunt",
-      "damage_decrease"
+      "damage_decrease",
+      "daze"
     ],
     "dna_source": [
       "sanctuary",
@@ -30533,6 +30485,7 @@
     "hybrid_type": "non_hybrid",
     "specialty": [
       "has_special_active_ability",
+      "has_special_passive_ability",
       "has_on_escape_ability",
       "has_alert_ability",
       "priority_non_damage",
@@ -37456,9 +37409,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "local_area_4",
-      "arena",
-      "isla_events"
+      "local_area_4"
     ],
     "health": 2700,
     "damage": 1350,
@@ -39326,8 +39277,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "strike_towers",
-      "isla_events"
+      "strike_towers"
     ],
     "health": 3600,
     "damage": 1300,
@@ -41214,7 +41164,7 @@
         "delay": 0,
         "cooldown": 1,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/attack_wound.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_attack_wound.png",
         "effects": [
           {
             "action": "attack",
@@ -42183,6 +42133,7 @@
       "irritator_gen_2"
     ],
     "hybrids": [
+      "coelotator",
       "scaphotator"
     ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/diplotator.png",
@@ -43623,8 +43574,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "arena",
-      "pass"
+      "arena"
     ],
     "health": 4200,
     "damage": 1200,
@@ -43773,6 +43723,7 @@
       "damage_decrease",
       "swap_prevent",
       "dot",
+      "daze",
       "cleanse"
     ],
     "dna_source": [
@@ -45352,8 +45303,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "strike_towers",
-      "pass"
+      "strike_towers"
     ],
     "health": 3600,
     "damage": 1500,
@@ -46335,7 +46285,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/shield_speed_debuff.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_shield_speed_debuff.png",
         "effects": [
           {
             "action": "shield",
@@ -47098,8 +47048,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "local_area_2",
-      "everywhere_saturday"
+      "local_area_2"
     ],
     "health": 2100,
     "damage": 1350,
@@ -50052,7 +50001,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/shield_speed_debuff.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_shield_speed_debuff.png",
         "effects": [
           {
             "action": "shield",
@@ -50250,8 +50199,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "strike_towers",
-      "pass"
+      "strike_towers"
     ],
     "health": 3150,
     "damage": 1050,
@@ -52193,8 +52141,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "arena",
-      "pass"
+      "arena"
     ],
     "health": 3300,
     "damage": 1000,
@@ -52218,7 +52165,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/shield_speed_debuff.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_shield_speed_debuff.png",
         "effects": [
           {
             "action": "shield",
@@ -52383,8 +52330,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "strike_towers",
-      "pass"
+      "strike_towers"
     ],
     "health": 4000,
     "damage": 1200,
@@ -54592,6 +54538,7 @@
       "group_armor_increase",
       "hot_contextual",
       "armor_decrease",
+      "swap_prevent",
       "dot"
     ],
     "dna_source": [
@@ -54817,21 +54764,29 @@
         ]
       },
       {
-        "uuid": "a26c489a3ab58794bab1394aceea9d4e",
-        "name": "On Escape Dive Ready",
+        "uuid": "ba751c62d0c2f554b95e94d8e5fd9a85",
+        "name": "Impact On Escape",
         "type": "on_escape",
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/on_escape_cloak.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/on_escape_impact_bypass_armor.png",
         "effects": [
           {
-            "action": "cloak",
-            "target": "self",
-            "multiplier": 2,
+            "action": "swap_prevent",
+            "target": "escapee",
             "duration": [
-              2
+              1
             ]
+          },
+          {
+            "action": "bypass_armor",
+            "target": "escapee"
+          },
+          {
+            "action": "attack",
+            "target": "escapee",
+            "multiplier": 1.5
           }
         ]
       }
@@ -54855,7 +54810,7 @@
       "905907df1122a8d4ca4ac6de72474d92": 6,
       "1d9532a26b6f7b343b839c0bb0c99cc4": 11,
       "be139814184e91d4d9abb63fca4dd4b2": 16,
-      "a26c489a3ab58794bab1394aceea9d4e": 21
+      "ba751c62d0c2f554b95e94d8e5fd9a85": 21
     },
     "points": {
       "cap": {
@@ -56775,7 +56730,8 @@
       "glyptodon"
     ],
     "hybrids": [
-      "glyptosavis"
+      "glyptosavis",
+      "raptoceras"
     ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/glyptoceras.png",
     "moves": [
@@ -57779,8 +57735,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "local_area_1",
-      "everywhere_thursday"
+      "local_area_1"
     ],
     "health": 4200,
     "damage": 1700,
@@ -58503,8 +58458,7 @@
       "cleanse"
     ],
     "dna_source": [
-      "arena",
-      "isla_events"
+      "arena"
     ],
     "health": 3300,
     "damage": 1100,
@@ -60367,7 +60321,6 @@
     ],
     "dna_source": [
       "sanctuary",
-      "everywhere_wednesday",
       "alliance_missions"
     ],
     "health": 3000,
@@ -63004,7 +62957,6 @@
     ],
     "dna_source": [
       "sanctuary",
-      "everywhere_friday",
       "continent_EU/US"
     ],
     "health": 4500,
@@ -66573,9 +66525,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "everywhere_sunday",
-      "strike_towers",
-      "pass"
+      "strike_towers"
     ],
     "health": 3500,
     "damage": 1000,
@@ -69869,7 +69819,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "none"
+      "arena"
     ],
     "health": 4200,
     "damage": 1350,
@@ -72324,7 +72274,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/shield_speed_debuff.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_shield_speed_debuff.png",
         "effects": [
           {
             "action": "shield",
@@ -73526,8 +73476,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "strike_towers",
-      "pass"
+      "strike_towers"
     ],
     "health": 4050,
     "damage": 1150,
@@ -74392,8 +74341,7 @@
       "resistance_decrease_all"
     ],
     "dna_source": [
-      "strike_towers",
-      "isla_events"
+      "strike_towers"
     ],
     "health": 1200,
     "damage": 380,
@@ -74704,8 +74652,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "local_area_1",
-      "everywhere_tuesday"
+      "local_area_1"
     ],
     "health": 3300,
     "damage": 1000,
@@ -74729,7 +74676,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/shield_speed_debuff.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_shield_speed_debuff.png",
         "effects": [
           {
             "action": "shield",
@@ -75309,7 +75256,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/shield_speed_debuff.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_shield_speed_debuff.png",
         "effects": [
           {
             "action": "shield",
@@ -76927,7 +76874,7 @@
     "crit": 5,
     "critm": 145,
     "version": "v3.19",
-    "description": "This colorful hybrid's physical features have been reduced in size, but not diminished in efficiency. Its nasal crest is  allows it to defend itself from a position of weakness while the dorsal fin allows it agile movement when hunting. Its highly visible plumage serves as a warning to other predators, as approaching a Megatyrannus without proper precautions is extremely dangerous.",
+    "description": "This colorful hybrid's physical features have been reduced in size, but not diminished in efficiency. Its nasal crest allows it to defend itself from a position of weakness while the dorsal fin allows it agile movement when hunting. Its highly visible plumage serves as a warning to other predators, as approaching a Megatyrannus without proper precautions is extremely dangerous.",
     "ingredients": [
       "megamimus",
       "nanophosaurus"
@@ -77585,6 +77532,7 @@
     ],
     "dna_source": [
       "sanctuary",
+      "short_range",
       "local_area_3"
     ],
     "health": 3600,
@@ -78112,7 +78060,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/shield_speed_debuff.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_shield_speed_debuff.png",
         "effects": [
           {
             "action": "shield",
@@ -80734,8 +80682,7 @@
     "dna_source": [
       "sanctuary",
       "continent_NA/SA/US",
-      "strike_towers",
-      "pass"
+      "strike_towers"
     ],
     "health": 3300,
     "damage": 1200,
@@ -81443,6 +81390,7 @@
       "damage_decrease",
       "crit_decrease",
       "heal_decrease",
+      "daze",
       "nullify"
     ],
     "dna_source": [
@@ -82132,7 +82080,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "none"
+      "arena"
     ],
     "health": 4200,
     "damage": 1500,
@@ -83162,7 +83110,7 @@
         "delay": 0,
         "cooldown": 1,
         "priority": 1,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/dodge_critical_buff_cleanse.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_dodge_critical_buff_cleanse.png",
         "effects": [
           {
             "action": "remove_all_neg",
@@ -83545,7 +83493,7 @@
         "delay": 0,
         "cooldown": 1,
         "priority": 1,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/dodge_critical_buff_cleanse.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_dodge_critical_buff_cleanse.png",
         "effects": [
           {
             "action": "remove_all_neg",
@@ -83917,8 +83865,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "local_area_1",
-      "everywhere_thursday"
+      "local_area_1"
     ],
     "health": 3000,
     "damage": 1600,
@@ -84058,6 +84005,7 @@
       "vulner",
       "dot",
       "resistance_decrease_all",
+      "daze",
       "nullify",
       "cleanse",
       "heal"
@@ -85010,8 +84958,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "local_area_4",
-      "everywhere_wednesday"
+      "local_area_4"
     ],
     "health": 4350,
     "damage": 1400,
@@ -85227,8 +85174,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "strike_towers",
-      "isla_events"
+      "strike_towers"
     ],
     "health": 3600,
     "damage": 1500,
@@ -87433,6 +87379,7 @@
     ],
     "dna_source": [
       "sanctuary",
+      "short_range",
       "alliance_missions"
     ],
     "health": 3250,
@@ -89409,7 +89356,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/bypass_armor_damage_debuff_cleanse.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_bypass_armor_damage_debuff_cleanse.png",
         "effects": [
           {
             "action": "remove_vulner",
@@ -89446,7 +89393,7 @@
         "delay": 0,
         "cooldown": 1,
         "priority": 1,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/dodge_critical_buff_cleanse.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_dodge_critical_buff_cleanse.png",
         "effects": [
           {
             "action": "remove_all_neg",
@@ -91252,9 +91199,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "park",
-      "arena",
-      "isla_events"
+      "park"
     ],
     "health": 4200,
     "damage": 1300,
@@ -92416,8 +92361,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "strike_towers",
-      "isla_events"
+      "strike_towers"
     ],
     "health": 2250,
     "damage": 1350,
@@ -93344,8 +93288,8 @@
             "target": "self",
             "multiplier": 0.15,
             "duration": [
-              2,
-              1
+              1,
+              4
             ]
           }
         ]
@@ -93490,6 +93434,7 @@
     ],
     "dna_source": [
       "sanctuary",
+      "short_range",
       "local_area_1"
     ],
     "health": 4000,
@@ -95398,8 +95343,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "arena",
-      "isla_events"
+      "arena"
     ],
     "health": 2400,
     "damage": 1000,
@@ -95785,8 +95729,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "arena",
-      "pass"
+      "arena"
     ],
     "health": 4500,
     "damage": 1000,
@@ -97060,7 +97003,7 @@
       },
       {
         "uuid": "98871044a3ae51a4593984b65dd1c310",
-        "name": "Not Available",
+        "name": "Ferocious Resilient Rampage",
         "type": "regular",
         "delay": 1,
         "cooldown": 1,
@@ -100403,8 +100346,7 @@
       "cleanse"
     ],
     "dna_source": [
-      "strike_towers",
-      "pass"
+      "strike_towers"
     ],
     "health": 4280,
     "damage": 1450,
@@ -100708,7 +100650,9 @@
     "version": "v3.18",
     "description": "Ile Saint-Hubert has allowed us to observe behavioral differences between various species of dinosaur, and this velociraptor is no exception. Its fight or flight instinct is overdeveloped to a point where it often hurts itself fighting, but its cunning allows it to pick its battles and escape if necessary.",
     "ingredients": [],
-    "hybrids": [],
+    "hybrids": [
+      "raptoceras"
+    ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/rebirth_raptor.png",
     "moves": [
       {
@@ -105190,8 +105134,7 @@
       "vulner"
     ],
     "dna_source": [
-      "arena",
-      "isla_events"
+      "arena"
     ],
     "health": 1420,
     "damage": 625,
@@ -106089,8 +106032,7 @@
       "heal"
     ],
     "dna_source": [
-      "strike_towers",
-      "isla_events"
+      "strike_towers"
     ],
     "health": 4900,
     "damage": 1450,
@@ -106330,9 +106272,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "local_area_1",
-      "arena",
-      "pass"
+      "local_area_1"
     ],
     "health": 4050,
     "damage": 1000,
@@ -108866,7 +108806,9 @@
       "shantungosaurus",
       "animantarx"
     ],
-    "hybrids": [],
+    "hybrids": [
+      "shantrospinos"
+    ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/shantunrax.png",
     "moves": [
       {
@@ -110527,6 +110469,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/alert_counter.png",
         "effects": [
           {
             "action": "bypass_dodge",
@@ -112369,7 +112312,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/shield_speed_debuff.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_shield_speed_debuff.png",
         "effects": [
           {
             "action": "shield",
@@ -114434,7 +114377,7 @@
         "delay": 0,
         "cooldown": 1,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/attack_wound.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_attack_wound.png",
         "effects": [
           {
             "action": "attack",
@@ -115928,8 +115871,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "park",
-      "everywhere_saturday"
+      "park"
     ],
     "health": 3900,
     "damage": 1000,
@@ -116047,7 +115989,6 @@
       "swap_prevent"
     ],
     "dna_source": [
-      "short_range",
       "strike_towers"
     ],
     "health": 1180,
@@ -116069,7 +116010,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/shield_speed_debuff.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_shield_speed_debuff.png",
         "effects": [
           {
             "action": "shield",
@@ -116358,8 +116299,7 @@
       "heal"
     ],
     "dna_source": [
-      "strike_towers",
-      "pass"
+      "strike_towers"
     ],
     "health": 1300,
     "damage": 430,
@@ -117782,9 +117722,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "local_area_2",
-      "arena",
-      "pass"
+      "local_area_2"
     ],
     "health": 3900,
     "damage": 1000,
@@ -120522,7 +120460,7 @@
         "delay": 0,
         "cooldown": 2,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/attack_wound.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_attack_wound.png",
         "effects": [
           {
             "action": "attack",
@@ -121040,6 +120978,7 @@
     ],
     "dna_source": [
       "sanctuary",
+      "short_range",
       "local_area_3"
     ],
     "health": 4100,
@@ -121417,7 +121356,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/shield_speed_debuff.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/icon_shield_speed_debuff.png",
         "effects": [
           {
             "action": "shield",
@@ -121560,7 +121499,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "pass"
+      "none"
     ],
     "health": 4800,
     "damage": 1250,
@@ -123459,8 +123398,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "local_area_4",
-      "everywhere_sunday"
+      "local_area_4"
     ],
     "health": 3300,
     "damage": 1000,
@@ -123634,9 +123572,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "local_area_3",
-      "arena",
-      "pass"
+      "local_area_3"
     ],
     "health": 3750,
     "damage": 1000,
@@ -129648,8 +129584,7 @@
     ],
     "dna_source": [
       "sanctuary",
-      "strike_towers",
-      "pass"
+      "strike_towers"
     ],
     "health": 4500,
     "damage": 1100,
@@ -130233,8 +130168,7 @@
       "cleanse"
     ],
     "dna_source": [
-      "arena",
-      "pass"
+      "arena"
     ],
     "health": 1500,
     "damage": 410,
