@@ -2,7 +2,10 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
-const SLUGS = [
+// Fallback slug list — only used if the dinodex index fetch fails. The
+// authoritative list comes from pp.dex.items on the index page so newly
+// added creatures are picked up automatically.
+const FALLBACK_SLUGS = [
   '93_classic_t_rex','acrocanthops','acrocanthosaurus','aenocyonyx','aerospinosaurus','aerotitan',
   'ailurarctos','alacranix','alankydactylus','alankyloceratops','alankylosaurus','alanqa',
   'albertocevia','albertosaurus','albertospinos','allodrigues','alloraptor','allosaurus',
@@ -243,31 +246,41 @@ function diffCreatures(oldList, newList) {
 }
 
 async function main() {
-  // Fetch last modified date from the dinodex index
+  // Fetch last modified date and slug list from the dinodex index
   console.log('  Fetching dinodex metadata...');
   const indexRes = await axios.get('https://www.paleo.gg/games/jurassic-world-alive/dinodex', { headers: HEADERS, timeout: 15000 });
   const indexProps = parsePageProps(indexRes.data);
   const lastModifiedDate = indexProps.meta?.lastModifiedDate || null;
   console.log(`  Last modified date: ${lastModifiedDate}`);
 
+  const indexItems = indexProps.dex?.items;
+  let slugs;
+  if (Array.isArray(indexItems) && indexItems.length > 0) {
+    slugs = indexItems.map(x => x.uuid).filter(Boolean);
+    console.log(`  Discovered ${slugs.length} creatures from index.`);
+  } else {
+    slugs = FALLBACK_SLUGS;
+    console.log(`  WARN: index items missing; using fallback list (${slugs.length}).`);
+  }
+
   // Fetch move names once from the first creature page
   console.log('  Fetching move name dictionary...');
-  const firstRes = await axios.get(BASE_URL + SLUGS[0], { headers: HEADERS, timeout: 15000 });
+  const firstRes = await axios.get(BASE_URL + slugs[0], { headers: HEADERS, timeout: 15000 });
   const moveNames = parsePageProps(firstRes.data).__namespaces['dinodex-move'] || {};
   console.log(`  Loaded ${Object.keys(moveNames).length} move names.`);
 
   const results = [];
   let done = 0;
 
-  for (let i = 0; i < SLUGS.length; i += CONCURRENCY) {
-    const batch = SLUGS.slice(i, i + CONCURRENCY);
+  for (let i = 0; i < slugs.length; i += CONCURRENCY) {
+    const batch = slugs.slice(i, i + CONCURRENCY);
     const fetched = await Promise.all(batch.map(slug => fetchCreature(slug, moveNames)));
     for (const c of fetched) {
       if (c) results.push(c);
     }
     done += batch.length;
-    process.stdout.write(`\r  Progress: ${done}/${SLUGS.length} (${results.length} ok)`);
-    if (i + CONCURRENCY < SLUGS.length) await sleep(DELAY_MS);
+    process.stdout.write(`\r  Progress: ${done}/${slugs.length} (${results.length} ok)`);
+    if (i + CONCURRENCY < slugs.length) await sleep(DELAY_MS);
   }
 
   console.log(`\n  Done! ${results.length} creatures scraped.`);

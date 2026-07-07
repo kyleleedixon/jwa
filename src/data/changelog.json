@@ -1,5 +1,53 @@
 [
   {
+    "date": "2026-07-07",
+    "version": "2026-07-03",
+    "changes": [
+      {
+        "type": "new",
+        "uuid": "coelocephalus",
+        "name": "Coelocephalus",
+        "rarity": "apex"
+      },
+      {
+        "type": "new",
+        "uuid": "coelophysis",
+        "name": "Coelophysis",
+        "rarity": "common"
+      },
+      {
+        "type": "new",
+        "uuid": "coelotator",
+        "name": "Coelotator",
+        "rarity": "epic"
+      },
+      {
+        "type": "new",
+        "uuid": "paralititan",
+        "name": "Paralititan",
+        "rarity": "legendary"
+      },
+      {
+        "type": "new",
+        "uuid": "paralitrosaurus",
+        "name": "Paralitrosaurus",
+        "rarity": "unique"
+      },
+      {
+        "type": "new",
+        "uuid": "raptoceras",
+        "name": "Raptoceras",
+        "rarity": "unique"
+      },
+      {
+        "type": "new",
+        "uuid": "shantrospinos",
+        "name": "Shantrospinos",
+        "rarity": "apex"
+      }
+    ]
+  },
+  {
     "date": "2026-07-05",
     "version": "2026-07-03",
     "changes": [
