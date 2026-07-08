@@ -156,6 +156,33 @@ export default function HelpModal({ onClose }: Props) {
             </Item>
           </Section>
 
+          <Section title="Evolution Cost Math">
+            <Item label="Coin costs">
+              Non-Omega rarities all share one coin table — the cost to go from level <em>n</em> to <em>n+1</em> only depends on <em>n</em>, not on rarity. Costs start small at low levels and climb sharply past level 20 (10k at 15→16, 50k at 20→21, 250k from 30→31 onward). Omega has its own table topping out at 400k per level.
+            </Item>
+            <Item label="Own DNA (non-hybrid)">
+              Each rarity has its own DNA-per-level curve that starts at that rarity&rsquo;s unlock level. A Common needs 50 DNA to go 1→2, a Rare 100 DNA to go 6→7, an Epic 150 to go 11→12, and so on. Levels below unlock cost 0 DNA — you simply can&rsquo;t reach them without owning the creature.
+            </Item>
+            <Item label="Fusing (hybrids)">
+              Hybrid DNA isn&rsquo;t collected directly — you fuse ingredient DNA into it. Each fuse yields a random amount: <span className="text-red-400 text-xs font-medium">10</span> worst, <span className="text-blue-300 text-xs font-medium">22</span> average, <span className="text-green-400 text-xs font-medium">50</span> best. Every fuse also costs coins: <Badge>Rare 20</Badge> <Badge>Epic 100</Badge> <Badge>Legendary 200</Badge> <Badge>Unique 1,000</Badge> <Badge>Apex 2,000</Badge>.
+            </Item>
+            <Item label="Ingredient DNA per fuse">
+              How much ingredient DNA each fuse burns depends on the ingredient&rsquo;s rarity relative to the hybrid. Roughly: 50 DNA/fuse if the ingredient is one tier below, 200 two tiers below, 500 three tiers below, 2,000 four tiers below. Apex hybrids reverse the pattern for Rare ingredients (2,000/fuse). Multiply by your total fuse count to get the ingredient DNA needed.
+            </Item>
+            <Item label="Total cost formula">
+              <strong className="text-white">Total DNA</strong> = own DNA needed for all levels from your <Badge>From Lv</Badge> to target. <strong className="text-white">Fuses</strong> = ⌈total DNA ÷ DNA-per-fuse⌉. <strong className="text-white">Total coins</strong> = level-up coins + (fuses × fuse coin fee). <strong className="text-white">Each ingredient</strong> = fuses × its DNA/fuse rate. Best/Avg/Worst columns just plug 50/22/10 into the same formula.
+            </Item>
+            <Item label="Max level calculator">
+              Enter what you have and it walks levels up one at a time, checking after each level whether you still have enough coins, own DNA (non-hybrid), and each ingredient&rsquo;s DNA (hybrid). It stops at the first constraint. Because fuse counts are computed on cumulative DNA (not per-level), the result matches the cost table above exactly.
+            </Item>
+            <Item label="From Lv dropdown">
+              All costs are cumulative from the <Badge>From Lv</Badge> you pick — set it to your creature&rsquo;s current level and the numbers show only what&rsquo;s left to reach the target, not the from-scratch cost.
+            </Item>
+            <Item label="Omega">
+              Omegas skip fusing entirely — no ingredient DNA, no fuse coin fee. They use their own coin and own-DNA tables, both of which continue smoothly from level 1 through 35.
+            </Item>
+          </Section>
+
           <Section title="Tier List">
             <Item label="Overview">
               The <a href="/tier-list" className="text-blue-400 hover:underline">Tier List</a> ranks every creature by running a full round-robin 1v1 simulation at level 26 — each creature fights every other creature and the results are tallied into a win rate.
