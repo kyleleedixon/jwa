@@ -213,7 +213,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 1,
           "cooldown": 2,
@@ -4786,7 +4786,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 3,
@@ -4890,7 +4890,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 1,
           "cooldown": 2,
@@ -4948,7 +4948,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -7952,7 +7952,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 1,
           "cooldown": 2,
@@ -11190,7 +11190,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 1,
           "cooldown": 2,
@@ -11247,7 +11247,7 @@
         "type": "swap_in",
         "effects": [],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -12307,7 +12307,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 1,
           "cooldown": 2,
@@ -12471,7 +12471,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -12981,7 +12981,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 0,
           "cooldown": 3,
@@ -13022,7 +13022,7 @@
         "type": "counter",
         "effects": [],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -14118,7 +14118,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 0,
           "cooldown": 2,
@@ -14209,7 +14209,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 0,
           "cooldown": 2,
@@ -14339,7 +14339,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -14692,7 +14692,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 0,
           "cooldown": 3,
@@ -14761,7 +14761,7 @@
         "type": "counter",
         "effects": [],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -15055,7 +15055,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -15176,7 +15176,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -17435,7 +17435,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 1,
           "cooldown": 2,
@@ -17536,7 +17536,7 @@
         "type": "swap_in",
         "effects": [],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -18143,7 +18143,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -18251,7 +18251,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 2,
@@ -18391,7 +18391,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -20736,7 +20736,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 1,
           "cooldown": 2,
@@ -31602,7 +31602,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 2,
@@ -31731,7 +31731,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -32663,7 +32663,7 @@
         "type": "swap_in",
         "effects": [],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -32720,7 +32720,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -32940,7 +32940,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 2,
@@ -33271,7 +33271,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 2,
@@ -33304,7 +33304,7 @@
         "type": "swap_in",
         "effects": [],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -33350,7 +33350,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "effects": []
         }
       }
@@ -33436,7 +33436,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 0,
           "cooldown": 0,
@@ -33519,7 +33519,7 @@
         "type": "swap_in",
         "effects": [],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -33565,7 +33565,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "effects": []
         }
       }
@@ -33654,7 +33654,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 0,
           "cooldown": 0,
@@ -33713,7 +33713,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 2,
@@ -34078,7 +34078,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 0,
           "cooldown": 0,
@@ -34133,7 +34133,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 2,
@@ -34298,7 +34298,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -41219,7 +41219,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -44038,7 +44038,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 3,
@@ -44109,7 +44109,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "effects": []
         }
       }
@@ -44239,7 +44239,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 3,
@@ -44335,7 +44335,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "effects": []
         }
       }
@@ -46394,7 +46394,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 1,
           "cooldown": 2,
@@ -56002,7 +56002,7 @@
         "type": "swap_in",
         "effects": [],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -59357,7 +59357,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 1,
@@ -59459,7 +59459,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 0,
           "cooldown": 2,
@@ -59564,7 +59564,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -70453,7 +70453,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 0,
           "cooldown": 1,
@@ -71475,7 +71475,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 1,
           "cooldown": 2,
@@ -80016,7 +80016,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 1,
           "cooldown": 2,
@@ -81587,7 +81587,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 1,
@@ -86222,7 +86222,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 2,
@@ -89065,7 +89065,7 @@
     "uuid": "paralititan",
     "name": "Paralititan",
     "rarity": "legendary",
-    "class": "resilient",
+    "class": "fierce_resilient",
     "size": "large",
     "hybrid_type": "non_hybrid",
     "specialty": [
@@ -89315,7 +89315,7 @@
     "uuid": "paralitrosaurus",
     "name": "Paralitrosaurus",
     "rarity": "unique",
-    "class": "resilient",
+    "class": "fierce_resilient",
     "size": "large",
     "hybrid_type": "super_hybrid",
     "specialty": [
@@ -90347,7 +90347,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -90548,7 +90548,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 1,
           "cooldown": 2,
@@ -94615,7 +94615,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 2,
@@ -95331,7 +95331,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 0,
           "cooldown": 2,
@@ -95883,7 +95883,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 1,
@@ -95948,7 +95948,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 3,
@@ -99779,7 +99779,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -102555,6 +102555,248 @@
     ]
   },
   {
+    "uuid": "rebirth_quetzalcoatlus",
+    "name": "Rebirth Quetzalcoatlus",
+    "rarity": "legendary",
+    "class": "cunning",
+    "size": "large",
+    "hybrid_type": "non_hybrid",
+    "specialty": [
+      "has_special_active_ability",
+      "has_on_escape_ability",
+      "priority_damage",
+      "target_all_opponents",
+      "group_attack",
+      "run",
+      "bypass_dodge",
+      "group_bypass_dodge",
+      "bypass_alert",
+      "group_bypass_alert",
+      "dodge",
+      "crit_increase",
+      "damage_decrease",
+      "group_damage_decrease",
+      "crit_decrease",
+      "daze",
+      "group_daze",
+      "nullify"
+    ],
+    "dna_source": [
+      "none"
+    ],
+    "health": 4100,
+    "damage": 1600,
+    "speed": 115,
+    "armor": 0,
+    "crit": 25,
+    "critm": 150,
+    "version": "v3.21",
+    "description": "A fair warning to all who would attempt to tame this flying titan, as it has reportedly been seen swallowing an adult human being whole. Quetzalcoatlus likes to nest in crevaces large enough to allow it to fly but considering their giant wingspans, those are few and far between.",
+    "ingredients": [],
+    "hybrids": [],
+    "image": "https://cdn.paleo.gg/games/jwa/images/creature/rebirth_quetzalcoatlus.png",
+    "moves": [
+      {
+        "uuid": "12c237ebcc2e0314099abe37f70e0f0a",
+        "name": "Instant Cunning Strike",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 1,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/cunning_strike.png",
+        "effects": [
+          {
+            "action": "remove_dot",
+            "target": "self"
+          },
+          {
+            "action": "damage_decrease",
+            "target": "highest_dmg",
+            "multiplier": 0.5,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "crit_decrease",
+            "target": "highest_dmg",
+            "multiplier": 1,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "remove_crit_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "remove_damage_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "attack",
+            "target": "highest_dmg",
+            "multiplier": 1
+          },
+          {
+            "action": "dodge",
+            "target": "self",
+            "multiplier": 0.67,
+            "duration": [
+              1,
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "fab15967ae8d57644a2178f1d1033482",
+        "name": "Ear-Piercing Screech",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/fab15967ae8d57644a2178f1d1033482.png",
+        "effects": [
+          {
+            "action": "dodge",
+            "target": "self",
+            "multiplier": 0.67,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "daze",
+            "target": "all_opponents",
+            "duration": [
+              2,
+              2
+            ]
+          },
+          {
+            "action": "damage_decrease",
+            "target": "all_opponents",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_dodge",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 1.25
+          }
+        ]
+      },
+      {
+        "uuid": "65a23bc4bb8721c4b9fad7fa7a66d415",
+        "name": "Nullifying Impact",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/scrub.png",
+        "effects": [
+          {
+            "action": "remove_all_pos",
+            "target": "most_pos"
+          },
+          {
+            "action": "attack",
+            "target": "most_pos",
+            "multiplier": 1.5
+          }
+        ]
+      },
+      {
+        "uuid": "e386187221505b040ac3eb8a1c869ecb",
+        "name": "Carry Off And Run",
+        "type": "regular",
+        "delay": 1,
+        "cooldown": 1,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/e386187221505b040ac3eb8a1c869ecb.png",
+        "effects": [
+          {
+            "action": "crit_increase",
+            "target": "self",
+            "multiplier": 0.5,
+            "duration": [
+              1
+            ]
+          },
+          {
+            "action": "daze",
+            "target": "highest_dmg",
+            "duration": [
+              1
+            ]
+          },
+          {
+            "action": "remove_dodge",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "remove_cloak",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "run",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "run",
+            "target": "self"
+          }
+        ]
+      },
+      {
+        "uuid": "7d1ec36de9f90e543b6b2eac5b7a7b00",
+        "name": "On Escape Rampage",
+        "type": "on_escape",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/on_escape_rampage.png",
+        "effects": [
+          {
+            "action": "attack",
+            "target": "escapee",
+            "multiplier": 2
+          }
+        ]
+      }
+    ],
+    "resistance": [
+      75,
+      75,
+      50,
+      0,
+      50,
+      50,
+      100,
+      0,
+      0,
+      0,
+      50,
+      0,
+      0
+    ]
+  },
+  {
     "uuid": "rebirth_raptor",
     "name": "Rebirth Raptor",
     "rarity": "legendary",
@@ -105176,7 +105418,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 3,
@@ -105277,7 +105519,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 66,
+          "threshold": 66.66666666666667,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -106553,7 +106795,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 1,
@@ -117234,7 +117476,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 1,
           "cooldown": 2,
@@ -117410,7 +117652,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -120629,7 +120871,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 0,
           "cooldown": 0,
@@ -120723,7 +120965,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 2,
@@ -121930,7 +122172,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 1,
           "delay": 1,
           "cooldown": 1,
@@ -125137,7 +125379,7 @@
         "type": "swap_in",
         "effects": [],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -125410,7 +125652,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,
@@ -132342,7 +132584,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 2,
@@ -132405,7 +132647,7 @@
           }
         ],
         "if_alert": {
-          "threshold": 33,
+          "threshold": 33.333333333333336,
           "priority": 0,
           "delay": 0,
           "cooldown": 0,

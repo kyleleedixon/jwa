@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-07-08",
+    "version": "2026-07-07",
+    "changes": [
+      {
+        "type": "new",
+        "uuid": "rebirth_quetzalcoatlus",
+        "name": "Rebirth Quetzalcoatlus",
+        "rarity": "legendary"
+      }
+    ]
+  },
+  {
     "date": "2026-07-07",
     "version": "2026-07-03",
     "changes": [
