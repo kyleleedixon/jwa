@@ -377,6 +377,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
           </div>
           <div className="flex items-start gap-2 shrink-0">
             <button
+              data-tour="share-button"
               onClick={handleShare}
               className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-xs font-medium"
               title="Copy shareable link"
@@ -502,7 +503,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
         )}
 
         {/* level slider */}
-        <div className="flex items-center gap-3 px-5 pt-4 pb-2">
+        <div data-tour="level-slider" className="flex items-center gap-3 px-5 pt-4 pb-2">
           <span className="text-xs text-gray-500 shrink-0">Level</span>
           <input
             type="range"
@@ -534,12 +535,12 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
 
         {/* evolution cost */}
         {level > minLevel && (
-          <div className="px-5 py-4 border-b border-slate-700/60">
+          <div data-tour="evo-cost" className="px-5 py-4 border-b border-slate-700/60">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
                 Evolution Cost <span className="text-gray-600 normal-case font-normal">(Lv {evoFrom} → {level})</span>
               </h3>
-              <div className="flex items-center gap-1.5">
+              <div data-tour="from-lv" className="flex items-center gap-1.5">
                 <span className="text-[10px] text-gray-500">From</span>
                 <select
                   value={evoFrom}
@@ -593,7 +594,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
         )}
 
         {/* max level calculator */}
-        <div className="px-5 py-4 border-b border-slate-700/60">
+        <div data-tour="max-level" className="px-5 py-4 border-b border-slate-700/60">
           <div className="flex items-baseline gap-2 mb-3">
             <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Max Level Calculator</h3>
             <span className="text-[10px] text-gray-500">
@@ -716,7 +717,7 @@ export default function CreatureModal({ creature, creatures, onClose, onNavigate
         </div>
 
         {/* boosts allocator */}
-        <div className="px-5 py-4 border-b border-slate-700/60">
+        <div data-tour="boosts" className="px-5 py-4 border-b border-slate-700/60">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Boosts</h3>
             <span className={`text-xs font-mono font-semibold ${remainingBoosts === 0 ? 'text-green-400' : 'text-blue-400'}`}>

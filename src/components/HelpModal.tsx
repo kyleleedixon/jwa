@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 interface Props {
   onClose: () => void;
+  onStartTour?: () => void;
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -43,7 +44,7 @@ function Badge({ children, color = 'slate' }: { children: React.ReactNode; color
   );
 }
 
-export default function HelpModal({ onClose }: Props) {
+export default function HelpModal({ onClose, onStartTour }: Props) {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', handler);
@@ -64,16 +65,26 @@ export default function HelpModal({ onClose }: Props) {
         onClick={e => e.stopPropagation()}
       >
         {/* header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-700 sticky top-0 bg-slate-900 z-10">
-          <div>
+        <div className="flex items-center justify-between gap-3 px-6 py-4 border-b border-slate-700 sticky top-0 bg-slate-900 z-10">
+          <div className="min-w-0">
             <h1 className="text-lg font-bold text-white">How to use the Dinodex</h1>
             <p className="text-xs text-gray-500 mt-0.5">All creatures from Jurassic World Alive. Data syncs automatically when paleo.gg publishes an update.</p>
           </div>
-          <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            {onStartTour && (
+              <button
+                onClick={onStartTour}
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium transition-colors"
+              >
+                Take the tour
+              </button>
+            )}
+            <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <div className="px-6 py-5 flex flex-col gap-7">
@@ -239,6 +250,17 @@ export default function HelpModal({ onClose }: Props) {
               Share a maxed boost spread with your alliance, compare two different Omega point builds, or link a specific creature during a team discussion. The recipient sees exactly what you see.
             </Item>
           </Section>
+
+          {onStartTour && (
+            <div className="sm:hidden -mt-2">
+              <button
+                onClick={onStartTour}
+                className="w-full px-4 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-colors"
+              >
+                Take the guided tour
+              </button>
+            </div>
+          )}
 
           <Section title="Data & Updates">
             <Item label="Source">

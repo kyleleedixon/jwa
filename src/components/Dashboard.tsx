@@ -10,7 +10,10 @@ import CreatureCard from './CreatureCard';
 import CreatureModal from './CreatureModal';
 import HelpModal from './HelpModal';
 import ChangelogModal from './ChangelogModal';
+import WelcomeModal from './WelcomeModal';
+import Tour, { type TourStep } from './Tour';
 import { decodeShare, clearShareFromURL } from '@/lib/share';
+import { hasSeenOnboarding, markOnboardingSeen } from '@/lib/onboarding';
 
 const PAGE_SIZE = 60;
 
@@ -56,6 +59,8 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
   const [selected, setSelected] = useState<Creature | null>(null);
   const [helpOpen, setHelpOpen] = useState(false);
   const [changelogOpen, setChangelogOpen] = useState(false);
+  const [welcomeOpen, setWelcomeOpen] = useState(false);
+  const [tourOpen, setTourOpen] = useState(false);
   const [sortKey, setSortKey] = useState<SortKey>('name');
   const [sortDir, setSortDir] = useState<SortDir>('asc');
 
@@ -63,15 +68,118 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
     if (window.innerWidth >= 768) setSidebarOpen(true);
   }, []);
 
-  // Open creature from share URL on mount
+  // Open creature from share URL on mount, or trigger onboarding
   useEffect(() => {
-    const param = new URLSearchParams(window.location.search).get('share');
-    if (!param) return;
-    const state = decodeShare(param);
-    if (!state) return;
-    const creature = creatures.find(c => c.uuid === state.c);
-    if (creature) setSelected(creature);
+    const params = new URLSearchParams(window.location.search);
+    const shareParam = params.get('share');
+    if (shareParam) {
+      const state = decodeShare(shareParam);
+      const creature = state ? creatures.find(c => c.uuid === state.c) : null;
+      if (creature) {
+        setSelected(creature);
+        return;
+      }
+    }
+
+    if (params.get('tour') === '1') {
+      setTourOpen(true);
+    } else if (params.get('welcome') === '1' || !hasSeenOnboarding()) {
+      setWelcomeOpen(true);
+    }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const dismissWelcome = useCallback(() => {
+    markOnboardingSeen();
+    setWelcomeOpen(false);
+  }, []);
+
+  const startTour = useCallback(() => {
+    markOnboardingSeen();
+    setWelcomeOpen(false);
+    setHelpOpen(false);
+    setSelected(null);
+    clearShareFromURL();
+    setTourOpen(true);
+  }, []);
+
+  // Sample creature the tour opens — prefer a well-known legendary hybrid so
+  // ingredient DNA columns are visible, fall back to any hybrid, then anything.
+  const tourCreature = useMemo(() => {
+    return creatures.find(c => c.uuid === 'indoraptor')
+      ?? creatures.find(c => c.ingredients && c.ingredients.length > 0)
+      ?? creatures[0];
+  }, [creatures]);
+
+  const tourSteps: TourStep[] = useMemo(() => [
+    {
+      target: 'search',
+      title: 'Search',
+      content: "Type any part of a creature's name to filter the grid instantly.",
+    },
+    {
+      target: 'filters-button',
+      title: 'Filters',
+      content: 'Narrow the grid by rarity, class, hybrid type, resistance, or ability. Multiple selections within a group are OR — a blue badge shows how many filters are active.',
+    },
+    {
+      target: 'sort-bar',
+      title: 'Sort',
+      content: 'Sort by Name, any stat, or Tier Rank (highest-ranked at the top of the grid). Click a chip again to reverse the direction.',
+    },
+    {
+      target: 'card',
+      title: 'Creature cards',
+      content: 'Every card shows stats at level 26 plus a tier rank badge. Tap any card to open the full detail modal — that\u2019s where evolution costs, boosts, and share links live.',
+    },
+    {
+      target: 'level-slider',
+      title: 'Level slider',
+      content: 'Drag to any level from the rarity minimum up to 35. Health and Damage scale with level; Speed, Armor, and Crit don\u2019t.',
+      onEnter: () => { if (tourCreature) setSelected(tourCreature); },
+      waitForTarget: true,
+    },
+    {
+      target: 'from-lv',
+      title: 'From Lv dropdown',
+      content: 'Set your creature\u2019s current level here. All costs below become cumulative from this level — so a partially-levelled creature shows only what\u2019s left to reach the target.',
+    },
+    {
+      target: 'evo-cost',
+      title: 'Evolution cost',
+      content: 'Coins and DNA needed to reach the target. Hybrids show ingredient DNA in Best / Avg / Worst columns based on your fuse luck (50 / 22 / 10 DNA per fuse).',
+    },
+    {
+      target: 'max-level',
+      title: 'Max level calculator',
+      content: 'Type in the coins and DNA you actually have, and it shows the highest level you can reach right now — including all fuse costs for hybrids.',
+    },
+    {
+      target: 'boosts',
+      title: 'Boosts',
+      content: 'One boost per level. Distribute across HP / DMG / SPD with the − and + buttons — the stats above update live.',
+    },
+    {
+      target: 'share-button',
+      title: 'Share',
+      content: 'Copy a link that encodes this exact build (creature + level + boosts + enhancements + Omega points). Whoever opens the link sees exactly what you see.',
+    },
+    {
+      target: 'nav-tier',
+      title: 'Tier List',
+      content: 'A full round-robin 1v1 simulation of every creature at level 26. Top 25 get S / A / B / C tiers; the rest show a numeric rank.',
+      onEnter: () => { setSelected(null); clearShareFromURL(); },
+    },
+    {
+      target: 'nav-battle',
+      title: 'Battle Simulator',
+      content: 'Pit any two creatures head-to-head with full boosts, enhancements, swap-in scenarios, and a turn-by-turn battle log.',
+    },
+    {
+      target: 'help-button',
+      title: 'How to use',
+      content: 'Everything else — evolution cost math, tier list scoring, move accuracy details — is documented in the Help modal. You can re-launch this tour from there any time.',
+    },
+  ], [tourCreature]);
 
   const handleModalClose = useCallback(() => {
     setSelected(null);
@@ -174,7 +282,9 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
           tierRank={tierRanks[selected.uuid]}
         />
       )}
-      {helpOpen && <HelpModal onClose={() => setHelpOpen(false)} />}
+      {helpOpen && <HelpModal onClose={() => setHelpOpen(false)} onStartTour={startTour} />}
+      {welcomeOpen && <WelcomeModal onDismiss={dismissWelcome} onStartTour={startTour} />}
+      {tourOpen && <Tour steps={tourSteps} onFinish={() => setTourOpen(false)} />}
       {changelogOpen && (
         <ChangelogModal
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -197,6 +307,7 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
           {/* top row: filters + title + nav + actions + user */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
+              data-tour="filters-button"
               onClick={() => setSidebarOpen(o => !o)}
               className={`flex items-center gap-1.5 shrink-0 rounded-lg transition-colors px-2 py-1.5 text-sm font-medium ${sidebarOpen ? 'bg-blue-600/20 text-blue-300' : 'bg-slate-700 hover:bg-slate-600 text-gray-300 hover:text-white'}`}
               aria-label="Toggle filters"
@@ -217,12 +328,13 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
               JWA <span className="text-blue-400">Dinodex</span>
             </h1>
             <nav className="hidden sm:flex items-center gap-1 shrink-0">
-              <a href="/tier-list" className="px-2.5 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-slate-700 transition-colors">Tier List</a>
-              <a href="/battle" className="px-2.5 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-slate-700 transition-colors">Battle Sim</a>
+              <a data-tour="nav-tier" href="/tier-list" className="px-2.5 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-slate-700 transition-colors">Tier List</a>
+              <a data-tour="nav-battle" href="/battle" className="px-2.5 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-slate-700 transition-colors">Battle Sim</a>
             </nav>
             {/* search: hidden on mobile (shown in second row), visible sm+ */}
             <div className="hidden sm:block flex-1 min-w-0">
               <input
+                data-tour="search"
                 type="text"
                 placeholder="Search…"
                 value={search}
@@ -245,6 +357,7 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
                 </button>
               )}
               <button
+                data-tour="help-button"
                 onClick={() => setHelpOpen(true)}
                 className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-gray-300 hover:text-white text-sm font-medium"
                 aria-label="How to use"
@@ -271,14 +384,15 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
           {/* search + nav: second row on mobile only */}
           <div className="sm:hidden flex items-center gap-2">
             <input
+              data-tour="search"
               type="text"
               placeholder="Search…"
               value={search}
               onChange={e => { setSearch(e.target.value); setPage(1); }}
               className="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
             />
-            <a href="/tier-list" className="shrink-0 px-2.5 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white bg-slate-700 hover:bg-slate-600 transition-colors whitespace-nowrap">Tier List</a>
-            <a href="/battle" className="shrink-0 px-2.5 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white bg-slate-700 hover:bg-slate-600 transition-colors whitespace-nowrap">Battle</a>
+            <a data-tour="nav-tier" href="/tier-list" className="shrink-0 px-2.5 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white bg-slate-700 hover:bg-slate-600 transition-colors whitespace-nowrap">Tier List</a>
+            <a data-tour="nav-battle" href="/battle" className="shrink-0 px-2.5 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white bg-slate-700 hover:bg-slate-600 transition-colors whitespace-nowrap">Battle</a>
           </div>
         </div>
       </header>
@@ -313,7 +427,7 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
             </div>
           ) : (
             <>
-              <div className="flex items-center gap-2 mb-3 overflow-x-auto pb-1 scrollbar-none">
+              <div data-tour="sort-bar" className="flex items-center gap-2 mb-3 overflow-x-auto pb-1 scrollbar-none">
                 <span className="text-xs text-gray-500 uppercase tracking-wider shrink-0">Sort:</span>
                 {SORT_OPTIONS.map(opt => (
                   <button
@@ -333,8 +447,8 @@ export default function Dashboard({ creatures, lastModifiedDate, version, change
                 ))}
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 sm:gap-3">
-                {visible.map(c => (
-                  <div key={c.uuid} onClick={() => setSelected(c)}>
+                {visible.map((c, i) => (
+                  <div key={c.uuid} onClick={() => setSelected(c)} {...(i === 0 ? { 'data-tour': 'card' } : {})}>
                     <CreatureCard creature={c} tierRank={tierRanks[c.uuid]} />
                   </div>
                 ))}
