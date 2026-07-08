@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef, useLayoutEffect, useMemo } from 'react';
 
 export interface TourStep {
   target?: string;                    // data-tour attribute value
@@ -28,7 +28,9 @@ export default function Tour({ steps, onFinish }: Props) {
   const [index, setIndex] = useState(0);
   const [rect, setRect] = useState<DOMRect | null>(null);
   const [ready, setReady] = useState(false);
+  const [measured, setMeasured] = useState<{ w: number; h: number } | null>(null);
   const stepSeq = useRef(0);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   const step = steps[index];
 
@@ -50,6 +52,7 @@ export default function Tour({ steps, onFinish }: Props) {
     const seq = ++stepSeq.current;
     setReady(false);
     setRect(null);
+    setMeasured(null);
 
     async function setup() {
       if (step.onEnter) await step.onEnter();
@@ -117,27 +120,64 @@ export default function Tour({ steps, onFinish }: Props) {
     return () => document.removeEventListener('keydown', handler);
   }, [next, prev, finish]);
 
-  const tooltipStyle: React.CSSProperties = (() => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-    if (isMobile) {
-      // Fixed to bottom on mobile so it never covers the spotlighted element
-      // unless the target itself sits near the bottom; simple + reliable.
-      if (rect && rect.top > window.innerHeight * 0.55) {
-        return { top: 16, left: 16, right: 16 };
-      }
-      return { bottom: 16, left: 16, right: 16 };
-    }
-    if (!rect) {
-      return { top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 360 };
-    }
-    const w = 360;
+  const tooltipStyle: React.CSSProperties = useMemo(() => {
+    if (typeof window === 'undefined') return {};
+    const vpW = window.innerWidth;
+    const vpH = window.innerHeight;
+    const margin = 16;
     const gap = 12;
-    const spaceBelow = window.innerHeight - rect.bottom;
-    const below = spaceBelow >= 220;
-    const left = Math.max(16, Math.min(window.innerWidth - w - 16, rect.left + rect.width / 2 - w / 2));
-    if (below) return { top: rect.bottom + gap, left, width: w };
-    return { bottom: window.innerHeight - rect.top + gap, left, width: w };
-  })();
+    const isMobile = vpW < 640;
+
+    // Desired width for this viewport; use measured width if available for clamping
+    const desiredW = isMobile ? Math.min(vpW - margin * 2, 400) : Math.min(360, vpW - margin * 2);
+    const w = measured?.w ?? desiredW;
+    const h = measured?.h ?? 220;
+
+    let top: number;
+    let left: number;
+
+    if (!rect) {
+      // No target — center in viewport
+      top = Math.max(margin, (vpH - h) / 2);
+      left = Math.max(margin, (vpW - w) / 2);
+    } else {
+      // Prefer placing below the target; fall back to above; fall back to overlap-clamped
+      const spaceBelow = vpH - rect.bottom - gap - margin;
+      const spaceAbove = rect.top - gap - margin;
+      if (spaceBelow >= h) {
+        top = rect.bottom + gap;
+      } else if (spaceAbove >= h) {
+        top = rect.top - h - gap;
+      } else {
+        top = rect.top + rect.height / 2 - h / 2;
+      }
+      left = rect.left + rect.width / 2 - w / 2;
+    }
+
+    // Clamp into viewport
+    left = Math.max(margin, Math.min(vpW - w - margin, left));
+    top = Math.max(margin, Math.min(vpH - h - margin, top));
+
+    return {
+      top,
+      left,
+      width: desiredW,
+      maxHeight: `calc(100dvh - ${margin * 2}px)`,
+      overflowY: 'auto',
+      // Hide until measured to avoid a one-frame flash at fallback dimensions
+      opacity: measured ? 1 : 0,
+      transition: 'opacity 120ms ease-out',
+    };
+  }, [rect, measured]);
+
+  // Measure the actual rendered tooltip so positioning uses real dimensions
+  useLayoutEffect(() => {
+    if (!ready) return;
+    const el = tooltipRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    setMeasured({ w: r.width, h: r.height });
+  }, [ready, index, rect]);
 
   if (!ready) return null;
 
@@ -160,6 +200,7 @@ export default function Tour({ steps, onFinish }: Props) {
       )}
 
       <div
+        ref={tooltipRef}
         className="fixed z-[71] bg-slate-900 border border-slate-600 rounded-xl shadow-2xl p-4"
         style={tooltipStyle}
       >
