@@ -31788,9 +31788,14 @@
       "has_swap_in_ability",
       "has_counter_ability",
       "priority_damage",
+      "target_all_opponents",
+      "group_attack",
       "heal",
       "bypass_armor",
+      "group_bypass_armor",
       "bypass_dodge",
+      "bypass_alert",
+      "group_bypass_alert",
       "shield",
       "damage_increase",
       "crit_increase",
@@ -31870,8 +31875,8 @@
         ]
       },
       {
-        "uuid": "611447ddd12fb8847b10ecd48da44cbb",
-        "name": "Instant Fierce Rampage",
+        "uuid": "6d96345e5462d24418ad599221bf1434",
+        "name": "Instant Group Fierce Rampage",
         "type": "regular",
         "delay": 1,
         "cooldown": 1,
@@ -31884,19 +31889,23 @@
           },
           {
             "action": "remove_shield",
-            "target": "highest_hp"
+            "target": "all_opponents"
           },
           {
             "action": "remove_taunt",
-            "target": "highest_hp"
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
           },
           {
             "action": "bypass_armor",
-            "target": "highest_hp"
+            "target": "all_opponents"
           },
           {
             "action": "attack",
-            "target": "highest_hp",
+            "target": "all_opponents",
             "multiplier": 2
           }
         ]
@@ -31984,13 +31993,8 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/images/move/regular/c461a2a64ed31fd42866052acad20fee.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/pas_counter_strike_criticalbuff.png",
         "effects": [
-          {
-            "action": "heal",
-            "target": "self",
-            "multiplier": 0.5
-          },
           {
             "action": "crit_increase",
             "target": "self",
@@ -32352,7 +32356,6 @@
     "specialty": [
       "has_counter_ability",
       "priority_non_damage",
-      "heal",
       "bypass_armor",
       "damage_increase",
       "crit_increase",
@@ -32529,13 +32532,8 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/images/move/regular/c461a2a64ed31fd42866052acad20fee.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/pas_counter_strike_criticalbuff.png",
         "effects": [
-          {
-            "action": "heal",
-            "target": "self",
-            "multiplier": 0.5
-          },
           {
             "action": "crit_increase",
             "target": "self",
@@ -102582,7 +102580,7 @@
       "nullify"
     ],
     "dna_source": [
-      "none"
+      "arena"
     ],
     "health": 4100,
     "damage": 1600,
