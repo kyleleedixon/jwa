@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-07-30",
+    "version": "2026-07-29",
+    "changes": [
+      {
+        "type": "new",
+        "uuid": "tsintamoloch",
+        "name": "Tsintamoloch",
+        "rarity": "unique"
+      }
+    ]
+  },
+  {
     "date": "2026-07-23",
     "version": "2026-07-22",
     "changes": [

@@ -89827,6 +89827,7 @@
     ],
     "hybrids": [
       "atrocimoloch",
+      "tsintamoloch",
       "tuoramoloch"
     ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/paramoloch.png",
@@ -127903,6 +127904,496 @@
     ]
   },
   {
+    "uuid": "tsintamoloch",
+    "name": "Tsintamoloch",
+    "rarity": "unique",
+    "class": "resilient",
+    "size": "medium",
+    "hybrid_type": "super_hybrid",
+    "specialty": [
+      "has_special_active_ability",
+      "has_special_passive_ability",
+      "has_on_escape_ability",
+      "has_counter_ability",
+      "target_team",
+      "target_all_opponents",
+      "group_attack",
+      "heal",
+      "group_heal",
+      "stun",
+      "bypass_dodge",
+      "bypass_alert",
+      "group_bypass_alert",
+      "shield",
+      "damage_increase",
+      "group_damage_increase",
+      "crit_increase",
+      "group_crit_increase",
+      "heal_increase",
+      "damage_decrease",
+      "crit_decrease",
+      "vulner",
+      "group_vulner",
+      "resistance_decrease_all",
+      "cleanse"
+    ],
+    "dna_source": [
+      "none"
+    ],
+    "health": 5650,
+    "damage": 1500,
+    "speed": 116,
+    "armor": 15,
+    "crit": 10,
+    "critm": 125,
+    "version": "v3.21",
+    "description": "Fusing the Tsintaosaurus and the Paramoloch together allowed for a specialization of their offspring's cranial crest. It is now strictly a communication tool. The spikes surrounding Tsintamoloch's forehead are the true danger, as they can outright blind an opponent attempting to butt heads.",
+    "ingredients": [
+      "paramoloch",
+      "tsintaosaurus"
+    ],
+    "hybrids": [],
+    "image": "https://cdn.paleo.gg/games/jwa/images/creature/tsintamoloch.png",
+    "moves": [
+      {
+        "uuid": "74a6b75d854c83b4f82ca907a037cb25",
+        "name": "Group Resilient Strike",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/strike_definite_vulnerable.png",
+        "effects": [
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "remove_dodge",
+            "target": "all_opponents"
+          },
+          {
+            "action": "remove_cloak",
+            "target": "all_opponents"
+          },
+          {
+            "action": "remove_speed_increase",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 1
+          },
+          {
+            "action": "vulner",
+            "target": "all_opponents",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "b5a1fcdd52b34234aab97bc8de20af71",
+        "name": "Determined Impact",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 1,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/b5a1fcdd52b34234aab97bc8de20af71.png",
+        "effects": [
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "remove_dot",
+            "target": "self"
+          },
+          {
+            "action": "remove_speed_increase",
+            "target": "fastest"
+          },
+          {
+            "action": "remove_crit_increase",
+            "target": "fastest"
+          },
+          {
+            "action": "remove_damage_increase",
+            "target": "fastest"
+          },
+          {
+            "action": "bypass_dodge",
+            "target": "fastest"
+          },
+          {
+            "action": "attack",
+            "target": "fastest",
+            "multiplier": 1.5
+          },
+          {
+            "action": "vulner",
+            "target": "fastest",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              1
+            ]
+          },
+          {
+            "action": "damage_decrease",
+            "target": "fastest",
+            "multiplier": 0.5,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "crit_decrease",
+            "target": "fastest",
+            "multiplier": 1,
+            "duration": [
+              1,
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "b98e47ccc2ed17640b67688eace7c081",
+        "name": "Leveling Denial Impact",
+        "type": "regular",
+        "delay": 2,
+        "cooldown": 2,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/b98e47ccc2ed17640b67688eace7c081.png",
+        "effects": [
+          {
+            "action": "attack",
+            "target": "highest_dmg",
+            "multiplier": 1.5
+          },
+          {
+            "action": "resistance_decrease_all",
+            "target": "highest_dmg",
+            "multiplier": 1,
+            "duration": [
+              1
+            ]
+          },
+          {
+            "action": "stun",
+            "target": "highest_dmg",
+            "duration": [
+              1
+            ]
+          },
+          {
+            "action": "remove_all_neg",
+            "target": "self"
+          },
+          {
+            "action": "heal_increase",
+            "target": "self",
+            "multiplier": 0.25,
+            "duration": [
+              2,
+              8
+            ]
+          },
+          {
+            "action": "heal",
+            "target": "team",
+            "multiplier": 1
+          },
+          {
+            "action": "shield",
+            "target": "self",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "9b377daee5cd06c429e79649e3cf82f4",
+        "name": "Resilient Group Rampage",
+        "type": "regular",
+        "delay": 1,
+        "cooldown": 2,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/rampage_definite_vulnerable.png",
+        "effects": [
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "remove_dodge",
+            "target": "all_opponents"
+          },
+          {
+            "action": "remove_cloak",
+            "target": "all_opponents"
+          },
+          {
+            "action": "remove_speed_increase",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 2
+          },
+          {
+            "action": "vulner",
+            "target": "all_opponents",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "3eb5a199e0e123c419166d4fedf4e2d0",
+        "name": "Medium Resilient Counter-Attack",
+        "type": "counter",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/counter_definite_resilient_vulnerable.png",
+        "effects": [
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "remove_cloak",
+            "target": "attacker"
+          },
+          {
+            "action": "remove_dodge",
+            "target": "attacker"
+          },
+          {
+            "action": "attack",
+            "target": "attacker",
+            "multiplier": 0.5
+          },
+          {
+            "action": "vulner",
+            "target": "attacker",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "e24b0048826b2d64ba5b13f4a1b12546",
+        "name": "On Escape Restoring Aggression",
+        "type": "on_escape",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/e24b0048826b2d64ba5b13f4a1b12546.png",
+        "effects": [
+          {
+            "action": "remove_all_neg",
+            "target": "team"
+          },
+          {
+            "action": "heal",
+            "target": "team",
+            "multiplier": 1.5
+          },
+          {
+            "action": "crit_increase",
+            "target": "team",
+            "multiplier": 0.5,
+            "duration": [
+              1
+            ]
+          },
+          {
+            "action": "damage_increase",
+            "target": "team",
+            "multiplier": 0.2,
+            "duration": [
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "ra__5663b808188a47a48a2364241e11e983",
+        "name": "Enhancement",
+        "type": "reactive",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/ra__5663b808188a47a48a2364241e11e983.png",
+        "effects": [
+          {
+            "action": "remove_all_neg",
+            "target": "self"
+          },
+          {
+            "action": "damage_increase",
+            "target": "self",
+            "multiplier": 0.1,
+            "duration": [
+              1,
+              4
+            ]
+          },
+          {
+            "action": "heal_increase",
+            "target": "self",
+            "multiplier": 0.2,
+            "duration": [
+              1,
+              4
+            ]
+          },
+          {
+            "action": "shield",
+            "target": "self",
+            "multiplier": 0.75,
+            "duration": [
+              1,
+              4
+            ]
+          }
+        ]
+      }
+    ],
+    "resistance": [
+      25,
+      0,
+      65,
+      25,
+      100,
+      75,
+      80,
+      75,
+      100,
+      0,
+      50,
+      85,
+      0
+    ],
+    "enhancements": [
+      {
+        "cost": 200,
+        "req": [
+          [
+            "coins",
+            100000
+          ],
+          [
+            "catalyst_minor",
+            360
+          ]
+        ],
+        "rwd": {
+          "type": "health",
+          "value": 110
+        }
+      },
+      {
+        "cost": 250,
+        "req": [
+          [
+            "coins",
+            150000
+          ],
+          [
+            "catalyst_minor",
+            1620
+          ],
+          [
+            "catalyst",
+            270
+          ]
+        ],
+        "rwd": {
+          "type": "damage",
+          "value": 110
+        }
+      },
+      {
+        "cost": 300,
+        "req": [
+          [
+            "coins",
+            200000
+          ],
+          [
+            "catalyst_minor",
+            1080
+          ],
+          [
+            "catalyst",
+            1620
+          ]
+        ],
+        "rwd": {
+          "type": "speed",
+          "value": 2
+        }
+      },
+      {
+        "cost": 400,
+        "req": [
+          [
+            "coins",
+            250000
+          ],
+          [
+            "catalyst",
+            3240
+          ]
+        ],
+        "rwd": {
+          "type": "boost_max",
+          "value": 1
+        }
+      },
+      {
+        "cost": 500,
+        "req": [
+          [
+            "coins",
+            350000
+          ],
+          [
+            "catalyst_major",
+            2000
+          ]
+        ],
+        "rwd": {
+          "type": "moves_reactive",
+          "value": "ra__5663b808188a47a48a2364241e11e983"
+        }
+      }
+    ]
+  },
+  {
     "uuid": "tsintamoth",
     "name": "Tsintamoth",
     "rarity": "legendary",
@@ -128121,6 +128612,7 @@
     "description": "The special forward-facing crest on top of Tsintaosaurus' head has given it great scientific popularity. Aside from its crest, this creature was like most Hadrosaur, because it could move between quadrupedal and bipedal stances and was a target for large predators like T. rex.",
     "ingredients": [],
     "hybrids": [
+      "tsintamoloch",
       "tsintamoth"
     ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/tsintaosaurus.png",
