@@ -4679,6 +4679,222 @@
     ]
   },
   {
+    "uuid": "alioramus",
+    "name": "Alioramus",
+    "rarity": "epic",
+    "class": "cunning",
+    "size": "medium",
+    "hybrid_type": "non_hybrid",
+    "specialty": [
+      "has_special_active_ability",
+      "has_on_escape_ability",
+      "rend",
+      "bypass_dodge",
+      "dodge",
+      "hot_contextual",
+      "damage_decrease",
+      "crit_decrease",
+      "speed_decrease",
+      "swap_prevent",
+      "resistance_decrease_all"
+    ],
+    "dna_source": [
+      "sanctuary",
+      "none"
+    ],
+    "health": 3800,
+    "damage": 1400,
+    "speed": 119,
+    "armor": 0,
+    "crit": 25,
+    "critm": 125,
+    "version": "v3.21",
+    "description": "Alioramus' carnivorous diet is based off on smaller animals and dinosaurs, allowing it to live in territories prowled by other tyrannosaurids who target larger prey. Lacking the bite force of its cousins, it strikes less protected areas to ensure maximum damage.",
+    "ingredients": [],
+    "hybrids": [],
+    "image": "https://cdn.paleo.gg/games/jwa/images/creature/alioramus.png",
+    "moves": [
+      {
+        "uuid": "75a8021661f6ec848b4ac8226865b401",
+        "name": "Cunning Strike",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/cunning_strike.png",
+        "effects": [
+          {
+            "action": "remove_dot",
+            "target": "self"
+          },
+          {
+            "action": "damage_decrease",
+            "target": "lowest_hp",
+            "multiplier": 0.5,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "crit_decrease",
+            "target": "lowest_hp",
+            "multiplier": 1,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "remove_crit_increase",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "remove_damage_increase",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "attack",
+            "target": "lowest_hp",
+            "multiplier": 1
+          }
+        ]
+      },
+      {
+        "uuid": "f650e725672b9fa498d525065837eedb",
+        "name": "Cunning Rampage Devour",
+        "type": "regular",
+        "delay": 1,
+        "cooldown": 1,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/f650e725672b9fa498d525065837eedb.png",
+        "effects": [
+          {
+            "action": "remove_dot",
+            "target": "self"
+          },
+          {
+            "action": "remove_crit_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "remove_damage_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "crit_decrease",
+            "target": "highest_dmg",
+            "multiplier": 1,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "damage_decrease",
+            "target": "highest_dmg",
+            "multiplier": 0.5,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "attack",
+            "target": "highest_dmg",
+            "multiplier": 2
+          },
+          {
+            "action": "hot_contextual",
+            "target": "self",
+            "multiplier": 0.4,
+            "duration": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "38aad402b56f8954f9b615e8e80cf714",
+        "name": "Rending Deceleration",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/38aad402b56f8954f9b615e8e80cf714.png",
+        "effects": [
+          {
+            "action": "dodge",
+            "target": "self",
+            "multiplier": 0.667,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "resistance_decrease_all",
+            "target": "highest_hp",
+            "multiplier": 0.5,
+            "duration": [
+              2
+            ]
+          },
+          {
+            "action": "bypass_dodge",
+            "target": "highest_hp"
+          },
+          {
+            "action": "rend",
+            "target": "highest_hp",
+            "multiplier": 0.6
+          },
+          {
+            "action": "speed_decrease",
+            "target": "highest_hp",
+            "multiplier": 0.5,
+            "duration": [
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "132b2baaf90442445a05d6901cea3e97",
+        "name": "No Escape",
+        "type": "on_escape",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/132b2baaf90442445a05d6901cea3e97.png",
+        "effects": [
+          {
+            "action": "swap_prevent",
+            "target": "escapee",
+            "duration": [
+              1
+            ]
+          }
+        ]
+      }
+    ],
+    "resistance": [
+      50,
+      0,
+      100,
+      50,
+      75,
+      50,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
     "uuid": "allodrigues",
     "name": "Allodrigues",
     "rarity": "unique",

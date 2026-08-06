@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-08-06",
+    "version": "2026-08-05",
+    "changes": [
+      {
+        "type": "new",
+        "uuid": "alioramus",
+        "name": "Alioramus",
+        "rarity": "epic"
+      }
+    ]
+  },
+  {
     "date": "2026-07-30",
     "version": "2026-07-29",
     "changes": [
