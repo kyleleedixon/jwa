@@ -371,7 +371,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -380,7 +380,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -389,15 +389,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -4729,7 +4729,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -4738,7 +4738,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -4747,15 +4747,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -11321,7 +11321,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -11330,7 +11330,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -11339,15 +11339,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -16489,7 +16489,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -16498,7 +16498,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -16507,15 +16507,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -24808,7 +24808,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -24817,7 +24817,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -24826,15 +24826,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -25686,7 +25686,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -25695,7 +25695,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -25704,15 +25704,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -29432,6 +29432,7 @@
       "speed_decrease",
       "armor_decrease",
       "heal_decrease",
+      "group_heal_decrease",
       "vulner",
       "swap_prevent",
       "resistance_decrease_all",
@@ -29442,7 +29443,7 @@
       "none"
     ],
     "health": 5850,
-    "damage": 1550,
+    "damage": 1600,
     "speed": 127,
     "armor": 25,
     "crit": 20,
@@ -29513,8 +29514,17 @@
         "delay": 0,
         "cooldown": 2,
         "priority": 1,
-        "icon": "https://cdn.paleo.gg/games/images/move/regular/8f74eb4ad04cde849b6d5f2759fec0ba.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/cunning_impact.png",
         "effects": [
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 1.5
+          },
           {
             "action": "remove_dot",
             "target": "self"
@@ -29529,13 +29539,8 @@
             ]
           },
           {
-            "action": "attack",
-            "target": "lowest_hp",
-            "multiplier": 1.5
-          },
-          {
             "action": "heal_decrease",
-            "target": "lowest_hp",
+            "target": "all_opponents",
             "multiplier": 0.5,
             "duration": [
               2,
@@ -32212,6 +32217,11 @@
         "icon": "https://cdn.paleo.gg/games/images/move/regular/c461a2a64ed31fd42866052acad20fee.png",
         "effects": [
           {
+            "action": "heal",
+            "target": "self",
+            "multiplier": 0.75
+          },
+          {
             "action": "crit_increase",
             "target": "self",
             "multiplier": 1,
@@ -32454,7 +32464,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -32463,7 +32473,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -32472,15 +32482,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -32572,6 +32582,7 @@
     "specialty": [
       "has_counter_ability",
       "priority_non_damage",
+      "heal",
       "bypass_armor",
       "damage_increase",
       "crit_increase",
@@ -32615,7 +32626,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -32624,7 +32635,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -32633,15 +32644,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -32750,6 +32761,11 @@
         "priority": 0,
         "icon": "https://cdn.paleo.gg/games/images/move/regular/c461a2a64ed31fd42866052acad20fee.png",
         "effects": [
+          {
+            "action": "heal",
+            "target": "self",
+            "multiplier": 0.75
+          },
           {
             "action": "crit_increase",
             "target": "self",
@@ -33035,7 +33051,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -33044,7 +33060,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -33053,15 +33069,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -33395,7 +33411,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -33404,7 +33420,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -33413,15 +33429,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -37237,6 +37253,464 @@
     }
   },
   {
+    "uuid": "cryolophosaurus_mattel",
+    "name": "Cryolophosaurus Mattel",
+    "rarity": "unique",
+    "class": "fierce_resilient",
+    "size": "medium",
+    "hybrid_type": "non_hybrid",
+    "specialty": [
+      "has_special_active_ability",
+      "has_special_passive_ability",
+      "has_swap_in_ability",
+      "has_counter_ability",
+      "priority_damage",
+      "priority_last_non_damage",
+      "target_all_opponents",
+      "group_attack",
+      "heal",
+      "bypass_dodge",
+      "group_bypass_dodge",
+      "bypass_alert",
+      "group_bypass_alert",
+      "shield",
+      "dodge",
+      "damage_increase",
+      "speed_increase",
+      "armor_increase",
+      "damage_decrease",
+      "group_damage_decrease",
+      "crit_decrease",
+      "group_crit_decrease",
+      "speed_decrease",
+      "vulner",
+      "swap_prevent",
+      "resistance_decrease_all",
+      "nullify",
+      "cleanse"
+    ],
+    "dna_source": [
+      "none"
+    ],
+    "health": 4875,
+    "damage": 1455,
+    "speed": 117,
+    "armor": 10,
+    "crit": 5,
+    "critm": 125,
+    "version": "v3.22",
+    "description": "This Cryolophosaurus teal variant is primed for battle! It is significantly louder than the usual Cryolophosaurus, and its tail wags indicate what it will do next!",
+    "ingredients": [],
+    "hybrids": [],
+    "image": "https://cdn.paleo.gg/games/jwa/images/creature/cryolophosaurus_mattel.png",
+    "moves": [
+      {
+        "uuid": "ca82d33b318249140903d3b7adde55d9",
+        "name": "Protective Advance",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 1,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/strike_shield_armor_buff.png",
+        "effects": [
+          {
+            "action": "attack",
+            "target": "fastest",
+            "multiplier": 1
+          },
+          {
+            "action": "shield",
+            "target": "self",
+            "multiplier": 0.5,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "armor_increase",
+            "target": "self",
+            "multiplier": 0.15,
+            "duration": [
+              1,
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "96810f2c151a1a442883d9c73325967c",
+        "name": "Cunning Dodge Impact",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 1,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/96810f2c151a1a442883d9c73325967c.png",
+        "effects": [
+          {
+            "action": "remove_dot",
+            "target": "self"
+          },
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_dodge",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 1.5
+          },
+          {
+            "action": "damage_decrease",
+            "target": "all_opponents",
+            "multiplier": 0.5,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "crit_decrease",
+            "target": "all_opponents",
+            "multiplier": 1,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "remove_damage_increase",
+            "target": "all_opponents"
+          },
+          {
+            "action": "dodge",
+            "target": "self",
+            "multiplier": 0.67,
+            "duration": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "fa56c4644933a1647acdd9c182e6941a",
+        "name": "Delayed Diminishing Advantage",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": -1,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/scrub.png",
+        "effects": [
+          {
+            "action": "remove_all_pos",
+            "target": "most_pos"
+          },
+          {
+            "action": "resistance_decrease_all",
+            "target": "most_pos",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "damage_decrease",
+            "target": "most_pos",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "speed_decrease",
+            "target": "most_pos",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "remove_all_neg",
+            "target": "self"
+          },
+          {
+            "action": "speed_increase",
+            "target": "self",
+            "multiplier": 0.25,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "damage_increase",
+            "target": "self",
+            "multiplier": 0.25,
+            "duration": [
+              2,
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "ca5f40ca79d8170499e80c8929562609",
+        "name": "Lockdown Defensive Rampage",
+        "type": "regular",
+        "delay": 1,
+        "cooldown": 1,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/ca5f40ca79d8170499e80c8929562609.png",
+        "effects": [
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "heal",
+            "target": "self",
+            "multiplier": 1.5
+          },
+          {
+            "action": "shield",
+            "target": "self",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "attack",
+            "target": "fastest",
+            "multiplier": 2
+          },
+          {
+            "action": "vulner",
+            "target": "fastest",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              1
+            ]
+          },
+          {
+            "action": "speed_decrease",
+            "target": "fastest",
+            "multiplier": 0.15,
+            "duration": [
+              2
+            ]
+          },
+          {
+            "action": "swap_prevent",
+            "target": "fastest",
+            "duration": [
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "2d6b2dad7bb59064396033413d49bf6b",
+        "name": "Afflicting Counter Strike",
+        "type": "counter",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/2d6b2dad7bb59064396033413d49bf6b.png",
+        "effects": [
+          {
+            "action": "resistance_decrease_all",
+            "target": "attacker",
+            "multiplier": 0.25,
+            "duration": [
+              2
+            ]
+          },
+          {
+            "action": "attack",
+            "target": "attacker",
+            "multiplier": 0.75
+          }
+        ]
+      },
+      {
+        "uuid": "7d180bc1e3464784eb5db9f0f6e0e262",
+        "name": "Swap In Degenerating Distraction",
+        "type": "swap_in",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/7d180bc1e3464784eb5db9f0f6e0e262.png",
+        "effects": [
+          {
+            "action": "resistance_decrease_all",
+            "target": "highest_dmg",
+            "multiplier": 0.2,
+            "duration": [
+              3
+            ]
+          },
+          {
+            "action": "damage_decrease",
+            "target": "highest_dmg",
+            "multiplier": 1,
+            "duration": [
+              1,
+              4
+            ]
+          },
+          {
+            "action": "swap_prevent",
+            "target": "self",
+            "duration": [
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "ra__1e2b6bb011388b9468af597d935562dc",
+        "name": "Enhancement",
+        "type": "reactive",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/prestige_passif_damage_buff.png",
+        "effects": [
+          {
+            "action": "damage_increase",
+            "target": "self",
+            "multiplier": 0.15,
+            "duration": [
+              0,
+              4
+            ]
+          }
+        ]
+      }
+    ],
+    "resistance": [
+      0,
+      75,
+      50,
+      0,
+      100,
+      50,
+      100,
+      0,
+      0,
+      0,
+      67,
+      50,
+      0
+    ],
+    "enhancements": [
+      {
+        "cost": 200,
+        "req": [
+          [
+            "coins",
+            100000
+          ],
+          [
+            "catalyst_minor",
+            360
+          ]
+        ],
+        "rwd": {
+          "type": "health",
+          "value": 110
+        }
+      },
+      {
+        "cost": 250,
+        "req": [
+          [
+            "coins",
+            150000
+          ],
+          [
+            "catalyst_minor",
+            1620
+          ],
+          [
+            "catalyst",
+            270
+          ]
+        ],
+        "rwd": {
+          "type": "damage",
+          "value": 110
+        }
+      },
+      {
+        "cost": 300,
+        "req": [
+          [
+            "coins",
+            200000
+          ],
+          [
+            "catalyst_minor",
+            1080
+          ],
+          [
+            "catalyst",
+            1620
+          ]
+        ],
+        "rwd": {
+          "type": "speed",
+          "value": 2
+        }
+      },
+      {
+        "cost": 400,
+        "req": [
+          [
+            "coins",
+            250000
+          ],
+          [
+            "catalyst",
+            3240
+          ]
+        ],
+        "rwd": {
+          "type": "boost_max",
+          "value": 1
+        }
+      },
+      {
+        "cost": 500,
+        "req": [
+          [
+            "coins",
+            350000
+          ],
+          [
+            "catalyst_major",
+            2000
+          ]
+        ],
+        "rwd": {
+          "type": "moves_reactive",
+          "value": "ra__1e2b6bb011388b9468af597d935562dc"
+        }
+      }
+    ]
+  },
+  {
     "uuid": "dakotacurus",
     "name": "Dakotacurus",
     "rarity": "unique",
@@ -39626,7 +40100,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -39635,7 +40109,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -39644,15 +40118,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -40108,7 +40582,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -40117,7 +40591,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -40126,15 +40600,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -40325,7 +40799,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -40334,7 +40808,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -40343,15 +40817,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -40477,7 +40951,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -40486,7 +40960,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -40495,15 +40969,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -40950,7 +41424,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -40959,7 +41433,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -40968,15 +41442,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -42817,7 +43291,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -42826,7 +43300,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -42835,15 +43309,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -43169,7 +43643,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -43178,7 +43652,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -43187,15 +43661,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -48095,7 +48569,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -48104,7 +48578,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -48113,15 +48587,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -52112,7 +52586,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -52121,7 +52595,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -52130,15 +52604,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -52437,7 +52911,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -52446,7 +52920,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -52455,15 +52929,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -54724,6 +55198,8 @@
       "group_speed_decrease",
       "armor_decrease",
       "group_armor_decrease",
+      "heal_decrease",
+      "group_heal_decrease",
       "vulner",
       "cleanse",
       "heal"
@@ -54732,7 +55208,7 @@
       "none"
     ],
     "health": 6500,
-    "damage": 1350,
+    "damage": 1450,
     "speed": 110,
     "armor": 30,
     "crit": 5,
@@ -54802,7 +55278,7 @@
         "type": "regular",
         "delay": 0,
         "cooldown": 2,
-        "priority": 0,
+        "priority": 1,
         "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/damage_distraction_slow.png",
         "effects": [
           {
@@ -54840,6 +55316,43 @@
               2,
               4
             ]
+          },
+          {
+            "action": "heal_decrease",
+            "target": "all_opponents",
+            "multiplier": 0.33,
+            "duration": [
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "1485d665a076e0f45ae2c64b84c0ad56",
+        "name": "Harden",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/damage_armor_buff_cleanse.png",
+        "effects": [
+          {
+            "action": "attack",
+            "target": "highest_hp",
+            "multiplier": 1.5
+          },
+          {
+            "action": "armor_increase",
+            "target": "team",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "remove_all_neg",
+            "target": "self"
           }
         ]
       },
@@ -54929,35 +55442,6 @@
             }
           ]
         }
-      },
-      {
-        "uuid": "1485d665a076e0f45ae2c64b84c0ad56",
-        "name": "Harden",
-        "type": "regular",
-        "delay": 0,
-        "cooldown": 2,
-        "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/damage_armor_buff_cleanse.png",
-        "effects": [
-          {
-            "action": "attack",
-            "target": "highest_hp",
-            "multiplier": 1.5
-          },
-          {
-            "action": "armor_increase",
-            "target": "team",
-            "multiplier": 0.5,
-            "duration": [
-              2,
-              4
-            ]
-          },
-          {
-            "action": "remove_all_neg",
-            "target": "self"
-          }
-        ]
       },
       {
         "uuid": "7420702ecd3ff404785085419ac23507",
@@ -55080,7 +55564,7 @@
     ],
     "resistance": [
       75,
-      25,
+      33,
       50,
       25,
       0,
@@ -57766,7 +58250,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -57775,7 +58259,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -57784,15 +58268,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -58646,7 +59130,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -58655,7 +59139,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -58664,15 +59148,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -61181,7 +61665,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -61190,7 +61674,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -61199,15 +61683,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -69585,7 +70069,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -69594,7 +70078,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -69603,15 +70087,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -69772,7 +70256,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -69781,7 +70265,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -69790,15 +70274,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -71346,7 +71830,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -71355,7 +71839,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -71364,15 +71848,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -71949,7 +72433,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -71958,7 +72442,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -71967,15 +72451,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -76491,7 +76975,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -76500,7 +76984,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -76509,15 +76993,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -78894,7 +79378,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -78903,7 +79387,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -78912,15 +79396,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -80056,7 +80540,8 @@
       "group_damage_decrease",
       "crit_decrease",
       "group_crit_decrease",
-      "speed_decrease"
+      "speed_decrease",
+      "cleanse"
     ],
     "dna_source": [
       "none"
@@ -80176,7 +80661,7 @@
             ]
           },
           {
-            "action": "remove_damage_decrease",
+            "action": "remove_all_neg",
             "target": "self"
           },
           {
@@ -80194,10 +80679,10 @@
         ]
       },
       {
-        "uuid": "ot__26002f02764f1da40b4ec9548818cd16_d4ac2bf503ef8034c98a1b04fd7323bc__33",
+        "uuid": "ot__26002f02764f1da40b4ec9548818cd16_d4ac2bf503ef8034c98a1b04fd7323bc__50",
         "name": "Bellowing Alert Rampage",
         "type": "regular",
-        "delay": 1,
+        "delay": 0,
         "cooldown": 2,
         "priority": 1,
         "effects": [
@@ -80232,9 +80717,9 @@
           }
         ],
         "if_alert": {
-          "threshold": 33.333333333333336,
+          "threshold": 50,
           "priority": 1,
-          "delay": 1,
+          "delay": 0,
           "cooldown": 2,
           "effects": [
             {
@@ -80732,7 +81217,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -80741,7 +81226,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -80750,15 +81235,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -80845,7 +81330,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -80854,7 +81339,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -80863,15 +81348,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -81185,7 +81670,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -81194,7 +81679,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -81203,15 +81688,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -81430,7 +81915,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -81439,7 +81924,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -81448,15 +81933,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -91458,7 +91943,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -91467,7 +91952,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -91476,15 +91961,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -94354,7 +94839,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -94363,7 +94848,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -94372,15 +94857,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -94549,7 +95034,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -94558,7 +95043,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -94567,15 +95052,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -97925,7 +98410,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -97934,7 +98419,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -97943,15 +98428,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -98050,7 +98535,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -98059,7 +98544,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -98068,15 +98553,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -98863,7 +99348,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -98872,7 +99357,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -98881,15 +99366,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -99423,7 +99908,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -99432,7 +99917,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -99441,15 +99926,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -104478,7 +104963,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -104487,7 +104972,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -104496,15 +104981,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -106341,7 +106826,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -106350,7 +106835,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -106359,15 +106844,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -107871,7 +108356,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -107880,7 +108365,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -107889,15 +108374,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -109078,7 +109563,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -109087,7 +109572,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -109096,15 +109581,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -115648,7 +116133,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -115657,7 +116142,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -115666,15 +116151,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -116097,7 +116582,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -116106,7 +116591,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -116115,15 +116600,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -118089,7 +118574,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -118098,7 +118583,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -118107,15 +118592,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -119387,6 +119872,422 @@
         "critm": 7
       }
     }
+  },
+  {
+    "uuid": "stomatosuchus_mattel",
+    "name": "Stomatosuchus Mattel",
+    "rarity": "unique",
+    "class": "cunning_fierce",
+    "size": "large",
+    "hybrid_type": "non_hybrid",
+    "specialty": [
+      "has_special_active_ability",
+      "has_special_passive_ability",
+      "has_on_escape_ability",
+      "has_counter_ability",
+      "priority_damage",
+      "target_team",
+      "target_all_opponents",
+      "group_attack",
+      "bypass_armor",
+      "group_bypass_armor",
+      "bypass_alert",
+      "group_bypass_alert",
+      "shield",
+      "group_shield",
+      "taunt",
+      "hot_contextual",
+      "vulner",
+      "group_vulner",
+      "swap_prevent",
+      "dot",
+      "daze"
+    ],
+    "dna_source": [
+      "none"
+    ],
+    "health": 4850,
+    "damage": 1700,
+    "speed": 117,
+    "armor": 20,
+    "crit": 5,
+    "critm": 125,
+    "version": "v3.22",
+    "description": "Bright green and mean, the Stomatosuchus roars into action! Careful around its head, as it has a powerful upwards bite attack!",
+    "ingredients": [],
+    "hybrids": [],
+    "image": "https://cdn.paleo.gg/games/jwa/images/creature/stomatosuchus_mattel.png",
+    "moves": [
+      {
+        "uuid": "a254ac8c6081e6549937adc575c60495",
+        "name": "Group Fierce Strike",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/fierce_strike_bypass_shield_scrub_cleanse.png",
+        "effects": [
+          {
+            "action": "remove_vulner",
+            "target": "self"
+          },
+          {
+            "action": "remove_shield",
+            "target": "all_opponents"
+          },
+          {
+            "action": "remove_taunt",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_armor",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 1
+          }
+        ]
+      },
+      {
+        "uuid": "240c6cbd30df791429f3a37764e3104b",
+        "name": "Taunting Resilient Group Impact",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/impact_shield_remove_dodge.png",
+        "effects": [
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "remove_dodge",
+            "target": "all_opponents"
+          },
+          {
+            "action": "remove_cloak",
+            "target": "all_opponents"
+          },
+          {
+            "action": "remove_speed_increase",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 1.5
+          },
+          {
+            "action": "vulner",
+            "target": "all_opponents",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              1
+            ]
+          },
+          {
+            "action": "shield",
+            "target": "team",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              2
+            ]
+          },
+          {
+            "action": "taunt",
+            "target": "self",
+            "duration": [
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "a7fe0810515e9bd47bc4770413871bdf",
+        "name": "Dazing Vulnerable Impact",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 1,
+        "priority": 1,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/a7fe0810515e9bd47bc4770413871bdf.png",
+        "effects": [
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "bypass_armor",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "attack",
+            "target": "highest_dmg",
+            "multiplier": 1.5
+          },
+          {
+            "action": "daze",
+            "target": "highest_dmg",
+            "duration": [
+              2
+            ]
+          },
+          {
+            "action": "vulner",
+            "target": "highest_dmg",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "6ce73d4aa8a730e4fb52e04fe366a1f8",
+        "name": "Fierce Devouring Rampage",
+        "type": "regular",
+        "delay": 1,
+        "cooldown": 1,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/rampage_bypass_shield_devour.png",
+        "effects": [
+          {
+            "action": "remove_shield",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "bypass_armor",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "attack",
+            "target": "lowest_hp",
+            "multiplier": 2
+          },
+          {
+            "action": "hot_contextual",
+            "target": "self",
+            "multiplier": 0.6,
+            "duration": [
+              4
+            ]
+          },
+          {
+            "action": "remove_taunt",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "remove_vulner",
+            "target": "self"
+          }
+        ]
+      },
+      {
+        "uuid": "7bc39bebe728ea341b43259383589620",
+        "name": "Lesser Wounding Counter",
+        "type": "counter",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/counter_wound_vulnerable.png",
+        "effects": [
+          {
+            "action": "dot",
+            "target": "attacker",
+            "multiplier": 0.2,
+            "duration": [
+              1
+            ]
+          },
+          {
+            "action": "vulner",
+            "target": "attacker",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "76ce55cdfee2f3b4791eeb22b1bdfdad",
+        "name": "On Escape Dazing Impact",
+        "type": "on_escape",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/76ce55cdfee2f3b4791eeb22b1bdfdad.png",
+        "effects": [
+          {
+            "action": "daze",
+            "target": "escapee",
+            "duration": [
+              2
+            ]
+          },
+          {
+            "action": "bypass_armor",
+            "target": "escapee"
+          },
+          {
+            "action": "attack",
+            "target": "escapee",
+            "multiplier": 1.5
+          },
+          {
+            "action": "swap_prevent",
+            "target": "escapee",
+            "duration": [
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "ra__2fd2ce19f20c3ef48addaa90782e8223",
+        "name": "Enhancement",
+        "type": "reactive",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/prestige_passif_damage_buff.png",
+        "effects": [
+          {
+            "action": "damage_increase",
+            "target": "self",
+            "multiplier": 0.15,
+            "duration": [
+              2,
+              2
+            ]
+          }
+        ]
+      }
+    ],
+    "resistance": [
+      0,
+      50,
+      50,
+      50,
+      75,
+      67,
+      100,
+      0,
+      0,
+      0,
+      0,
+      50,
+      67
+    ],
+    "enhancements": [
+      {
+        "cost": 200,
+        "req": [
+          [
+            "coins",
+            100000
+          ],
+          [
+            "catalyst_minor",
+            360
+          ]
+        ],
+        "rwd": {
+          "type": "health",
+          "value": 110
+        }
+      },
+      {
+        "cost": 250,
+        "req": [
+          [
+            "coins",
+            150000
+          ],
+          [
+            "catalyst_minor",
+            1620
+          ],
+          [
+            "catalyst",
+            270
+          ]
+        ],
+        "rwd": {
+          "type": "damage",
+          "value": 110
+        }
+      },
+      {
+        "cost": 300,
+        "req": [
+          [
+            "coins",
+            200000
+          ],
+          [
+            "catalyst_minor",
+            1080
+          ],
+          [
+            "catalyst",
+            1620
+          ]
+        ],
+        "rwd": {
+          "type": "speed",
+          "value": 2
+        }
+      },
+      {
+        "cost": 400,
+        "req": [
+          [
+            "coins",
+            250000
+          ],
+          [
+            "catalyst",
+            3240
+          ]
+        ],
+        "rwd": {
+          "type": "boost_max",
+          "value": 1
+        }
+      },
+      {
+        "cost": 500,
+        "req": [
+          [
+            "coins",
+            350000
+          ],
+          [
+            "catalyst_major",
+            2000
+          ]
+        ],
+        "rwd": {
+          "type": "moves_reactive",
+          "value": "ra__2fd2ce19f20c3ef48addaa90782e8223"
+        }
+      }
+    ]
   },
   {
     "uuid": "struthiomimus",
@@ -130046,7 +130947,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -130055,7 +130956,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -130064,15 +130965,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -131942,7 +132843,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -131951,7 +132852,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -131960,15 +132861,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]
@@ -132280,7 +133181,7 @@
           },
           {
             "action": "damage_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 0.5,
             "duration": [
               1,
@@ -132289,7 +133190,7 @@
           },
           {
             "action": "crit_decrease",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1,
             "duration": [
               1,
@@ -132298,15 +133199,15 @@
           },
           {
             "action": "remove_crit_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "remove_damage_increase",
-            "target": "lowest_hp"
+            "target": "highest_dmg"
           },
           {
             "action": "attack",
-            "target": "lowest_hp",
+            "target": "highest_dmg",
             "multiplier": 1
           }
         ]

@@ -1,5 +1,45 @@
 [
   {
+    "date": "2026-08-14",
+    "version": "2026-08-13",
+    "changes": [
+      {
+        "type": "new",
+        "uuid": "cryolophosaurus_mattel",
+        "name": "Cryolophosaurus Mattel",
+        "rarity": "unique"
+      },
+      {
+        "type": "new",
+        "uuid": "stomatosuchus_mattel",
+        "name": "Stomatosuchus Mattel",
+        "rarity": "unique"
+      },
+      {
+        "type": "updated",
+        "uuid": "ceranosaurus",
+        "name": "Ceranosaurus",
+        "stats": {
+          "damage": [
+            1550,
+            1600
+          ]
+        }
+      },
+      {
+        "type": "updated",
+        "uuid": "geminideus",
+        "name": "Geminideus",
+        "stats": {
+          "damage": [
+            1350,
+            1450
+          ]
+        }
+      }
+    ]
+  },
+  {
     "date": "2026-08-06",
     "version": "2026-08-05",
     "changes": [
