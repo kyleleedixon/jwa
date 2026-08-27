@@ -1,5 +1,29 @@
 [
   {
+    "date": "2026-08-27",
+    "version": "2026-08-27",
+    "changes": [
+      {
+        "type": "new",
+        "uuid": "aliorasuchus",
+        "name": "Aliorasuchus",
+        "rarity": "unique"
+      },
+      {
+        "type": "new",
+        "uuid": "indoraptor_mattel",
+        "name": "Indoraptor Mattel",
+        "rarity": "apex"
+      },
+      {
+        "type": "new",
+        "uuid": "paralidactylus",
+        "name": "Paralidactylus",
+        "rarity": "apex"
+      }
+    ]
+  },
+  {
     "date": "2026-08-14",
     "version": "2026-08-13",
     "changes": [

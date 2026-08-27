@@ -4711,7 +4711,9 @@
     "version": "v3.21",
     "description": "Alioramus' carnivorous diet is based off on smaller animals and dinosaurs, allowing it to live in territories prowled by other tyrannosaurids who target larger prey. Lacking the bite force of its cousins, it strikes less protected areas to ensure maximum damage.",
     "ingredients": [],
-    "hybrids": [],
+    "hybrids": [
+      "aliorasuchus"
+    ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/alioramus.png",
     "moves": [
       {
@@ -4892,6 +4894,427 @@
       0,
       0,
       0
+    ]
+  },
+  {
+    "uuid": "aliorasuchus",
+    "name": "Aliorasuchus",
+    "rarity": "unique",
+    "class": "cunning",
+    "size": "medium",
+    "hybrid_type": "giga_hybrid",
+    "specialty": [
+      "has_special_active_ability",
+      "has_on_escape_ability",
+      "has_counter_ability",
+      "priority_damage",
+      "rend",
+      "stun",
+      "bypass_armor",
+      "bypass_dodge",
+      "dodge",
+      "hot_contextual",
+      "damage_decrease",
+      "crit_decrease",
+      "speed_decrease",
+      "swap_prevent",
+      "resistance_decrease_all",
+      "nullify"
+    ],
+    "dna_source": [
+      "none"
+    ],
+    "health": 4350,
+    "damage": 1500,
+    "speed": 126,
+    "armor": 10,
+    "crit": 25,
+    "critm": 150,
+    "version": "v3.22",
+    "description": "An extremely adaptable predator, wherever you find dinosaurs, Aliorasuchus thrives. Aliorasuchus' varied diet of meat and fish regardless of provenance (or freshness) has turned its bite from one of the weakest among tyrannosaurids to one of the most dangerous!",
+    "ingredients": [
+      "alioramus",
+      "pyrosuchus"
+    ],
+    "hybrids": [],
+    "image": "https://cdn.paleo.gg/games/jwa/images/creature/aliorasuchus.png",
+    "moves": [
+      {
+        "uuid": "12c237ebcc2e0314099abe37f70e0f0a",
+        "name": "Instant Cunning Strike",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 1,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/cunning_strike.png",
+        "effects": [
+          {
+            "action": "remove_dot",
+            "target": "self"
+          },
+          {
+            "action": "damage_decrease",
+            "target": "highest_dmg",
+            "multiplier": 0.5,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "crit_decrease",
+            "target": "highest_dmg",
+            "multiplier": 1,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "remove_crit_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "remove_damage_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "attack",
+            "target": "highest_dmg",
+            "multiplier": 1
+          },
+          {
+            "action": "dodge",
+            "target": "self",
+            "multiplier": 0.67,
+            "duration": [
+              1,
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "6a87ee94aa1e5564d94d9713ec9f9988",
+        "name": "Infectious Bite",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/6a87ee94aa1e5564d94d9713ec9f9988.png",
+        "effects": [
+          {
+            "action": "resistance_decrease_all",
+            "target": "highest_hp",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "speed_decrease",
+            "target": "highest_hp",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "damage_decrease",
+            "target": "highest_hp",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "stun",
+            "target": "highest_hp",
+            "duration": [
+              1
+            ]
+          },
+          {
+            "action": "attack",
+            "target": "highest_hp",
+            "multiplier": 1.75
+          },
+          {
+            "action": "swap_prevent",
+            "target": "highest_hp",
+            "duration": [
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "f650e725672b9fa498d525065837eedb",
+        "name": "Cunning Rampage Devour",
+        "type": "regular",
+        "delay": 1,
+        "cooldown": 1,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/f650e725672b9fa498d525065837eedb.png",
+        "effects": [
+          {
+            "action": "remove_dot",
+            "target": "self"
+          },
+          {
+            "action": "remove_crit_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "remove_damage_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "crit_decrease",
+            "target": "highest_dmg",
+            "multiplier": 1,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "damage_decrease",
+            "target": "highest_dmg",
+            "multiplier": 0.5,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "attack",
+            "target": "highest_dmg",
+            "multiplier": 2
+          },
+          {
+            "action": "hot_contextual",
+            "target": "self",
+            "multiplier": 0.4,
+            "duration": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "4f60693932dd878419d69f93d96fba9f",
+        "name": "Swallowed Whole",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 4,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/swallowedwhole.png",
+        "effects": [
+          {
+            "action": "bypass_armor",
+            "target": "highest_hp"
+          },
+          {
+            "action": "bypass_dodge",
+            "target": "highest_hp"
+          },
+          {
+            "action": "rend",
+            "target": "highest_hp",
+            "multiplier": 1
+          },
+          {
+            "action": "dodge",
+            "target": "self",
+            "multiplier": 0.667,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "swap_prevent",
+            "target": "self",
+            "duration": [
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "3724f6ce67935f443a32b5a82e2343a9",
+        "name": "Nullifying Counter",
+        "type": "counter",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/swap_in_scrub.png",
+        "effects": [
+          {
+            "action": "remove_all_pos",
+            "target": "attacker"
+          }
+        ]
+      },
+      {
+        "uuid": "132b2baaf90442445a05d6901cea3e97",
+        "name": "No Escape",
+        "type": "on_escape",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/132b2baaf90442445a05d6901cea3e97.png",
+        "effects": [
+          {
+            "action": "swap_prevent",
+            "target": "escapee",
+            "duration": [
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "ra__a9b887baae81bba4eb9b02cb8ad0fe24",
+        "name": "Enhancement",
+        "type": "reactive",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/prestige_passif_damage_buff.png",
+        "effects": [
+          {
+            "action": "damage_increase",
+            "target": "self",
+            "multiplier": 0.25,
+            "duration": [
+              1
+            ]
+          },
+          {
+            "action": "crit_increase",
+            "target": "self",
+            "multiplier": 0.5,
+            "duration": [
+              1
+            ]
+          }
+        ]
+      }
+    ],
+    "resistance": [
+      100,
+      0,
+      100,
+      50,
+      75,
+      50,
+      0,
+      0,
+      50,
+      0,
+      0,
+      0,
+      0
+    ],
+    "enhancements": [
+      {
+        "cost": 200,
+        "req": [
+          [
+            "coins",
+            100000
+          ],
+          [
+            "catalyst_minor",
+            360
+          ]
+        ],
+        "rwd": {
+          "type": "health",
+          "value": 110
+        }
+      },
+      {
+        "cost": 250,
+        "req": [
+          [
+            "coins",
+            150000
+          ],
+          [
+            "catalyst_minor",
+            1620
+          ],
+          [
+            "catalyst",
+            270
+          ]
+        ],
+        "rwd": {
+          "type": "damage",
+          "value": 110
+        }
+      },
+      {
+        "cost": 300,
+        "req": [
+          [
+            "coins",
+            200000
+          ],
+          [
+            "catalyst_minor",
+            1080
+          ],
+          [
+            "catalyst",
+            1620
+          ]
+        ],
+        "rwd": {
+          "type": "speed",
+          "value": 2
+        }
+      },
+      {
+        "cost": 400,
+        "req": [
+          [
+            "coins",
+            250000
+          ],
+          [
+            "catalyst",
+            3240
+          ]
+        ],
+        "rwd": {
+          "type": "boost_max",
+          "value": 1
+        }
+      },
+      {
+        "cost": 500,
+        "req": [
+          [
+            "coins",
+            350000
+          ],
+          [
+            "catalyst_major",
+            2000
+          ]
+        ],
+        "rwd": {
+          "type": "moves_reactive",
+          "value": "ra__a9b887baae81bba4eb9b02cb8ad0fe24"
+        }
+      }
     ]
   },
   {
@@ -67268,6 +67691,497 @@
     ]
   },
   {
+    "uuid": "indoraptor_mattel",
+    "name": "Indoraptor Mattel",
+    "rarity": "apex",
+    "class": "cunning_fierce",
+    "size": "medium",
+    "hybrid_type": "non_hybrid",
+    "specialty": [
+      "has_special_active_ability",
+      "has_on_escape_ability",
+      "has_counter_ability",
+      "has_alert_ability",
+      "priority_damage",
+      "target_all_opponents",
+      "bypass_armor",
+      "bypass_dodge",
+      "dodge",
+      "damage_increase",
+      "speed_increase",
+      "armor_increase",
+      "hot_contextual",
+      "damage_decrease",
+      "crit_decrease",
+      "armor_decrease",
+      "heal_decrease",
+      "group_heal_decrease",
+      "nullify",
+      "cleanse"
+    ],
+    "dna_source": [
+      "none"
+    ],
+    "health": 4400,
+    "damage": 1650,
+    "speed": 128,
+    "armor": 0,
+    "crit": 40,
+    "critm": 135,
+    "version": "v3.22",
+    "description": "This predator was engineered to be terror incarnate! Its bright yellow stripes seem evolved to taunt its prey, as they will never see it coming. They will only know they have been caught once they really feel its claws and teeth upon them for the last time!",
+    "ingredients": [],
+    "hybrids": [],
+    "image": "https://cdn.paleo.gg/games/jwa/images/creature/indoraptor_mattel.png",
+    "moves": [
+      {
+        "uuid": "489f996b1c99d0b479df46a0aee70846",
+        "name": "Harrowing Strike",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/489f996b1c99d0b479df46a0aee70846.png",
+        "effects": [
+          {
+            "action": "remove_shield",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "bypass_dodge",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "attack",
+            "target": "lowest_hp",
+            "multiplier": 1
+          },
+          {
+            "action": "armor_decrease",
+            "target": "lowest_hp",
+            "multiplier": 0.25,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "remove_damage_increase",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "remove_crit_increase",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "damage_decrease",
+            "target": "lowest_hp",
+            "multiplier": 0.5,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "speed_increase",
+            "target": "self",
+            "multiplier": 0.1,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "dodge",
+            "target": "self",
+            "multiplier": 0.67,
+            "duration": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "d27f7ec323f1f874e8e2548946b037b1",
+        "name": "Neon Overcharge",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/neonrecharge.png",
+        "effects": [
+          {
+            "action": "remove_all_neg",
+            "target": "self"
+          },
+          {
+            "action": "remove_all_pos",
+            "target": "most_pos"
+          },
+          {
+            "action": "vulner",
+            "target": "self",
+            "multiplier": 0.2,
+            "duration": [
+              2,
+              1
+            ]
+          },
+          {
+            "action": "damage_increase",
+            "target": "self",
+            "multiplier": 0.3,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "armor_increase",
+            "target": "self",
+            "multiplier": 0.2,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "speed_increase",
+            "target": "self",
+            "multiplier": 0.5,
+            "duration": [
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "8c7b6578fbf054541bc5153671737328",
+        "name": "Cautious Cunning Rampage",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 1,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/cunning_rampage.png",
+        "effects": [
+          {
+            "action": "remove_dot",
+            "target": "self"
+          },
+          {
+            "action": "damage_decrease",
+            "target": "highest_dmg",
+            "multiplier": 0.5,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "crit_decrease",
+            "target": "highest_dmg",
+            "multiplier": 1,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "remove_crit_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "remove_damage_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "attack",
+            "target": "highest_dmg",
+            "multiplier": 2
+          }
+        ]
+      },
+      {
+        "uuid": "ot__384d553a4fb7b5944a42e153aae4b9fc_ee8880e04af49fa4885d485ca7ac6465__50",
+        "name": "Reaping Slash",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 0,
+        "effects": [
+          {
+            "action": "remove_vulner",
+            "target": "self"
+          },
+          {
+            "action": "remove_shield",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "bypass_armor",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "attack",
+            "target": "lowest_hp",
+            "multiplier": 1.5
+          },
+          {
+            "action": "hot_contextual",
+            "target": "self",
+            "multiplier": 0.4,
+            "duration": [
+              2
+            ]
+          }
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 1,
+          "delay": 1,
+          "cooldown": 2,
+          "effects": [
+            {
+              "action": "bypass_dodge",
+              "target": "lowest_hp"
+            },
+            {
+              "action": "attack",
+              "target": "lowest_hp",
+              "multiplier": 2.5
+            },
+            {
+              "action": "hot_contextual",
+              "target": "self",
+              "multiplier": 0.6,
+              "duration": [
+                1
+              ]
+            },
+            {
+              "action": "damage_decrease",
+              "target": "lowest_hp",
+              "multiplier": 0.5,
+              "duration": [
+                1,
+                2
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "uuid": "942071399c8206e4aae67ba23d36c632",
+        "name": "Darting Blighted Counter",
+        "type": "counter",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/942071399c8206e4aae67ba23d36c632.png",
+        "effects": [
+          {
+            "action": "attack",
+            "target": "attacker",
+            "multiplier": 1
+          },
+          {
+            "action": "speed_increase",
+            "target": "self",
+            "multiplier": 0.3,
+            "duration": [
+              1
+            ]
+          },
+          {
+            "action": "heal_decrease",
+            "target": "all_opponents",
+            "multiplier": 0.25,
+            "duration": [
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "cf787248eef433b4ba21e150385d4c87",
+        "name": "Hunt On Escape",
+        "type": "on_escape",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/on_escape_swapin_camouflage_hunting.png",
+        "effects": [
+          {
+            "action": "speed_increase",
+            "target": "self",
+            "multiplier": 0.25,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "damage_increase",
+            "target": "self",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "dodge",
+            "target": "self",
+            "multiplier": 1,
+            "duration": [
+              1,
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "ra__96ce975e255fbbd4dab021758c48f23a",
+        "name": "Enhancement",
+        "type": "reactive",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/ra__96ce975e255fbbd4dab021758c48f23a.png",
+        "effects": [
+          {
+            "action": "cloak",
+            "target": "team",
+            "multiplier": 2,
+            "duration": [
+              2,
+              1
+            ]
+          }
+        ]
+      }
+    ],
+    "resistance": [
+      0,
+      75,
+      50,
+      75,
+      75,
+      0,
+      100,
+      0,
+      0,
+      100,
+      50,
+      0,
+      85
+    ],
+    "enhancements": [
+      {
+        "cost": 100,
+        "req": [
+          [
+            "catalyst_minor",
+            360
+          ],
+          [
+            "coins",
+            150000
+          ]
+        ],
+        "rwd": {
+          "type": "speed",
+          "value": 2
+        }
+      },
+      {
+        "cost": 150,
+        "req": [
+          [
+            "catalyst_minor",
+            1300
+          ],
+          [
+            "catalyst",
+            430
+          ],
+          [
+            "coins",
+            200000
+          ]
+        ],
+        "rwd": {
+          "type": "health",
+          "value": 110
+        }
+      },
+      {
+        "cost": 200,
+        "req": [
+          [
+            "catalyst_minor",
+            1080
+          ],
+          [
+            "catalyst",
+            1620
+          ],
+          [
+            "coins",
+            250000
+          ]
+        ],
+        "rwd": {
+          "type": "boost_max",
+          "value": 2
+        }
+      },
+      {
+        "cost": 250,
+        "req": [
+          [
+            "catalyst",
+            1940
+          ],
+          [
+            "catalyst_major",
+            650
+          ],
+          [
+            "coins",
+            300000
+          ]
+        ],
+        "rwd": {
+          "type": "damage",
+          "value": 110
+        }
+      },
+      {
+        "cost": 300,
+        "req": [
+          [
+            "coins",
+            400000
+          ],
+          [
+            "catalyst_major",
+            1540
+          ],
+          [
+            "catalyst",
+            1020
+          ]
+        ],
+        "rwd": {
+          "type": "moves_reactive",
+          "value": "ra__96ce975e255fbbd4dab021758c48f23a"
+        }
+      }
+    ]
+  },
+  {
     "uuid": "indotaurus",
     "name": "Indotaurus",
     "rarity": "unique",
@@ -89763,6 +90677,480 @@
     ]
   },
   {
+    "uuid": "paralidactylus",
+    "name": "Paralidactylus",
+    "rarity": "apex",
+    "class": "wild_card",
+    "size": "large",
+    "hybrid_type": "mega_hybrid",
+    "specialty": [
+      "has_special_active_ability",
+      "has_on_escape_ability",
+      "has_counter_ability",
+      "priority_non_damage",
+      "priority_last_damage",
+      "target_team",
+      "target_all_opponents",
+      "group_attack",
+      "heal",
+      "group_heal",
+      "heal_pct",
+      "bypass_dodge",
+      "group_bypass_dodge",
+      "bypass_alert",
+      "group_bypass_alert",
+      "shield",
+      "damage_increase",
+      "group_damage_increase",
+      "armor_increase",
+      "damage_decrease",
+      "group_damage_decrease",
+      "crit_decrease",
+      "group_crit_decrease",
+      "speed_decrease",
+      "group_speed_decrease",
+      "armor_decrease",
+      "swap_prevent",
+      "dot",
+      "resistance_decrease_all",
+      "nullify",
+      "cleanse"
+    ],
+    "dna_source": [
+      "none"
+    ],
+    "health": 5100,
+    "damage": 1400,
+    "speed": 119,
+    "armor": 40,
+    "crit": 5,
+    "critm": 125,
+    "version": "v3.22",
+    "description": "While generally a docile dinosaur, the sheer destructive potential of a Paralidactylus tail strike is a potent deterrent against predators. If that wasn't enough, they are surprisingly fast, earning them the title of the fastest sauropod on the planet!",
+    "ingredients": [
+      "paralitrosaurus",
+      "skorpiodactylus"
+    ],
+    "hybrids": [],
+    "image": "https://cdn.paleo.gg/games/jwa/images/creature/paralidactylus.png",
+    "moves": [
+      {
+        "uuid": "30d1c2688b140c346850770c2c92189b",
+        "name": "Dispersed Cunning Strike",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/cunning_strike.png",
+        "effects": [
+          {
+            "action": "remove_dot",
+            "target": "self"
+          },
+          {
+            "action": "damage_decrease",
+            "target": "all_opponents",
+            "multiplier": 0.5,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "crit_decrease",
+            "target": "all_opponents",
+            "multiplier": 1,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "remove_crit_increase",
+            "target": "all_opponents"
+          },
+          {
+            "action": "remove_damage_increase",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 1
+          }
+        ]
+      },
+      {
+        "uuid": "d44e42ff65f0f714b800fd5ae651814c",
+        "name": "Bellowing Citadel",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 1,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/bellowingcitadel.png",
+        "effects": [
+          {
+            "action": "remove_all_neg",
+            "target": "self"
+          },
+          {
+            "action": "shield",
+            "target": "self",
+            "multiplier": 0.5,
+            "duration": [
+              3,
+              4
+            ]
+          },
+          {
+            "action": "armor_increase",
+            "target": "self",
+            "multiplier": 0.5,
+            "duration": [
+              3,
+              4
+            ]
+          },
+          {
+            "action": "speed_decrease",
+            "target": "fastest",
+            "multiplier": 0.5,
+            "duration": [
+              2
+            ]
+          },
+          {
+            "action": "remove_shield",
+            "target": "fastest"
+          },
+          {
+            "action": "armor_decrease",
+            "target": "fastest",
+            "multiplier": 1,
+            "duration": [
+              2,
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "29557a5acd0c5c44b80be0681bfe7cb2",
+        "name": "Fortifying Thagomizer Sweep",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/29557a5acd0c5c44b80be0681bfe7cb2.png",
+        "effects": [
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "heal",
+            "target": "team",
+            "multiplier": 1
+          },
+          {
+            "action": "remove_all_neg",
+            "target": "team"
+          },
+          {
+            "action": "remove_all_pos",
+            "target": "all_opponents"
+          },
+          {
+            "action": "speed_decrease",
+            "target": "all_opponents",
+            "multiplier": 0.5,
+            "duration": [
+              2
+            ]
+          },
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_dodge",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 1.5
+          }
+        ]
+      },
+      {
+        "uuid": "fe0f50a89d92b3742b336b6c76bdf24c",
+        "name": "Payback Wounding Rampage",
+        "type": "regular",
+        "delay": 1,
+        "cooldown": 1,
+        "priority": -1,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/fe0f50a89d92b3742b336b6c76bdf24c.png",
+        "effects": [
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "heal",
+            "target": "self",
+            "multiplier": 1
+          },
+          {
+            "action": "remove_damage_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "damage_decrease",
+            "target": "highest_dmg",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "attack",
+            "target": "highest_dmg",
+            "multiplier": 2
+          },
+          {
+            "action": "dot",
+            "target": "highest_dmg",
+            "multiplier": 0.4,
+            "duration": [
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "d7302bbdc83fca146a033de931c5b2bb",
+        "name": "Ferocious Counter Healing Strike",
+        "type": "counter",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/d7302bbdc83fca146a033de931c5b2bb.png",
+        "effects": [
+          {
+            "action": "damage_increase",
+            "target": "team",
+            "multiplier": 0.15,
+            "duration": [
+              1,
+              1
+            ]
+          },
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "heal",
+            "target": "self",
+            "multiplier": 0.5
+          },
+          {
+            "action": "remove_shield",
+            "target": "attacker"
+          },
+          {
+            "action": "bypass_dodge",
+            "target": "attacker"
+          },
+          {
+            "action": "attack",
+            "target": "attacker",
+            "multiplier": 1
+          }
+        ]
+      },
+      {
+        "uuid": "3ca6cd70257694b4db0f9cf2392ee975",
+        "name": "Invincible Afflicting Lockdown",
+        "type": "on_escape",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/3ca6cd70257694b4db0f9cf2392ee975.png",
+        "effects": [
+          {
+            "action": "resistance_decrease_all",
+            "target": "escapee",
+            "multiplier": 0.5,
+            "duration": [
+              2
+            ]
+          },
+          {
+            "action": "swap_prevent",
+            "target": "escapee",
+            "duration": [
+              2
+            ]
+          },
+          {
+            "action": "shield",
+            "target": "self",
+            "multiplier": 1,
+            "duration": [
+              1,
+              4
+            ]
+          },
+          {
+            "action": "heal_pct",
+            "target": "self",
+            "multiplier": 1
+          }
+        ]
+      },
+      {
+        "uuid": "ra__b8577af9852741f43924095240a0cf4c",
+        "name": "Enhancement",
+        "type": "reactive",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/ra__b8577af9852741f43924095240a0cf4c.png",
+        "effects": [
+          {
+            "action": "vulner",
+            "target": "lowest_hp",
+            "multiplier": 0.5,
+            "duration": [
+              1
+            ]
+          }
+        ]
+      }
+    ],
+    "resistance": [
+      0,
+      100,
+      100,
+      0,
+      50,
+      50,
+      100,
+      0,
+      75,
+      100,
+      50,
+      50,
+      0
+    ],
+    "enhancements": [
+      {
+        "cost": 100,
+        "req": [
+          [
+            "catalyst_minor",
+            360
+          ],
+          [
+            "coins",
+            150000
+          ]
+        ],
+        "rwd": {
+          "type": "speed",
+          "value": 2
+        }
+      },
+      {
+        "cost": 150,
+        "req": [
+          [
+            "catalyst_minor",
+            1300
+          ],
+          [
+            "catalyst",
+            430
+          ],
+          [
+            "coins",
+            200000
+          ]
+        ],
+        "rwd": {
+          "type": "health",
+          "value": 110
+        }
+      },
+      {
+        "cost": 200,
+        "req": [
+          [
+            "catalyst_minor",
+            1080
+          ],
+          [
+            "catalyst",
+            1620
+          ],
+          [
+            "coins",
+            250000
+          ]
+        ],
+        "rwd": {
+          "type": "boost_max",
+          "value": 2
+        }
+      },
+      {
+        "cost": 250,
+        "req": [
+          [
+            "catalyst",
+            1940
+          ],
+          [
+            "catalyst_major",
+            650
+          ],
+          [
+            "coins",
+            300000
+          ]
+        ],
+        "rwd": {
+          "type": "damage",
+          "value": 110
+        }
+      },
+      {
+        "cost": 300,
+        "req": [
+          [
+            "coins",
+            400000
+          ],
+          [
+            "catalyst_major",
+            1540
+          ],
+          [
+            "catalyst",
+            1020
+          ]
+        ],
+        "rwd": {
+          "type": "moves_reactive",
+          "value": "ra__b8577af9852741f43924095240a0cf4c"
+        }
+      }
+    ]
+  },
+  {
     "uuid": "paralititan",
     "name": "Paralititan",
     "rarity": "legendary",
@@ -90020,8 +91408,6 @@
     "size": "large",
     "hybrid_type": "super_hybrid",
     "specialty": [
-      "has_special_active_ability",
-      "has_special_passive_ability",
       "has_swap_in_ability",
       "has_on_escape_ability",
       "has_counter_ability",
@@ -90064,7 +91450,9 @@
       "paralititan",
       "ankyntrosaurus"
     ],
-    "hybrids": [],
+    "hybrids": [
+      "paralidactylus"
+    ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/paralitrosaurus.png",
     "moves": [
       {
@@ -99094,6 +100482,7 @@
       "sarcorixis"
     ],
     "hybrids": [
+      "aliorasuchus",
       "pyrorixis"
     ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/pyrosuchus.png",
@@ -114318,6 +115707,7 @@
       "dimodactylus"
     ],
     "hybrids": [
+      "paralidactylus",
       "skorpiostegotops"
     ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/skorpiodactylus.png",
