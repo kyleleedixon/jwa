@@ -19444,6 +19444,393 @@
     ]
   },
   {
+    "uuid": "arsinoitherium",
+    "name": "Arsinoitherium",
+    "rarity": "rare",
+    "class": "cunning_resilient",
+    "size": "medium",
+    "hybrid_type": "non_hybrid",
+    "specialty": [
+      "has_revenge_ability",
+      "priority_damage",
+      "heal",
+      "damage_increase",
+      "damage_decrease",
+      "crit_decrease",
+      "vulner"
+    ],
+    "dna_source": [
+      "sanctuary",
+      "none"
+    ],
+    "health": 4500,
+    "damage": 1200,
+    "speed": 114,
+    "armor": 25,
+    "crit": 5,
+    "critm": 125,
+    "version": "v3.22",
+    "description": "This dual-horned mammal may look similar to a rhinoceros, but they are in fact closer to elephants and manatees than the beast it resembles! Found in humid and vegetated areas of the globe, Arsinoitherium is very stubborn and will not move until it wants to move.",
+    "ingredients": [],
+    "hybrids": [
+      "arsionosaurus"
+    ],
+    "image": "https://cdn.paleo.gg/games/jwa/images/creature/arsinoitherium.png",
+    "moves": [
+      {
+        "uuid": "64ecdb6d71e1e204da5b142c5441dab0",
+        "name": "Regenerating Strike",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/64ecdb6d71e1e204da5b142c5441dab0.png",
+        "effects": [
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "damage_increase",
+            "target": "self",
+            "multiplier": 0.2,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "attack",
+            "target": "highest_dmg",
+            "multiplier": 1
+          },
+          {
+            "action": "heal",
+            "target": "self",
+            "multiplier": 0.5
+          }
+        ]
+      },
+      {
+        "uuid": "r__422ce5b17b107c44ea3b9f560a25200f_af006abdeab42574abdfd233ff1f620d",
+        "name": "Revenge Cunning Rampage",
+        "type": "regular",
+        "delay": 1,
+        "cooldown": 1,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/cunning_rampage.png",
+        "effects": [
+          {
+            "action": "remove_dot",
+            "target": "self"
+          },
+          {
+            "action": "remove_damage_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "remove_crit_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "damage_decrease",
+            "target": "highest_dmg",
+            "multiplier": 0.5,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "crit_decrease",
+            "target": "highest_dmg",
+            "multiplier": 1,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "attack",
+            "target": "highest_dmg",
+            "multiplier": 2
+          }
+        ]
+      },
+      {
+        "uuid": "ae626c78eca0af64f879f1781180db59",
+        "name": "Rooted Instant Trample",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 1,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/ae626c78eca0af64f879f1781180db59.png",
+        "effects": [
+          {
+            "action": "swap_prevent",
+            "target": "self",
+            "duration": [
+              1
+            ]
+          },
+          {
+            "action": "attack",
+            "target": "highest_dmg",
+            "multiplier": 1.5
+          },
+          {
+            "action": "damage_decrease",
+            "target": "highest_dmg",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "vulner",
+            "target": "highest_dmg",
+            "multiplier": 0.5,
+            "duration": [
+              2
+            ]
+          }
+        ]
+      }
+    ],
+    "resistance": [
+      0,
+      0,
+      100,
+      50,
+      100,
+      0,
+      0,
+      0,
+      50,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "uuid": "arsionosaurus",
+    "name": "Arsionosaurus",
+    "rarity": "epic",
+    "class": "cunning_resilient",
+    "size": "medium",
+    "hybrid_type": "hybrid",
+    "specialty": [
+      "has_revenge_ability",
+      "priority_damage",
+      "target_all_opponents",
+      "group_attack",
+      "bypass_alert",
+      "group_bypass_alert",
+      "damage_decrease",
+      "crit_decrease",
+      "vulner",
+      "group_vulner",
+      "resistance_decrease_all",
+      "nullify"
+    ],
+    "dna_source": [
+      "none"
+    ],
+    "health": 4500,
+    "damage": 1350,
+    "speed": 118,
+    "armor": 25,
+    "crit": 20,
+    "critm": 125,
+    "version": "v3.22",
+    "description": "Arsionosaurus features smaller protuberances on its dorsal plates, making it difficult for predators to assault it from the side as they risk injuring themselves while the rest of the herd fends them off. Arsionosaurus communicates with its herd-mates via feet drumming, a trait present in elephants even today!",
+    "ingredients": [
+      "arsinoitherium",
+      "crichtonsaurus"
+    ],
+    "hybrids": [],
+    "image": "https://cdn.paleo.gg/games/jwa/images/creature/arsionosaurus.png",
+    "moves": [
+      {
+        "uuid": "74a6b75d854c83b4f82ca907a037cb25",
+        "name": "Group Resilient Strike",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/strike_definite_vulnerable.png",
+        "effects": [
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "remove_dodge",
+            "target": "all_opponents"
+          },
+          {
+            "action": "remove_cloak",
+            "target": "all_opponents"
+          },
+          {
+            "action": "remove_speed_increase",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 1
+          },
+          {
+            "action": "vulner",
+            "target": "all_opponents",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "71b82138f8f5ead4b98091f1d062a327",
+        "name": "Exhaust",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 1,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/affliction_impact_nullify.png",
+        "effects": [
+          {
+            "action": "remove_all_pos",
+            "target": "most_pos"
+          },
+          {
+            "action": "resistance_decrease_all",
+            "target": "most_pos",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "attack",
+            "target": "most_pos",
+            "multiplier": 1.25
+          }
+        ]
+      },
+      {
+        "uuid": "r__422ce5b17b107c44ea3b9f560a25200f_af006abdeab42574abdfd233ff1f620d",
+        "name": "Revenge Cunning Rampage",
+        "type": "regular",
+        "delay": 1,
+        "cooldown": 1,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/cunning_rampage.png",
+        "effects": [
+          {
+            "action": "remove_dot",
+            "target": "self"
+          },
+          {
+            "action": "remove_damage_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "remove_crit_increase",
+            "target": "highest_dmg"
+          },
+          {
+            "action": "damage_decrease",
+            "target": "highest_dmg",
+            "multiplier": 0.5,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "crit_decrease",
+            "target": "highest_dmg",
+            "multiplier": 1,
+            "duration": [
+              1,
+              2
+            ]
+          },
+          {
+            "action": "attack",
+            "target": "highest_dmg",
+            "multiplier": 2
+          }
+        ]
+      },
+      {
+        "uuid": "ae626c78eca0af64f879f1781180db59",
+        "name": "Rooted Instant Trample",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 1,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/ae626c78eca0af64f879f1781180db59.png",
+        "effects": [
+          {
+            "action": "swap_prevent",
+            "target": "self",
+            "duration": [
+              1
+            ]
+          },
+          {
+            "action": "attack",
+            "target": "highest_dmg",
+            "multiplier": 1.5
+          },
+          {
+            "action": "damage_decrease",
+            "target": "highest_dmg",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "vulner",
+            "target": "highest_dmg",
+            "multiplier": 0.5,
+            "duration": [
+              2
+            ]
+          }
+        ]
+      }
+    ],
+    "resistance": [
+      0,
+      33,
+      100,
+      50,
+      100,
+      0,
+      100,
+      0,
+      50,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
     "uuid": "atrocimoloch",
     "name": "Atrocimoloch",
     "rarity": "unique",
@@ -29937,7 +30324,7 @@
         "delay": 0,
         "cooldown": 2,
         "priority": 1,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/cunning_impact.png",
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/8f74eb4ad04cde849b6d5f2759fec0ba.png",
         "effects": [
           {
             "action": "bypass_alert",
@@ -37261,6 +37648,7 @@
     "description": "This ankylosaur is named for the writer who started it all, Michael Crichton, the author of Jurassic Park!",
     "ingredients": [],
     "hybrids": [
+      "arsionosaurus",
       "crichtomoloch"
     ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/crichtonsaurus.png",
