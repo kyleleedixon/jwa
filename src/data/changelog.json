@@ -1,5 +1,72 @@
 [
   {
+    "date": "2026-09-24",
+    "version": "2026-09-23",
+    "changes": [
+      {
+        "type": "new",
+        "uuid": "koolatrax",
+        "name": "Koolatrax",
+        "rarity": "unique"
+      },
+      {
+        "type": "new",
+        "uuid": "koolatrodon",
+        "name": "Koolatrodon",
+        "rarity": "epic"
+      },
+      {
+        "type": "updated",
+        "uuid": "arctovasilas",
+        "name": "Arctovasilas",
+        "stats": {
+          "health": [
+            4800,
+            4950
+          ],
+          "damage": [
+            1400,
+            1450
+          ],
+          "critm": [
+            125,
+            135
+          ]
+        }
+      },
+      {
+        "type": "updated",
+        "uuid": "dakotaraptor",
+        "name": "Dakotaraptor",
+        "stats": {
+          "health": [
+            3300,
+            3400
+          ],
+          "damage": [
+            1350,
+            1450
+          ]
+        }
+      },
+      {
+        "type": "updated",
+        "uuid": "postimetrodon",
+        "name": "Postimetrodon",
+        "stats": {
+          "damage": [
+            1200,
+            1250
+          ],
+          "crit": [
+            5,
+            15
+          ]
+        }
+      }
+    ]
+  },
+  {
     "date": "2026-09-03",
     "version": "2026-09-02",
     "changes": [
