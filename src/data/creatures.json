@@ -18,6 +18,8 @@
       "bypass_armor",
       "group_bypass_armor",
       "bypass_dodge",
+      "bypass_alert",
+      "group_bypass_alert",
       "damage_increase",
       "crit_increase",
       "speed_increase",
@@ -127,6 +129,10 @@
         "effects": [
           {
             "action": "remove_shield",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_alert",
             "target": "all_opponents"
           },
           {
@@ -25160,6 +25166,10 @@
             "target": "all_opponents"
           },
           {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
             "action": "bypass_armor",
             "target": "all_opponents"
           },
@@ -26282,6 +26292,8 @@
       "bypass_armor",
       "group_bypass_armor",
       "bypass_dodge",
+      "bypass_alert",
+      "group_bypass_alert",
       "dodge",
       "crit_increase",
       "hot_contextual",
@@ -26374,6 +26386,10 @@
         "effects": [
           {
             "action": "remove_shield",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_alert",
             "target": "all_opponents"
           },
           {
@@ -81074,7 +81090,6 @@
     ],
     "dna_source": [
       "sanctuary",
-      "short_range",
       "local_area_3"
     ],
     "health": 3600,
@@ -90644,7 +90659,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/swap_in_heal_x1_5.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/swap_in_heal_x1.png",
         "effects": [
           {
             "action": "heal",
@@ -90922,7 +90937,6 @@
     ],
     "dna_source": [
       "sanctuary",
-      "short_range",
       "alliance_missions"
     ],
     "health": 3250,
@@ -94035,6 +94049,244 @@
           "value": "ra__df4453a7ffcfb334daf45d51b5062c34"
         }
       }
+    ]
+  },
+  {
+    "uuid": "peloroplites",
+    "name": "Peloroplites",
+    "rarity": "epic",
+    "class": "resilient",
+    "size": "medium",
+    "hybrid_type": "non_hybrid",
+    "specialty": [
+      "has_special_passive_ability",
+      "has_counter_ability",
+      "priority_non_damage",
+      "target_team",
+      "target_all_opponents",
+      "group_attack",
+      "bypass_dodge",
+      "bypass_alert",
+      "group_bypass_alert",
+      "shield",
+      "damage_increase",
+      "group_damage_increase",
+      "armor_increase",
+      "group_armor_increase",
+      "taunt",
+      "speed_decrease",
+      "vulner",
+      "group_vulner"
+    ],
+    "dna_source": [
+      "sanctuary",
+      "short_range"
+    ],
+    "health": 4500,
+    "damage": 1150,
+    "speed": 115,
+    "armor": 20,
+    "crit": 5,
+    "critm": 125,
+    "version": "v3.23",
+    "description": "The Peloroplites is a massive wall of spike and bone, worthy of its name’s meaning: “monstrous heavy one”. Despite its sinister moniker, this gentle herbivore will not bother anyone that leaves it alone.",
+    "ingredients": [],
+    "hybrids": [],
+    "image": "https://cdn.paleo.gg/games/jwa/images/creature/peloroplites.png",
+    "moves": [
+      {
+        "uuid": "74a6b75d854c83b4f82ca907a037cb25",
+        "name": "Group Resilient Strike",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/strike_definite_vulnerable.png",
+        "effects": [
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "remove_dodge",
+            "target": "all_opponents"
+          },
+          {
+            "action": "remove_cloak",
+            "target": "all_opponents"
+          },
+          {
+            "action": "remove_speed_increase",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 1
+          },
+          {
+            "action": "vulner",
+            "target": "all_opponents",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "e3e96b759e717ba468ef121c174dc263",
+        "name": "Instant Taunting Fortress",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 1,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/e3e96b759e717ba468ef121c174dc263.png",
+        "effects": [
+          {
+            "action": "armor_increase",
+            "target": "self",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              2
+            ]
+          },
+          {
+            "action": "shield",
+            "target": "self",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              2
+            ]
+          },
+          {
+            "action": "taunt",
+            "target": "self",
+            "duration": [
+              2
+            ]
+          },
+          {
+            "action": "damage_increase",
+            "target": "self",
+            "multiplier": 0.34,
+            "duration": [
+              3,
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "e91044ce62c9e754e97ca55089fecd90",
+        "name": "Superiority Rampage",
+        "type": "regular",
+        "delay": 1,
+        "cooldown": 1,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/superiority_rampage.png",
+        "effects": [
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "bypass_dodge",
+            "target": "fastest"
+          },
+          {
+            "action": "attack",
+            "target": "fastest",
+            "multiplier": 2
+          },
+          {
+            "action": "speed_decrease",
+            "target": "fastest",
+            "multiplier": 0.5,
+            "duration": [
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "a7096a3899f6fbc47b3d6550277d6560",
+        "name": "Reverberating Aggression",
+        "type": "counter",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/a7096a3899f6fbc47b3d6550277d6560.png",
+        "effects": [
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 0.33
+          },
+          {
+            "action": "damage_increase",
+            "target": "team",
+            "multiplier": 0.1,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "damage_increase",
+            "target": "self",
+            "multiplier": 0.15,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "armor_increase",
+            "target": "team",
+            "multiplier": 0.05,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "armor_increase",
+            "target": "self",
+            "multiplier": 0.1,
+            "duration": [
+              2,
+              4
+            ]
+          }
+        ]
+      }
+    ],
+    "resistance": [
+      0,
+      0,
+      100,
+      0,
+      0,
+      90,
+      0,
+      0,
+      75,
+      100,
+      100,
+      0,
+      100
     ]
   },
   {
@@ -98167,7 +98419,6 @@
     ],
     "dna_source": [
       "sanctuary",
-      "short_range",
       "local_area_1"
     ],
     "health": 4000,
@@ -103455,7 +103706,7 @@
         "delay": 0,
         "cooldown": 0,
         "priority": 0,
-        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/swap_in_heal_x1_5.png",
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/swap_in_heal_x1.png",
         "effects": [
           {
             "action": "heal",
@@ -127215,7 +127466,6 @@
     ],
     "dna_source": [
       "sanctuary",
-      "short_range",
       "local_area_3"
     ],
     "health": 4100,
@@ -133701,6 +133951,10 @@
         "effects": [
           {
             "action": "remove_shield",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_alert",
             "target": "all_opponents"
           },
           {
