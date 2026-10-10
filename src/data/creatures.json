@@ -23531,7 +23531,6 @@
     "hybrid_type": "mega_hybrid",
     "specialty": [
       "has_special_active_ability",
-      "has_special_passive_ability",
       "has_on_escape_ability",
       "has_counter_ability",
       "priority_damage",
@@ -40409,7 +40408,8 @@
     "description": "Nearly twice the size of modern crocodiles, Deinosuchus is an ambush hunter. It waits motionless in swamps before exploding out of the water with jaws capable of snapping even large dinosaurs in half.",
     "ingredients": [],
     "hybrids": [
-      "deinotops"
+      "deinotops",
+      "pelorosuchus"
     ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/deinosuchus.png",
     "moves": [
@@ -94091,7 +94091,9 @@
     "version": "v3.23",
     "description": "The Peloroplites is a massive wall of spike and bone, worthy of its name’s meaning: “monstrous heavy one”. Despite its sinister moniker, this gentle herbivore will not bother anyone that leaves it alone.",
     "ingredients": [],
-    "hybrids": [],
+    "hybrids": [
+      "pelorosuchus"
+    ],
     "image": "https://cdn.paleo.gg/games/jwa/images/creature/peloroplites.png",
     "moves": [
       {
@@ -94283,6 +94285,398 @@
       0,
       0,
       75,
+      100,
+      100,
+      0,
+      100
+    ]
+  },
+  {
+    "uuid": "pelorosuchus",
+    "name": "Pelorosuchus",
+    "rarity": "legendary",
+    "class": "fierce_resilient",
+    "size": "medium",
+    "hybrid_type": "hybrid",
+    "specialty": [
+      "has_special_passive_ability",
+      "has_swap_in_ability",
+      "has_on_escape_ability",
+      "has_counter_ability",
+      "has_revenge_ability",
+      "has_alert_ability",
+      "priority_damage",
+      "priority_non_damage",
+      "target_team",
+      "target_all_opponents",
+      "group_attack",
+      "run",
+      "bypass_armor",
+      "group_bypass_armor",
+      "bypass_dodge",
+      "group_bypass_dodge",
+      "bypass_alert",
+      "group_bypass_alert",
+      "shield",
+      "damage_increase",
+      "group_damage_increase",
+      "speed_increase",
+      "armor_increase",
+      "group_armor_increase",
+      "hot_contextual",
+      "speed_decrease",
+      "dot",
+      "cleanse"
+    ],
+    "dna_source": [
+      "none"
+    ],
+    "health": 4700,
+    "damage": 1050,
+    "speed": 116,
+    "armor": 10,
+    "crit": 15,
+    "critm": 130,
+    "version": "v3.23",
+    "description": "Pelorosuchus is an ambush herbivore whose main source of food is tree leaves. Able to topple trees with its considerable acceleration speed and body weight, Pelorosuchus has often drawn comparisons to the work of lumberjacks.",
+    "ingredients": [
+      "peloroplites",
+      "deinosuchus"
+    ],
+    "hybrids": [],
+    "image": "https://cdn.paleo.gg/games/jwa/images/creature/pelorosuchus.png",
+    "moves": [
+      {
+        "uuid": "02cbcdd6237e6f24ca15146122749269",
+        "name": "Shielded Heavy Strike",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/bypass_armor_shield_cleanse.png",
+        "effects": [
+          {
+            "action": "remove_vulner",
+            "target": "self"
+          },
+          {
+            "action": "remove_damage_decrease",
+            "target": "self"
+          },
+          {
+            "action": "bypass_armor",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "bypass_dodge",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "attack",
+            "target": "lowest_hp",
+            "multiplier": 1
+          },
+          {
+            "action": "remove_speed_increase",
+            "target": "fastest"
+          },
+          {
+            "action": "shield",
+            "target": "self",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "174e11ebf35de1b44b894d7ced53c59d",
+        "name": "Intimidating Wounding Impact",
+        "type": "regular",
+        "delay": 0,
+        "cooldown": 2,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/174e11ebf35de1b44b894d7ced53c59d.png",
+        "effects": [
+          {
+            "action": "remove_all_neg",
+            "target": "self"
+          },
+          {
+            "action": "damage_increase",
+            "target": "self",
+            "multiplier": 0.25,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "armor_increase",
+            "target": "self",
+            "multiplier": 0.25,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "speed_decrease",
+            "target": "highest_hp",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "attack",
+            "target": "highest_hp",
+            "multiplier": 1.5
+          },
+          {
+            "action": "dot",
+            "target": "highest_hp",
+            "multiplier": 0.25,
+            "duration": [
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "710fbcd8efcf2734aa2450156f4d6b7b",
+        "name": "Terror Instinct",
+        "type": "regular",
+        "delay": 1,
+        "cooldown": 2,
+        "priority": 1,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/710fbcd8efcf2734aa2450156f4d6b7b.png",
+        "effects": [
+          {
+            "action": "remove_all_neg",
+            "target": "highest_hp"
+          },
+          {
+            "action": "run",
+            "target": "highest_hp"
+          },
+          {
+            "action": "damage_increase",
+            "target": "self",
+            "multiplier": 0.25,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "speed_increase",
+            "target": "self",
+            "multiplier": 0.25,
+            "duration": [
+              2,
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "r__88aa7a7d1cc856a44b220d5389f0d68a_33d0327a57751174fa62fbe7fa29ad8e",
+        "name": "Devouring Revenge",
+        "type": "regular",
+        "delay": 1,
+        "cooldown": 3,
+        "priority": 1,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/r__88aa7a7d1cc856a44b220d5389f0d68a_33d0327a57751174fa62fbe7fa29ad8e.png",
+        "effects": [
+          {
+            "action": "bypass_armor",
+            "target": "lowest_hp"
+          },
+          {
+            "action": "attack",
+            "target": "lowest_hp",
+            "multiplier": 2
+          },
+          {
+            "action": "hot_contextual",
+            "target": "self",
+            "multiplier": 0.4,
+            "duration": [
+              3
+            ]
+          },
+          {
+            "action": "shield",
+            "target": "self",
+            "multiplier": 0.5,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "armor_increase",
+            "target": "self",
+            "multiplier": 0.25,
+            "duration": [
+              2,
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "e7a143083a0e68e429a226f695875d97",
+        "name": "Resounding Aggression",
+        "type": "counter",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/counterresoundingaggression.png",
+        "effects": [
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 0.33
+          },
+          {
+            "action": "damage_increase",
+            "target": "team",
+            "multiplier": 0.1,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "damage_increase",
+            "target": "self",
+            "multiplier": 0.15,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "armor_increase",
+            "target": "team",
+            "multiplier": 0.1,
+            "duration": [
+              2,
+              4
+            ]
+          },
+          {
+            "action": "armor_increase",
+            "target": "self",
+            "multiplier": 0.1,
+            "duration": [
+              2,
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "ot__0ccf3d7303d70064bb7a7c2a7adf225f_7bbeee697de77b94eb94a4b6a45a0ea2__50",
+        "name": "Alert Swap In Precise Rampage",
+        "type": "swap_in",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/jwa/images/move/icon/thresholdswapinpreciserampage.png",
+        "effects": [
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_armor",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_dodge",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 1.5
+          }
+        ],
+        "if_alert": {
+          "threshold": 50,
+          "priority": 0,
+          "delay": 0,
+          "cooldown": 0,
+          "effects": [
+            {
+              "action": "bypass_armor",
+              "target": "all_opponents"
+            },
+            {
+              "action": "bypass_dodge",
+              "target": "all_opponents"
+            },
+            {
+              "action": "attack",
+              "target": "all_opponents",
+              "multiplier": 2.5
+            },
+            {
+              "action": "remove_shield",
+              "target": "all_opponents"
+            }
+          ]
+        }
+      },
+      {
+        "uuid": "39e340b266fd7cb49b52f888483fd110",
+        "name": "Group Defense Shattering Impact On Escape",
+        "type": "on_escape",
+        "delay": 0,
+        "cooldown": 0,
+        "priority": 0,
+        "icon": "https://cdn.paleo.gg/games/images/move/regular/39e340b266fd7cb49b52f888483fd110.png",
+        "effects": [
+          {
+            "action": "remove_shield",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_alert",
+            "target": "all_opponents"
+          },
+          {
+            "action": "bypass_armor",
+            "target": "all_opponents"
+          },
+          {
+            "action": "attack",
+            "target": "all_opponents",
+            "multiplier": 1.5
+          }
+        ]
+      }
+    ],
+    "resistance": [
+      0,
+      0,
+      65,
+      0,
+      0,
+      75,
+      0,
+      0,
+      50,
       100,
       100,
       0,
