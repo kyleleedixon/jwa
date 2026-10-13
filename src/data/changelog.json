@@ -1,5 +1,22 @@
 [
   {
+    "date": "2026-10-13",
+    "version": "2026-10-12",
+    "changes": [
+      {
+        "type": "updated",
+        "uuid": "koolatrodon",
+        "name": "Koolatrodon",
+        "stats": {
+          "damage": [
+            1350,
+            1400
+          ]
+        }
+      }
+    ]
+  },
+  {
     "date": "2026-10-10",
     "version": "2026-10-09",
     "changes": [
