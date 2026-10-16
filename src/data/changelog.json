@@ -1,5 +1,35 @@
 [
   {
+    "date": "2026-10-16",
+    "version": "2026-10-15",
+    "changes": [
+      {
+        "type": "new",
+        "uuid": "erlidraco",
+        "name": "Erlidraco",
+        "rarity": "legendary"
+      },
+      {
+        "type": "new",
+        "uuid": "guidraco",
+        "name": "Guidraco",
+        "rarity": "epic"
+      },
+      {
+        "type": "new",
+        "uuid": "quetzaldraco",
+        "name": "Quetzaldraco",
+        "rarity": "unique"
+      },
+      {
+        "type": "new",
+        "uuid": "quetzalvexus",
+        "name": "Quetzalvexus",
+        "rarity": "apex"
+      }
+    ]
+  },
+  {
     "date": "2026-10-13",
     "version": "2026-10-12",
     "changes": [
