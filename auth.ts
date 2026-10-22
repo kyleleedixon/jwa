@@ -41,6 +41,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     Discord({
       clientId: process.env.DISCORD_CLIENT_ID!,
       clientSecret: process.env.DISCORD_CLIENT_SECRET!,
+      // Discord now returns an `iss` param on the callback; without this Auth.js
+      // validates it against its placeholder issuer and fails with CallbackRouteError.
+      issuer: 'https://discord.com',
       authorization: { params: { prompt: 'none' } },
     }),
   ],
